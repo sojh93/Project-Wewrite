@@ -8,10 +8,11 @@ const Text = ({
     margin,padding,
 
     onClick, children,   
+    ...props
     }) => {
 
     return (
-        <p onClick style={fontSize,fontColor,fontWeight, margin, padding}>{children}</p>
+        <p onClick style={props,fontSize,fontColor,fontWeight, margin, padding}>{children}</p>
     );
 }
 

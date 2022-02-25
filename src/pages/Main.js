@@ -1,11 +1,10 @@
 //import Library
-import React from "react"
+import React, { useEffect } from 'react';
 import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 //import Actions
-
 
 //import elements
 import { Button, Grid, Input, Image, Text } from "../elements" 
@@ -14,23 +13,22 @@ import { Button, Grid, Input, Image, Text } from "../elements"
 
 
 // impot Component
-
-//import Actions
-
+import KakaoMapScript from '../shared/kakaomap';
 
 //import axios
 import instance from "../shared/Request";
 
 
 function Main(props) {
-    const color = (props=>props.theme.color);
-    
-    console.log(props)
-    return (
-        <Grid>
-            <P>312</P>
-        </Grid>
+    useEffect(() => {
+        KakaoMapScript();
+    }, []);
 
+    return (
+        <div id='myMap' style={{
+            width: '100vw',
+            height: '100vh'
+        }}></div>
     );
 }
 

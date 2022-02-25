@@ -1,6 +1,6 @@
 const theme = {
     color: {
-        primary: 'skyblue',
+        primary: '#fafafa',
         secondary: 'green',
         },
         size: {

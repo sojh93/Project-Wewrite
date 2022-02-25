@@ -7,11 +7,12 @@ const Image = ({
     width, height, margin, padding,
 
     onClick,
+    ...props
     }) => {
 
 
     return (
-        <img onClick={onClick} src={src} style={ width, height, margin, padding }></img>
+        <img onClick={onClick} src={src} style={ width, height, margin, padding,props }></img>
     )
 }
 

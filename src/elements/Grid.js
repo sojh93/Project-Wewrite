@@ -11,12 +11,13 @@ const Grid = ({
     
 
     is_flex,
-
+    ...props
 
 }) => {
 
+    console.log(props)
     return(
-            <div onClick={onClick} style={border, borderRadius, width, height, margin, padding, gap}>
+            <div onClick={onClick} style={border, borderRadius, width, height, margin, padding, gap,props}>
                 {children}
             </div>
 
