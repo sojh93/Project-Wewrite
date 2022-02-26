@@ -10,6 +10,7 @@ import theme from '../theme/theme';
 
 //import Pages
 import Main from "../pages/Main";
+import Login from "../pages/Login";
 
 
 
@@ -19,6 +20,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <Routes>
           <Route path="/" element={<Main />}/>
+          <Route path="/login" element={<Login />}/>
         </Routes>
       </ThemeProvider>
     </React.Fragment>

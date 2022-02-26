@@ -3,16 +3,15 @@ import React from "react";
 import styled from "styled-components";
 
 const Text = ({
-    fontSize,fontColor,fontWeight,
+    
 
-    margin,padding,
 
     onClick, children,   
     ...props
     }) => {
 
     return (
-        <p onClick={onClick} style={{props,fontSize,fontColor,fontWeight, margin, padding}}>{children}</p>
+        <p onClick={onClick} style={{...props}}>{children}</p>
     );
 }
 

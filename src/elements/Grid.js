@@ -13,7 +13,7 @@ const Grid = ({
     if(wrap){
         return(
             <Wrap style={{display:"flex",justifyContent:"center",}}>
-                <div onClick={onClick} style={props}>
+                <div onClick={onClick} style={{...props}}>
                     {children}
                 </div>
             </Wrap>
@@ -21,13 +21,13 @@ const Grid = ({
     }
     if(is_flex){
         return(
-            <Flex onClick={onClick} style={props}>
+            <Flex onClick={onClick} style={{...props}}>
                 {children}
             </Flex>
         )
     }
     return(
-            <Div onClick={onClick} style={props}>
+            <Div onClick={onClick} style={{...props}}>
                 {children}
             </Div>
 
