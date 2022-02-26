@@ -9,7 +9,7 @@ const Image = ({
 
 
     return (
-        <img onClick={onClick} src={src} style={ props }></img>
+        <img onClick={onClick} src={src} style={ {props} }></img>
     )
 }
 
