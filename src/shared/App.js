@@ -6,7 +6,7 @@ import { ThemeProvider } from "styled-components";
 
 //import CSS
 import './App.css';
-import theme from './theme';
+import theme from '../theme/theme';
 
 //import Pages
 import Main from "../pages/Main";

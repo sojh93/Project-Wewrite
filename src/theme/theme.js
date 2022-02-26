@@ -1,16 +1,24 @@
-export const lightTheme = {
-    bgColor : '#F8F7F4',
-    textColor : '#31302E',
-    borderColor : '1px solid #eaeaea',
+export const mainTheme = {
+    primary: '#fafafa',
+    secondary: '#efefef',
 };
 
 export const darkTheme = {
-    bgColor : '#1E1E22',
-    textColor : '#ccc',
-    borderColor : '1px solid #2c2d33',
+    primary: '#fafafa',
+    secondary: 'green',
 };
 
+export const size = {
+    width : "320px",
+    height : "100vh",
+    
+}
+
 export const theme = {
-    lightTheme,
+    mainTheme,
     darkTheme,
+    size,
 };
+
+
+export default theme;

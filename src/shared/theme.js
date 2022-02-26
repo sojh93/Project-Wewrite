@@ -1,13 +1,24 @@
-const theme = {
-    color: {
-        primary: '#fafafa',
-        secondary: 'green',
-        },
-        size: {
-        sm: '20px',
-        md: '50px',
-        lg: '100px',
-        }
+export const lightTheme = {
+    primary: '#fafafa',
+    secondary: 'green',
+};
+
+export const darkTheme = {
+    primary: '#fafafa',
+    secondary: 'green',
+};
+
+export const size = {
+    width : "320px",
+    height : "100vh",
+    
 }
+
+export const theme = {
+    lightTheme,
+    darkTheme,
+    size,
+};
+
 
 export default theme;
