@@ -17,6 +17,7 @@ import { Button, Grid, Input, Image, Text } from "../elements"
 // impot Component
 import Header from '../components/Header';
 import Bottom from '../components/Bottom';
+import Post from '../components/Post';
 
 
 
@@ -54,6 +55,12 @@ function PostList() {
                     options={options}
                 />
             </Grid>
+
+            <Grid>
+                <Post/>
+            </Grid>
+
+
             <Bottom thisPage="postList"/>
         </Grid>
 
