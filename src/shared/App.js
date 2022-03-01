@@ -11,7 +11,7 @@ import theme from '../theme/theme';
 import Main from "../pages/Main";
 import Login from "../pages/Login";
 import Clause from "../pages/Clause";
-import LegiMem from "../pages/LegiMem";
+import Signup from "../pages/Signup";
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login />}/>
           <Route path="/clause" element={<Clause />}/>
-          <Route path="/legimem" element={<LegiMem />}/>
+          <Route path="/Signup" element={<Signup />}/>
         </Routes>
       </ThemeProvider>
     </React.Fragment>

@@ -5,7 +5,6 @@ import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 //import Actions
 //import Pages
-import LegiMem from "./LegiMem";
 //import elements
 import { Button, Grid, Input, Image, Text } from "../elements"
 //import Icon
@@ -35,7 +34,7 @@ function Clause() {
                     <Text>이 약관은 OOO(이하 '회사')가 제공하는 위치사업정보...</Text>
                 </Grid>
                 <div>
-                    <button onClick={LegiMem}>동의</button>
+                    <button>동의</button>
                 </div>
                 <div>
                     <button>비동의</button>

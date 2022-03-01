@@ -4,9 +4,11 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 //import Actions
+
 //import Pages
 import Main from "./Main";
-import LegiMem from "./LegiMem";
+import Signup from "./Signup";
+
 //import elements
 import { Button, Grid, Input, Image, Text } from "../elements"
 //import Icon
@@ -17,7 +19,7 @@ import instance from "../shared/Request";
 
 function Login() {
     const regist_mem = () => {
-        this.props.history.push('/LegiMem');
+        
     }
 
     return (
