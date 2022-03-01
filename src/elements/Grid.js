@@ -12,7 +12,7 @@ const Grid = ({
     console.log(props);
     if(wrap){
         return(
-            <Wrap style={{display:"flex",justifyContent:"center",}}>
+            <Wrap style={{display:"flex"}}>
                 <div onClick={onClick} style={{...props}}>
                     {children}
                 </div>
