@@ -9,7 +9,6 @@ const Grid = ({
     ...props
 
 }) => {
-    console.log(props);
     if(wrap){
         return(
             <Wrap style={{display:"flex"}}>

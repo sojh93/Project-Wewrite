@@ -53,7 +53,7 @@ const Header = (props) => {
     
     return(
             <Grid>
-                <Grid position="absolute" top="0px" is_flex align-items="center" justify-content='space-between' box-sizing="border-box" padding="0" width ="320px" height='60px' margin='0'  >
+                <Grid position="absolute" top="0px" is_flex alignItems="center" justifyContent='space-between' box-sizing="border-box" padding="0" width ="320px" height='60px' margin='0'  >
                     <div onClick={()=>{navigate('/')}}>
                         <img width={"50px"} alt="instagram letter Logo" src="/Logo/soso.jpeg"/>
                     </div>

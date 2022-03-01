@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import SwitchSelector from "react-switch-selector";
 
 //import Actions
 
@@ -10,17 +11,13 @@ import { useNavigate } from "react-router-dom";
 import { Button, Grid, Input, Image, Text } from "../elements";
 
 //import Icon
-import { AiOutlineHeart } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
-import SwitchSelector from "react-switch-selector";
 
 // impot Component
 import Header from "../components/Header";
-
-//import Actions
-//import axios
-import instance from "../shared/Request";
+import Bottom from "../components/Bottom";
 import HorizonLine from "../components/HorizonLine";
+
 
 
 const Mypage = () => {
@@ -29,7 +26,7 @@ const Mypage = () => {
     {
         label: <span>본인 작품</span>,
         value: {
-             foo: true
+          foo: true
         },
         selectedBackgroundColor: "#0097e6",
     },
@@ -38,65 +35,42 @@ const Mypage = () => {
         value: "bar",
         selectedBackgroundColor: "#fbc531"
     }
- ];
- 
- const onChange = (newValue) => {
-     console.log(newValue);
- };
- 
- const initialSelectedIndex = options.findIndex(({value}) => value === "bar");
+  ];
+  
+  const onChange = (newValue) => {
+      console.log(newValue);
+  };
+  
+  const initialSelectedIndex = options.findIndex(({value}) => value === "bar");
+
+  const moveHref = () => {
+    document.location.href = "/mywrite"
+  }
 
   return (
-    <Grid wrap height="100%">
+    <Grid wrap>
       <Header/>
-      <Grid wrap  padding="0" width="100%">
-        <Grid height="110px" flexDirection="row" margin="5px 5px 0 0" width="100%">
-          <CgProfile size="90" style={{ width: "40%" }} padding="0" margin="15px 0 0 0"/>
+      <Grid is_flex flexDirection="column" height="150px" width="320px" is_scroll padding="0">
+        <Grid is_flex height="130px" alignItems="center" justifyContent="space-between" margin="5px 5px 0 0">
+          <CgProfile size="70px" style={{ width: "30%" }} padding="0" margin="0"/>
           <Grid
             is_flex
-            height="30px"
-            margin="5px 0 0 0"
-            width="80px"
-            flexDirection="row"
           >
-            닉네임
-          </Grid>
-          <Grid
-              is_flex
-              height="30px"
-              margin="40px 0 0 0"
-              width="20%"
-              
-
-            >
-              소개
+            <Grid width="180px" is_flex flexDirection="column" justifyContent="center">
+              <Text margin="5px 5px 0px 5px" fontSize="10px">닉네임</Text>
+              <Text margin="5px" fontSize="8px">소개소개소개소개소개소개소개소개소개소개소개소개소개소개소개</Text>
+              <Text margin="0px 5px 5px 5px" fontSize="10px">참여 소설</Text>
             </Grid>
-            <Grid
-            is_flex
-            height="55px"
-            textAlign="center"
-            margin="15px 0 0 0"
-            width="25%"
-            flexDirection="row"
-            padding="0"
-          >
-          <Button>프로필 수정하기</Button>
           </Grid>
-        </Grid>
-       
-        
-        <Grid is_flex flexDirection="column" width="100%">
-            
           <Grid
-            is_flex
-            height="30px"
-            margin="5px 5px 0px 80px"
-            flexDirection="column"
+            textAlign="center"
           >
-            참여소설 {} 작성문장 {}
+            <Button width="50px" padding="2px" onClick={moveHref}><Text margin="0px" fontSize="9px">프로필 수정</Text></Button>
           </Grid>
         </Grid>
-        <HorizonLine />
+        <Grid is_flex flexDirection="column" width="100%">
+
+        </Grid>
         <div className="your-required-wrapper" style={{width: 150, height: 40, margin: "auto"}}>
         <SwitchSelector
             onChange={onChange}
@@ -108,12 +82,9 @@ const Mypage = () => {
         />
     </div>
       </Grid>
-      
-     </Grid>
-     
-     
+      <Bottom thisPage="myPage"/>
+    </Grid>
 
-     
     
   );
 };

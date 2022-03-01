@@ -16,14 +16,12 @@ import { Button, Grid, Input, Image, Text } from "../elements"
 // impot Component
 
 
-//import Actions
 
 
-//import axios
-import instance from "../shared/Request";
 
-
-function Temp() {
+function temp() {
+    // const dispatch = useDispatch();
+    // const navigate = useNavigate();
     
     return (
         <Grid>
@@ -34,4 +32,4 @@ function Temp() {
 }
 
 
-export default Temp;
+export default temp;
