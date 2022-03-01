@@ -38,20 +38,21 @@ const Wrap = styled.div`
     width : ${props => props.theme.size.width};
     height : ${props => props.theme.size.height};
     background-color : ${props => props.theme.mainTheme.primary};
+    overflow : hidden;
 
 `;
 
 const Div = styled.div`
     background-color : ${props => props.theme.mainTheme.primary};
     border : 1px solid ${props => props.theme.mainTheme.secondary};
-
+    box-sizing : border-box;
 `;
 
 const Flex = styled.div`
     display : flex;
     background-color : ${props => props.theme.mainTheme.primary};
     border : 1px solid ${props => props.theme.mainTheme.secondary};
-
+    box-sizing : border-box;
 `;
 
 
