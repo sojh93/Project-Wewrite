@@ -10,11 +10,8 @@ import theme from '../theme/theme';
 //import Pages
 import Main from "../pages/Main";
 import Login from "../pages/Login";
-import Mypage from "../pages/Mypage";
-
-
 import Clause from "../pages/Clause";
-import LegiMem from "../pages/LegiMem";
+import Signup from "../pages/Signup";
 
 function App() {
   return (
@@ -23,12 +20,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login />}/>
-
-          <Route path="/mypage" element={<Mypage />}/>
-
           <Route path="/clause" element={<Clause />}/>
-          <Route path="/legimem" element={<LegiMem />}/>
-
+          <Route path="/Signup" element={<Signup />}/>
         </Routes>
       </ThemeProvider>
     </React.Fragment>

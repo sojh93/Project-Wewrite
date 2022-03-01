@@ -16,7 +16,7 @@ import blank from "../image/blank.jpg";
 import instance from "../shared/Request";
 import axios from "axios";
 
-function LegiMem() {
+function Signup() {
     const regi_completed = () => {
         this.props.history.push('/Login');
     }
@@ -51,4 +51,4 @@ function LegiMem() {
         </Grid>
     );
 }
-export default LegiMem;
+export default Signup;
