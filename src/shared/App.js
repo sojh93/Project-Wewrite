@@ -13,6 +13,7 @@ import Login from "../pages/Login";
 import Clause from "../pages/Clause";
 import Signup from "../pages/Signup";
 import Mypage from "../pages/Mypage";
+import PostList from "../pages/PostList";
 
 function App() {
   return (
@@ -23,7 +24,8 @@ function App() {
           <Route path="/login" element={<Login />}/>
           <Route path="/clause" element={<Clause />}/>
           <Route path="/Signup" element={<Signup />}/>
-          <Route path="/Mypage" element={<Mypage />}/>
+          <Route path="/mypage" element={<Mypage />}/>
+          <Route path="/postlist" element={<PostList />}/>
         </Routes>
       </ThemeProvider>
     </React.Fragment>

@@ -14,22 +14,24 @@ import { Button, Grid, Input, Image, Text } from "../elements"
 
 
 // impot Component
+import Header from '../components/Header';
+import Bottom from '../components/Bottom';
 
 
 
 
-
-function temp() {
-    // const dispatch = useDispatch();
-    // const navigate = useNavigate();
+function PostList() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     
     return (
-        <Grid>
-            <h1>하이?</h1>
+        <Grid wrap>
+            <Header/>
+            <Bottom thisPage="postList"/>
         </Grid>
 
     );
 }
 
 
-export default temp;
+export default PostList;

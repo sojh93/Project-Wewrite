@@ -49,7 +49,7 @@ function Main(props) {
             </Grid>    
 
 
-            <Bottom/>
+            <Bottom thisPage="main"/>
 
         </Grid>
     );

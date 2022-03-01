@@ -13,8 +13,8 @@ import { Button, Grid, Input, Image, Text } from "../elements";
 
 // impot Component
 import Header from "../components/Header";
+import Bottom from "../components/Bottom";
 
-//import Actions
 //import axios
 import instance from "../shared/Request";
 // import Header from "../components/Header";
@@ -29,7 +29,7 @@ const Mypage = () => {
     {
         label: <span>본인 작품</span>,
         value: {
-             foo: true
+          foo: true
         },
         selectedBackgroundColor: "#0097e6",
     },
@@ -38,13 +38,13 @@ const Mypage = () => {
         value: "bar",
         selectedBackgroundColor: "#fbc531"
     }
- ];
- 
- const onChange = (newValue) => {
-     console.log(newValue);
- };
- 
- const initialSelectedIndex = options.findIndex(({value}) => value === "bar");
+  ];
+  
+  const onChange = (newValue) => {
+      console.log(newValue);
+  };
+  
+  const initialSelectedIndex = options.findIndex(({value}) => value === "bar");
 
   return (
     <Grid wrap height="100%">
@@ -103,12 +103,9 @@ const Mypage = () => {
         />
     </div>
       </Grid>
-      
-     </Grid>
-     
-     
+      <Bottom thisPage="myPage"/>
+    </Grid>
 
-     
     
   );
 };
