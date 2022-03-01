@@ -15,6 +15,8 @@ import { Button, Grid, Input, Image, Text } from "../elements"
 
 // impot Component
 import Post from '../components/Post';
+import Header from '../components/Header'
+import Carousel from '../components/Carousel'
 
 // import KakaoMapScript from '../shared/kakaomap';
 import Bottom from '../components/Bottom';
@@ -26,78 +28,28 @@ function Main(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { kakao } = window;
+    const tempImage = ["http://img.etoday.co.kr/pto_db/2017/06/20170630055356_1088133_710_340.jpg","https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/1jPF/image/oRhdR-gw5pIPzXu74IiCpUAkBb4.jpg"];
 
-    const mapref = React.useRef()
-    console.log(mapref);
 
     
     useEffect(() => {
-        
-    const container = document.getElementById('map');
-    const options = {
-        center: new kakao.maps.LatLng(37.551146405438494, 126.98824852791579),
-        level: 5
-    };
-    
-    const map = new kakao.maps.Map(container, options);
-    
-    // 주소-좌표 변환 객체를 생성합니다
-    var geocoder = new kakao.maps.services.Geocoder();  
-    ////////////클릭한 곳에 마커 찍히는 코드
-    var marker = new kakao.maps.Marker({ 
-        // 지도 중심좌표에 마커를 생성합니다 
-        position: map.getCenter() 
-    }); 
-    // 지도에 마커를 표시합니다
-    marker.setMap(map);
 
-    // 지도에 클릭 이벤트를 등록합니다
-    // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
-    kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
-        
-        // 클릭한 위도, 경도 정보를 가져옵니다 
-        var latlng = mouseEvent.latLng; 
-        
-        // 마커 위치를 클릭한 위치로 옮깁니다
-        marker.setPosition(latlng);
-        
-        var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-        message += '경도는 ' + latlng.getLng() + ' 입니다';
-        
-        dispatch(mapActions.setCoor(latlng.getLat(),latlng.getLng()));
-        console.log(message);
-        
-    });
-
-    kakao.maps.event.addListener(map, 'dragend', function() {        
-    
-        // 지도 중심좌표를 얻어옵니다 
-        var latlng = map.getCenter(); 
-        
-        var message = '변경된 지도 중심좌표는 ' + latlng.getLat() + ' 이고, ';
-        message += '경도는 ' + latlng.getLng() + ' 입니다';
-        
-        console.log(message);
-        
-    });
     }, []);
 
     return (
-        <Grid wrap >   
+        <Grid wrap>   
+            <Header/>
 
-                <div ref={mapref} id='map' style={{
-                    width: '320px',
-                    height: "calc(100vh - 50px)",
-                    zIndex : "1",
-                }}/>
-                
-                <Grid position="absolute" zIndex="2" bottom="49px" width="320px" height="200px" backgroundColor="white">
-                    <Post>하이?</Post>
-                </Grid>
+            <Grid>
+                <Carousel width="320px" height="180px" imgURL={tempImage} />
+            </Grid>
+
+            <Grid>
+                <Text>추천 릴레이</Text>
+            </Grid>    
 
 
-                <Bottom/>
+            <Bottom/>
 
         </Grid>
     );
