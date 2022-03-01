@@ -12,6 +12,7 @@ import Main from "../pages/Main";
 import Login from "../pages/Login";
 import Clause from "../pages/Clause";
 import Signup from "../pages/Signup";
+import Mypage from "../pages/Mypage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/login" element={<Login />}/>
           <Route path="/clause" element={<Clause />}/>
           <Route path="/Signup" element={<Signup />}/>
+          <Route path="/Mypage" element={<Mypage />}/>
         </Routes>
       </ThemeProvider>
     </React.Fragment>

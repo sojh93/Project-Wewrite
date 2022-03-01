@@ -3,11 +3,17 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 //import Actions
+
 //import elements
 import { Button, Grid, Input, Image, Text } from "../elements";
+
 //import Icon
+
 // impot Component
+import Header from "../components/Header";
+
 //import Actions
 //import axios
 import instance from "../shared/Request";
@@ -42,24 +48,7 @@ const Mypage = () => {
 
   return (
     <Grid wrap height="100%">
-      {/* <Header></Header> */}
-      <Grid
-        // is_flex
-        height="30px"
-        // width="120px"
-        margin="20px 0px 0px 15px"
-        width="15%"
-        flexDirection="row"
-
-        // background-color="#e9ecef"
-      >
-        {" "}
-        로고
-      </Grid>
-      <Grid is_flex width="15%" flexDirection="row">
-        <AiOutlineHeart />
-      </Grid>
-      <HorizonLine />
+      <Header/>
       <Grid is_flex flexDirection="column" height="calc(30% - 121px)" is_scroll padding="0">
         <Grid is_flex flexDirection="row" margin="5px 5px 0 0">
           <CgProfile size="100" style={{ width: "30%" }} padding="0" margin="0"/>
