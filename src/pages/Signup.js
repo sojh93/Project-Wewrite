@@ -36,30 +36,16 @@ function Signup() {
     const [pwd,setPwd] = React.useState(true);
     const [preview,setPreview] =React.useState(blank);
     const fileInput = React.useRef();
-
+    var file = new File(["foo"], "foo.txt", {
+        type: "text/plain",
+    });
+    const [postFile,setPostFile] =React.useState(file);
     
-    // instance({
-    //     method : "post",
-    //     url : "/user/signup",
-    //     data : {userInfo : {
-    //                 "username":"String",
-    //                 "nickName":"String",
-    //                 "password":"String",
-    //                 "check_password":"String",
-    //                 "introduction":"String"
-    //             },
-    //         userProfile:"gkgk"},
-    //     headers : {
-    //         "Content-Type": "multipart/form-data",
-    //     }
-    // }).then(res =>{
-    //     console.log(res);
-    // })
-    
-
     const selectFile =(e) =>{
         const formData = new FormData();
         const file = fileInput.current.files[0];
+        setPostFile(file);
+        
         formData.append("userProfile",file);
 
         const reader = new FileReader();
@@ -72,9 +58,6 @@ function Signup() {
     }
     
 
-    const regi_completed = () => {
-        this.props.history.push('/Login');
-    }
 
     const handleSubmit = (event) => {
         
@@ -88,15 +71,20 @@ function Signup() {
             nickName: data.get('nickname'),
             password: data.get('password'),
             checkPassword: data.get('password'),
-            introduction : "??",
+            introduction : data.get('loginID'),
+            userProfile : postFile,
         };
-        postData.append("userProfile",null);
-        postData.append("userInfo",userInfo);
+
+        postData.append("userProfile",postFile);
+        postData.append("username",data.get('loginID'));
+        postData.append("nickName",data.get('nickname'));
+        postData.append("password",data.get('password'));
+        postData.append("checkPassword",data.get('password'));
+        postData.append("introduction",data.get('loginID'));
         const signupData = {
             userInfo,
             userProfile:postData,
         }
-        console.log(signupData);
 
 
         instance({
@@ -104,7 +92,7 @@ function Signup() {
             url : "/user/signup",
             data : postData,
             headers : {
-                "Content-Type": "multipart/form-data",
+                "Content-Type": "multipart/form-data"
             }
         }).then(res=>console.log(res));
         
