@@ -24,16 +24,34 @@ const initialState = {
 //middleware actions
 const signup=(user_data) =>{
     return async function (dispatch,getState){
-        
-
+        instance({
+            method : "post",
+            url : "/user/signup",
+            data : user_data,
+            headers : {
+                "Content-Type": "multipart/form-data"
+            }
+        }).then(res=>console.log(res));
         
     }
 }
 const login=(user_data) =>{
     return async function (dispatch,getState){
         
+        instance({
+            method : "post",
+            url : "/user/logIn",
+            data : user_data,
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8"
+            }
+        }).then(res=>{
+            const token = res.headers;
 
-        dispatch(set_user(""));
+
+            // dispatch(set_user(""));
+        });
+        
     }
 }
 const check=() =>{

@@ -21,7 +21,7 @@ export default function Post({children}) {
     return (
         <Grid is_flex flexDirection="column" width="300px" height="100px">
             <Grid is_flex align-items="center" justifyContents="center">
-                <Image width="100px" borderRadius="5px" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA1MjJfMTcz%2FMDAxNjIxNjcwMzA3ODY1.PK5Q_yIQRr3ZyvTO_XhARkEF9aMJ0C1wavUEr2hEEjgg.kfG41tZDQtwvKtpwO7OhRguDv0C_E5JCSfyGnlpi1rEg.JPEG.vicky0170%2Fe6c17e085ded495c098f99cbea98477d.jpg&type=sc960_832"></Image>
+                <Image width="100px" height="100px" borderRadius="5px" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA1MjJfMTcz%2FMDAxNjIxNjcwMzA3ODY1.PK5Q_yIQRr3ZyvTO_XhARkEF9aMJ0C1wavUEr2hEEjgg.kfG41tZDQtwvKtpwO7OhRguDv0C_E5JCSfyGnlpi1rEg.JPEG.vicky0170%2Fe6c17e085ded495c098f99cbea98477d.jpg&type=sc960_832"></Image>
                 <Grid is_flex flexDirection="column" width="170px" height="100px" justifyContents="">
                     <Text font-size="12px" margin="3px">제목</Text>
                     <Grid><Text font-size="12px" margin="0px" height="50px">첫문장</Text></Grid>
