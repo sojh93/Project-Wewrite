@@ -14,6 +14,9 @@ import Clause from "../pages/Clause";
 import Signup from "../pages/Signup";
 import Mypage from "../pages/Mypage";
 import PostList from "../pages/PostList";
+import Write from '../pages/Write';
+import UnfinishedDetail from '../pages/unfinishedDetail';
+import FinishedDetail from '../pages/FinishedDetail';
 
 function App() {
   return (
@@ -26,6 +29,10 @@ function App() {
           <Route path="/Signup" element={<Signup />}/>
           <Route path="/mypage" element={<Mypage />}/>
           <Route path="/postlist" element={<PostList />}/>
+          <Route path="/write" element={<Write />}/>
+          <Route path="/unfinisheddetail" element={<UnfinishedDetail />}/>
+          <Route path="/finisheddetail" element={<FinishedDetail />}/>
+
         </Routes>
       </ThemeProvider>
     </React.Fragment>

@@ -53,10 +53,12 @@ function PostList() {
                 <SwitchSelector
                     onChange={onChange}
                     options={options}
+                    initialSelectedIndex={initialSelectedIndex}            
+                    
                 />
             </Grid>
 
-            <Grid>
+            <Grid is_flex height="500px" width="320px" flexDirection="column" alignItems="center">
                 <Post/>
             </Grid>
 

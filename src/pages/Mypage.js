@@ -24,16 +24,16 @@ const Mypage = () => {
 
   const options = [
     {
-        label: <span>본인 작품</span>,
-        value: {
-          foo: true
-        },
-        selectedBackgroundColor: "#0097e6",
+        label: "본인 작품",
+        value: "userPost",
+        width : "100px",
+        fontSize : "10px"
     },
     {
         label: "저장된 작품",
-        value: "bar",
-        selectedBackgroundColor: "#fbc531"
+        value: "bookmark",
+        width : "100px",
+
     }
   ];
   
@@ -41,7 +41,7 @@ const Mypage = () => {
       console.log(newValue);
   };
   
-  const initialSelectedIndex = options.findIndex(({value}) => value === "bar");
+  const initialSelectedIndex = options.findIndex(({value}) => value === "userPost");
 
   return (
     <Grid wrap>
@@ -67,16 +67,13 @@ const Mypage = () => {
         <Grid is_flex flexDirection="column" width="100%">
 
         </Grid>
-        <div className="your-required-wrapper" style={{width: 150, height: 40, margin: "auto"}}>
-        <SwitchSelector
-            onChange={onChange}
-            options={options}
-            initialSelectedIndex={initialSelectedIndex}
-            backgroundColor={"#353b48"}
-            fontColor={"#f5f6fa"}
-            
-        />
-    </div>
+        <Grid margin="15px" width="100px" height="30px">
+                <SwitchSelector
+                    onChange={onChange}
+                    options={options}
+                    initialSelectedIndex={initialSelectedIndex}            
+                />
+            </Grid>
       </Grid>
       <Bottom thisPage="myPage"/>
     </Grid>
