@@ -23,7 +23,7 @@ const Mywrite = (props) => {
         <Header/>
             <Grid is_flex align-items="center" margin="10px 0 0 0" flexDirection="column" height="90px" width="320px">
                
-                
+            <Button algin-items="right" margin="5px 0 0 245px" width="60px">완료</Button>
                 <Image src={blank} width="70px" height="70px"/>
                 <Button>프로필 사진 추가하기</Button>
             
