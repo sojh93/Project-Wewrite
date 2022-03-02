@@ -14,6 +14,7 @@ import Clause from "../pages/Clause";
 import Signup from "../pages/Signup";
 import Mypage from "../pages/Mypage";
 import PostList from "../pages/PostList";
+import Mywrite from "../pages/Mywrite";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/clause" element={<Clause />}/>
           <Route path="/Signup" element={<Signup />}/>
           <Route path="/mypage" element={<Mypage />}/>
+          <Route path="/mywrite" element={<Mywrite />}/>
           <Route path="/postlist" element={<PostList />}/>
         </Routes>
       </ThemeProvider>

@@ -44,7 +44,7 @@ const Mypage = () => {
   const initialSelectedIndex = options.findIndex(({value}) => value === "bar");
 
   const moveHref = () => {
-    document.location.href = "/mywrite"
+    document.location.href = "/Mywrite"
   }
 
   return (
