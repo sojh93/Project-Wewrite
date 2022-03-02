@@ -15,6 +15,7 @@ import Signup from "../pages/Signup";
 import Mypage from "../pages/Mypage";
 import PostList from "../pages/PostList";
 import Mywrite from "../pages/Mywrite";
+import NewsList from "../pages/NewsList";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/mypage" element={<Mypage />}/>
           <Route path="/mywrite" element={<Mywrite />}/>
           <Route path="/postlist" element={<PostList />}/>
+          <Route path="/newslist" element={<NewsList />}/>
         </Routes>
       </ThemeProvider>
     </React.Fragment>
