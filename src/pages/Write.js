@@ -1,4 +1,4 @@
-/import Library
+//import Library
 import React from "react"
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,8 +7,6 @@ import { useNavigate } from "react-router-dom";
 //import elements
 import { Button, Grid, Input, Image, Text } from "../elements"
 //import Icon
-import bookCover from "../image/bookCover.png"
-import fileIcon from "../image/fileIcon.png"
 // impot Component
 import Header from "../components/Header"
 import Bottom from "../components/Bottom"
@@ -31,7 +29,7 @@ function Write() {
                         <Grid is_flex>
                             <Text>표지 :</Text>
                             <Grid is_flex>
-                                <img src={fileIcon} width="20px" height="20px" text-align="center"/>
+                                {/* <img src={} width="20px" height="20px" text-align="center"/> */}
                                 <Text>파일 선택하기</Text>
                             </Grid>
                         </Grid>
@@ -52,7 +50,7 @@ function Write() {
                         </Grid>
                     </Grid>
                     <Grid>
-                        <img src={bookCover} alt="표지 미리보기" width="50px" height="50px" />
+                        {/* <img src={} alt="표지 미리보기" width="50px" height="50px" /> */}
                         <Button alignItems="center">pick</Button>
                         <Text>표지 색상</Text>
                     </Grid>
