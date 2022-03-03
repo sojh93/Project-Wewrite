@@ -5,7 +5,6 @@ import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 //import Actions
-import { actionCreators as mapActions } from "../redux/modules/map";
 
 //import elements
 import { Button, Grid, Input, Image, Text } from "../elements" 
@@ -17,8 +16,6 @@ import { Button, Grid, Input, Image, Text } from "../elements"
 import Post from '../components/Post';
 import Header from '../components/Header'
 import Carousel from '../components/Carousel'
-
-// import KakaoMapScript from '../shared/kakaomap';
 import Bottom from '../components/Bottom';
 
 

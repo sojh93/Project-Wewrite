@@ -8,18 +8,17 @@ const Button = ({
     fontColor,
     fontSize,
 
-    ref , onClick, disabled,
+    ref , onClick, disabled=false,
 
     children,
     ...props
 }
     
 ) => {  
-    console.log(props);
 
     return (
     <div>
-        <Btn style={{width, height, margin, padding,fontColor,fontSize, ...props}} ref={ref} onClick={onClick} disabled>{children}</Btn>
+        <Btn style={{width, height, margin, padding,fontColor,fontSize, ...props}} ref={ref} onClick={onClick} disabled={disabled}>{children}</Btn>
     </div>
     );
 }
