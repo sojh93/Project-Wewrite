@@ -31,19 +31,19 @@ function Signup() {
 
                 <Grid margin="20px 0 10px 0">
                     <Text>ID</Text>
-                    <Input></Input>
+                    <Input />
                 </Grid>
                 <Grid margin="10px">
                     <Text>NickName</Text>
-                    <Input></Input>
+                    <Input />
                 </Grid>
                 <Grid margin="10px">
-                    <Text>Password</Text>
-                    <Input type="password"></Input>
+                    <Text>비밀번호</Text>
+                    <Input type="password" />
                 </Grid>
                 <Grid margin="10px">
-                    <Text>Password Check</Text>
-                    <Input type="password"></Input>
+                    <Text>비밀번호 확인</Text>
+                    <Input type="password" />
                 </Grid>
                 <Button margin="20px" width="80px" onClick={regi_completed}>회원가입 완료</Button>
             </Grid>
