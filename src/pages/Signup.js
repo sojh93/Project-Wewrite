@@ -20,6 +20,7 @@ import blank from "../image/blank.jpg";
 //impot Component
 
 //import Actions
+import { actionCreators as userActions } from "../redux/modules/user";
 
 //import axios
 import instance from "../shared/Request";
@@ -29,7 +30,9 @@ import { method } from "lodash";
 
 
 function Signup() {
-    
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const [pwdCheck,setPwdCheck] = React.useState(true);
     const [pwdForm,setPwdForm] =React.useState(true);
     const [idForm,setIdForm] =React.useState(true);
@@ -66,36 +69,15 @@ function Signup() {
         const postData = new FormData();
         
         
-        const userInfo = {
-            username: data.get('loginID'),
-            nickName: data.get('nickname'),
-            password: data.get('password'),
-            checkPassword: data.get('password'),
-            introduction : data.get('loginID'),
-            userProfile : postFile,
-        };
-
         postData.append("userProfile",postFile);
         postData.append("username",data.get('loginID'));
         postData.append("nickName",data.get('nickname'));
         postData.append("password",data.get('password'));
         postData.append("checkPassword",data.get('password'));
-        postData.append("introduction",data.get('loginID'));
-        const signupData = {
-            userInfo,
-            userProfile:postData,
-        }
+        postData.append("introduction"," ");
 
 
-        instance({
-            method : "post",
-            url : "/user/signup",
-            data : postData,
-            headers : {
-                "Content-Type": "multipart/form-data"
-            }
-        }).then(res=>console.log(res));
-        
+        dispatch(userActions.signup(postData));
     };
 
 

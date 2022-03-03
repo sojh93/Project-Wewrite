@@ -4,13 +4,12 @@ import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 
 
 //import Modules
-import Map from "./modules/map";
 import User from './modules/user';
+import Post from './modules/post'
 
 
 const middlewares = [thunk];
 const rootReducer = combineReducers({
-    map : Map,
     user : User,
 });
 const enhancer = applyMiddleware(...middlewares);

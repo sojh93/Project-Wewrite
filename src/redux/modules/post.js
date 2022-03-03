@@ -6,28 +6,28 @@ import { getCookie } from "../../shared/Cookie";
 import instance from "../../shared/Request";
 
 //action
-const SET_COOR = "SET_COOR";
+const TEST = "TEST";
 
 //action creatos
-const set_coor = createAction(SET_COOR, (coor) => ({ coor }));
+const testAction = createAction(TEST, (test) => ({ test }));
 
 //initialState
 const initialState = {
-    coor : [0,0],
+    list : [],
 };
 
 
 //middleware actions
-const setCoor=(x,y) =>{
+const Test=() =>{
     return async function (dispatch,getState){
-        console.log(x,y);
+        
     }
 }
 
 //reducer
 export default handleActions(
     {
-        [SET_COOR]: (state, action) =>
+        [TEST]: (state, action) =>
         produce(state, (draft) => {
             
         }),
@@ -38,7 +38,7 @@ export default handleActions(
 
 //action creator export
 const actionCreators = {
-    setCoor,
+    Test,
 
 };
 
