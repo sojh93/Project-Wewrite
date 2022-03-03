@@ -18,7 +18,7 @@ const Books = (props) => {
 
     return(
     <>
-    <Grid is_flex justifyContent="space-around" width="100%" margin="30px 0 0 0" height="75px" borderBottom="1.5px solid black">
+    <Grid is_flex className="book" justifyContent="space-around" width="100%" margin="30px 0 0 0" height="75px" borderBottom="1.5px solid black">
         <Grid is_flex height="70px" width="20%">
             <Image src={book1} width="70px" height="70px"/>
         </Grid>
@@ -26,7 +26,7 @@ const Books = (props) => {
             <Image src={book2} width="70px" height="70px"/>
         </Grid>
     </Grid>
-    <Grid is_flex justifyContent="space-around" width="100%" margin="30px 0 0 0" height="75px" borderBottom="1.5px solid black">
+    <Grid is_flex className="book" justifyContent="space-around" width="100%" margin="30px 0 0 0" height="75px" borderBottom="1.5px solid black">
         <Grid is_flex height="70px" width="20%">    
             <Image src={book3} width="70px" height="70px"/>
         </Grid>
