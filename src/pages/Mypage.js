@@ -99,6 +99,7 @@ const Mypage = () => {
         </Grid>
       </Grid>
       <Grid is_flex width="100%" alignItems="center">
+        {/* 스위치 부분 - 본인작품 / 저장된 작품*/}
         <div className="your-required-wrapper"
           style={{
             width: 160,
