@@ -21,6 +21,9 @@ import { Button, Grid, Input, Image, Text } from "../elements"
 import instance from "../shared/Request";
 
 function Login() {
+    const _user = useSelector(state=>state.user);
+    console.log(_user);
+    
     const handleSubmit = (event) => {
         
         event.preventDefault();

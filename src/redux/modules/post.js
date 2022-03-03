@@ -1,36 +1,48 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { getCookie } from "../../shared/Cookie";
 
 //API
 import instance from "../../shared/Request";
 
 //action
-const TEST = "TEST";
+const GET_POST = "GET_POST";
 
 //action creatos
-const testAction = createAction(TEST, (test) => ({ test }));
+const getPost = createAction(GET_POST, (post_data) => ({ post_data }));
 
 //initialState
 const initialState = {
-    list : [],
+    Post_list : [],
 };
 
 
 //middleware actions
-const Test=() =>{
+const get=() =>{
     return async function (dispatch,getState){
-        
+        instance({
+            method : "post",
+            url : "/user/logIn",
+            data : {},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8"
+            }
+        }).then(res=>{
+            const token = res.headers;
+
+
+            // dispatch(set_user(""));
+        });
     }
 }
 
 //reducer
 export default handleActions(
     {
-        [TEST]: (state, action) =>
+        [GET_POST]: (state, action) =>
         produce(state, (draft) => {
-            
+            draft.list = [...action.payload.Post_list];
         }),
+        
     },
     initialState
 );
@@ -38,7 +50,7 @@ export default handleActions(
 
 //action creator export
 const actionCreators = {
-    Test,
+    get,
 
 };
 

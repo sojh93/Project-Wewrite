@@ -8,7 +8,6 @@ import {  Input, Image, Text, Button } from "../elements"
 
 
 const Carousel = (props) => {
-  console.log(props);
   return (
     <>
       

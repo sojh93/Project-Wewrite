@@ -46,12 +46,12 @@ const Header = (props) => {
     
     return(
             <Grid>
-                <Grid position="absolute" top="0px" is_flex alignItems="center" justifyContent='space-between' box-sizing="border-box" padding="0" width ="320px" height='60px' margin='0'  >
+                <Grid position="absolute" top="0px" is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="320px" height='60px' margin='0'  >
                     <div onClick={()=>{navigate('/')}}>
                         <img width={"50px"} alt="instagram letter Logo" src="/Logo/soso.jpeg"/>
                     </div>
                     <Grid is_flex border="0">
-                        <Tooltip title="Add Post"><IconButton sx={{width:"50px", height : "50px"}}><FavoriteBorderOutlinedIcon  sx={{ margin :"10px"}}/></IconButton></Tooltip>    
+                        <Tooltip title="알람"><IconButton sx={{width:"50px", height : "50px"}}><FavoriteBorderOutlinedIcon  sx={{ margin :"10px"}}/></IconButton></Tooltip>    
                     </Grid>
                 </Grid>
                 <Grid margin="0 0 50px 0"/>
