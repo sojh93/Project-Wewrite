@@ -42,8 +42,14 @@ function Signup() {
     var file = new File(["foo"], "foo.txt", {
         type: "text/plain",
     });
+
     const [postFile,setPostFile] =React.useState(file);
     
+    React.useEffect(()=>{
+        dispatch(userActions.check("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjQ2MzkxNjE2LCJleHAiOjE2NDYzOTUyMTZ9.VrGfr8IWgewW2sTO9WLS2tIdB1ID_h_8GIfc-urdDuE"))
+    },[])
+
+
     const selectFile =(e) =>{
         const formData = new FormData();
         const file = fileInput.current.files[0];

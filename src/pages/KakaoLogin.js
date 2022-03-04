@@ -17,8 +17,14 @@ import { Button, Grid, Input, Image, Text } from "../elements"
 // impot Component
 
 import instance from "../shared/Request";
+import axios from "axios";
 
-
+const kakao = axios.create({
+	baseURL: "https://kauth.kakao.com",
+        headers : {
+                "content-type" : "application/x-www-form-urlencoded;charset=utf-8",
+        }
+});
 
 
 const KakaoLogin = () => {
@@ -27,14 +33,38 @@ const KakaoLogin = () => {
 
     React.useEffect(() => {
         console.log(router.search.split('=')[1])
-        instance({
+
+        const data = {
+            grant_type : "authorization_code",
+            client_id : "43268aa6f88af6282a341e3b61b9a761",
+            redirect_uri : "http://localhost:3000/login/kakaoLogin",
+            code : router.search.split('=')[1],
+            client_secret : "rPfOmfcisQud180j3Kyp9jxytSXQuTrH",
+        }
+
+        
+        const queryStringBody = Object.keys(data)
+            .map(k=> encodeURIComponent(k)+"="+encodeURI(data[k]))
+            .join("&")
+
+        kakao({
             method : "post",
-            url : "/login/kakaoLogin",
-            data : {kakaoToken:router.search.split('=')[1]},
+            url : "/oauth/token",
+            data :queryStringBody,
             headers : {
-                "Content-Type": "application/json;charset-UTF-8"
+                "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
             }
-        }).then(res=>console.log(res));
+        }).then(res=>{
+            console.log(res);
+            instance({
+                method : "post",
+                url : "/login/kakaoLogin",
+                data :{kakaoToken : res.data.access_token},
+                headers : {
+                }
+            });
+        })
+
     }, [])
 
 
