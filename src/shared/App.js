@@ -17,6 +17,7 @@ import PostList from "../pages/PostList";
 import Write from '../pages/Write';
 import UnfinishedDetail from '../pages/unfinishedDetail';
 import FinishedDetail from '../pages/FinishedDetail';
+import KakaoLogin from '../pages/KakaoLogin';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login />}/>
+          <Route path="/login/kakaoLogin" element={<KakaoLogin />}/>
           <Route path="/clause" element={<Clause />}/>
           <Route path="/Signup" element={<Signup />}/>
           <Route path="/mypage" element={<Mypage />}/>
