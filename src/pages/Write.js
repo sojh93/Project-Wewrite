@@ -27,6 +27,16 @@ function Write() {
                             <Input />
                         </Grid>
                         <Grid is_flex>
+                            <Text>장르 :</Text>
+                            <select>
+                                <option value="1" key="1">판타지</option>
+                                <option value="2" key="2">현판</option>
+                                <option value="3" key="3">로맨스</option>
+                                <option value="4" key="4">로판</option>
+                                <option value="5" key="5">무협</option>
+                            </select>
+                        </Grid>
+                        <Grid is_flex>
                             <Text>표지 :</Text>
                             <Grid is_flex>
                                 {/* <img src={} width="20px" height="20px" text-align="center"/> */}
@@ -36,11 +46,11 @@ function Write() {
                         <Grid is_flex>
                             <Text>완성 문장 수 :</Text>
                             <select>
-                                <option key="1" value="1">1</option>
-                                <option key="2" value="2">2</option>
-                                <option key="3" value="3">3</option>
-                                <option key="4" value="4">4</option>
-                                <option key="5" value="5">5</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
                             </select>
                             <Text>개</Text>
                         </Grid>
