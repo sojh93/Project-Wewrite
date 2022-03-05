@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 //import MUI
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
 
 //import Pages
 import Main from "./Main";
@@ -22,6 +24,20 @@ import { Button, Grid, Input, Image, Text } from "../elements"
 
 //43268aa6f88af6282a341e3b61b9a761
 import instance from "../shared/Request";
+
+
+function Copyright(props) {
+    return (
+        <Typography variant="body2" color="text.secondary" align="center" {...props}>
+        {'Copyright © '}
+        <Link color="inherit" href="https://mui.com/">
+            Your Website
+        </Link>{' '}
+        {new Date().getFullYear()}
+        {'.'}
+        </Typography>
+    );
+}
 
 function Login() {
     const navigate = useNavigate();
@@ -87,6 +103,7 @@ function Login() {
                 <Grid margin="10px">Signin with Google</Grid>
                 <Text>회원이 아니신가요?</Text>
                 <Button>회원가입</Button>
+                <Copyright/>
             </Grid>
 
         </Grid>
