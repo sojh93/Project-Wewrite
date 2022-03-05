@@ -42,9 +42,9 @@ function Main(props) {
         <Grid wrap>   
             <Header/>
 
-            <Grid>
+            {/* <Grid>
                 <Carousel width="320px" height="180px" imgURL={tempImage} />
-            </Grid>
+            </Grid> */}
 
             {/* <Grid>
                 <Text>추천 릴레이</Text>
