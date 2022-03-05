@@ -36,19 +36,19 @@ const Grid = ({
 const Wrap = styled.div`
     width : ${props => props.theme.size.width};
     height : ${props => props.theme.size.height};
-    background-color : ${props => props.theme.mainTheme.primary};
+    background-color : ${props => props.theme.mainTheme.tertiary};
     overflow : hidden;
 
 `;
 
 const Div = styled.div`
-    background-color : ${props => props.theme.mainTheme.primary};
+    background-color : ${props => props.theme.mainTheme.tertiary};
     box-sizing : border-box;
 `;
 
 const Flex = styled.div`
     display : flex;
-    background-color : ${props => props.theme.mainTheme.primary};
+    background-color : ${props => props.theme.mainTheme.tertiary};
     box-sizing : border-box;
 `;
 
