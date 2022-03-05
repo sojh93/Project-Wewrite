@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 //import MUI
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
 
 //import Pages
 import Main from "./Main";
@@ -18,12 +20,31 @@ import { Button, Grid, Input, Image, Text } from "../elements"
 //impot Component
 //import Actions
 //import axios
+
+
+//43268aa6f88af6282a341e3b61b9a761
 import instance from "../shared/Request";
 
+
+function Copyright(props) {
+    return (
+        <Typography variant="body2" color="text.secondary" align="center" {...props}>
+        {'Copyright © '}
+        <Link color="inherit" href="https://mui.com/">
+            Your Website
+        </Link>{' '}
+        {new Date().getFullYear()}
+        {'.'}
+        </Typography>
+    );
+}
+
 function Login() {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const _user = useSelector(state=>state.user);
-    console.log(_user);
-    
+
     const handleSubmit = (event) => {
         
         event.preventDefault();
@@ -78,10 +99,11 @@ function Login() {
                     가입
                     </Button></Box>
                 
-                <Grid margin="10px">카카오 계정 로그인</Grid>
+                <Grid margin="10px"><Button onClick={()=>window.location.assign('https://kauth.kakao.com/oauth/authorize?client_id=43268aa6f88af6282a341e3b61b9a761&redirect_uri=http://localhost:3000/login/kakaoLogin&response_type=code')}>카카오 계정 로그인</Button></Grid>
                 <Grid margin="10px">Signin with Google</Grid>
                 <Text>회원이 아니신가요?</Text>
                 <Button>회원가입</Button>
+                <Copyright/>
             </Grid>
 
         </Grid>

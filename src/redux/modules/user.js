@@ -54,9 +54,23 @@ const login=(user_data) =>{
         
     }
 }
-const check=() =>{
+const check=(test) =>{
     return async function (dispatch,getState){
-        const token = getCookie('WW_user');
+
+        instance({
+            method : "post",
+            url : "/user/myInfo",
+            data : {},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8",
+                "X-AUTH-TOKEN" : test
+            }
+        }).then(res=>{
+            console.log(res.data);
+
+
+            // dispatch(set_user(""));
+        });
     }
 }
 const logout=() =>{
