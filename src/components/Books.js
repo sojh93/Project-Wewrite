@@ -6,11 +6,11 @@ import { Grid, Image } from "../elements";
 // import Components
 
 // import default image
-import book1 from "../image/SleepingDog.jpg";
-import book2 from "../image/manTrainingCat.png";
-import book3 from "../image/BeingExistAndTime.jpg";
-import book4 from "../image/KingMakingTheory.jpg";
-import book5 from "../image/Ajeossi.png";
+// import book1 from "../image/SleepingDog.jpg";
+// import book2 from "../image/manTrainingCat.png";
+// import book3 from "../image/BeingExistAndTime.jpg";
+// import book4 from "../image/KingMakingTheory.jpg";
+// import book5 from "../image/Ajeossi.png";
 
 const Books = (props) => {
 
