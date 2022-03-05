@@ -1,6 +1,8 @@
 export const mainTheme = {
-    primary: '#fafafa',
-    secondary: '#efefef',
+    primary: '#6454FF',
+    secondary: '#6454AF',
+    tertiary : '#FFFFFF'
+
 };
 
 export const darkTheme = {
