@@ -3,10 +3,9 @@ import React from "react"
 import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
 import { useNavigate,useParams,useLocation } from "react-router-dom";
-import qs from 'qs';
 
 //import Actions
-
+import { actionCreators as userActions } from "../redux/modules/user";
 
 //import elements
 import { Button, Grid, Input, Image, Text } from "../elements" 
@@ -28,6 +27,8 @@ const kakao = axios.create({
 
 
 const KakaoLogin = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const router = useLocation();
     // 카카오에서 준 인증코드
 
@@ -62,6 +63,9 @@ const KakaoLogin = () => {
                 data :{kakaoToken : res.data.access_token},
                 headers : {
                 }
+            }).then(res=>{
+                console.log(res.headers['X-AUTH-TOKEN']);
+                
             });
         })
 

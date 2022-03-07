@@ -17,8 +17,12 @@ import Signup from "./Signup";
 //import elements
 import { Button, Grid, Input, Image, Text } from "../elements"
 //import Icon
+
 //impot Component
+
 //import Actions
+import { actionCreators as userActions } from "../redux/modules/user";
+
 //import axios
 
 
@@ -54,7 +58,9 @@ function Login() {
         const userInfo = {
             username: data.get('loginID'),
             password: data.get('password'),
-        };
+        }; 
+
+        dispatch(userActions.login(userInfo))
 
         console.log(userInfo);
 
@@ -96,7 +102,7 @@ function Login() {
                     variant="contained"
                     sx={{ color : 'white' ,bgcolor : 'primary.button', mt: 3, mb: 2 }}
                     >
-                    가입
+                    로그인
                     </Button></Box>
                 
                 <Grid margin="10px"><Button onClick={()=>window.location.assign('https://kauth.kakao.com/oauth/authorize?client_id=43268aa6f88af6282a341e3b61b9a761&redirect_uri=http://localhost:3000/login/kakaoLogin&response_type=code')}>카카오 계정 로그인</Button></Grid>

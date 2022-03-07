@@ -3,6 +3,14 @@ import React, { useEffect } from 'react';
 import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { EffectCards } from "swiper";
+import { FreeMode, Pagination } from "swiper";
+
+import "swiper/css";
+import "swiper/css/effect-cards";
+
+import "./styles.css";
 
 //import Actions
 
@@ -15,8 +23,8 @@ import { Button, Grid, Input, Image, Text } from "../elements"
 // impot Component
 import Post from '../components/Post';
 import Header from '../components/Header'
-import Carousel from '../components/Carousel'
 import Bottom from '../components/Bottom';
+import Carousel from '../components/Carousel'
 import Books from '../components/Books';
 
 
@@ -41,7 +49,154 @@ function Main(props) {
     return (
         <Grid wrap>   
             <Header/>
+            <Grid margin>
+                <Swiper
+                    effect={"cards"}
+                    grabCursor={true}
+                    modules={[EffectCards]}
+                    className="mySwiper"
+                >
+                    <SwiperSlide><Image onClick={()=>{navigate('/finishedDetail/1')}} width="240px" height='320px' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
+                    <SwiperSlide><Image width="240px" height='320px' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
+                    <SwiperSlide><Image width="240px" height='320px' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
+                    <SwiperSlide><Image width="240px" height='320px' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
+                </Swiper>
+            </Grid>
 
+            <Grid margin ="30px 0">
+                이쯤에 대충 무슨 텍스트가 들어가겠지
+                <Swiper
+                    style={{height : 100, width : 320}}
+                    slidesPerView={3}
+                    spaceBetween={20}
+                    freeMode={true}
+                    pagination={{
+                    clickable: true,
+                    }}
+                    modules={[FreeMode, Pagination]}
+                    className="mySwiper"
+                >
+                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
+                </Swiper>
+            </Grid>
+            <Grid margin ="30px 0">
+                이쯤에 대충 무슨 텍스트가 들어가겠지
+                <Swiper
+                    style={{height : 100, width : 320}}
+                    slidesPerView={3}
+                    spaceBetween={20}
+                    freeMode={true}
+                    pagination={{
+                    clickable: true,
+                    }}
+                    modules={[FreeMode, Pagination]}
+                    className="mySwiper"
+                >
+                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
+                </Swiper>
+            </Grid>
+            <Grid margin ="30px 0">
+                이쯤에 대충 무슨 텍스트가 들어가겠지
+                <Swiper
+                    style={{height : 100, width : 320}}
+                    slidesPerView={3}
+                    spaceBetween={20}
+                    freeMode={true}
+                    pagination={{
+                    clickable: true,
+                    }}
+                    modules={[FreeMode, Pagination]}
+                    className="mySwiper"
+                >
+                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
+                </Swiper>
+            </Grid>
+            <Grid margin ="30px 0">
+                이쯤에 대충 무슨 텍스트가 들어가겠지
+                <Swiper
+                    style={{height : 100, width : 320}}
+                    slidesPerView={3}
+                    spaceBetween={20}
+                    freeMode={true}
+                    pagination={{
+                    clickable: true,
+                    }}
+                    modules={[FreeMode, Pagination]}
+                    className="mySwiper"
+                >
+                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
+                </Swiper>
+            </Grid>
+            <Grid margin ="30px 0">
+                이쯤에 대충 무슨 텍스트가 들어가겠지
+                <Swiper
+                    style={{height : 100, width : 320}}
+                    slidesPerView={3}
+                    spaceBetween={20}
+                    freeMode={true}
+                    pagination={{
+                    clickable: true,
+                    }}
+                    modules={[FreeMode, Pagination]}
+                    className="mySwiper"
+                >
+                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
+                </Swiper>
+            </Grid>
+            <Grid margin ="30px 0">
+                이쯤에 대충 무슨 텍스트가 들어가겠지
+                <Swiper
+                    style={{height : 100, width : 320}}
+                    slidesPerView={3}
+                    spaceBetween={20}
+                    freeMode={true}
+                    pagination={{
+                    clickable: true,
+                    }}
+                    modules={[FreeMode, Pagination]}
+                    className="mySwiper"
+                >
+                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
+                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
+                </Swiper>
+            </Grid>
             {/* <Grid>
                 <Carousel width="320px" height="180px" imgURL={tempImage} />
             </Grid> */}
@@ -51,7 +206,7 @@ function Main(props) {
                 <Books book={tempImage}></Books>
             </Grid>     */}
 
-            <Grid margin="10px">
+            {/* <Grid margin="100px 10px">
                 <Button theme="unfilled" >다음</Button>
                 <Grid margin="10px"></Grid>
                 <Input isTheme placeholder="placeholder" />
@@ -66,7 +221,7 @@ function Main(props) {
                     <option value="grape">grape</option>
                     <option value="melon">melon</option>
                 </Input>
-            </Grid>
+            </Grid> */}
 
             <Bottom thisPage="main"/>
 

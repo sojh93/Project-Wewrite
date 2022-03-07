@@ -31,7 +31,10 @@ const signup=(user_data) =>{
             headers : {
                 "Content-Type": "multipart/form-data"
             }
-        }).then(res=>console.log(res));
+        }).then(res=>{
+            console.log(res);
+            window.location.assign('/login');
+        });
         
     }
 }
@@ -40,16 +43,18 @@ const login=(user_data) =>{
         
         instance({
             method : "post",
-            url : "/user/logIn",
+            url : "/user/login",
             data : user_data,
             headers : {
                 "Content-Type": "application/json;charset-UTF-8"
             }
         }).then(res=>{
-            const token = res.headers;
-
-
-            // dispatch(set_user(""));
+            const token = res.headers.authorization;
+            setCookie('WW_user',token);
+            const userInfo={...res.data}
+            dispatch(set_user(userInfo));
+            window.location.assign('/');
+            
         });
         
     }

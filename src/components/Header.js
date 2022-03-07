@@ -47,15 +47,14 @@ const Header = (props) => {
     
     return(
             <Grid>
-                <Grid position="absolute" top="0px" is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="320px" height='60px' margin='0'  >
-                    <Grid is_flex border="0">
+                <Grid position="absolute" top="0px" background-color="#6454ff00" is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="320px" height='60px' margin='0'  >
+                    <Grid background-color="#6454ff00"  is_flex border="0">
                         <Tooltip title="장르 고르기"><IconButton sx={{width:"50px", height : "50px"}}><DensityMediumIcon  sx={{ width:"15px", height : "15px", margin :"10px"}}/></IconButton></Tooltip>    
                     </Grid>
-                    <Grid is_flex border="0">
-                        <Tooltip title="알람"><IconButton sx={{width:"50px", height : "50px"}}><FavoriteBorderOutlinedIcon  sx={{ margin :"10px"}}/></IconButton></Tooltip>    
+                    <Grid background-color="#6454ff00"  is_flex border="0">
+                        <Tooltip title="알람"><IconButton sx={{width:"50px", height : "50px"}}><NotificationsNoneOutlinedIcon  sx={{ margin :"10px"}}/></IconButton></Tooltip>    
                     </Grid>
                 </Grid>
-                <Grid margin="0 0 50px 0"/>
             </Grid>
 
     );

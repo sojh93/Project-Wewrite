@@ -37,13 +37,13 @@ export default function Bottom(props) {
     }
 
     return (
-        <Grid position="absolute" bottom="0px">
-            <Grid is_flex alignItems="center" justifyContent="space-around" width="320px" >
-                {props.thisPage==="main"?       <Text><WidgetsIcon/></Text>             : <Text onClick={()=>navigate('/')}><WidgetsOutlinedIcon/></Text>}
-                {props.thisPage==="book"?       <Text><BookmarkOutlinedIcon/></Text>    : <Text><BookmarkBorderOutlinedIcon/></Text>}
-                {props.thisPage==="add"?        <Text><AddCircleOutlinedIcon/></Text>   : <Text><AddCircleOutlineOutlinedIcon/></Text>}
-                {props.thisPage==="postList"?   <Text><HomeIcon/></Text>                : <Text onClick={()=>navigate('/postlist')}><HomeOutlinedIcon/></Text>}
-                {props.thisPage==="myPage"?   <Text><PersonIcon/></Text>              : <Text onClick={()=>navigate('/mypage')}><PersonOutlineOutlinedIcon/></Text>}
+        <Grid position="absolute" bottom="0px" z-index="1" border-radius="10px 10px 0 0" >
+            <Grid is_flex background-color='#6454FF' border-radius="10px 10px 0 0" alignItems="center" justifyContent="space-around" width="320px" >
+                {props.thisPage==="main"?       <Text color="white"><WidgetsIcon /></Text>              : <Text color="white" onClick={()=>navigate('/')}><WidgetsOutlinedIcon/></Text>}
+                {props.thisPage==="book"?       <Text color="white"><BookmarkOutlinedIcon/></Text>      : <Text color="white"><BookmarkBorderOutlinedIcon/></Text>}
+                {props.thisPage==="add"?        <Text color="white"><AddCircleOutlinedIcon/></Text>     : <Text color="white"><AddCircleOutlineOutlinedIcon/></Text>}
+                {props.thisPage==="postList"?   <Text color="white"><HomeIcon/></Text>                  : <Text color="white" onClick={()=>navigate('/postlist')}><HomeOutlinedIcon/></Text>}
+                {props.thisPage==="myPage"?     <Text color="white"><PersonIcon/></Text>                : <Text color="white" onClick={()=>navigate('/mypage')}><PersonOutlineOutlinedIcon/></Text>}
             </Grid>
         </Grid>
     );
