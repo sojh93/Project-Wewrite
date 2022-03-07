@@ -49,7 +49,7 @@ function Main(props) {
     return (
         <Grid wrap>   
             <Header/>
-            <Grid margin>
+            <Grid margin='50px 0 0 0'>
                 <Swiper
                     effect={"cards"}
                     grabCursor={true}

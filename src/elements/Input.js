@@ -35,7 +35,7 @@ const Input = ({
             
             if(type === 'radio'){
                 return (
-                    <WrapRadio>
+                    <WrapRadio style={{...props}}>
                     <label>
                         <div><Radio type='radio' name={name} value={value}/><span>{value}</span></div>
                     </label>
@@ -101,7 +101,6 @@ const ThemeInput = styled.input`
 const WrapRadio = styled.div`
     display: inline-flex;
     align-items: center;
-    width : 200px;
     height : 30px;
     &>label{
         font-size : 13px;

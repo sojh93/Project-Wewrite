@@ -74,16 +74,16 @@ function Login() {
 
     return (
         <Grid wrap>
-            <Grid is_flex alignItems="center" flexDirection="column" border="1px solid black" height="90px" width="320px">
-                <Text fontSize="30px" fontWeight="600">로그인</Text>
+            <Grid is_flex alignItems="center" flexDirection="column" margin='100px 0 0 0' height="90px" width="320px">
+                <Text fontSize="16px" fontWeight="400">로그인</Text>
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ width: "300px", mt: 1, alignItems: 'center', textAlign: 'center' }}>
                     <TextField
-                        sx={{ height: "40px", bgcolor: "white", }}
+                        sx={{ height: "40px", bgcolor: "white",margin :'30px 0' }}
                         margin="normal"
                         size="small"
                         fullWidth
                         id="loginID"
-                        label="ID"
+                        label="이메일"
                         name="loginID"
                         // autoComplete="loginID"
                         autoFocus
@@ -102,10 +102,10 @@ function Login() {
                     />
                     <Button 
                     theme="unfilled"
-                    margin="20px"
+                    margin="50px"
                      >다음</Button>
                 </Box>
-                <HorizontalLine />
+                <Grid width='280px' heigh='1px' borderBottom='1px solid gray'></Grid>
                 <Grid padding="1px">
                     <Text>or</Text>
                 </Grid>
@@ -115,9 +115,11 @@ function Login() {
                 >
                     <Button
                         onClick={() => window.location.assign('https://kauth.kakao.com/oauth/authorize?client_id=43268aa6f88af6282a341e3b61b9a761&redirect_uri=http://localhost:3000/login/kakaoLogin&response_type=code')}
-                        backgroundImage=""
+                        backgroundImage='https://developers.kakao.com/tool/resource/static/img/button/login/full/ko/kakao_login_medium_wide.png'
                         width=""
                         heigh=""
+                        border='0px'
+                        backgroundColor="#00000000"
                         >
                         카카오로 로그인하기
                     </Button>
@@ -126,8 +128,8 @@ function Login() {
                     is_flex
                     justifyContent="space-between"
                     width="100%">
-                    <Button>회원가입</Button>
-                    <Button>비밀번호 찾기</Button>
+                    <Button border='0px' backgroundColor="#00000000" onClick={()=>navigate('/signup')}>회원가입</Button>
+                    <Button border='0px' backgroundColor="#00000000">비밀번호 찾기</Button>
                 </Grid>
             </Grid>
 

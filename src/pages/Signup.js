@@ -91,6 +91,8 @@ function Signup() {
 
   const pwdCheckChange = (e) => {};
 
+
+
   return (
     <Grid wrap is_scroll>
       <Grid
@@ -99,6 +101,7 @@ function Signup() {
         flexDirection="column"
         height="60px"
         width="320px"
+        margin="20px 0"
       >
         <Grid>
           <Text fontSize="20px" fontWeight="400">
@@ -189,12 +192,13 @@ function Signup() {
             <Text
               fontSize="15px"
               fontWeight="400"
-              margin="15px 275px 5px 1px"
+              margin="15px 250px 0 1px"
               width="100px"
             >
               비밀번호 확인
             </Text>
           </Grid>
+
           <TextField
             sx={{
               marginTop: "10px",
@@ -214,12 +218,14 @@ function Signup() {
             // autoComplete="current-passwordCheck"
             onChange={pwdCheckChange}
           />
-          <Grid is_flex padding="0" width="100%" margin="15px 0 0 5px" textAlign="left">
+
+          <Grid is_flex padding="0" width="100%" margin="100px 0 0 5px" textAlign="left">
           <Text fontSize="3px">
-          서비스의 이용을 위한 약관동의와 개인정보 수집에
-          대한 동의가 필요합니다.
+          서비스의 이용을 위한 약관동의와 개인정보 수집에 대한 동의가 필요합니다.
           </Text>
           </Grid>
+
+
           <Grid
             is_flex
             padding="10px"
@@ -237,44 +243,45 @@ function Signup() {
             />
           </Grid>
           <Grid
-             
-             padding="0"
-             margin="20px 0 20px 0"
-             width="300px"
-             textAlign="left"
+            is_flex
+            flexDirection='column'
+            padding="0"
+            margin="10px"
+            width="300px"
+            textAlign="left"
           >
             <Input
               isTheme
               type="radio"
               value="[필수] 준회원서비스 이용약관"
-              name="회원가입 약관동의"
+              name="회원가입 약관동의1"
               
             />
             <Input
               isTheme
               type="radio"
               value="[필수] 개인(신용)전보 준회원 필수 동의서"
-              name="회원가입 약관동의"
-              padding="0 100px 0 0"
+              name="회원가입 약관동의2"
+              
             />
             <Input
               isTheme
               type="radio"
               value="[선택] 개인(신용)정보 선택동의서_준회원"
-              name="회원가입 약관동의"
+              name="회원가입 약관동의3"
             />
           </Grid>
 
           <Button
-          isTheme
-            type="filled"
-            fullWidth
+            theme="unfilled"
+            type = 'submit'
             variant="contained"
             sx={{ color: "#6454FF", bgcolor: "primary.button", mt: 3, mb: 2 }}
           >
             가입
           </Button>
         </Box>
+        <Grid width='10px' height='10px' margin='20px'/>
       </Grid>
     </Grid>
   );

@@ -10,7 +10,7 @@ const Button = ({
 
     ref , onClick, disabled=false,
 
-    theme,
+    theme,type=null,
 
     children,
     ...props
@@ -27,7 +27,7 @@ const Button = ({
     if(theme === 'unfilled'){
         return (
             <div>
-                <Unfilled style={{width, height, margin, padding,fontColor,fontSize, ...props}} ref={ref} onClick={onClick} disabled={disabled}>{children}</Unfilled>
+                <Unfilled type={type} style={{width, height, margin, padding,fontColor,fontSize, ...props}} ref={ref} onClick={onClick} disabled={disabled}>{children}</Unfilled>
             </div>
         )
     }
