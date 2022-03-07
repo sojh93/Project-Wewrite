@@ -38,7 +38,11 @@ const Wrap = styled.div`
     height : ${props => props.theme.size.height};
     background-color : ${props => props.theme.mainTheme.tertiary};
     overflow : hidden;
-
+    flex-direction : column;
+    overflow : auto;
+    ::-webkit-scrollbar { 
+    display: none; 
+    }
 `;
 
 const Div = styled.div`

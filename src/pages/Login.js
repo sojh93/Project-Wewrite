@@ -17,9 +17,14 @@ import Signup from "./Signup";
 //import elements
 import { Button, Grid, Input, Image, Text } from "../elements"
 //import Icon
+
 //impot Component
+
 import HorizontalLine from "../components/HorizontalLine";
+
 //import Actions
+import { actionCreators as userActions } from "../redux/modules/user";
+
 //import axios
 
 
@@ -57,7 +62,9 @@ function Login() {
         const userInfo = {
             username: data.get('loginID'),
             password: data.get('password'),
-        };
+        }; 
+
+        dispatch(userActions.login(userInfo))
 
         console.log(userInfo);
 

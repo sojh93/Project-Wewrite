@@ -3,11 +3,11 @@ import React from "react";
 import styled from "styled-components";
 
 const Text = ({
-    onClick, children,   
+    onClick, children, margin='5px',
     ...props
     }) => {
     return (
-        <p onClick={onClick} style={{...props}}>{children}</p>
+        <p onClick={onClick} style={{...props,margin,wordBreak : 'keep-all'}}>{children} </p>
     );
 }
 

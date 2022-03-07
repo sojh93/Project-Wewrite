@@ -23,7 +23,7 @@ const Image = ({
 }
 
 const Default = styled.img`
-
+    
 `;
 
 const Circle = styled.img`

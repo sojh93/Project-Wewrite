@@ -39,7 +39,7 @@ function App() {
           <Route path="/postlist" element={<PostList />}/>
           <Route path="/write" element={<Write />}/>
           <Route path="/unfinisheddetail" element={<UnfinishedDetail />}/>
-          <Route path="/finisheddetail" element={<FinishedDetail />}/>
+          <Route path="/finisheddetail/:postKey" element={<FinishedDetail />}/>
 
         </Routes>
       </ThemeProvider>
