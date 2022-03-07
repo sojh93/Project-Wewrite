@@ -26,15 +26,15 @@ export default function IndeterminateCheckbox() {
     <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
       <FormControlLabel
         label="Child 1"
-        control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
+        control={<Checkbox checked={checked[1]} onChange={handleChange2} />}
       />
       <FormControlLabel
         label="Child 2"
-        control={<Checkbox checked={checked[1]} onChange={handleChange3} />}
+        control={<Checkbox checked={checked[2]} onChange={handleChange3} />}
       />
       <FormControlLabel
         label="Child 3"
-        control={<Checkbox checked={checked[2]} onChange={handleChange4} />}
+        control={<Checkbox checked={checked[0]} onChange={handleChange4} />}
       />
     </Box>
   );
@@ -46,7 +46,7 @@ export default function IndeterminateCheckbox() {
         control={
           <Checkbox
             checked={checked[0] && checked[1] && checked[2]}
-            indeterminate={checked[0] !== checked[1] && checked[2]}
+            indeterminate={checked[0] !==  checked[1] && checked[2] | checked[1] !==  checked[0] && checked[2] | checked[2] !==  checked[0] && checked[1]}
             onChange={handleChange1}
           />
         }
