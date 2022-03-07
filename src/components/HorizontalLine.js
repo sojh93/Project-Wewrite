@@ -8,10 +8,10 @@ const HorizonLine = ({ text }) => {
         textAlign: "center",
         borderBottom: "1px solid #aaa",
         lineHeight: "0.1em",
-        margin: "10px 0 20px",
+        margin: "10px 0 5px 0",
       }}
     >
-      <span style={{ background: "#fff", padding: "0 10px" }}></span>
+      <span style={{ padding: "0 10px" }}></span>
     </div>
   );
 };

@@ -91,27 +91,32 @@ function Login() {
                         id="password"
                     // autoComplete="current-password"
                     />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ color: 'white', bgcolor: 'primary.button', mt: 3, mb: 2 }}
-                    >
-                        다음
-                    </Button>
+                    <Button 
+                    theme="unfilled"
+                    margin="20px"
+                     >다음</Button>
                 </Box>
                 <HorizontalLine />
-                <Text>or</Text>
-                <Grid margin="10px">
+                <Grid padding="1px">
+                    <Text>or</Text>
+                </Grid>
+                <Grid
+                    margin="10px"
+                    padding="0 10px 0 10px"
+                >
                     <Button
-                     onClick={() => window.location.assign('https://kauth.kakao.com/oauth/authorize?client_id=43268aa6f88af6282a341e3b61b9a761&redirect_uri=http://localhost:3000/login/kakaoLogin&response_type=code')}>
+                        onClick={() => window.location.assign('https://kauth.kakao.com/oauth/authorize?client_id=43268aa6f88af6282a341e3b61b9a761&redirect_uri=http://localhost:3000/login/kakaoLogin&response_type=code')}
+                        backgroundImage=""
+                        width=""
+                        heigh=""
+                        >
                         카카오로 로그인하기
                     </Button>
                 </Grid>
                 <Grid
-                 is_flex 
-                 justifyContent="space-between" 
-                 width="100%">
+                    is_flex
+                    justifyContent="space-between"
+                    width="100%">
                     <Button>회원가입</Button>
                     <Button>비밀번호 찾기</Button>
                 </Grid>
