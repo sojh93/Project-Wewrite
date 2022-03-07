@@ -14,6 +14,7 @@ import { Button, Grid, Input, Image, Text } from "../elements"
 
 
 // impot Component
+import { getCookie,setCookie,deleteCookie } from "../shared/Cookie";
 
 import instance from "../shared/Request";
 import axios from "axios";
@@ -64,8 +65,10 @@ const KakaoLogin = () => {
                 headers : {
                 }
             }).then(res=>{
-                console.log(res.headers['X-AUTH-TOKEN']);
-                
+                const token = res.headers.authorization;
+                console.log(token);
+                setCookie('WW_user',token);
+                dispatch(userActions.check())
             });
         })
 

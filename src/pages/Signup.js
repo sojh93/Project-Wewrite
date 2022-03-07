@@ -131,9 +131,9 @@ function Signup() {
             margin="normal"
             size="small"
             fullWidth
-            id="email"
+            id="loginID"
             label="email"
-            name="email"
+            name="loginID"
             // autoComplete="loginID"
             autoFocus
             onChange={checkId}
@@ -145,9 +145,9 @@ function Signup() {
             margin="normal"
             size="small"
             fullWidth
-            id="emailCode"
+            id="nickname"
             label="인증코드"
-            name="Code"
+            name="nickname"
             // autoComplete="nickname"
             autoFocus
             onChange={checkId}
