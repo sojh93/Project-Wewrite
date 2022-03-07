@@ -18,7 +18,6 @@ import { Button, Grid, Input, Image, Text } from "../elements";
 import blank from "../image/blank.jpg";
 
 //impot Component
-import Checkbox from "../components/Checkbox";
 
 //import Actions
 import { actionCreators as userActions } from "../redux/modules/user";
@@ -93,7 +92,7 @@ function Signup() {
   const pwdCheckChange = (e) => {};
 
   return (
-    <Grid wrap>
+    <Grid wrap is_scroll>
       <Grid
         is_flex
         alignItems="center"
@@ -108,7 +107,7 @@ function Signup() {
         </Grid>
 
         <Grid is_flex justifyContent="flex-start">
-          <Text fontSize="15px" fontWeight="400" margin="15px 250px 5px 5px">
+          <Text fontSize="15px" fontWeight="400" margin="15px 250px 0 5px">
             이메일
           </Text>
         </Grid>
@@ -125,7 +124,7 @@ function Signup() {
           }}
         >
           <TextField
-            sx={{ height: "40px", bgcolor: "white", margin: "15px 0 15px 0" }}
+            sx={{ height: "40px", bgcolor: "white", margin: "10px 0 15px 0" }}
             margin="normal"
             size="small"
             fullWidth
@@ -135,7 +134,9 @@ function Signup() {
             // autoComplete="loginID"
             autoFocus
             onChange={checkId}
-          />
+          >
+            <Button></Button>
+          </TextField>
           <TextField
             sx={{ height: "40px", bgcolor: "white", margin: "15px 0 15px 0" }}
             margin="normal"
@@ -213,14 +214,63 @@ function Signup() {
             // autoComplete="current-passwordCheck"
             onChange={pwdCheckChange}
           />
-
-          <Checkbox/>
+          <Grid is_flex padding="0" width="100%" margin="15px 0 0 5px" textAlign="left">
+          <Text fontSize="3px">
+          서비스의 이용을 위한 약관동의와 개인정보 수집에
+          대한 동의가 필요합니다.
+          </Text>
+          </Grid>
+          <Grid
+            is_flex
+            padding="10px"
+            margin="5px 0 0 0"
+            width="300px"
+            border="1px solid #6454FF"
+          >
+            <Input
+              isTheme
+              type="radio"
+              value="회원가입 약관동의(전체)"
+              name="회원가입 약관동의"
+              padding="0"
+              margin="0"
+            />
+          </Grid>
+          <Grid
+             
+             padding="0"
+             margin="20px 0 20px 0"
+             width="300px"
+             textAlign="left"
+          >
+            <Input
+              isTheme
+              type="radio"
+              value="[필수] 준회원서비스 이용약관"
+              name="회원가입 약관동의"
+              
+            />
+            <Input
+              isTheme
+              type="radio"
+              value="[필수] 개인(신용)전보 준회원 필수 동의서"
+              name="회원가입 약관동의"
+              padding="0 100px 0 0"
+            />
+            <Input
+              isTheme
+              type="radio"
+              value="[선택] 개인(신용)정보 선택동의서_준회원"
+              name="회원가입 약관동의"
+            />
+          </Grid>
 
           <Button
-            type="submit"
+          isTheme
+            type="filled"
             fullWidth
             variant="contained"
-            sx={{ color: "white", bgcolor: "primary.button", mt: 3, mb: 2 }}
+            sx={{ color: "#6454FF", bgcolor: "primary.button", mt: 3, mb: 2 }}
           >
             가입
           </Button>
