@@ -37,7 +37,9 @@ export default function Bottom(props) {
     const [value, setValue] = React.useState(0);
 
     const _user = useSelector(state => state.user);
-    console.log(_user);
+    const _post = useSelector(state => state.post);
+    // console.log(_user);
+    // console.log(_post);
     React.useEffect(()=>{
         if(!_user.is_login){
             dispatch(userActions.check());

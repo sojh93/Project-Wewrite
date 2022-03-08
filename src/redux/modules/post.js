@@ -13,8 +13,10 @@ const setPost = createAction(SET_POST, (postList,postType) => ({ postList,postTy
 
 //initialState
 const initialState = {
-    postType : null,
-    Post_list : [],
+    allPostList : [],
+    recentPostList : [],
+    recommendPostList : [],
+    incompletePostList : [],
 };
 
 
@@ -73,17 +75,6 @@ const getRecommend=() =>{
 const addPost=(postData) =>{
     return async function (dispatch,getState){
         const token = getCookie('WW_user');
-        
-
-        const postData = new FormData();
-        var file = new File(["foo"], "foo.txt", {
-            type: "text/plain",
-        });
-        postData.append("title", "제목");
-        postData.append("color", 'red');
-        postData.append("limitCnt", 15);
-        postData.append("category", '장르');
-        postData.append("postImageUrl",file);
 
         instance({
             method : "post",
@@ -104,7 +95,7 @@ export default handleActions(
     {
         [SET_POST]: (state, action) =>
         produce(state, (draft) => {
-            draft.list = [...action.payload.postList];
+            draft[`${action.payload.postType}PostList`] = [...action.payload.postList];
         }),
         
     },
@@ -115,6 +106,7 @@ export default handleActions(
 //action creator export
 const actionCreators = {
     getAll,
+    getRecent,
     getRecommend,
     addPost,
 

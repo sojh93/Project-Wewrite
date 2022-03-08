@@ -10,13 +10,10 @@ import { Children } from "react";
 
 
 const Input = ({
-    border,borderRadius,
-
-    width, height, margin, padding,
 
     defaultValue,type,placeholder,
 
-    onChange,ref,
+    onChange,_ref,ref,
 
     isTheme=false,
     id, label, name, value,
@@ -37,7 +34,7 @@ const Input = ({
                 return (
                     <WrapRadio style={{...props}}>
                     <label>
-                        <div><Radio type='radio' name={name} value={value}/><span>{value}</span></div>
+                        <div><Radio type='radio' ref={ref} name={name} value={value}/><span>{value}</span></div>
                     </label>
                     </WrapRadio>
                 )
@@ -45,7 +42,11 @@ const Input = ({
             if(type === 'select'){
                 return (
                     <Wrap>
-                        <Select name={name}>
+                        <Select
+                        onChange={onChange}
+                        ref={_ref}
+                        placeholder={placeholder}
+                        name={name}>
                             {children}
                         </Select>
                     </Wrap>
@@ -60,6 +61,7 @@ const Input = ({
                             onChange={onChange}
                             ref={ref}
                             placeholder={placeholder}
+                            style={{...props}}
                         />
                         <MarkX><FiXCircle/></MarkX>
                         
@@ -74,7 +76,7 @@ const Input = ({
 
 
     return (
-        <input type={type} onChange={onChange} ref={ref} placeholder={placeholder} defaultValue={defaultValue} style={ {border,borderRadius, width, height, margin, padding, ...props}}/>
+        <input type={type} onChange={onChange} ref={ref} placeholder={placeholder} defaultValue={defaultValue} style={ {...props}}/>
     );
 }
 

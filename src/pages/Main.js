@@ -13,6 +13,8 @@ import "swiper/css/effect-cards";
 import "./styles.css";
 
 //import Actions
+import { actionCreators as userActions } from '../redux/modules/user';
+import { actionCreators as postActions } from '../redux/modules/post';
 
 //import elements
 import { Button, Grid, Input, Image, Text } from "../elements" 
@@ -34,16 +36,30 @@ function Main(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const _user = useSelector(state=>state.user);
-
+    const _user = useSelector(state => state.user);
+    const _post = useSelector(state => state.post);
+    console.log(_post);
 
     const tempImage = ["http://img.etoday.co.kr/pto_db/2017/06/20170630055356_1088133_710_340.jpg","https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/1jPF/image/oRhdR-gw5pIPzXu74IiCpUAkBb4.jpg","https://post-phinf.pstatic.net/MjAyMjAyMjRfMTQg/MDAxNjQ1Njc3NzEzMDk0.ZY8y6TgCWsQn-9PtU2NgyzZIZXxvmxxKovYVpcKP2I8g.z04ffjM409tGuMHlukshDSCcKNvQw2Y0aL6WQG0ApYwg.JPEG/CT5-V_%EB%B8%94%EB%9E%99%EC%9C%99_%ED%8B%B0%EC%A0%80_1.jpg?type=w1200"];
 
 
 
 
-    useEffect(() => {
+    React.useEffect(() => {
+        if(_post.allPostList.length === 0){
+            console.log('1');
+            dispatch(postActions.getAll())
+        }
+        if(_post.recentPostList.length === 0){
+            console.log('2');
+            dispatch(postActions.getRecent())
+        }
+        if(_post.recommendPostList.length === 0){
+            console.log('3');
 
+            dispatch(postActions.getRecommend())
+        }
+        
     }, []);
 
     return (
