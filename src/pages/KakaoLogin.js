@@ -68,7 +68,7 @@ const KakaoLogin = () => {
                 const token = res.headers.authorization;
                 console.log(token);
                 setCookie('WW_user',token);
-                dispatch(userActions.check())
+                dispatch(userActions.check(token))
             });
         })
 

@@ -40,7 +40,7 @@ function FinishedDetail(props) {
             </Grid>
             <Grid is_flex flex-direction='column' align-items='center' z-index="1" margin="-4px 0 0 0" width='100%'> 
                 <Grid margin='5px'>
-                    <Chip margin="0px">테스트</Chip>
+                    <Chip margin="10px">테스트</Chip>
                     <Grid is_flex justify-content="space-between" align-items="center" width='310px'>
                         <Text font-size='24px'>무서운 이야기</Text>
                         <Grid is_flex>
@@ -50,12 +50,13 @@ function FinishedDetail(props) {
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid is_flex flexDirection='column' width='310px' borderBottom="1px solid black">
+                <Grid is_flex flexDirection='column' width='310px'>
                     <Sentence/>
                     <Sentence/>
                     <Sentence/>
                 </Grid>
-                <Grid is_flex flexDirection='column' width='310px' borderBottom="1px solid black">
+                <Grid width='280px' height='1px' borderBottom="1px solid #00000040"/>
+                <Grid is_flex flexDirection='column' width='310px'>
                     <Text>참여자</Text>
                     <Swiper
                     style={{height : '68px', width : '300px', margin : '10px'}}
@@ -106,6 +107,7 @@ function FinishedDetail(props) {
                     </SwiperSlide>
                 </Swiper>
                 </Grid>
+                <Grid width='280px' height='1px' borderBottom="1px solid #00000040"/>
                 <Grid is_flex flexDirection='column' width='310px' >
                     <Text>댓글</Text>    
                     <Comment/>

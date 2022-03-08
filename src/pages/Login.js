@@ -66,9 +66,8 @@ function Login() {
 
         dispatch(userActions.login(userInfo))
 
-        console.log(userInfo);
 
-
+        navigate('/');
 
     };
 
