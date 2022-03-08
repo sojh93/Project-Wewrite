@@ -33,7 +33,7 @@ function App() {
           <Route path="/login/kakaoLogin" element={<KakaoLogin />}/>
           <Route path="/clause" element={<Clause />}/>
           <Route path="/Signup" element={<Signup />}/>
-          <Route path="/mypage" element={<Mypage />}/>
+          <Route path="/userpage/:userKey" element={<Mypage />}/>
           <Route path="/mywrite" element={<Mywrite />}/>
           <Route path="/newslist" element={<NewsList />}/>
           <Route path="/postlist" element={<PostList />}/>

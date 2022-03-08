@@ -11,6 +11,7 @@ import Post from './modules/post'
 const middlewares = [thunk];
 const rootReducer = combineReducers({
     user : User,
+    post : Post,
 });
 const enhancer = applyMiddleware(...middlewares);
 const store = createStore(rootReducer,enhancer);

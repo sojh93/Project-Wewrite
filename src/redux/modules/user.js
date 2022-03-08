@@ -51,28 +51,28 @@ const login=(user_data) =>{
         }).then(res=>{
             const token = res.headers.authorization;
             setCookie('WW_user',token);
+            console.log(res);
             const userInfo={...res.data}
             dispatch(set_user(userInfo));
-            window.location.assign('/');
+            // window.location.assign('/');
             
         });
         
     }
 }
-const check=(test) =>{
+const check=() =>{
     return async function (dispatch,getState){
-
+        const token = getCookie('WW_user')
         instance({
             method : "post",
             url : "/user/myInfo",
             data : {},
             headers : {
                 "Content-Type": "application/json;charset-UTF-8",
-                "X-AUTH-TOKEN" : test
+                "authorization" : token
             }
         }).then(res=>{
-            console.log(res.data);
-
+            dispatch(set_user(res.data));
 
             // dispatch(set_user(""));
         });
