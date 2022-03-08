@@ -30,8 +30,9 @@ export default function Comment({children}) {
 
     return (
         <Grid>
-            <Grid is_flex margin='5px' width='310px' gap='5px'>
-                <Image width='30px' height='30px' src='https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FkQ5wU%2Fbtrd5kEGcBi%2FHo0a7Hmj3V6LxRhxkC2KRk%2Fimg.jpg'/>
+            <Grid is_flex  margin='5px' width='310px' gap='5px'>
+                {/* <Image width='30px' height='30px' src='https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FkQ5wU%2Fbtrd5kEGcBi%2FHo0a7Hmj3V6LxRhxkC2KRk%2Fimg.jpg'/> */}
+                <Text><b>nick</b></Text>
                 <Grid  width='250px'  height='auto'>
                     <Text>안녕하시오 이건 댓글인데 설마 길게 쓸까? 심지어 영어로...? 그럴리가 없어</Text>
                 </Grid>
@@ -47,7 +48,7 @@ export default function Comment({children}) {
                     >
                         <MoreHorizIcon />
                     </IconButton>
-                    <FavoriteBorderOutlinedIcon  sx={{width:'15px'}}/>
+                    {/* <FavoriteBorderOutlinedIcon  sx={{width:'15px'}}/> */}
                     <Menu
                         id="basic-menu"
                         MenuListProps={{

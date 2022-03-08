@@ -99,7 +99,7 @@ function Main(props) {
                 </Swiper>
             </Grid>
             <Grid margin ="30px 0">
-                이쯤에 대충 무슨 텍스트가 들어가겠지
+                모든 게시물
                 <Swiper
                     style={{height : 100, width : 320}}
                     slidesPerView={3}
@@ -111,83 +111,9 @@ function Main(props) {
                     modules={[FreeMode, Pagination]}
                     className="mySwiper"
                 >
-                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
-                </Swiper>
-            </Grid>
-            <Grid margin ="30px 0">
-                이쯤에 대충 무슨 텍스트가 들어가겠지
-                <Swiper
-                    style={{height : 100, width : 320}}
-                    slidesPerView={3}
-                    spaceBetween={20}
-                    freeMode={true}
-                    pagination={{
-                    clickable: true,
-                    }}
-                    modules={[FreeMode, Pagination]}
-                    className="mySwiper"
-                >
-                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
-                </Swiper>
-            </Grid>
-            <Grid margin ="30px 0">
-                이쯤에 대충 무슨 텍스트가 들어가겠지
-                <Swiper
-                    style={{height : 100, width : 320}}
-                    slidesPerView={3}
-                    spaceBetween={20}
-                    freeMode={true}
-                    pagination={{
-                    clickable: true,
-                    }}
-                    modules={[FreeMode, Pagination]}
-                    className="mySwiper"
-                >
-                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
-                </Swiper>
-            </Grid>
-            <Grid margin ="30px 0">
-                이쯤에 대충 무슨 텍스트가 들어가겠지
-                <Swiper
-                    style={{height : 100, width : 320}}
-                    slidesPerView={3}
-                    spaceBetween={20}
-                    freeMode={true}
-                    pagination={{
-                    clickable: true,
-                    }}
-                    modules={[FreeMode, Pagination]}
-                    className="mySwiper"
-                >
-                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
+                    {_post.allPostList.map((v,i)=>{
+                        return (<SwiperSlide><Image width='100%' height='100%' key={v.postKey} src={v.postImageUrl}/></SwiperSlide>)
+                    })}
                 </Swiper>
             </Grid>
             <Grid margin ="30px 0">

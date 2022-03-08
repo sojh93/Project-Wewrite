@@ -16,7 +16,6 @@ const initialState = {
     allPostList : [],
     recentPostList : [],
     recommendPostList : [],
-    incompletePostList : [],
 };
 
 
