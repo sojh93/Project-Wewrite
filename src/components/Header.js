@@ -3,7 +3,8 @@ import React from "react"
 import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import { Swiper, SwiperSlide } from "swiper/react";
+import { FreeMode, Pagination,EffectCoverflow } from "swiper";
 //import Actions
 
 
@@ -11,14 +12,9 @@ import { useNavigate } from "react-router-dom";
 import {  Grid, Input, Image, Text } from "../elements" 
 
 //import Mui
-import Avatar from '@mui/material/Avatar';
-import { Modal } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Snackbar from '@mui/material/Snackbar';
+import Modal from '@mui/material/Modal';
 
 //import Icon
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
@@ -40,18 +36,91 @@ const Header = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '300px',
+        height: '600px',
+        borderRadius:'5px',
+        boxShadow: 24,
+        p: 4,
+    };
 
     React.useEffect(async() => {
 
     },[]);
     
+
+    if(props.isMain)
     return(
-            <Grid>
-                <Grid position="absolute" top="0px" backgroundColor="#6454ff00" is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="320px" height='60px' margin='0'  >
-                    <Grid backgroundColor="#6454ff00"  is_flex border="0">
-                        <Tooltip title="장르 고르기"><IconButton sx={{width:"50px", height : "50px"}}><DensityMediumIcon  sx={{ width:"15px", height : "15px", margin :"10px"}}/></IconButton></Tooltip>    
+            <Grid >
+                <Grid zIndex='9' boxShadow='rgb(217 217 217) 0px 2px 5px' position="absolute" top="0px"  backgroundColor="white"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+                    <Grid backgroundColor="white" is_flex border="0">
+                        <Tooltip title="장르 고르기"><IconButton onClick={handleOpen} sx={{width:"50px", height : "50px"}}><DensityMediumIcon  sx={{ width:"15px", height : "15px", margin :"10px"}}/></IconButton></Tooltip>    
+                        <Modal
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                        >
+                            <Grid is_flex justifyContent='center' alignItems='center' {...style}>
+                                <Swiper
+                                    direction={"vertical"}
+                                    style={{height : '500px', width : '100px',margin : '10px'}}
+                                    slidesPerView={6}
+                                    spaceBetween={0}
+                                    freeMode={true}
+                                    loop={true}
+                                    grabCursor={true}
+                                    effect={"coverflow"}
+                                    coverflowEffect={{
+                                        rotate: 10,
+                                        stretch: 5,
+                                        depth: 100,
+                                        modifier: 1,
+                                        slideShadows: false,
+                                    }}
+                                    pagination={{
+                                    clickable: true,
+                                    }}
+                                    modules={[FreeMode, EffectCoverflow, Pagination]}
+                                    className="mySwiper"
+                                    >
+                                        <SwiperSlide>
+                                            <Text onClick={(e)=>console.log(e.target.innerHTML)}>스릴러</Text>
+                                        </SwiperSlide>
+                                        <SwiperSlide>
+                                        <Text onClick={(e)=>console.log(e.target.innerHTML)}>공포</Text>
+                                        </SwiperSlide>
+                                        <SwiperSlide>
+                                        <Text onClick={(e)=>console.log(e.target.innerHTML)}>로맨스</Text>
+                                        </SwiperSlide>
+                                        <SwiperSlide>
+                                        <Text onClick={(e)=>console.log(e.target.innerHTML)}>판타지</Text>
+                                        </SwiperSlide>
+                                        <SwiperSlide>
+                                        <Text onClick={(e)=>console.log(e.target.innerHTML)}>액션</Text>
+                                        </SwiperSlide>
+                                        <SwiperSlide>
+                                        <Text onClick={(e)=>console.log(e.target.innerHTML)}>시리즈</Text>
+                                        </SwiperSlide>
+                                        <SwiperSlide>
+                                        <Text onClick={(e)=>console.log(e.target.innerHTML)}>유아</Text>
+                                        </SwiperSlide>
+                                        <SwiperSlide>
+                                        <Text onClick={(e)=>console.log(e.target.innerHTML)}>코미디</Text>
+                                        </SwiperSlide>
+                                </Swiper>
+                            </Grid>
+                        </Modal>
                     </Grid>
-                    <Grid backgroundColor="#6454ff00"  is_flex border="0">
+                    <Grid backgroundColor="white" is_flex border="0">
                         <Tooltip title="알람"><IconButton sx={{width:"50px", height : "50px"}}><NotificationsNoneOutlinedIcon  sx={{ margin :"10px"}}/></IconButton></Tooltip>    
                     </Grid>
                 </Grid>
@@ -59,17 +128,17 @@ const Header = (props) => {
 
     );
     
-//     return(
-//         <Grid>
-//             <Grid position="absolute" top="0px" is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="320px" height='60px' margin='0'  >
-//                 <Grid is_flex border="0">
-//                     <Tooltip title="뒤로가기"><IconButton sx={{width:"50px", height : "50px"}}><KeyboardArrowLeftIcon  sx={{ width:"15px", height : "15px", margin :"10px"}}/></IconButton></Tooltip>    
-//                 </Grid>
+    return(
+        <Grid>
+            <Grid zIndex='9' boxShadow='rgb(217 217 217) 0px 2px 5px' position="absolute" top="0px"  backgroundColor="white"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+                <Grid is_flex border="0">
+                    <Tooltip title="뒤로가기"><IconButton sx={{width:"50px", height : "50px"}}><KeyboardArrowLeftIcon  sx={{ width:"15px", height : "15px", margin :"10px"}}/></IconButton></Tooltip>    
+                </Grid>
                 
-//             <Grid margin="0 0 50px 0"/>
-//         </Grid>
-
-// );
+                <Grid backgroundColor='white' margin="0 0 50px 0"/>
+            </Grid>
+        </Grid>
+);
 }
 
 
