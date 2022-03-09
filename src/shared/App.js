@@ -20,6 +20,9 @@ import Write from '../pages/Write';
 import UnfinishedDetail from '../pages/unfinishedDetail';
 import FinishedDetail from '../pages/FinishedDetail';
 import KakaoLogin from '../pages/KakaoLogin';
+import ModifyProfile from "../pages/ModifyProfile";
+import ChangePassword from "../pages/ChangePassword";
+import WithdrawMember from "../pages/withdrawMember";
 
 
 
@@ -29,17 +32,20 @@ function App() {
       <ThemeProvider theme={theme}>
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/login" element={<Login />}/>
-          <Route path="/login/kakaoLogin" element={<KakaoLogin />}/>
-          <Route path="/clause" element={<Clause />}/>
-          <Route path="/Signup" element={<Signup />}/>
-          <Route path="/mypage" element={<Mypage />}/>
-          <Route path="/mywrite" element={<Mywrite />}/>
-          <Route path="/newslist" element={<NewsList />}/>
-          <Route path="/postlist" element={<PostList />}/>
-          <Route path="/write" element={<Write />}/>
-          <Route path="/unfinisheddetail" element={<UnfinishedDetail />}/>
-          <Route path="/finisheddetail/:postKey" element={<FinishedDetail />}/>
+          <Route path="/login" element={<Login />} />
+          <Route path="/login/kakaoLogin" element={<KakaoLogin />} />
+          <Route path="/clause" element={<Clause />} />
+          <Route path="/Signup" element={<Signup />} />
+          <Route path="/mypage" element={<Mypage />} />
+          <Route path="/mywrite" element={<Mywrite />} />
+          <Route path="/newslist" element={<NewsList />} />
+          <Route path="/postlist" element={<PostList />} />
+          <Route path="/write" element={<Write />} />
+          <Route path="/unfinisheddetail" element={<UnfinishedDetail />} />
+          <Route path="/finisheddetail/:postKey" element={<FinishedDetail />} />
+          <Route path="/modifyprofile" element={<ModifyProfile />} />
+          <Route path="/changePassword" element={<ChangePassword />} />
+          <Route path="/withdrawMember" element={<WithdrawMember />} />
 
         </Routes>
       </ThemeProvider>

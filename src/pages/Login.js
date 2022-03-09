@@ -62,7 +62,7 @@ function Login() {
         const userInfo = {
             username: data.get('loginID'),
             password: data.get('password'),
-        }; 
+        };
 
         dispatch(userActions.login(userInfo))
 
@@ -78,7 +78,7 @@ function Login() {
                 <Text fontSize="16px" fontWeight="400">로그인</Text>
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ width: "300px", mt: 1, alignItems: 'center', textAlign: 'center' }}>
                     <TextField
-                        sx={{ height: "40px", bgcolor: "white",margin :'30px 0' }}
+                        sx={{ height: "40px", bgcolor: "white", margin: '30px 0' }}
                         margin="normal"
                         size="small"
                         fullWidth
@@ -100,10 +100,10 @@ function Login() {
                         id="password"
                     // autoComplete="current-password"
                     />
-                    <Button 
-                    theme="unfilled"
-                    margin="50px"
-                     >다음</Button>
+                    <Button
+                        theme="unfilled"
+                        margin="50px"
+                    >다음</Button>
                 </Box>
                 <Grid width='280px' heigh='1px' borderBottom='1px solid gray'></Grid>
                 <Grid padding="1px">
@@ -120,7 +120,7 @@ function Login() {
                         heigh=""
                         border='0px'
                         backgroundColor="#00000000"
-                        >
+                    >
                         카카오로 로그인하기
                     </Button>
                 </Grid>
@@ -128,7 +128,7 @@ function Login() {
                     is_flex
                     justifyContent="space-between"
                     width="100%">
-                    <Button border='0px' backgroundColor="#00000000" onClick={()=>navigate('/signup')}>회원가입</Button>
+                    <Button border='0px' backgroundColor="#00000000" onClick={() => navigate('/signup')}>회원가입</Button>
                     <Button border='0px' backgroundColor="#00000000">비밀번호 찾기</Button>
                 </Grid>
             </Grid>

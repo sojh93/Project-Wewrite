@@ -29,19 +29,19 @@ const Mywrite = (props) => {
             
                 <Grid margin="20px 0 10px 0">
                     <Text>닉네임</Text>
-                    <Input></Input>
+                    <Input />
                 </Grid>
                 <Grid margin="10px">
                     <Text>소개</Text>
-                    <Input height="50px"></Input>
+                    <Input height="50px" />
                 </Grid>
                 <Grid margin="10px">
                     <Text>비밀번호</Text>
-                    <Input type="password"></Input>
+                    <Input type="password" />
                 </Grid>
                 <Grid margin="10px">
                     <Text>비밀번호 확인</Text>
-                    <Input type="password"></Input>
+                    <Input type="password" />
                 </Grid>
                 <Button margin="20px" width="90px">프로필수정 완료</Button>
             </Grid>
