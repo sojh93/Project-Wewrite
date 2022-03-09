@@ -1,8 +1,6 @@
 //import Library
 import React from "react";
-import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import "./styles.css";
 
@@ -17,6 +15,7 @@ import { CgProfile } from "react-icons/cg";
 // impot Component
 import Header from "../components/Header";
 import Bottom from "../components/Bottom";
+import NavigationBar from "../components/NavigationBar";
 
 const Mypage = () => {
     const moveHref = () => {
@@ -70,6 +69,7 @@ const Mypage = () => {
                         </Text>
                     </Grid>
                 </Grid>
+                <NavigationBar />
             </Grid>
 
             <Bottom thisPage="myPage" />
