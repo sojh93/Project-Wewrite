@@ -52,8 +52,8 @@ export default function Bottom(props) {
     }
 
     return (
-        <Grid position="absolute" bottom="0px" zIndex="1" borderRadius="10px 10px 0 0" >
-            <Grid is_flex backgroundColor='#6454FF' borderRadius="10px 10px 0 0" alignItems="center" justifyContent="space-around" width="320px" >
+        <Grid zIndex='9' position="absolute" bottom="0px" borderRadius="10px 10px 0 0" >
+            <Grid is_flex backgroundColor='#6454FF' borderRadius="10px 10px 0 0" alignItems="center" justifyContent="space-around" width="100vw" minWidth ="360px" maxWidth ="390px">
                 {props.thisPage==="main"?       <Text color="white"><WidgetsIcon /></Text>              : <Text color="white" onClick={()=>navigate('/')}><WidgetsOutlinedIcon/></Text>}
                 {props.thisPage==="book"?       <Text color="white"><BookmarkOutlinedIcon/></Text>      : <Text color="white"><BookmarkBorderOutlinedIcon/></Text>}
                 {props.thisPage==="add"?        <Text color="white"><AddCircleOutlinedIcon/></Text>     : <Text color="white" onClick={addBtn}><AddCircleOutlineOutlinedIcon/></Text>}

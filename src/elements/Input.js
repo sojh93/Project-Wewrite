@@ -63,8 +63,6 @@ const Input = ({
                             placeholder={placeholder}
                             style={{...props}}
                         />
-                        <MarkX><FiXCircle/></MarkX>
-                        
                     </Wrap>
                 )
             }
@@ -90,6 +88,7 @@ const ThemeInput = styled.input`
     
     width : 300px;
     height : 40px;
+    padding : 15px;
 
     box-sizing: border-box;
 
@@ -160,12 +159,5 @@ const Select = styled.select`
 
 
 
-const MarkX = styled.div`
-    position : absolute;
-    top : 10px;
-    right : 10px;
-    font-size : 15px;
-    color : gray;
-    display : none
-`;
+
 export default Input;

@@ -35,10 +35,10 @@ function FinishedDetail(props) {
 
         <Grid wrap>   
             <Header/>
-            <Grid margin='0' height=''>
+            <Grid margin='60px 0 0 0' height=''>
                 <Image width='100%' height='' src='https://m.gababa.co.kr/web/product/big/202201/fa879723a59d6040560c2402f587e080.jpg'/>
             </Grid>
-            <Grid is_flex flex-direction='column' align-items='center' z-index="1" margin="-4px 0 0 0" width='100%'> 
+            <Grid is_flex flex-direction='column' align-items='center' margin="-4px 0 0 0" width='100%'> 
                 <Grid margin='5px'>
                     <Chip margin="10px">테스트</Chip>
                     <Grid is_flex justify-content="space-between" align-items="center" width='310px'>

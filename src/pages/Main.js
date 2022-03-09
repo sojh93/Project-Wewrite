@@ -63,10 +63,18 @@ function Main(props) {
     }, []);
 
     return (
+        <>
+            <Header isMain/>
         <Grid wrap>   
-            <Header/>
-            <Grid margin='50px 0 0 0'>
+
+            <Grid is_flex flexDirection='column' alignItems='center' margin='60px 0 0 0'>
+                <Grid margin = "20px">
+                    <Input isTheme placeholder='Search'/>
+
+                </Grid>
+
                 <Swiper
+                    rewind={true}
                     effect={"cards"}
                     grabCursor={true}
                     modules={[EffectCards]}
@@ -77,12 +85,11 @@ function Main(props) {
                     <SwiperSlide><Image width="240px" height='320px' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
                     <SwiperSlide><Image width="240px" height='320px' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
                 </Swiper>
-            </Grid>
 
-            <Grid margin ="30px 0">
-                이쯤에 대충 무슨 텍스트가 들어가겠지
-                <Swiper
-                    style={{height : 100, width : 320}}
+                <Grid width='100%'  is_flex flexDirection='column'>
+                    <Text margin='10px' fontSize='24px' fontWeight='500'>새로운 이야기</Text>
+                    <Swiper
+                    style={{height : '200px', width : 'calc(100vw - 20px)', minWidth : '340px', maxWidth : '370px' ,margin : '10px'}}
                     slidesPerView={3}
                     spaceBetween={20}
                     freeMode={true}
@@ -91,17 +98,34 @@ function Main(props) {
                     }}
                     modules={[FreeMode, Pagination]}
                     className="mySwiper"
-                >
-                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
-                </Swiper>
-            </Grid>
-            <Grid margin ="30px 0">
-                모든 게시물
-                <Swiper
-                    style={{height : 100, width : 320}}
+                    >
+                        <SwiperSlide>
+                            <Books title='1' src='https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxNzA1MTlfMTAz%2FMDAxNDk1MTg4MjgyODc5.m2G06HHnnU6ecH9fgxBa49y_CAWRdET66-BHaDPyaH8g.EqJortjsZ1FSGUYuuMI0boDSCN4XtUTb6OV5kN7gYgkg.JPEG.nahe1234%2FIMG_4413.jpg&type=sc960_832'/>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <Books title='2' src='https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTEyMjZfNSAg%2FMDAxNjQwNDk2NDMwNjEy.KQSYCQjtbr93R6puwjZv3XBb927BTZa6HrWggnvfFjsg.I7SHh8UejjgOrY2PbT-ud4rDMLIvDBtTJPScyBq9W6kg.JPEG.betterbester79%2FIMG_5224.JPG&type=sc960_832'/>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <Books title='3' src='https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAzMjlfMyAg%2FMDAxNjE2OTg4ODA4MjMz.8abxqorQhFPeI-TmKo3TsYCUpxawNAKCwimDD7FzooQg.lQkhZ0rPB03RMPdGabgZz1yhkNLR2xyvjdeTtPN3WSog.JPEG.gooddaykiki%2FIMG_5466.JPG&type=sc960_832'/>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <Books title='4' src='https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjAxMTNfMTg2%2FMDAxNjQyMDM3NTE1OTc5.UTfYs5s2LKeHfQlLIYIOFGW5jyKYPoUaerGkPToJ5Ysg.DwCj3l0SQ2I3qcV2T-YdeSetjBij4LOpfPtkXbQWAoog.JPEG.pola0216%2F%25B1%25D7%25C7%25D8%25BF%25EC%25B8%25AE%25B4%25C212%25C8%25B8%25B1%25E8%25B4%25D9%25B9%25CC%25C4%25DA%25C6%25AE03.jpg&type=sc960_832'/>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <Books title='5' src='https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjAxMThfMjQw%2FMDAxNjQyNDk5MTk5NTg0.TGQOj1wiTuvHW23KfmsWqlBqM9j3M0z0m8chhlBlTIsg.O9YpTNuc33BY1qJCg0ASF_750ME0NwKovQG6y6IVYtgg.JPEG.raheehair2900%2FScreenshot%25A3%25DF20220118%25A3%25AD182843%25A3%25DFNAVER.jpg&type=sc960_832'/>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <Books title='6' src='https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjAyMjBfOTMg%2FMDAxNjQ1MzI1MTE1MjQw.SVXr8xT2ehQZztcvJx8XdN2Q5EfHQByQ-oC2vODW9_0g.mfK2BIZ5Jx2EzHS7anVPsY3APMIuY3O3XjSl8LN7X8Eg.JPEG.sunba0809%2F70fa0d298ba51808c7194ccd738b30da.jpg&type=sc960_832'/>
+                        </SwiperSlide>
+                    </Swiper>
+                </Grid>
+
+                
+
+                <Grid width='100%'  is_flex flexDirection='column'>
+                    <Text margin='10px' fontSize='24px' fontWeight='500'>당신에게 추천해요</Text>
+                    <Swiper
+                    style={{height : '200px', width : 'calc(100vw - 20px)', minWidth : '340px', maxWidth : '370px' ,margin : '10px'}}
                     slidesPerView={3}
                     spaceBetween={20}
                     freeMode={true}
@@ -110,68 +134,49 @@ function Main(props) {
                     }}
                     modules={[FreeMode, Pagination]}
                     className="mySwiper"
-                >
-                    {_post.allPostList.map((v,i)=>{
-                        return (<SwiperSlide><Image width='100%' height='100%' key={v.postKey} src={v.postImageUrl}/></SwiperSlide>)
-                    })}
-                </Swiper>
+                    >
+                        <SwiperSlide>
+                            <Books title='1' src='https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxNzA1MTlfMTAz%2FMDAxNDk1MTg4MjgyODc5.m2G06HHnnU6ecH9fgxBa49y_CAWRdET66-BHaDPyaH8g.EqJortjsZ1FSGUYuuMI0boDSCN4XtUTb6OV5kN7gYgkg.JPEG.nahe1234%2FIMG_4413.jpg&type=sc960_832'/>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <Books title='2' src='https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTEyMjZfNSAg%2FMDAxNjQwNDk2NDMwNjEy.KQSYCQjtbr93R6puwjZv3XBb927BTZa6HrWggnvfFjsg.I7SHh8UejjgOrY2PbT-ud4rDMLIvDBtTJPScyBq9W6kg.JPEG.betterbester79%2FIMG_5224.JPG&type=sc960_832'/>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <Books title='3' src='https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAzMjlfMyAg%2FMDAxNjE2OTg4ODA4MjMz.8abxqorQhFPeI-TmKo3TsYCUpxawNAKCwimDD7FzooQg.lQkhZ0rPB03RMPdGabgZz1yhkNLR2xyvjdeTtPN3WSog.JPEG.gooddaykiki%2FIMG_5466.JPG&type=sc960_832'/>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <Books title='4' src='https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjAxMTNfMTg2%2FMDAxNjQyMDM3NTE1OTc5.UTfYs5s2LKeHfQlLIYIOFGW5jyKYPoUaerGkPToJ5Ysg.DwCj3l0SQ2I3qcV2T-YdeSetjBij4LOpfPtkXbQWAoog.JPEG.pola0216%2F%25B1%25D7%25C7%25D8%25BF%25EC%25B8%25AE%25B4%25C212%25C8%25B8%25B1%25E8%25B4%25D9%25B9%25CC%25C4%25DA%25C6%25AE03.jpg&type=sc960_832'/>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <Books title='5' src='https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjAxMThfMjQw%2FMDAxNjQyNDk5MTk5NTg0.TGQOj1wiTuvHW23KfmsWqlBqM9j3M0z0m8chhlBlTIsg.O9YpTNuc33BY1qJCg0ASF_750ME0NwKovQG6y6IVYtgg.JPEG.raheehair2900%2FScreenshot%25A3%25DF20220118%25A3%25AD182843%25A3%25DFNAVER.jpg&type=sc960_832'/>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <Books title='6' src='https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjAyMjBfOTMg%2FMDAxNjQ1MzI1MTE1MjQw.SVXr8xT2ehQZztcvJx8XdN2Q5EfHQByQ-oC2vODW9_0g.mfK2BIZ5Jx2EzHS7anVPsY3APMIuY3O3XjSl8LN7X8Eg.JPEG.sunba0809%2F70fa0d298ba51808c7194ccd738b30da.jpg&type=sc960_832'/>
+                        </SwiperSlide>
+                    </Swiper>
+                </Grid>
             </Grid>
-            <Grid margin ="30px 0">
-                이쯤에 대충 무슨 텍스트가 들어가겠지
-                <Swiper
-                    style={{height : 100, width : 320}}
-                    slidesPerView={3}
-                    spaceBetween={20}
-                    freeMode={true}
-                    pagination={{
-                    clickable: true,
-                    }}
-                    modules={[FreeMode, Pagination]}
-                    className="mySwiper"
-                >
-                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
-                </Swiper>
-            </Grid>
-            {/* <Grid>
-                <Carousel width="320px" height="180px" imgURL={tempImage} />
-            </Grid> */}
 
-            {/* <Grid>
-                <Text>추천 릴레이</Text>
-                <Books book={tempImage}></Books>
-            </Grid>     */}
-
-            {/* <Grid margin="100px 10px">
-                <Button theme="unfilled" >다음</Button>
-                <Grid margin="10px"></Grid>
-                <Input isTheme placeholder="placeholder" />
-                <Grid margin="10px"></Grid>
-                <Input isTheme type="radio" value="예시1" name="test" />
-                <Input isTheme type="radio" value="예시2" name="test" />
-                <Grid margin="10px"></Grid>
-                <Input isTheme type="select" name="test1">
-                    <option disabled selected>fruits 🍊</option>
-                    <option value="apple">apple</option>
-                    <option value="orange">orange</option>
-                    <option value="grape">grape</option>
-                    <option value="melon">melon</option>
-                </Input>
-            </Grid> */}
 
             <Bottom thisPage="main"/>
 
         </Grid>
+        </>
     );
 }
 
 
+const Hover = styled.div`
 
+`;
+
+const Mark = styled.div`
+    position : absolute;
+    top : 10px;
+    right : 10px;
+    font-size : 15px;
+    color : gray;
+    display : none
+`;
 
 export default Main;
