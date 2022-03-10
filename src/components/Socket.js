@@ -28,8 +28,8 @@ const ChattingRoom = (props) => {
     const { roomName, category } = useSelector(
         (state) => state.chat.currentChat
     );
-    const roomId = useSelector((state) => state.chat.currentChat.roomId);
-    console.log(roomId);
+    const postId = useSelector((state) => state.chat.currentChat.roomId);
+    console.log(postId);
     // 토큰
     const token = getCookie("WW_user");
     const dispatch = useDispatch();
@@ -48,7 +48,7 @@ const ChattingRoom = (props) => {
         return () => {
             wsDisConnectUnsubscribe();
         };
-    }, [roomId]);
+    }, [postId]);
 
     // 웹소켓 연결, 구독
     function wsConnectSubscribe() {
@@ -59,8 +59,9 @@ const ChattingRoom = (props) => {
                 },
                 () => {
                     ws.subscribe(
-                        `/sub/api/chat/rooms/${roomId}`,
+                        `/sub/api/chat/rooms/79`,
                         (data) => {
+                            // const postId = JSON.parse(79);
                             const newMessage = JSON.parse(data.body);
                         }, // dispatch(chatActions 왜빠진거지?)
                         { token: token }
@@ -113,7 +114,7 @@ const ChattingRoom = (props) => {
             // send할 데이터
             const data = {
                 type: "TALK",
-                roomId: roomId,
+                roomId: postId,
                 sender: sender,
                 message: messageText,
             };
