@@ -9,7 +9,7 @@ import styled from "styled-components";
 // 채팅 관련 함수들 가져오기
 
 // 쿠키
-import { getCookie } from "../shared/cookie";
+import { getCookie } from "../shared/Cookie";
 
 // 리덕스
 import { useDispatch, useSelector } from "react-redux";
@@ -21,7 +21,7 @@ import SockJS from "sockjs-client";
 // 채팅 방 컴포넌트
 const ChattingRoom = (props) => {
     // 소켓 통신 객체
-    const sock = new SockJS("http://15.164.97.250:8080/chatting");
+    const sock = new SockJS("http://3.36.75.74:8080/ws-stomp");
     const ws = Stomp.over(sock);
 
     // 방 제목 가져오기
@@ -29,14 +29,14 @@ const ChattingRoom = (props) => {
         (state) => state.chat.currentChat
     );
     const roomId = useSelector((state) => state.chat.currentChat.roomId);
-
+    console.log(roomId);
     // 토큰
-    const token = getCookie("access-token");
+    const token = getCookie("WW_user");
     const dispatch = useDispatch();
 
     // 보낼 메시지 텍스트
     const messageText = useSelector((state) => state.chat.messageText);
-    // sedner 정보 가져오기
+    // sender 정보 가져오기
     let sender = useSelector((state) => state.user.userInfo?.username);
     if (!sender) {
         sender = getCookie("username");
@@ -67,6 +67,7 @@ const ChattingRoom = (props) => {
                     );
                 }
             );
+            console.log("success");
         } catch (error) {
             console.log(error);
         }
@@ -137,3 +138,4 @@ const ChattingRoom = (props) => {
 
     return <></>;
 };
+export default ChattingRoom;

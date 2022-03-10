@@ -33,7 +33,7 @@ const Mypage = () => {
     return (
         <Grid wrap>
             <Header />
-            <Grid height="140px" width="320px" is_scroll padding="0">
+            <Grid height="140px" width="320px" is_scroll padding="0" margin="0">
                 <Grid
                     is_flex
                     height="130px"

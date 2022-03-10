@@ -20,6 +20,7 @@ import Write from "../pages/Write";
 import UnfinishedDetail from "../pages/unfinishedDetail";
 import FinishedDetail from "../pages/FinishedDetail";
 import KakaoLogin from "../pages/KakaoLogin";
+import Socket from "../components/Socket";
 
 function App() {
     return (
@@ -37,6 +38,7 @@ function App() {
                     <Route path="/newslist" element={<NewsList />} />
                     <Route path="/postlist" element={<PostList />} />
                     <Route path="/write" element={<Write />} />
+                    <Route path="/socket" element={<Socket />} />
                     <Route
                         path="/unfinisheddetail"
                         element={<UnfinishedDetail />}
