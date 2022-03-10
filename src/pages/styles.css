@@ -94,9 +94,9 @@ body {
 
 p {
     max-height: 100%;
-    font-size: 14px;
+    font-size: 10px;
     color: rgb(85, 85, 85);
-    line-height: 30px;
+    line-height: 12px;
 }
 
 p.close {
