@@ -12,7 +12,7 @@ import Main from "../pages/Main";
 import Login from "../pages/Login";
 import Clause from "../pages/Clause";
 import Signup from "../pages/Signup";
-import Mypage from "../pages/Mypage";
+import UserPage from "../pages/UserPage";
 import Mywrite from "../pages/Mywrite";
 import NewsList from "../pages/NewsList";
 import PostList from "../pages/PostList";
@@ -36,14 +36,14 @@ function App() {
           <Route path="/login/kakaoLogin" element={<KakaoLogin />} />
           <Route path="/clause" element={<Clause />} />
           <Route path="/Signup" element={<Signup />} />
-          <Route path="/userpage/:userKey" element={<Mypage />} />
+          <Route path="/userpage/:userKey" element={<UserPage />} />
           <Route path="/mywrite" element={<Mywrite />} />
           <Route path="/newslist" element={<NewsList />} />
           <Route path="/postlist" element={<PostList />} />
           <Route path="/write" element={<Write />} />
           <Route path="/unfinisheddetail/:postKey" element={<UnfinishedDetail />} />
           <Route path="/finisheddetail/:postKey" element={<FinishedDetail />} />
-          <Route path="/modifyprofile" element={<ModifyProfile />} />
+          <Route path="/modifyprofile/:userKey" element={<ModifyProfile />} />
           <Route path="/changePassword" element={<ChangePassword />} />
           <Route path="/withdrawMember" element={<WithdrawMember />} />
 

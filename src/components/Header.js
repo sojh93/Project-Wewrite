@@ -23,6 +23,8 @@ import DensityMediumIcon from '@mui/icons-material/DensityMedium';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 // impot Component
 
@@ -145,7 +147,7 @@ const Header = (props) => {
             <Grid>
                 <Grid zIndex='9' boxShadow='rgb(217 217 217) 0px 2px 5px' position="absolute" top="0px"  backgroundColor="white"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
                     <Grid is_flex border="0">
-                        <Tooltip title="뒤로가기"><IconButton sx={{width:"50px", height : "50px"}}><KeyboardArrowLeftIcon sx={{ width:"15px", height : "15px", margin :"10px"}}/></IconButton></Tooltip>    
+                        <Tooltip title="뒤로가기"><IconButton  onClick={()=>{navigate(-1)}} sx={{width:"50px", height : "50px"}}><KeyboardArrowLeftIcon sx={{ width:"15px", height : "15px", margin :"10px"}}/></IconButton></Tooltip>    
                     </Grid>
     
                     <Grid>
@@ -160,12 +162,50 @@ const Header = (props) => {
         );
     }
     
-
+    if(props.isUserPage){
+        return(
+            <Grid>
+                <Grid zIndex='9' boxShadow='rgb(217 217 217) 0px 2px 5px' position="absolute" top="0px"  backgroundColor="white"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+                    <Grid is_flex border="0">
+                        <Tooltip title="뒤로가기"><IconButton onClick={()=>{navigate(-1)}} sx={{width:"50px", height : "50px"}}><KeyboardArrowLeftIcon sx={{ width:"15px", height : "15px", margin :"10px"}}/></IconButton></Tooltip>    
+                    </Grid>
+    
+                    <Grid>
+                        <Text>{props.UserName}</Text>
+                    </Grid>
+    
+                    <Grid backgroundColor="white" is_flex border="0" >
+                        <Tooltip title="설정"><IconButton  onClick={()=>{navigate('/modifyprofile')}} sx={{width:"50px", height : "50px"}}><SettingsOutlinedIcon  sx={{ margin :"10px"}}/></IconButton></Tooltip>    
+                    </Grid>
+                </Grid>
+            </Grid>
+        );
+    }
+    if(props.isEditUser){
+        return(
+            <Grid>
+                <Grid zIndex='9' boxShadow='rgb(217 217 217) 0px 2px 5px' position="absolute" top="0px"  backgroundColor="white"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+                    <Grid is_flex border="0">
+                        <Tooltip title="뒤로가기"><IconButton onClick={()=>{navigate(-1)}} sx={{width:"50px", height : "50px"}}><KeyboardArrowLeftIcon sx={{ width:"15px", height : "15px", margin :"10px"}}/></IconButton></Tooltip>    
+                    </Grid>
+    
+                    <Grid>
+                        <Text>회원 정보 수정하기</Text>
+                    </Grid>
+    
+                    <Grid backgroundColor="white" is_flex border="0" >
+                        <Tooltip title="설정"><IconButton sx={{width:"50px", height : "50px"}}><SettingsIcon  sx={{ margin :"10px"}}/></IconButton></Tooltip>    
+                    </Grid>
+                </Grid>
+            </Grid>
+        );
+    }
+    
     return(
         <Grid>
             <Grid zIndex='9' boxShadow='rgb(217 217 217) 0px 2px 5px' position="absolute" top="0px"  backgroundColor="white"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
                 <Grid is_flex border="0">
-                    <Tooltip title="뒤로가기"><IconButton sx={{width:"50px", height : "50px"}}><KeyboardArrowLeftIcon sx={{ width:"15px", height : "15px", margin :"10px"}}/></IconButton></Tooltip>    
+                    <Tooltip title="뒤로가기"><IconButton  onClick={()=>{navigate(-1)}} sx={{width:"50px", height : "50px"}}><KeyboardArrowLeftIcon sx={{ width:"15px", height : "15px", margin :"10px"}}/></IconButton></Tooltip>    
                 </Grid>
 
                 <Grid>
