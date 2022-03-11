@@ -46,25 +46,25 @@ function Signup() {
     React.useEffect(() => {
         dispatch(
             userActions.check(
-                "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjQ2MzkxNjE2LCJleHAiOjE2NDYzOTUyMTZ9.VrGfr8IWgewW2sTO9WLS2tIdB1ID_h_8GIfc-urdDuE"
+                "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MUBnbWFpbC5jb20iLCJpYXQiOjE2NDY5MjI5NjUsImV4cCI6MTY0NzE4MjE2NX0.Kqtl_id1CXFJnx68n2PtgeL1HsB5zaUlOzrLj6X0l58"
             )
         );
     }, []);
 
-    const selectFile = (e) => {
-        const formData = new FormData();
-        const file = fileInput.current.files[0];
-        setPostFile(file);
+    // const selectFile = (e) => {
+    //     const formData = new FormData();
+    //     const file = fileInput.current.files[0];
+    //     setPostFile(file);
 
-        formData.append("userProfile", file);
+    //     formData.append("userProfile", file);
 
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.addEventListener("load", function () {
-            console.log(reader.result);
-            setPreview(reader.result);
-        });
-    };
+    //     const reader = new FileReader();
+    //     reader.readAsDataURL(file);
+    //     reader.addEventListener("load", function () {
+    //         console.log(reader.result);
+    //         setPreview(reader.result);
+    //     });
+    // };
 
     const handleSubmit = (event) => {
         event.preventDefault();
