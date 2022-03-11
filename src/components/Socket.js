@@ -23,18 +23,19 @@ import SockJS from "sockjs-client";
 const ChattingRoom = (props) => {
     // 소켓 통신 객체
     const sock = new SockJS("http://3.36.75.74:8080/ws-stomp");
+    // const sock = new SockJS("http://binscot.shop/ws-stomp");
     const ws = Stomp.over(sock);
 
     // 방 제목 가져오기
     const category = "temp";
     const roomName = "name";
-    const postId = "postId";
+    const postId = "68";
     console.log(postId);
     // 토큰
-    // const token =
-    //     "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MUBnbWFpbC5jb20iLCJpYXQiOjE2NDY5MzQyOTksImV4cCI6MTY0NzE5MzQ5OX0.y-DfDDCqCLPQMYDpG_8ypZlSywc1_8-TivowUJp4EIk";
+    const token =
+        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MUBnbWFpbC5jb20iLCJpYXQiOjE2NDcwMTA0NDYsImV4cCI6MTY0NzI2OTY0Nn0.QUfB1bL0v9hByAkaX3756nqVNnScZ96BfT0lOytY8uw";
     var headers = {
-        userName: 'test1@gmail.com'
+        Authorization: token
     };
     const dispatch = useDispatch();
 
@@ -54,13 +55,15 @@ const ChattingRoom = (props) => {
         try {
             ws.connect(headers, () => {
                 ws.subscribe(
-                    `/chat/message/68`,
+                    // websocket 구독 url 콜백함수 header 
+                    `/sub/api/chat/rooms/68`,
                     (data) => {
-                        // const postId = JSON.parse(79);
-                        
-                            
-                        console.log("구독연결 테스트중 with 택규님, 하빈님")
-                        const newMessage = JSON.parse(data.body);
+                        // const postId = JSON.parse(68);
+                        // console.log(data)
+                        // // console.log("구독연결 테스트중 with 택규님, 하빈님")
+                        // const newMessage = JSON.parse(data.body);
+                        // console.log(newMessage)
+                        if (data.body) { alert("got message with body " + data.body) } else { alert("got empty message"); }
                     },
                     headers
                 );
@@ -81,6 +84,7 @@ const ChattingRoom = (props) => {
             console.log(error);
         }
     }
+    // useEffect에 return값에 넣어주면 자동으로 구독해제됨.
 
     // 웹소켓이 연결될 때 까지 실행하는 함수
     function waitForConnection(ws, callback) {
@@ -107,25 +111,27 @@ const ChattingRoom = (props) => {
             // }
             // send할 데이터
             const data = {
-                type: "TALK",
-                postId: postId,
+                type: "START",
+                postId: "68",
                 userName: headers.userName,
-                userId: "1",
-                paragraph: "항해99 젠장쓰",
+                userId: "null",
+                paragraph: "MVP 가즈아아",
                 nickName: 'noname',
             };
+            console.log(data);
             // 빈문자열이면 리턴
             if (messageText === "") {
                 return;
             }
             // 로딩 중
             waitForConnection(ws, function () {
-                ws.send("/pub/chat/message/68", headers, JSON.stringify(data));
+                ws.send("/pub/paragraph/complete", headers, JSON.stringify(data));
+                // 메세지 보내는 곳. url/헤더/데이터 -> 데이터를 문자열화 해주는 것
                 console.log(ws.ws.readyState);
             });
         } catch (error) {
             console.log(error);
-            //console.log(ws.ws.readyState);
+            console.log(ws.ws.readyState);
         }
     }
 

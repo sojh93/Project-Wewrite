@@ -50,7 +50,8 @@
     "styled-components": "^5.3.3",
     "swiper": "^8.0.7",
     "web-vitals": "^2.1.0",
-    "webpack": "^5.70.0"
+    "webpack": "^5.70.0",
+    "websocket": "^1.0.34"
   },
   "scripts": {
     "start": "react-scripts start",
