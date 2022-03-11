@@ -17,7 +17,7 @@ import Mywrite from "../pages/Mywrite";
 import NewsList from "../pages/NewsList";
 import PostList from "../pages/PostList";
 import Write from '../pages/Write';
-import UnfinishedDetail from '../pages/unfinishedDetail';
+import UnfinishedDetail from '../pages/UnfinishedDetail';
 import FinishedDetail from '../pages/FinishedDetail';
 import KakaoLogin from '../pages/KakaoLogin';
 import ModifyProfile from "../pages/ModifyProfile";
@@ -36,12 +36,12 @@ function App() {
           <Route path="/login/kakaoLogin" element={<KakaoLogin />} />
           <Route path="/clause" element={<Clause />} />
           <Route path="/Signup" element={<Signup />} />
-          <Route path="/mypage" element={<Mypage />} />
+          <Route path="/userpage/:userKey" element={<Mypage />} />
           <Route path="/mywrite" element={<Mywrite />} />
           <Route path="/newslist" element={<NewsList />} />
           <Route path="/postlist" element={<PostList />} />
           <Route path="/write" element={<Write />} />
-          <Route path="/unfinisheddetail" element={<UnfinishedDetail />} />
+          <Route path="/unfinisheddetail/:postKey" element={<UnfinishedDetail />} />
           <Route path="/finisheddetail/:postKey" element={<FinishedDetail />} />
           <Route path="/modifyprofile" element={<ModifyProfile />} />
           <Route path="/changePassword" element={<ChangePassword />} />
