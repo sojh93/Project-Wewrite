@@ -34,14 +34,14 @@ function FinishedDetail(props) {
     return (
 
         <Grid wrap>   
-            <Header/>
+            <Header isDetail postTitle="누구세요?"/>
             <Grid margin='60px 0 0 0' height=''>
                 <Image width='100%' height='' src='https://m.gababa.co.kr/web/product/big/202201/fa879723a59d6040560c2402f587e080.jpg'/>
             </Grid>
             <Grid is_flex flex-direction='column' align-items='center' margin="-4px 0 0 0" width='100%'> 
-                <Grid margin='5px'>
+                <Grid margin='5px' width='90%'>
                     <Chip margin="10px">테스트</Chip>
-                    <Grid is_flex justify-content="space-between" align-items="center" width='310px'>
+                    <Grid is_flex justify-content="space-between" align-items="center" width='100%'>
                         <Text font-size='24px'>무서운 이야기</Text>
                         <Grid is_flex>
                             <Text><ThumbUpOutlinedIcon/></Text>
@@ -50,10 +50,11 @@ function FinishedDetail(props) {
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid is_flex flexDirection='column' width='310px'>
+                <Grid width='90%' height='1px' borderBottom='1px solid'/>
+                <Grid is_flex flexDirection='column' width='90%'>
                     <Text>참여자</Text>
                     <Swiper
-                    style={{height : '68px', width : '300px', margin : '10px'}}
+                    style={{height : '68px', width : 'calc(100% - 20px)', margin : '10px'}}
                     slidesPerView={5}
                     spaceBetween={20}
                     freeMode={true}
@@ -83,8 +84,9 @@ function FinishedDetail(props) {
                     </SwiperSlide>
                 </Swiper>
                 </Grid>
-                <Grid is_flex flexDirection='column' width='310px'>
-                    <Sentence contents="내용..." src='https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxNzA1MTlfMTAz%2FMDAxNDk1MTg4MjgyODc5.m2G06HHnnU6ecH9fgxBa49y_CAWRdET66-BHaDPyaH8g.EqJortjsZ1FSGUYuuMI0boDSCN4XtUTb6OV5kN7gYgkg.JPEG.nahe1234%2FIMG_4413.jpg&type=sc960_832'/>
+                <Grid width='90%' height='1px' borderBottom='1px solid'/>
+                <Grid is_flex flexDirection='column' width='90%'>
+                    <Sentence contents="내용..내용이 이렇게 길게 길게 길이이일 게게 좀 더 길게게에에ㅔ" src='https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxNzA1MTlfMTAz%2FMDAxNDk1MTg4MjgyODc5.m2G06HHnnU6ecH9fgxBa49y_CAWRdET66-BHaDPyaH8g.EqJortjsZ1FSGUYuuMI0boDSCN4XtUTb6OV5kN7gYgkg.JPEG.nahe1234%2FIMG_4413.jpg&type=sc960_832'/>
                     <Sentence contents="내용..." src='https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTEyMjZfNSAg%2FMDAxNjQwNDk2NDMwNjEy.KQSYCQjtbr93R6puwjZv3XBb927BTZa6HrWggnvfFjsg.I7SHh8UejjgOrY2PbT-ud4rDMLIvDBtTJPScyBq9W6kg.JPEG.betterbester79%2FIMG_5224.JPG&type=sc960_832'/>
                     <Sentence contents="내용..." src='https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAzMjlfMyAg%2FMDAxNjE2OTg4ODA4MjMz.8abxqorQhFPeI-TmKo3TsYCUpxawNAKCwimDD7FzooQg.lQkhZ0rPB03RMPdGabgZz1yhkNLR2xyvjdeTtPN3WSog.JPEG.gooddaykiki%2FIMG_5466.JPG&type=sc960_832'/>
                 </Grid>

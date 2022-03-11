@@ -18,14 +18,19 @@ import { Button, Grid, Input, Image, Text } from "../elements"
 export default function Sentence(props) {
 
     return (
-        <Grid is_flex flexDirection='column' margin='50px 5px 5px 5px' width='310px' gap='5px'>
-            <Image width='30px' height='30px' src={props.src}/>
-
-            <Grid is_flex alignItems='center'>
-            <Grid  width='250px'  height='auto'>
-                <Text>{props.contents}</Text>
+        <Grid is_flex margin='50px 5px 5px 5px' justifyContent='space-between' width='100%' gap='10px'>
+            <Grid is_flex flexDirection='column'>
+                <Image width='30px' height='30px' src={props.src}/>
+                <Grid is_flex alignItems='center'>
+                    <FavoriteBorderOutlinedIcon  sx={{width:'10px'}}/>
+                    <Text margin='0 2px 1px 2px' fontSize='10px'>100</Text>
+                </Grid>
             </Grid>
-            <FavoriteBorderOutlinedIcon  sx={{width:'20px'}}/>
+
+            <Grid  width='100%' is_flex alignItems='flex-start'>
+                <Grid height='auto'>
+                    <Text>{props.contents}</Text>
+                </Grid>
             </Grid>
         </Grid>
     );
