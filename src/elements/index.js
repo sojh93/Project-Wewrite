@@ -6,4 +6,4 @@ import Button from "./Button";
 import Spinner from "./Spinner";
 import Chip from "./Chip";
 
-export {Spinner, Chip,Input, Grid, Image, Text, Button};
+export { Spinner, Chip, Input, Grid, Image, Text, Button };

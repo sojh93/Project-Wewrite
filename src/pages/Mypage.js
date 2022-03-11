@@ -2,8 +2,9 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate,useParams } from "react-router-dom";
-import SwitchSelector from "react-switch-selector";
+import { useNavigate } from "react-router-dom";
+import { useRef, useState } from "react";
+import "./styles.css";
 
 //import Actions
 
@@ -16,79 +17,67 @@ import { CgProfile } from "react-icons/cg";
 // impot Component
 import Header from "../components/Header";
 import Bottom from "../components/Bottom";
-import Books from "../components/Books";
+import BookILike from "../components/BookILike";
 
-const Mypage = (props) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+const Mypage = () => {
+    const moveHref = () => {
+        document.location.href = "/Mywrite";
+    };
 
-  const _user = useSelector(state => state.user);
-  const _post = useSelector(state => state.post);
+    const [closed, setClosed] = useState(false);
 
-  const pageUserKey = useParams().userKey;
-  console.log(pageUserKey);
+    const handleMoreBtn = () => {
+        setClosed(!closed);
+    };
 
-  const options = [
-    {
-      label: <span>본인 작품</span>,
-      value: {
-        foo: true,
-      },
-      selectedBackgroundColor: "#0097e6",
-    },
-    {
-      label: "저장된 작품",
-      value: "bar",
-      selectedBackgroundColor: "#fbc531",
-    },
-  ];
+    return (
+        <Grid wrap>
+            <Header />
+            <Grid height="140px" width="320px" is_scroll padding="0" margin="0">
+                <Grid
+                    is_flex
+                    height="130px"
+                    alignItems="center"
+                    justifyContent="center"
+                    margin="20px 5px 0 0"
+                >
+                    <CgProfile
+                        size="120px"
+                        style={{ width: "30%" }}
+                        padding="0"
+                        margin="0"
+                    />
+                </Grid>
+                <Grid is_flex>
+                    <Grid
+                        width="320px"
+                        is_flex
+                        flexDirection="column"
+                        alignItems="center"
+                        padding="0"
+                    >
+                        <Text margin="5px 5px 0px 5px" fontSize="12px">
+                            호칭
+                        </Text>
+                        <Text margin="5px 5px 0px 5px" fontSize="24px">
+                            닉네임
+                        </Text>
+                        <Text margin="5px" fontSize="8px" width="150px">
+                            <p className={closed ? "" : "close"}>
+                                소개글: 안녕하세요 저는 지중해의 몰타 섬이
+                                고향인 말티즈라고 해요. 먹을 걸 내놓아라. 혹시
+                                알아? 귀여워질지? 난 참지 않아!!
+                            </p>
+                        </Text>
+                    </Grid>
+                </Grid>
 
-  const onChange = (newValue) => {
-    console.log(newValue);
-  };
+                <BookILike />
+            </Grid>
 
-  const initialSelectedIndex = options.findIndex(
-    ({ value }) => value === "bar"
-  );
-
-  const moveHref = () => {
-  };
-
-  return (
-    <Grid wrap>
-      <Header thisPage='userPage'/>
-      <Grid
-        is_flex
-        flexDirection="column"
-        width="100%"
-        marginTop='60px'
-      >
-        
-      </Grid>
-      <Grid is_flex width="100%" alignItems="center">
-        {/* 스위치 부분 - 본인작품 / 저장된 작품*/}
-        <div className="your-required-wrapper"
-          style={{
-            width: 160,
-            height: 30,
-            margin: "auto",
-          }}
-        >
-          <SwitchSelector
-            onChange={onChange}
-            options={options}
-            initialSelectedIndex={initialSelectedIndex}
-            backgroundColor={"#353b48"}
-            fontColor={"#f5f6fa"}
-          />
-        </div>
+            <Bottom thisPage="myPage" />
         </Grid>
-        <Books>
-          
-        </Books>
-      <Bottom thisPage="myPage" />
-    </Grid>
-  );
+    );
 };
 
 export default Mypage;
