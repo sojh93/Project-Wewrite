@@ -1,29 +1,36 @@
 import React from "react";
+import { Nav } from 'rsuite';
 
-import styles from "./App.module.css";
-import useNavigation from "../hooks/useNavigation";
-import navigationData from "../data/Navigation";
 
-import Navbar from "./Navbar";
-import Tabbar from "./Tabbar";
 
-const NavigationBar = () => {
-    const { currentRoute, setCurrentRoute } = useNavigation();
-
+const styles = {
+    marginBottom: 50,
+  };
+  
+  const CustomNav = ({ active, onSelect, ...props }) => {
     return (
-        <div className={styles.container}>
-            <Navbar
-                navigationData={navigationData}
-                currentRoute={currentRoute}
-                setCurrentRoute={setCurrentRoute}
-            />
-            <Tabbar
-                navigationData={navigationData}
-                currentRoute={currentRoute}
-                setCurrentRoute={setCurrentRoute}
-            />
-        </div>
+      <Nav {...props} activeKey={active} onSelect={onSelect} style={styles}>
+        <Nav.Item eventKey="mywork">
+          내 참여작
+        </Nav.Item>
+        <Nav.Item eventKey="bookmark">북마크한 작품</Nav.Item>
+        <Nav.Item eventKey="favorite">좋아요한 작품</Nav.Item>
+   
+      </Nav>
     );
-};
+  };
 
-export default NavigationBar;
+  
+  const Demo = () => {
+    const [active, setActive] = React.useState('home');
+    return (
+      <div>
+        <CustomNav active={active} onSelect={setActive} />
+        <CustomNav appearance="tabs" active={active} onSelect={setActive} />
+        <CustomNav appearance="tabs" reversed active={active} onSelect={setActive} />
+        <CustomNav appearance="subtle" active={active} onSelect={setActive} />
+        <CustomNav appearance="subtle" reversed active={active} onSelect={setActive} />
+      </div>
+    );
+  };
+  
