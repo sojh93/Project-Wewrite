@@ -1,6 +1,7 @@
 import React from "react";
 
 import styled from "styled-components";
+import { useState } from "react";
 
 // Components
 
@@ -30,10 +31,10 @@ const ChattingRoom = (props) => {
     const postId = "postId";
     console.log(postId);
     // 토큰
-    const token =
-        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MUBnbWFpbC5jb20iLCJpYXQiOjE2NDY5MzQyOTksImV4cCI6MTY0NzE5MzQ5OX0.y-DfDDCqCLPQMYDpG_8ypZlSywc1_8-TivowUJp4EIk";
+    // const token =
+    //     "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MUBnbWFpbC5jb20iLCJpYXQiOjE2NDY5MzQyOTksImV4cCI6MTY0NzE5MzQ5OX0.y-DfDDCqCLPQMYDpG_8ypZlSywc1_8-TivowUJp4EIk";
     var headers = {
-        Authorization: token,
+        userName: 'test1@gmail.com'
     };
     const dispatch = useDispatch();
 
@@ -53,9 +54,12 @@ const ChattingRoom = (props) => {
         try {
             ws.connect(headers, () => {
                 ws.subscribe(
-                    `/chat/message/4`,
+                    `/chat/message/68`,
                     (data) => {
                         // const postId = JSON.parse(79);
+                        
+                            
+                        console.log("구독연결 테스트중 with 택규님, 하빈님")
                         const newMessage = JSON.parse(data.body);
                     },
                     headers
@@ -98,16 +102,17 @@ const ChattingRoom = (props) => {
     function sendMessage() {
         try {
             // token이 없으면 로그인 페이지로 이동
-            if (!token) {
-                alert("토큰이 없습니다. 다시 로그인 해주세요.");
-            }
+            // if (!token) {
+            //     alert("토큰이 없습니다. 다시 로그인 해주세요.");
+            // }
             // send할 데이터
             const data = {
                 type: "TALK",
                 postId: postId,
-                nickName: sender,
+                userName: headers.userName,
                 userId: "1",
-                paragraph: messageText,
+                paragraph: "항해99 젠장쓰",
+                nickName: 'noname',
             };
             // 빈문자열이면 리턴
             if (messageText === "") {
@@ -115,7 +120,7 @@ const ChattingRoom = (props) => {
             }
             // 로딩 중
             waitForConnection(ws, function () {
-                ws.send("/pub/api/chat/message", headers, JSON.stringify(data));
+                ws.send("/pub/chat/message/68", headers, JSON.stringify(data));
                 console.log(ws.ws.readyState);
             });
         } catch (error) {
