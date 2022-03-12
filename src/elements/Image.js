@@ -4,21 +4,19 @@ import { borderRadius, height } from '@mui/system';
 
 const Image = ({
     src,
-    height="50px",
-    width="50px",
+    size,
     onClick,
     is_circle = false,
     ...props
     }) => {
-
     if(is_circle){
         return(
-            <Circle onClick={onClick} src={src} style={ {...props,height,width} }></Circle>
+            <Circle onClick={onClick} src={src} style={ {...props,size} }></Circle>
         )
     }
 
     return (
-        <Default onClick={onClick} src={src} style={ {...props,height,width} }></Default>
+        <Default onClick={onClick} src={src} style={ {...props} }></Default>
     )
 }
 
@@ -27,7 +25,9 @@ const Default = styled.img`
 `;
 
 const Circle = styled.img`
-    border-radius : ${borderRadius?"25px":""};
+    width : ${props=>props.style.size + 'px'};
+    height : ${props=>props.style.size + 'px'};
+    border-radius : ${props=>props.style.size/2  + 'px'};
 `;
 
 export default Image;

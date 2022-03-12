@@ -27,7 +27,6 @@ const Input = ({
     }
     ) => {
 
-        
         if(isTheme){
             
             if(type === 'radio'){
@@ -50,6 +49,17 @@ const Input = ({
                             {children}
                         </Select>
                     </Wrap>
+                )
+            }
+            if(type === 'textarea'){
+                return(
+                <Wrap>
+                    <ThemeTextarea
+                                onChange={onChange}
+                                ref={ref}
+                                style={{...props}}
+                            />
+                </Wrap>
                 )
             }
             
@@ -95,6 +105,25 @@ const ThemeInput = styled.input`
     &:focus-visible{
         & + div { display : block }
         outline : none;
+        border : 1.5px solid ${props => props.theme.mainTheme.primary};
+    }
+`;
+
+const ThemeTextarea = styled.textarea`
+    border : 1.5px solid #9E9E9E;
+    border-radius : 5px;
+    
+    width : 300px;
+    height : 40px;
+    padding : 15px;
+    
+
+    box-sizing: border-box;
+    resize: none;
+    outline : none;
+
+    &:focus-visible{
+        & + div { display : block }
         border : 1.5px solid ${props => props.theme.mainTheme.primary};
     }
 `;

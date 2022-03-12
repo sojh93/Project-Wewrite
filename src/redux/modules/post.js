@@ -7,15 +7,18 @@ import { getCookie } from "../../shared/Cookie";
 
 //action
 const SET_POST = "SET_POST";
+const SET_ONE = "SET_ONE";
 
 //action creatos
 const setPost = createAction(SET_POST, (postList,postType) => ({ postList,postType }));
+const setOnePost = createAction(SET_ONE, (postData) => ({ postData }));
 
 //initialState
 const initialState = {
     allPostList : [],
     recentPostList : [],
     recommendPostList : [],
+    thisPost : {postKey:null},
 };
 
 
@@ -30,7 +33,6 @@ const getAll=() =>{
                 "Content-Type": "application/json;charset-UTF-8"
             }
         }).then(res=>{
-            console.log(res);
             // dispatch(setPost(res.data.))
 
             dispatch(setPost(res.data,'all'));
@@ -48,7 +50,6 @@ const getRecent=() =>{
                 "Content-Type": "application/json;charset-UTF-8"
             }
         }).then(res=>{
-            console.log(res);
             // dispatch(setPost(res.data.))
 
             dispatch(setPost(res.data,'recent'));
@@ -65,7 +66,6 @@ const getRecommend=() =>{
                 "Content-Type": "application/json;charset-UTF-8"
             }
         }).then(res=>{
-            console.log(res);
             dispatch(setPost(res.data,'recommend'));
         });
     }
@@ -89,12 +89,33 @@ const addPost=(postData) =>{
     }
 }
 
+const getOne=(postKey) =>{
+    return async function (dispatch,getState){
+        const token = getCookie('WW_user');
+
+        instance({
+            method : "get",
+            url : `/posts/${postKey}`,
+            data : {},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8",
+                'authorization' : token,
+            }
+        }).then(res=>{
+            dispatch(setOnePost(res.data));
+        });
+    }
+}
 //reducer
 export default handleActions(
     {
         [SET_POST]: (state, action) =>
         produce(state, (draft) => {
             draft[`${action.payload.postType}PostList`] = [...action.payload.postList];
+        }),
+        [SET_ONE]: (state, action) =>
+        produce(state, (draft) => {
+            draft.thisPost = {...action.payload.postData};
         }),
         
     },
@@ -108,6 +129,7 @@ const actionCreators = {
     getRecent,
     getRecommend,
     addPost,
+    getOne,
 
 
 };
