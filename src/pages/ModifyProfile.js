@@ -1,4 +1,9 @@
+// import Library
 import React from 'react'
+
+// inport MUI
+import TextField from "@mui/material/TextField";
+import Box from '@mui/material/Box';
 
 // import elements
 import { Image, Grid, Button, Input, Text } from "../elements/index";
@@ -15,43 +20,65 @@ function modifyProfile() {
         <Grid wrap>
             <Header />
             <Grid margin="60px 0 0 0">
-                <Grid is_flex align-items="center" flexDirection="column" width="320px" height="90px">
+                <Grid is_flex alignItems="center" flexDirection="column" width="320px" height="90px">
                     <Image src={blank} width="70px" height="70px" />
                     <Button>프로필 사진 추가하기</Button>
                 </Grid>
-                <Grid margin="10px" is_flex>
-                    <Grid>
-                        <Text>닉네임</Text>
+                <Box>
+                    <Grid margin="10px" is_flex>
+                        <TextField
+                        sx={{ height: "40px", bgcolor: "white", margin: '30px 0' }}
+                        margin="normal"
+                        size="small"
+                        fullWidth
+                        id="loginID"
+                        label="닉네임"
+                        name="Nickname"
+                        // autoComplete="loginID"
+                        autoFocus
+                        />
                     </Grid>
-                    <Grid justifyContent="flex-end">
-                        <Input />
+                    <Grid margin="10px" is_flex>
+                        <TextField
+                        sx={{ height: "40px", bgcolor: "white", margin: '30px 0' }}
+                        margin="normal"
+                        size="small"
+                        fullWidth
+                        id="loginID"
+                        label="소개"
+                        name="Introduction"
+                        // autoComplete="loginID"
+                        autoFocus
+                        />
                     </Grid>
-                </Grid>
-                <Grid margin="10px" is_flex>
-                    <Grid>
-                        <Text>소개글</Text>
+                    <Grid margin="10px" is_flex>
+                        <TextField
+                        sx={{ height: "40px", bgcolor: "white", margin: '30px 0' }}
+                        margin="normal"
+                        size="small"
+                        fullWidth
+                        id="loginID"
+                        label="이메일"
+                        name="Email"
+                        // autoComplete="loginID"
+                        autoFocus
+                        />
                     </Grid>
-                    <Grid justifyContent="flex-end">
-                        <Input />
+                    <Grid margin="10px" is_flex>
+                        <TextField
+                        sx={{ height: "40px", bgcolor: "white", margin: '30px 0' }}
+                        margin="normal"
+                        size="small"
+                        fullWidth
+                        id="password"
+                        label="비밀번호 변경하기"
+                        name="Nickname"
+                        type="password"
+                        // autoComplete="loginID"
+                        autoFocus
+                        />
                     </Grid>
-                </Grid>
-                <Grid margin="10px" is_flex>
-                    <Grid>
-                        <Text>이메일</Text>
-                    </Grid>
-                    <Grid justifyContent="flex-end">
-                        <Input />
-                    </Grid>
-                </Grid>
-                <Grid
-                    margin="10px"
-                    is_flex
-                    justifyContent="space-between"
-                    width="300px"
-                >
-                    <Text>비밀번호</Text>
-                    <Text>변경하기 {'>'}</Text>
-                </Grid>
+                </Box>
             </Grid>
             <Grid>
                 <Button
