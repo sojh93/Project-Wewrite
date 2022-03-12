@@ -7,115 +7,131 @@ import { getCookie } from "../../shared/Cookie";
 
 //action
 const SET_POST = "SET_POST";
+const SET_ONE = "SET_ONE";
 
 //action creatos
-const setPost = createAction(SET_POST, (postList, postType) => ({
-    postList,
-    postType,
-}));
+const setPost = createAction(SET_POST, (postList,postType) => ({ postList,postType }));
+const setOnePost = createAction(SET_ONE, (postData) => ({ postData }));
 
 //initialState
 const initialState = {
-    postType: null,
-    Post_list: [],
+    allPostList : [],
+    recentPostList : [],
+    recommendPostList : [],
+    thisPost : {postKey:null},
 };
+
 
 //middleware actions
-const getAll = () => {
-    return async function (dispatch, getState) {
+const getAll=() =>{
+    return async function (dispatch,getState){
         instance({
-            method: "get",
-            url: "/posts/incomplete",
-            data: {},
-            headers: {
-                "Content-Type": "application/json;charset-UTF-8",
-            },
-        }).then((res) => {
-            console.log(res);
+            method : "get",
+            url : "/posts/incomplete",
+            data : {},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8"
+            }
+        }).then(res=>{
             // dispatch(setPost(res.data.))
 
-            dispatch(setPost(res.data, "all"));
+            dispatch(setPost(res.data,'all'));
         });
-    };
-};
+    }
+}
 
-const getRecent = () => {
-    return async function (dispatch, getState) {
+const getRecent=() =>{
+    return async function (dispatch,getState){
         instance({
-            method: "get",
-            url: "/posts/recent",
-            data: {},
-            headers: {
-                "Content-Type": "application/json;charset-UTF-8",
-            },
-        }).then((res) => {
-            console.log(res);
+            method : "get",
+            url : "/posts/recent",
+            data : {},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8"
+            }
+        }).then(res=>{
             // dispatch(setPost(res.data.))
 
-            dispatch(setPost(res.data, "recent"));
+            dispatch(setPost(res.data,'recent'));
         });
-    };
-};
-const getRecommend = () => {
-    return async function (dispatch, getState) {
+    }
+}
+const getRecommend=() =>{
+    return async function (dispatch,getState){
         instance({
-            method: "get",
-            url: "/posts/recommend",
-            data: {},
-            headers: {
-                "Content-Type": "application/json;charset-UTF-8",
-            },
-        }).then((res) => {
-            console.log(res);
-            dispatch(setPost(res.data, "recommend"));
+            method : "get",
+            url : "/posts/recommend",
+            data : {},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8"
+            }
+        }).then(res=>{
+            dispatch(setPost(res.data,'recommend'));
         });
-    };
-};
+    }
+}
 
-const addPost = (postData) => {
-    return async function (dispatch, getState) {
-        const token = getCookie("WW_user");
-
-        const postData = new FormData();
-        var file = new File(["foo"], "foo.txt", {
-            type: "text/plain",
-        });
-        postData.append("title", "제목");
-        postData.append("color", "red");
-        postData.append("limitCnt", 15);
-        postData.append("category", "장르");
-        postData.append("postImageUrl", file);
+const addPost=(postData) =>{
+    return async function (dispatch,getState){
+        const token = getCookie('WW_user');
 
         instance({
-            method: "post",
-            url: "/posts",
-            data: postData,
-            headers: {
+            method : "post",
+            url : "/posts",
+            data : postData,
+            headers : {
                 "Content-Type": "multipart/form-data",
-                authorization: token,
-            },
-        }).then((res) => {
+                'authorization' : token,
+            }
+        }).then(res=>{
             console.log(res);
         });
-    };
-};
+    }
+}
 
+const getOne=(postKey) =>{
+    return async function (dispatch,getState){
+        const token = getCookie('WW_user');
+
+        instance({
+            method : "get",
+            url : `/posts/${postKey}`,
+            data : {},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8",
+                'authorization' : token,
+            }
+        }).then(res=>{
+            dispatch(setOnePost(res.data));
+        });
+    }
+}
 //reducer
 export default handleActions(
     {
         [SET_POST]: (state, action) =>
-            produce(state, (draft) => {
-                draft.list = [...action.payload.postList];
-            }),
+        produce(state, (draft) => {
+            draft[`${action.payload.postType}PostList`] = [...action.payload.postList];
+        }),
+        [SET_ONE]: (state, action) =>
+        produce(state, (draft) => {
+            draft.thisPost = {...action.payload.postData};
+        }),
+        
     },
     initialState
 );
 
+
 //action creator export
 const actionCreators = {
     getAll,
+    getRecent,
     getRecommend,
     addPost,
+    getOne,
+
+
 };
 
 export { actionCreators };

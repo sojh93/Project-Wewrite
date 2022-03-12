@@ -34,7 +34,9 @@ const Grid = ({
 }
 
 const Wrap = styled.div`
-    width : ${props => props.theme.size.width};
+    width : 100vw;
+    max-width : 390px;
+    min-width : 360px;
     height : ${props => props.theme.size.height};
     background-color : ${props => props.theme.mainTheme.tertiary};
     overflow : hidden;

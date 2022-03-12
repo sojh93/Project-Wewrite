@@ -63,19 +63,19 @@ const login=(user_data) =>{
 const check=() =>{
     return async function (dispatch,getState){
         const token = getCookie('WW_user')
-        instance({
-            method : "post",
-            url : "/user/myInfo",
-            data : {},
-            headers : {
-                "Content-Type": "application/json;charset-UTF-8",
-                "authorization" : token
-            }
-        }).then(res=>{
-            dispatch(set_user(res.data));
-
-            // dispatch(set_user(""));
-        });
+        if(token !== undefined){
+            instance({
+                method : "post",
+                url : "/user/myInfo",
+                data : {},
+                headers : {
+                    "Content-Type": "application/json;charset-UTF-8",
+                    "authorization" : token
+                }
+            }).then(res=>{
+                dispatch(set_user(res.data));
+            });
+        }
     }
 }
 const logout=() =>{

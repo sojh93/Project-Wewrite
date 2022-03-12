@@ -1,35 +1,38 @@
 //import Library
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 //import MUI
 
+
 //import Icon
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
+
 
 //import elements
-import { Button, Grid, Input, Image, Text } from "../elements";
+import { Button, Grid, Input, Image, Text } from "../elements" 
 
-export default function Sentence({ children }) {
-    console.log(children);
+export default function Sentence(props) {
 
     return (
-        <Grid is_flex margin="5px" width="310px" gap="5px">
-            <Image
-                width="30px"
-                height="30px"
-                src="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FkQ5wU%2Fbtrd5kEGcBi%2FHo0a7Hmj3V6LxRhxkC2KRk%2Fimg.jpg"
-            />
-            <Grid width="250px" height="auto">
-                <Text>
-                    안녕하시오 근데 이거는 한글만 줄 바뀜이 된다는데 진짠가
-                    안되는데 영어는 안되나..
-                </Text>
+        <Grid is_flex margin='50px 5px 5px 5px' justifyContent='space-between' width='100%' gap='10px'>
+            <Grid is_flex flexDirection='column'>
+                <Image width='30px' height='30px' src={props.src}/>
+                <Grid is_flex alignItems='center'>
+                    <FavoriteBorderOutlinedIcon  sx={{width:'10px'}}/>
+                    <Text margin='0 2px 1px 2px' fontSize='10px'>100</Text>
+                </Grid>
             </Grid>
-            <FavoriteBorderOutlinedIcon sx={{ width: "15px" }} />
+
+            <Grid  width='100%' is_flex alignItems='flex-start'>
+                <Grid height='auto'>
+                    <Text>{props.contents}</Text>
+                </Grid>
+            </Grid>
         </Grid>
     );
-}
+} 
+

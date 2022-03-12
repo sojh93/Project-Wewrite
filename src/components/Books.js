@@ -1,52 +1,37 @@
 import React from "react";
+import { SwiperSlide } from "swiper/react";
+import { Grid, Image,Text,Chip } from "../elements";
 
-// import elements
-import { Grid, Image } from "../elements";
+import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 
-// import Components
-
-// import default image
-import book1 from "../image/SleepingDog.jpg";
-import book2 from "../image/manTrainingCat.png";
-import book3 from "../image/BeingExistAndTime.jpg";
-import book4 from "../image/KingMakingTheory.jpg";
-import book5 from "../image/Ajeossi.png";
 
 const Books = (props) => {
-    return (
-        <>
-            <Grid
-                is_flex
-                justifyContent="space-around"
-                width="100%"
-                margin="30px 0 0 0"
-                height="75px"
-                borderBottom="1.5px solid black"
-            >
-                <Grid is_flex height="70px" width="20%">
-                    {/* {props.book[0] ? (
-                        <Image src={props.book[0]} width="70px" height="70px" />
-                    ) : (
-                        ""
-                    )} */}
-                </Grid>
-                <Grid is_flex height="70px" width="20%">
-                    {/* {props.book[1] ? (
-                        <Image src={props.book[1]} width="70px" height="70px" />
-                    ) : (
-                        ""
-                    )} */}
-                </Grid>
-                <Grid is_flex height="70px" width="20%">
-                    {/* {props.book[2] ? (
-                        <Image src={props.book[2]} width="70px" height="70px" />
-                    ) : (
-                        ""
-                    )} */}
-                </Grid>
+
+    return(
+        
+        <Grid onClick={props.onClick} width='100%' height='100%' is_flex flexDirection='column' alignItems='center'>
+            <Image width='100%' minHeight='140px' maxHeight='150px' height='150px' src={props.src}/>
+
+            <Grid width='100%' height='26px' is_flex alignItems='flex-start'>
+                <Text margin='3px' width='auto' fontSize='16px' color='black'>
+                    {props.title}
+                    </Text>
             </Grid>
-        </>
-    );
-};
+            <Grid margin='2px' width='100%' is_flex alignItems='flex-start'>
+                <Chip >장르</Chip>
+            </Grid>
+
+            <Grid is_flex fontSize='15px' color='#7E7E7E' fontWeight='300'>
+                <Text><ThumbUpOutlinedIcon/></Text>
+                <Text>{props.like}</Text>
+                <Text><BookmarkBorderOutlinedIcon/></Text>
+                <Text>???</Text>
+
+            </Grid>
+        </Grid>
+        
+    )
+}
 
 export default Books;

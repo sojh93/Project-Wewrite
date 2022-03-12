@@ -13,6 +13,8 @@ import "swiper/css/effect-cards";
 import "./styles.css";
 
 //import Actions
+import { actionCreators as userActions } from '../redux/modules/user';
+import { actionCreators as postActions } from '../redux/modules/post';
 
 //import elements
 import { Button, Grid, Input, Image, Text } from "../elements" 
@@ -34,23 +36,40 @@ function Main(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const _user = useSelector(state=>state.user);
-
+    const _user = useSelector(state => state.user);
+    const _post = useSelector(state => state.post);
 
     const tempImage = ["http://img.etoday.co.kr/pto_db/2017/06/20170630055356_1088133_710_340.jpg","https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/1jPF/image/oRhdR-gw5pIPzXu74IiCpUAkBb4.jpg","https://post-phinf.pstatic.net/MjAyMjAyMjRfMTQg/MDAxNjQ1Njc3NzEzMDk0.ZY8y6TgCWsQn-9PtU2NgyzZIZXxvmxxKovYVpcKP2I8g.z04ffjM409tGuMHlukshDSCcKNvQw2Y0aL6WQG0ApYwg.JPEG/CT5-V_%EB%B8%94%EB%9E%99%EC%9C%99_%ED%8B%B0%EC%A0%80_1.jpg?type=w1200"];
 
 
 
 
-    useEffect(() => {
-
+    React.useEffect(() => {
+        if(_post.allPostList.length === 0){
+            dispatch(postActions.getAll())
+        }
+        if(_post.recentPostList.length === 0){
+            dispatch(postActions.getRecent())
+        }
+        if(_post.recommendPostList.length === 0){
+            dispatch(postActions.getRecommend())
+        }
+        
     }, []);
 
     return (
+        <>
+            <Header isMain/>
         <Grid wrap>   
-            <Header/>
-            <Grid margin='50px 0 0 0'>
+
+            <Grid is_flex flexDirection='column' alignItems='center' margin='60px 0 0 0'>
+                <Grid margin = "20px">
+                    <Input isTheme placeholder='Search'/>
+
+                </Grid>
+
                 <Swiper
+                    rewind={true}
                     effect={"cards"}
                     grabCursor={true}
                     modules={[EffectCards]}
@@ -61,175 +80,99 @@ function Main(props) {
                     <SwiperSlide><Image width="240px" height='320px' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
                     <SwiperSlide><Image width="240px" height='320px' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
                 </Swiper>
+
+                <Grid width='100%'  is_flex flexDirection='column'>
+                    <Text margin='10px' fontSize='24px' fontWeight='500'>새로운 이야기</Text>
+                    <Swiper
+                    style={{height : '230px', width : 'calc(100vw - 20px)', minWidth : '340px', maxWidth : '370px' ,margin : '10px'}}
+                    slidesPerView={2.75}
+                    spaceBetween={20}
+                    freeMode={true}
+                    pagination={{
+                    clickable: true,
+                    }}
+                    modules={[FreeMode, Pagination]}
+                    className="mySwiper"
+                    >
+                        {_post.recentPostList.map((v,i)=>{
+                            return (
+                            <SwiperSlide key={v.postKey}>
+                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} title={v.title} like={v.postLikesCnt} src={v.postImageUrl} key={v.postKey}/>
+                            </SwiperSlide>
+                            )
+                        })}
+                    </Swiper>
+                </Grid>
+
+                
+
+                <Grid width='100%'  is_flex flexDirection='column'>
+                    <Text margin='10px' fontSize='24px' fontWeight='500'>당신에게 추천해요</Text>
+                    <Swiper
+                    style={{height : '230px', width : 'calc(100vw - 20px)', minWidth : '340px', maxWidth : '370px' ,margin : '10px'}}
+                    slidesPerView={2.75}
+                    spaceBetween={20}
+                    freeMode={true}
+                    pagination={{
+                    clickable: true,
+                    }}
+                    modules={[FreeMode, Pagination]}
+                    className="mySwiper"
+                    >
+                        {_post.recommendPostList.map((v,i)=>{
+                            return (
+                            <SwiperSlide key={v.postKey}>
+                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} title={v.title} like={v.postLikesCnt} src={v.postImageUrl} key={v.postKey}/>
+                            </SwiperSlide>
+                            )
+                        })}
+                    </Swiper>
+                </Grid>
+
+                <Grid width='100%'  is_flex flexDirection='column'>
+                    <Text margin='10px' fontSize='24px' fontWeight='500'>당신이 완성해주세요</Text>
+                    <Swiper
+                    style={{height : '230px', width : 'calc(100vw - 20px)', minWidth : '340px', maxWidth : '370px' ,margin : '10px'}}
+                    slidesPerView={2.75}
+                    spaceBetween={20}
+                    freeMode={true}
+                    pagination={{
+                    clickable: true,
+                    }}
+                    modules={[FreeMode, Pagination]}
+                    className="mySwiper"
+                    >
+                        {_post.allPostList.map((v,i)=>{
+                            return (
+                            <SwiperSlide key={v.postKey}>
+                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} title={v.title} like={v.postLikesCnt} src={v.postImageUrl} key={v.postKey}/>
+                            </SwiperSlide>
+                            )
+                        })}
+                    </Swiper>
+                </Grid>
             </Grid>
 
-            <Grid margin ="30px 0">
-                이쯤에 대충 무슨 텍스트가 들어가겠지
-                <Swiper
-                    style={{height : 100, width : 320}}
-                    slidesPerView={3}
-                    spaceBetween={20}
-                    freeMode={true}
-                    pagination={{
-                    clickable: true,
-                    }}
-                    modules={[FreeMode, Pagination]}
-                    className="mySwiper"
-                >
-                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
-                </Swiper>
-            </Grid>
-            <Grid margin ="30px 0">
-                이쯤에 대충 무슨 텍스트가 들어가겠지
-                <Swiper
-                    style={{height : 100, width : 320}}
-                    slidesPerView={3}
-                    spaceBetween={20}
-                    freeMode={true}
-                    pagination={{
-                    clickable: true,
-                    }}
-                    modules={[FreeMode, Pagination]}
-                    className="mySwiper"
-                >
-                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
-                </Swiper>
-            </Grid>
-            <Grid margin ="30px 0">
-                이쯤에 대충 무슨 텍스트가 들어가겠지
-                <Swiper
-                    style={{height : 100, width : 320}}
-                    slidesPerView={3}
-                    spaceBetween={20}
-                    freeMode={true}
-                    pagination={{
-                    clickable: true,
-                    }}
-                    modules={[FreeMode, Pagination]}
-                    className="mySwiper"
-                >
-                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
-                </Swiper>
-            </Grid>
-            <Grid margin ="30px 0">
-                이쯤에 대충 무슨 텍스트가 들어가겠지
-                <Swiper
-                    style={{height : 100, width : 320}}
-                    slidesPerView={3}
-                    spaceBetween={20}
-                    freeMode={true}
-                    pagination={{
-                    clickable: true,
-                    }}
-                    modules={[FreeMode, Pagination]}
-                    className="mySwiper"
-                >
-                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
-                </Swiper>
-            </Grid>
-            <Grid margin ="30px 0">
-                이쯤에 대충 무슨 텍스트가 들어가겠지
-                <Swiper
-                    style={{height : 100, width : 320}}
-                    slidesPerView={3}
-                    spaceBetween={20}
-                    freeMode={true}
-                    pagination={{
-                    clickable: true,
-                    }}
-                    modules={[FreeMode, Pagination]}
-                    className="mySwiper"
-                >
-                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
-                </Swiper>
-            </Grid>
-            <Grid margin ="30px 0">
-                이쯤에 대충 무슨 텍스트가 들어가겠지
-                <Swiper
-                    style={{height : 100, width : 320}}
-                    slidesPerView={3}
-                    spaceBetween={20}
-                    freeMode={true}
-                    pagination={{
-                    clickable: true,
-                    }}
-                    modules={[FreeMode, Pagination]}
-                    className="mySwiper"
-                >
-                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMTNfMTgx/MDAxNTc4ODgyMTUyNDM0.-e4N7j1acrwnIcYy3K5psSxVpgIqFz011hXhNSvWU9Ig.d6ykhZtXhz28aJ6r2tXvz2oPXmTcfU_oC7v-M6kGAi0g.JPEG.mkparang/%EC%B4%9D%EA%B7%A0%EC%87%A0.jpg?type=w800"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.yes24.com/goods/3361501/XL"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
-                    <SwiperSlide><Image width='100%' height='100%' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
-                </Swiper>
-            </Grid>
-            {/* <Grid>
-                <Carousel width="320px" height="180px" imgURL={tempImage} />
-            </Grid> */}
-
-            {/* <Grid>
-                <Text>추천 릴레이</Text>
-                <Books book={tempImage}></Books>
-            </Grid>     */}
-
-            {/* <Grid margin="100px 10px">
-                <Button theme="unfilled" >다음</Button>
-                <Grid margin="10px"></Grid>
-                <Input isTheme placeholder="placeholder" />
-                <Grid margin="10px"></Grid>
-                <Input isTheme type="radio" value="예시1" name="test" />
-                <Input isTheme type="radio" value="예시2" name="test" />
-                <Grid margin="10px"></Grid>
-                <Input isTheme type="select" name="test1">
-                    <option disabled selected>fruits 🍊</option>
-                    <option value="apple">apple</option>
-                    <option value="orange">orange</option>
-                    <option value="grape">grape</option>
-                    <option value="melon">melon</option>
-                </Input>
-            </Grid> */}
-
+            <Grid height='65px'></Grid>
             <Bottom thisPage="main"/>
 
         </Grid>
+        </>
     );
 }
 
 
+const Hover = styled.div`
 
+`;
+
+const Mark = styled.div`
+    position : absolute;
+    top : 10px;
+    right : 10px;
+    font-size : 15px;
+    color : gray;
+    display : none
+`;
 
 export default Main;

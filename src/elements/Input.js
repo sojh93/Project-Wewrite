@@ -10,13 +10,10 @@ import { Children } from "react";
 
 
 const Input = ({
-    border,borderRadius,
-
-    width, height, margin, padding,
 
     defaultValue,type,placeholder,
 
-    onChange,ref,
+    onChange,_ref,ref,
 
     isTheme=false,
     id, label, name, value,
@@ -30,14 +27,13 @@ const Input = ({
     }
     ) => {
 
-        
         if(isTheme){
             
             if(type === 'radio'){
                 return (
                     <WrapRadio style={{...props}}>
                     <label>
-                        <div><Radio type='radio' name={name} value={value}/><span>{value}</span></div>
+                        <div><Radio type='radio' ref={ref} name={name} value={value}/><span>{value}</span></div>
                     </label>
                     </WrapRadio>
                 )
@@ -45,10 +41,25 @@ const Input = ({
             if(type === 'select'){
                 return (
                     <Wrap>
-                        <Select name={name}>
+                        <Select
+                        onChange={onChange}
+                        ref={_ref}
+                        placeholder={placeholder}
+                        name={name}>
                             {children}
                         </Select>
                     </Wrap>
+                )
+            }
+            if(type === 'textarea'){
+                return(
+                <Wrap>
+                    <ThemeTextarea
+                                onChange={onChange}
+                                ref={ref}
+                                style={{...props}}
+                            />
+                </Wrap>
                 )
             }
             
@@ -60,9 +71,8 @@ const Input = ({
                             onChange={onChange}
                             ref={ref}
                             placeholder={placeholder}
+                            style={{...props}}
                         />
-                        <MarkX><FiXCircle/></MarkX>
-                        
                     </Wrap>
                 )
             }
@@ -74,7 +84,7 @@ const Input = ({
 
 
     return (
-        <input type={type} onChange={onChange} ref={ref} placeholder={placeholder} defaultValue={defaultValue} style={ {border,borderRadius, width, height, margin, padding, ...props}}/>
+        <input type={type} onChange={onChange} ref={ref} placeholder={placeholder} defaultValue={defaultValue} style={ {...props}}/>
     );
 }
 
@@ -88,12 +98,32 @@ const ThemeInput = styled.input`
     
     width : 300px;
     height : 40px;
+    padding : 15px;
 
     box-sizing: border-box;
 
     &:focus-visible{
         & + div { display : block }
         outline : none;
+        border : 1.5px solid ${props => props.theme.mainTheme.primary};
+    }
+`;
+
+const ThemeTextarea = styled.textarea`
+    border : 1.5px solid #9E9E9E;
+    border-radius : 5px;
+    
+    width : 300px;
+    height : 40px;
+    padding : 15px;
+    
+
+    box-sizing: border-box;
+    resize: none;
+    outline : none;
+
+    &:focus-visible{
+        & + div { display : block }
         border : 1.5px solid ${props => props.theme.mainTheme.primary};
     }
 `;
@@ -158,12 +188,5 @@ const Select = styled.select`
 
 
 
-const MarkX = styled.div`
-    position : absolute;
-    top : 10px;
-    right : 10px;
-    font-size : 15px;
-    color : gray;
-    display : none
-`;
+
 export default Input;

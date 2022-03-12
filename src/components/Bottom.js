@@ -24,6 +24,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 
+import { BiPlus } from "react-icons/bi";
+
 //import elements
 import { Button, Grid, Input, Image, Text } from "../elements" 
 
@@ -37,7 +39,9 @@ export default function Bottom(props) {
     const [value, setValue] = React.useState(0);
 
     const _user = useSelector(state => state.user);
-    console.log(_user);
+    const _post = useSelector(state => state.post);
+    // console.log(_user);
+    // console.log(_post);
     React.useEffect(()=>{
         if(!_user.is_login){
             dispatch(userActions.check());
@@ -50,14 +54,16 @@ export default function Bottom(props) {
     }
 
     return (
-        <Grid position="absolute" bottom="0px" zIndex="1" borderRadius="10px 10px 0 0" >
-            <Grid is_flex backgroundColor='#6454FF' borderRadius="10px 10px 0 0" alignItems="center" justifyContent="space-around" width="320px" >
-                {props.thisPage==="main"?       <Text color="white"><WidgetsIcon /></Text>              : <Text color="white" onClick={()=>navigate('/')}><WidgetsOutlinedIcon/></Text>}
-                {props.thisPage==="book"?       <Text color="white"><BookmarkOutlinedIcon/></Text>      : <Text color="white"><BookmarkBorderOutlinedIcon/></Text>}
-                {props.thisPage==="add"?        <Text color="white"><AddCircleOutlinedIcon/></Text>     : <Text color="white" onClick={addBtn}><AddCircleOutlineOutlinedIcon/></Text>}
-                {props.thisPage==="postList"?   <Text color="white"><HomeIcon/></Text>                  : <Text color="white" onClick={()=>navigate('/postlist')}><HomeOutlinedIcon/></Text>}
+        <Grid zIndex='9' position="absolute" bottom="0px" borderRadius="10px 10px 0 0" >
+            <Grid is_flex backgroundColor='#F9FAFB' borderRadius="10px 10px 0 0" alignItems="center" color='#7E7E7E' justifyContent="space-around" width="100vw" minWidth ="360px" maxWidth ="390px" height='60px'>
+                {props.thisPage==="main"?       <Text><WidgetsIcon /></Text>              : <Text onClick={()=>navigate('/')}><WidgetsOutlinedIcon/></Text>}
+                {props.thisPage==="book"?       <Text><BookmarkOutlinedIcon/></Text>      : <Text><BookmarkBorderOutlinedIcon/></Text>}
+                <Grid marginBottom='45px' width='60px' height='60px' borderRadius='30px' backgroundColor='#6454FF' is_flex alignItems='center' justifyContent='center' fontSize='40px'>
+                    <Text color='white'  margin='0' height='53px' onClick={()=>navigate('/write')}><BiPlus/></Text>
+                </Grid>
+                {props.thisPage==="postList"?   <Text><HomeIcon/></Text>                  : <Text onClick={()=>navigate('/postlist')}><HomeOutlinedIcon/></Text>}
                 
-                {_user.is_login?<Image margin='0 0 4px 0' is_circle width='25px' height='25px' src={_user.user.userProfileImage}/>:props.thisPage==="userPage"?     <Text color="white"><PersonIcon/></Text>                : <Text color="white" onClick={()=>navigate('/mypage')}><PersonOutlineOutlinedIcon/></Text>}
+                {props.thisPage==="userPage"?     <Text><PersonIcon/></Text>                : <Text onClick={()=>navigate('/login')}><PersonOutlineOutlinedIcon/></Text>}
             </Grid>
         </Grid>
     );
