@@ -19,7 +19,11 @@ const Books = (props) => {
                     </Text>
             </Grid>
             <Grid margin='2px' width='100%' is_flex alignItems='flex-start'>
-                <Chip >장르</Chip>
+                {props.category?props.category.map(v=>{
+                    return (
+                        <Chip>{v.category}</Chip>
+                    )
+                }):""}
             </Grid>
 
             <Grid is_flex fontSize='15px' color='#7E7E7E' fontWeight='300'>

@@ -18,7 +18,7 @@ import { Button, Grid, Input, Image, Text } from "../elements"
 export default function Sentence(props) {
 
     return (
-        <Grid is_flex margin='50px 5px 5px 5px' justifyContent='space-between' width='100%' gap='10px'>
+        <Grid is_flex margin='5px' justifyContent='space-between' width='100%' gap='10px'>
             <Grid is_flex flexDirection='column'>
                 <Image width='30px' height='30px' src={props.src}/>
                 <Grid is_flex alignItems='center'>

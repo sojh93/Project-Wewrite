@@ -64,10 +64,7 @@ function Main(props) {
         <Grid wrap>   
 
             <Grid is_flex flexDirection='column' alignItems='center' margin='60px 0 0 0'>
-                <Grid margin = "20px">
-                    <Input isTheme placeholder='Search'/>
 
-                </Grid>
                 <Grid width='100%' height='350px' backgroundSize='contain' backgroundImage='url("/default_img/bookBackGround.png")'>
                     <Swiper
                         style={{height : '320px', width : 'calc(100vw - 20px)', minWidth : '340px', maxWidth : '370px' ,margin : '10px'}}
@@ -118,7 +115,7 @@ function Main(props) {
                         {_post.recentPostList.map((v,i)=>{
                             return (
                             <SwiperSlide key={v.postKey}>
-                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} title={v.title} like={v.postLikesCnt} src={v.postImageUrl} key={v.postKey}/>
+                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} category={v.categoryList} title={v.title} like={v.postLikesCnt} src={v.postImageUrl} key={v.postKey}/>
                             </SwiperSlide>
                             )
                         })}
@@ -143,7 +140,7 @@ function Main(props) {
                         {_post.recommendPostList.map((v,i)=>{
                             return (
                             <SwiperSlide key={v.postKey}>
-                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} title={v.title} like={v.postLikesCnt} src={v.postImageUrl} key={v.postKey}/>
+                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} category={v.categoryList} title={v.title} like={v.postLikesCnt} src={v.postImageUrl} key={v.postKey}/>
                             </SwiperSlide>
                             )
                         })}
@@ -166,7 +163,7 @@ function Main(props) {
                         {_post.allPostList.map((v,i)=>{
                             return (
                             <SwiperSlide key={v.postKey}>
-                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} title={v.title} like={v.postLikesCnt} src={v.postImageUrl} key={v.postKey}/>
+                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} category={v.categoryList} title={v.title} like={v.postLikesCnt} src={v.postImageUrl} key={v.postKey}/>
                             </SwiperSlide>
                             )
                         })}
