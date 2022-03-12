@@ -18,13 +18,14 @@ import { Button, Grid, Input, Image, Text } from "../elements";
 import blank from "../image/blank.jpg";
 
 //impot Component
+import Header from "../components/Header";
+import { Chip } from "../elements";
 
 //import Actions
 import { actionCreators as userActions } from "../redux/modules/user";
 
 //import axios
 import instance from "../shared/Request";
-import axios from "axios";
 import { method } from "lodash";
 
 function Signup() {
@@ -36,6 +37,13 @@ function Signup() {
     const [idForm, setIdForm] = React.useState(true);
     const [pwd, setPwd] = React.useState(true);
     const [preview, setPreview] = React.useState(blank);
+    const [email, setEmail] = React.useState(null);
+    const [emailVeri, setEmailVeri] = React.useState(false);
+    const [code, setCode] = React.useState(null);
+    const [codeVeri, setCodeVeri] = React.useState(false);
+
+
+
     const fileInput = React.useRef();
     var file = new File(["foo"], "foo.txt", {
         type: "text/plain",
@@ -44,27 +52,9 @@ function Signup() {
     const [postFile, setPostFile] = React.useState(file);
 
     React.useEffect(() => {
-        dispatch(
-            userActions.check(
-                "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MUBnbWFpbC5jb20iLCJpYXQiOjE2NDY5MjI5NjUsImV4cCI6MTY0NzE4MjE2NX0.Kqtl_id1CXFJnx68n2PtgeL1HsB5zaUlOzrLj6X0l58"
-            )
-        );
     }, []);
 
-    // const selectFile = (e) => {
-    //     const formData = new FormData();
-    //     const file = fileInput.current.files[0];
-    //     setPostFile(file);
 
-    //     formData.append("userProfile", file);
-
-    //     const reader = new FileReader();
-    //     reader.readAsDataURL(file);
-    //     reader.addEventListener("load", function () {
-    //         console.log(reader.result);
-    //         setPreview(reader.result);
-    //     });
-    // };
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -83,40 +73,59 @@ function Signup() {
 
     const checkId = (e) => {
         let _reg = /^[-_.0-9a-zA-Z]{6,15}$/;
+        if(e.target.value === ''){
+            setEmail(false);
+        }else{
+            setEmail(e.target.value);
+        }
     };
-
+    const checkCode = (e) => {
+        if(e.target.value === ''){
+            setCode(false);
+        }else{
+            setCode(e.target.value);
+        }
+    };
     const pwdChange = (e) => {
         let _reg = /^[-_.!0-9a-zA-Z]{6,15}$/;
     };
 
     const pwdCheckChange = (e) => {};
 
+    const emailVerification = (e)=>{
+        setEmailVeri(true);
+        instance({
+            method : "post",
+            url : "/mailCheck",
+            data : {email},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8"
+            }
+        }).then(res=>{
+            console.log(res)
+        });
+    };
+    const codeVerification = (e)=>{
+        setCodeVeri(true);
+    };
+
     return (
-        <Grid wrap is_scroll>
+        <Grid wrap>
+            <Header/>
             <Grid
                 is_flex
                 alignItems="center"
                 flexDirection="column"
-                height="60px"
-                width="320px"
-                margin="20px 0"
+                marginTop = '80px'
             >
-                <Grid>
-                    <Text fontSize="20px" fontWeight="400">
+                <Grid is_flex flexDirection='column' width='300px'>
+                    <Text fontSize="24px" fontWeight="700">
                         회원가입
                     </Text>
-                </Grid>
-
-                <Grid is_flex justifyContent="flex-start">
-                    <Text
-                        fontSize="15px"
-                        fontWeight="400"
-                        margin="15px 250px 0 5px"
-                    >
-                        이메일
+                    <Text color='#7E7E7E' fontSize="12px" fontWeight="400">
+                    원활한 서비스 이용을 위한 기본 정보를 입력해주세요.
                     </Text>
                 </Grid>
-
                 <Box
                     component="form"
                     onSubmit={handleSubmit}
@@ -127,51 +136,82 @@ function Signup() {
                         alignItems: "center",
                         textAlign: "center",
                     }}
-                >
-                    <TextField
-                        sx={{
-                            height: "40px",
-                            bgcolor: "white",
-                            margin: "10px 0 15px 0",
-                        }}
-                        margin="normal"
-                        size="small"
-                        fullWidth
-                        id="loginID"
-                        label="email"
-                        name="loginID"
-                        // autoComplete="loginID"
-                        autoFocus
-                        onChange={checkId}
-                    >
-                        <Button></Button>
-                    </TextField>
-                    <TextField
-                        sx={{
-                            height: "40px",
-                            bgcolor: "white",
-                            margin: "15px 0 15px 0",
-                        }}
-                        margin="normal"
-                        size="small"
-                        fullWidth
-                        id="nickname"
-                        label="인증코드"
-                        name="nickname"
-                        // autoComplete="nickname"
-                        autoFocus
-                        onChange={checkId}
-                    />
-                    <Grid>
-                        <Text
-                            fontSize="15px"
-                            fontWeight="400"
-                            margin="15px 250px 0 1px"
-                            width="70px"
+                >   
+                    <Grid is_flex flexDirection='column' height='75px' position='relative'>
+                        <TextField
+                            sx={{
+                                height: "30px",
+                                bgcolor: "white",
+                                margin: "10px 0 15px 0",
+                            }}
+                            margin="normal"
+                            size="small"
+                            fullWidth
+                            id="loginID"
+                            label="email"
+                            name="loginID"
+                            autoFocus
+                            onChange={checkId}
                         >
-                            비밀번호
-                        </Text>
+                        </TextField>
+                        
+                        {email?
+                        <Chip onClick={emailVerification} position='absolute' right='10px' top='17px' width="70px" height="24px" backgroundColor='#6454FF'>인증코드</Chip> :
+                        <Chip position='absolute' right='10px' top='17px' width="70px" height="24px" backgroundColor='#EAEAEA'>인증코드</Chip>
+                        }                        
+                        
+                        <Text display={emailVeri?'':'none'} margin="0" color='#6454FF' fontWeight='400' fontSize='14px'>인증 코드를 발급했습니다. 이메일을 확인해주세요.</Text>
+
                     </Grid>
+                    
+                    <Grid is_flex flexDirection='column' alignItems='flex-start' height='100px' position='relative'>
+                        <TextField
+                            sx={{
+                                height: "30px",
+                                bgcolor: "white",
+                                margin: "15px 0 15px 0",
+                            }}
+                            margin="normal"
+                            size="small"
+                            fullWidth
+                            id="code"
+                            label="인증코드"
+                            name="code"
+                            autoFocus
+                            onChange={checkCode}
+                        />
+
+                        {code?
+                        <Chip onClick={codeVerification} position='absolute' right='10px' top='22px' width="70px" height="24px" backgroundColor='#6454FF'>인증하기</Chip> :
+                        <Chip position='absolute' right='10px' top='22px' width="70px" height="24px" backgroundColor='#EAEAEA'>인증하기</Chip>
+                        }                        
+                        
+                        <Text display={codeVeri?'':'none'} margin="0" color='#6454FF' fontWeight='400' fontSize='14px'>인증되었습니다.</Text>
+
+                    </Grid>
+
+                    <Grid is_flex flexDirection='column' alignItems='flex-start' height='80px' position='relative'>
+
+
+                        <TextField
+                            sx={{
+                                height: "40px",
+                                bgcolor: "white",
+                                margin: "15px 0 0 0",
+                            }}
+                            margin="normal"
+                            size="small"
+                            error={!pwdForm}
+                            //required
+                            fullWidth
+                            name="nickname"
+                            label="닉네임"
+                            id="nickname"
+                            // autoComplete="current-password"
+                            onChange={pwdChange}
+                        />
+                    </Grid>
+
 
                     <TextField
                         sx={{
@@ -203,16 +243,6 @@ function Signup() {
                         </Text>
                     </Grid>
 
-                    <Grid>
-                        <Text
-                            fontSize="15px"
-                            fontWeight="400"
-                            margin="15px 250px 0 1px"
-                            width="100px"
-                        >
-                            비밀번호 확인
-                        </Text>
-                    </Grid>
 
                     <TextField
                         sx={{

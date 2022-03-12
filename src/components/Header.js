@@ -204,15 +204,14 @@ const Header = (props) => {
     return(
         <Grid>
             <Grid zIndex='9' boxShadow='rgb(217 217 217) 0px 2px 5px' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
-                <Grid is_flex border="0">
+                <Grid is_flex backgroundColor="#F9FAFB" border="0">
                     <Tooltip title="뒤로가기"><IconButton  onClick={()=>{navigate(-1)}} sx={{width:"50px", height : "50px"}}><KeyboardArrowLeftIcon sx={{ width:"15px", height : "15px", margin :"10px"}}/></IconButton></Tooltip>    
                 </Grid>
 
                 <Grid>
                 </Grid>
 
-                <Grid backgroundColor="#F9FAFB" is_flex border="0">
-                    <Tooltip title="알람"><IconButton sx={{width:"50px", height : "50px"}}><NotificationsNoneOutlinedIcon  sx={{ margin :"10px"}}/></IconButton></Tooltip>    
+                <Grid width='50px' height='50px' backgroundColor="#F9FAFB" is_flex border="0">
                 </Grid>
             </Grid>
         </Grid>

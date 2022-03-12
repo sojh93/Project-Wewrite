@@ -11,7 +11,7 @@ const Chip = ({
 
 
     return (
-        <Default style={{...props, height}}><span style={{padding : "10px"}}>{children}</span></Default>
+        <Default onClick={onClick} style={{...props, height}}><span style={{padding : "10px"}}>{children}</span></Default>
     )
 }
 

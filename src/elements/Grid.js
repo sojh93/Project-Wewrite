@@ -5,6 +5,7 @@ const Grid = ({
     onClick,
     children,
     is_flex,
+    kakao=false,
     wrap,
     ...props
 
@@ -23,6 +24,13 @@ const Grid = ({
             <Flex onClick={onClick} style={{...props}}>
                 {children}
             </Flex>
+        )
+    }
+    if(kakao){
+        return(
+            <Kakao onClick={onClick} style={{...props}}>
+                {children}
+            </Kakao>
         )
     }
     return(
@@ -58,5 +66,12 @@ const Flex = styled.div`
     box-sizing : border-box;
 `;
 
+const Kakao = styled.div`
+    display : flex;
+    background-image : url('/default_img/kakao_login_medium_wide.png');
+    background-size : cover;
+    background-position : center;
+    box-sizing : border-box;
+`;
 
 export default Grid;

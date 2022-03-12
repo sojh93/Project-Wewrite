@@ -38,14 +38,14 @@ function ModifyProfile() {
                 </Grid>
 
                 <Grid margin="10px" is_flex>
-                    <Grid is_flex borderBottom='1px solid black'>
+                    <Grid is_flex borderBottom='1px solid #dbdbdb'>
                         <Text width='40px' margin='9px'>닉네임</Text>
                         <Input isTheme width='250px' border='0'/>
                     </Grid>
                 </Grid>
 
                 <Grid margin="10px" is_flex>
-                    <Grid is_flex borderBottom='1px solid black'>
+                    <Grid is_flex borderBottom='1px solid #dbdbdb'>
                         <Text width='40px' margin='9px'>소개</Text>
                         <Input isTheme height='150px' type='textarea' width='250px' border='0'/>
                     </Grid>
@@ -67,9 +67,6 @@ function ModifyProfile() {
                     is_flex
                 >회원 탈퇴</Button>
             </Grid>
-            
-            
-            <Bottom />
         </Grid >
     )
 }
