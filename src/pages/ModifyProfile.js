@@ -50,6 +50,12 @@ function ModifyProfile() {
                         <Input isTheme height='150px' type='textarea' width='250px' border='0'/>
                     </Grid>
                 </Grid>
+                <Grid margin="10px" is_flex>
+                    <Grid is_flex borderBottom='1px solid #dbdbdb'>
+                        <Text width='40px' margin='9px'>이메일</Text>
+                        <Input isTheme width='250px' border='0'/>
+                    </Grid>
+                </Grid>
 
                 <Grid
                     margin="10px"

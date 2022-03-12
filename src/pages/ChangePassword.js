@@ -20,18 +20,25 @@ function ChangePassword() {
                         fontColor="#CCCCCC"
                     >※ 대/소문자, 숫자, 특수문자 중 2개 이상을 사용주세요.</Text>
                 </Grid>
-                <Grid margin="10px">
-                    <Text>현재 비밀번호</Text>
-                    <Input type="password" width="100%"/>
+                <Grid margin="10px" is_flex>
+                    <Grid is_flex borderBottom='1px solid #dbdbdb'>
+                        <Text width='40px' margin='9px'>이메일</Text>
+                        <Input isTheme width='250px' border='0'/>
+                    </Grid>
                 </Grid>
-                <Grid margin="10px">
-                    <Text>새 비밀번호</Text>
-                    <Input type="password" width="100%" />
+                <Grid margin="10px" is_flex>
+                    <Grid is_flex borderBottom='1px solid #dbdbdb'>
+                        <Text width='40px' margin='9px'>이메일</Text>
+                        <Input isTheme width='250px' border='0'/>
+                    </Grid>
                 </Grid>
-                <Grid margin="10px">
-                    <Text>새 비밀번호 확인</Text>
-                    <Input type="password" width="100%" />
+                <Grid margin="10px" is_flex>
+                    <Grid is_flex borderBottom='1px solid #dbdbdb'>
+                        <Text width='40px' margin='9px'>이메일</Text>
+                        <Input isTheme width='250px' border='0'/>
+                    </Grid>
                 </Grid>
+                
             </Grid>
             <Bottom />
         </Grid>
