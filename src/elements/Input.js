@@ -51,6 +51,19 @@ const Input = ({
                     </Wrap>
                 )
             }
+            // if(type === 'password'){
+            //     return (
+            //         <Wrap>
+            //             <Password
+            //             onChange={onChange}
+            //             ref={_ref}
+            //             placeholder={placeholder}
+            //             name={name}>
+            //                 {children}
+            //             </Password>
+            //         </Wrap>
+            //     )
+            // }
             if(type === 'textarea'){
                 return(
                 <Wrap>
@@ -108,6 +121,18 @@ const ThemeInput = styled.input`
         border : 1.5px solid ${props => props.theme.mainTheme.primary};
     }
 `;
+
+// const Password = styled.input`
+//     border-bottom : 1.5px solid #9E9E9E;
+//     width : 300px;
+//     height : 40px;
+//     padding : 15px;
+//     box-sizing: border-box;
+//     resize: none;
+//     outline : none;
+
+// `
+
 
 const ThemeTextarea = styled.textarea`
     border : 1.5px solid #9E9E9E;
