@@ -89,7 +89,7 @@ function Signup() {
         let _reg = /^[-_.!0-9a-zA-Z]{6,15}$/;
     };
 
-    const pwdCheckChange = (e) => {};
+    const pwdCheckChange = (e) => { };
 
     return (
         <Grid wrap is_scroll>
@@ -102,14 +102,14 @@ function Signup() {
                 margin="20px 0"
             >
                 <Grid>
-                    <Text fontSize="20px" fontWeight="400">
+                    <Text fontSize="16px" fontWeight="400">
                         회원가입
                     </Text>
                 </Grid>
 
                 <Grid is_flex justifyContent="flex-start">
                     <Text
-                        fontSize="15px"
+                        fontSize="16px"
                         fontWeight="400"
                         margin="15px 250px 0 5px"
                     >
@@ -128,43 +128,53 @@ function Signup() {
                         textAlign: "center",
                     }}
                 >
-                    <TextField
-                        sx={{
-                            height: "40px",
-                            bgcolor: "white",
-                            margin: "10px 0 15px 0",
-                        }}
-                        margin="normal"
-                        size="small"
-                        fullWidth
-                        id="loginID"
-                        label="email"
-                        name="loginID"
-                        // autoComplete="loginID"
-                        autoFocus
-                        onChange={checkId}
-                    >
-                        <Button></Button>
-                    </TextField>
-                    <TextField
-                        sx={{
-                            height: "40px",
-                            bgcolor: "white",
-                            margin: "15px 0 15px 0",
-                        }}
-                        margin="normal"
-                        size="small"
-                        fullWidth
-                        id="nickname"
-                        label="인증코드"
-                        name="nickname"
-                        // autoComplete="nickname"
-                        autoFocus
-                        onChange={checkId}
-                    />
+                    <Grid is_flex>
+                        <TextField
+                            sx={{
+                                height: "40px",
+                                bgcolor: "white",
+                                margin: "10px 0 15px 0",
+                            }}
+                            width="322px"
+                            height="48px"
+                            margin="normal"
+                            size="small"
+                            fullWidth
+                            id="loginID"
+                            label="email"
+                            name="loginID"
+                            // autoComplete="loginID"
+                            autoFocus
+                            onChange={checkId}
+                        />
+                        <Button
+                        width="70px"
+                        height="21px"
+                        border-radius
+                        >코드</Button>
+                    </Grid>
+                    <Grid is_flex>
+                        <TextField
+                            sx={{
+                                height: "40px",
+                                bgcolor: "white",
+                                margin: "15px 0 15px 0",
+                            }}
+                            margin="normal"
+                            size="small"
+                            fullWidth
+                            id="nickname"
+                            label="인증코드"
+                            name="nickname"
+                            // autoComplete="nickname"
+                            autoFocus
+                            onChange={checkId}
+                        />
+                        <Button>인증</Button>
+                    </Grid>
                     <Grid>
                         <Text
-                            fontSize="15px"
+                            fontSize="16px"
                             fontWeight="400"
                             margin="15px 250px 0 1px"
                             width="70px"
@@ -205,7 +215,7 @@ function Signup() {
 
                     <Grid>
                         <Text
-                            fontSize="15px"
+                            fontSize="16px"
                             fontWeight="400"
                             margin="15px 250px 0 1px"
                             width="100px"
@@ -241,7 +251,7 @@ function Signup() {
                         margin="100px 0 0 5px"
                         textAlign="left"
                     >
-                        <Text fontSize="3px">
+                        <Text fontSize="14px" Color="#757575">
                             서비스의 이용을 위한 약관동의와 개인정보 수집에 대한
                             동의가 필요합니다.
                         </Text>
@@ -259,6 +269,7 @@ function Signup() {
                             type="radio"
                             value="회원가입 약관동의(전체)"
                             name="회원가입 약관동의"
+                            fontSize="14px"
                             padding="0"
                             margin="0"
                         />
@@ -276,18 +287,21 @@ function Signup() {
                             type="radio"
                             value="[필수] 준회원서비스 이용약관"
                             name="회원가입 약관동의1"
+                            fontSize="14px"
                         />
                         <Input
                             isTheme
                             type="radio"
                             value="[필수] 개인(신용)전보 준회원 필수 동의서"
                             name="회원가입 약관동의2"
+                            fontSize="14px"
                         />
                         <Input
                             isTheme
                             type="radio"
                             value="[선택] 개인(신용)정보 선택동의서_준회원"
                             name="회원가입 약관동의3"
+                            fontSize="14px"
                         />
                     </Grid>
 
