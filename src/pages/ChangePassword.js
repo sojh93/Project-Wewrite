@@ -1,4 +1,6 @@
 import React from 'react'
+import './styles.css'
+
 
 // import elements
 import { Image, Grid, Button, Input, Text } from "../elements/index";
@@ -22,20 +24,19 @@ function ChangePassword() {
                 </Text>
             </Grid>
             <Grid is_flex borderBottom='1px solid #e0e0e0' margin="60px 0 0 20px" width="350px">
-                <Text width='130px' margin='0 0 10px 0' color="#e0e0e0">현재 비밀번호</Text>
-                <Input isTheme width='220px' border='0'/>
+                <Input isTheme className="Password" type="password" width='220px' border='0' placeholder="현재 비밀번호" placeholderTextColor="#e0e0e0"/>
             </Grid>
             <Grid is_flex borderBottom='1px solid #e0e0e0' margin="20px 0 0 20px" width="350px" justifyContent="center">
-                <Text width='130px' margin='0 0 10px 0' color="#e0e0e0" display="block">새 비밀번호</Text>
-                <Input isTheme width='220px' border='0'/>
+                <Input isTheme className="Password" type="password" width='220px' border='0' placeholder="새 비밀번호" placeholderTextColor="#e0e0e0"/>
             </Grid>
             <Grid is_flex borderBottom='1px solid #e0e0e0' margin="20px 0 0 20px" width="350px" justifyContent="center">
-                <Text width='130px' margin='0 0 10px 0' color="#e0e0e0" display="block">새 비밀번호 다시입력</Text>
-                <Input isTheme width='220px' border='0'/>
+                <Input isTheme className="Password" type="password" width='220px' border='0' placeholder="비밀번호 확인" placeholderTextColor="#e0e0e0"/>
             </Grid>
             
         </Grid>
     )
 }
+
+
 
 export default ChangePassword

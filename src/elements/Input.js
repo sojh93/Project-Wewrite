@@ -51,19 +51,21 @@ const Input = ({
                     </Wrap>
                 )
             }
-            // if(type === 'password'){
-            //     return (
-            //         <Wrap>
-            //             <Password
-            //             onChange={onChange}
-            //             ref={_ref}
-            //             placeholder={placeholder}
-            //             name={name}>
-            //                 {children}
-            //             </Password>
-            //         </Wrap>
-            //     )
-            // }
+            if(type === 'password'){
+                return (
+                    <Wrap>
+                        <PasswordChange
+                        type='password'
+                        className="Password"
+                        onChange={onChange}
+                        ref={_ref}
+                        placeholder={placeholder}
+                        name={name}>
+                            {children}
+                        </PasswordChange>
+                    </Wrap>
+                )
+            }
             if(type === 'textarea'){
                 return(
                 <Wrap>
@@ -122,16 +124,24 @@ const ThemeInput = styled.input`
     }
 `;
 
-// const Password = styled.input`
-//     border-bottom : 1.5px solid #9E9E9E;
-//     width : 300px;
-//     height : 40px;
-//     padding : 15px;
-//     box-sizing: border-box;
-//     resize: none;
-//     outline : none;
-
-// `
+const PasswordChange = styled.input`
+    border-bottom : 1px solid #e0e0e0;
+    width : 350px;
+    height : 40px;
+    padding : 15px;
+    box-sizing: border-box;
+    resize: none;
+    border-left-color: white;
+    border-top-color: white;
+    border-right-color: white;
+    border: none;
+    &:focus-visible{
+        & + div { display : block }
+        outline : none;
+        border : none;
+    }
+    }
+`
 
 
 const ThemeTextarea = styled.textarea`
