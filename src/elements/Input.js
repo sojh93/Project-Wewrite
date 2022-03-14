@@ -33,7 +33,7 @@ const Input = ({
                 return (
                     <WrapRadio style={{...props}}>
                     <label>
-                        <div><Radio type='radio' ref={ref} name={name} value={value}/><span>{value}</span></div>
+                        <div><Radio type='radio' ref={_ref} name={name} value={value}/><span>{value}</span></div>
                     </label>
                     </WrapRadio>
                 )
@@ -51,7 +51,7 @@ const Input = ({
                     </Wrap>
                 )
             }
-            if(type === 'password'){
+            if(type === 'pwd'){
                 return (
                     <Wrap>
                         <PasswordChange
@@ -106,7 +106,6 @@ const Input = ({
 }
 
 const Wrap = styled.div`
-    position : relative;
 `;
 
 const ThemeInput = styled.input`
@@ -120,7 +119,6 @@ const ThemeInput = styled.input`
     box-sizing: border-box;
 
     &:focus-visible{
-        & + div { display : block }
         outline : none;
         border : 1.5px solid ${props => props.theme.mainTheme.primary};
     }

@@ -38,6 +38,21 @@ const signup=(user_data) =>{
         
     }
 }
+const nickCheck=(nickName) =>{
+    return async function (dispatch,getState){
+        instance({
+            method : "post",
+            url : "/user/signup/checkNick",
+            data : {nickName},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8"
+            }
+        }).then(res=>{
+            console.log(res);
+        });
+        
+    }
+}
 const login=(user_data) =>{
     return async function (dispatch,getState){
         
@@ -126,6 +141,7 @@ const actionCreators = {
     check,
     logout,
     editData,
+    nickCheck,
 
 };
 

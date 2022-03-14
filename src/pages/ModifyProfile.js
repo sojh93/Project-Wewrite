@@ -44,12 +44,11 @@ function ModifyProfile() {
     const selectFile = (e) => {
         const reader = new FileReader();
         const file = refFileInput.current.files[0];
-        console.log(file);
-        userProfile.append("userProfile",file);
-        userProfile.append("nickName","dsadas");
+        // userProfile.append("file",file);
 
+        
         instance({
-            method : "post",
+            method : "Patch",
             url : "/user/updateProfile",
             data : userProfile,
             headers : {
