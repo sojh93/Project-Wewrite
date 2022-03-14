@@ -17,15 +17,35 @@ import Header from "../components/Header";
 import Bottom from "../components/Bottom";
 import Post from "../components/Post";
 
+import instance from "../shared/Request";
+
+
 const UserPage = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const _user = useSelector(state => state.user);
     const _post = useSelector(state => state.post);
+    console.log(_user);
 
     const pageUserKey = useParams().userKey;
+    let [pageUser,setPageUser] = React.useState(null);
+
+    React.useEffect(()=>{
+        instance({
+            method : "get",
+            url : `/posts/userPage/${pageUserKey}?page=0&size=5`,
+            data : {},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8"
+            }
+        }).then(res=>{
+            setPageUser({...res.data});
+        })
+    },[])
+
     console.log(pageUserKey);
+    console.log(pageUser);
 
     const [index,setIndex] = React.useState(1);
 
@@ -33,23 +53,21 @@ const UserPage = (props) => {
 
     return (
     <Grid wrap>
-            <Header isUserPage UserName="jennni"/>
+            <Header isUserPage UserName={pageUser?pageUser.nickname:''}/>
             <Grid is_flex flexDirection='column' alignItems='center' width="100%" padding="0" marginTop="100px">
                 
-                <Image is_circle size='100' src='https://postfiles.pstatic.net/MjAyMjAyMjBfNDMg/MDAxNjQ1MzMwOTg2MTA0.rb5fjI1Aegjp3RHNgmq0PixnyLmCrZeusNM9jbQgdE8g.mD9oTu5zdLKXrs_JmKZv-X7ErwfIlmA76i-qEZvEvYIg.JPEG.sunba0809/467d8490bad8651e3e84d231c2c51e25.jpg?type=w966'/>
+                <Image is_circle size='100' src={pageUser?pageUser.userProfileImage:''}/>
     
                 <Text margin="5px 5px 0px 5px" fontSize="12px">
                     [호칭]
                 </Text>
 
                 <Text margin="5px 5px 0px 5px" fontSize="24px">
-                    닉네임
+                    {pageUser?pageUser.nickname:''}
                 </Text>
 
                 <Text margin="5px" fontSize="8px" width="150px">
-                    소개글: 안녕하세요 저는 지중해의 몰타 섬이
-                    고향인 말티즈라고 해요. 먹을 걸 내놓아라. 혹시
-                    알아? 귀여워질지? 난 참지 않아!!
+                    {pageUser?pageUser.introduction:''}
                 </Text>
 
                 <Grid borderBottom='1px solid black' is_flex width='100%'>
@@ -57,12 +75,13 @@ const UserPage = (props) => {
                     <Grid height='35px' width='33%' textAlign='center' onClick={()=>setIndex(2)}><Text>북마크한 작품</Text></Grid>
                     <Grid height='35px' width='33%' textAlign='center' onClick={()=>setIndex(3)}><Text>좋아요한 작품</Text></Grid>
                 </Grid> 
-                <Grid marginTop='-2px' width="34%" height='1px' borderTop='3px solid black' transform={'translate(' + (- 2 + index)*100 + '%)'} transition='transform 0.5s ease 0.1s'/>
+                <Grid marginTop='-3px' borderRadius='1px' width="34%" height='1px' borderTop='3px solid black' transform={'translate(' + (- 2 + index)*100 + '%)'} transition='transform 0.5s ease 0.1s'/>
 
 
-                <Grid is_flex flexDirection='column' alignItems='center' width="90%" marginTop='15px' gap='10px'>
+                <Grid is_flex flexDirection='column' alignItems='center' width="90%" marginTop='10px' gap='10px'>
                     <Post/>
                     <Post/>
+
                 </Grid>
             </Grid>
             <Bottom thisPage="myPage" />

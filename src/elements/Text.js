@@ -2,6 +2,7 @@ import { size } from "lodash";
 import React from "react";
 import styled from "styled-components";
 
+
 const Text = ({
     onClick, children, margin='5px',
     ...props

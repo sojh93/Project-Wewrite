@@ -91,9 +91,11 @@ function Write() {
         postData.append("color", colorList[color]);
         postData.append("limitCnt", sentenceCnt);
         postData.append("category", category);
+        postData.append("paragraph", sentence);
         postData.append("postImageUrl",refFileInput.current.files[0]);
 
         dispatch(postActions.addPost(postData));
+        navigate('/');
     }
 
 
@@ -106,7 +108,7 @@ function Write() {
                 <Grid>
                     <img src={preview?preview:'/default_img/inputImage.png'} width="130px" height="150px"/>
                     <Button onClick={()=>{refFileInput.current.click()}} border="1px solid #dbdbdb" width = "130px" height="30px" fontSize="12px" fontWeight="600">표지 변경하기</Button>
-                    <input ref={refFileInput} onChange={selectFile} type="file" style={{display:'none'}}/>
+                    <input ref={refFileInput} onChange={selectFile} type="file" accept="image/*,.jpg,.png,.fif,.jfif,.jpeg,.tif,.webp" style={{display:'none'}}/>
                 </Grid>
 
                 <Grid width='90%'>

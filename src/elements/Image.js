@@ -16,12 +16,13 @@ const Image = ({
     }
 
     return (
-        <Default onClick={onClick} src={src} style={ {...props} }></Default>
+        <Default onClick={onClick} src={src} style={ {...props,backgroundImage:`url(${src})`} }></Default>
     )
 }
 
-const Default = styled.img`
-    
+const Default = styled.div`
+    background-size : cover;
+    background-position : center;
 `;
 
 const Circle = styled.img`
