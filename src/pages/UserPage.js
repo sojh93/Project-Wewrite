@@ -53,7 +53,7 @@ const UserPage = (props) => {
 
     return (
     <Grid wrap>
-            <Header isUserPage UserName={pageUser?pageUser.nickname:''}/>
+            <Header isUserPage userKey={pageUserKey} UserName={pageUser?pageUser.nickname:''}/>
             <Grid is_flex flexDirection='column' alignItems='center' width="100%" padding="0" marginTop="100px">
                 
                 <Image is_circle size='100' src={pageUser?pageUser.userProfileImage:''}/>

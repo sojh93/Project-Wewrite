@@ -83,6 +83,24 @@ const logout=() =>{
         deleteCookie('WW_user');
     }
 }
+const editData=(userData) =>{
+    return async function (dispatch,getState){
+        const token = getCookie('WW_user');
+
+        instance({
+            method : "put",
+            url : "/user/update",
+            data : userData,
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8",
+                'authorization' : token,
+            }
+        }).then(res=>{
+            console.log(res);
+        });
+    }
+}
+
 //reducer
 export default handleActions(
     {
@@ -107,6 +125,7 @@ const actionCreators = {
     login,
     check,
     logout,
+    editData,
 
 };
 

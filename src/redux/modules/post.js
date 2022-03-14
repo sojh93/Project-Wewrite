@@ -8,10 +8,12 @@ import { getCookie } from "../../shared/Cookie";
 //action
 const SET_POST = "SET_POST";
 const SET_ONE = "SET_ONE";
+const LIKE = "LIKE";
 
 //action creatos
 const setPost = createAction(SET_POST, (postList,postType) => ({ postList,postType }));
 const setOnePost = createAction(SET_ONE, (postData) => ({ postData }));
+const like = createAction(LIKE, (postData) => ({ postData }));
 
 //initialState
 const initialState = {
@@ -89,6 +91,7 @@ const addPost=(postData) =>{
     }
 }
 
+
 const getOne=(postKey) =>{
     return async function (dispatch,getState){
         const token = getCookie('WW_user');
@@ -103,6 +106,24 @@ const getOne=(postKey) =>{
             }
         }).then(res=>{
             dispatch(setOnePost(res.data));
+        });
+    }
+}
+
+const likePost=(postKey) =>{
+    return async function (dispatch,getState){
+        const token = getCookie('WW_user');
+
+        instance({
+            method : "post",
+            url : `/postLikes/${postKey}`,
+            data : {},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8",
+                'authorization' : token,
+            }
+        }).then(res=>{
+            console.log(res);
         });
     }
 }
@@ -130,6 +151,8 @@ const actionCreators = {
     getRecommend,
     addPost,
     getOne,
+    likePost,
+
 
 
 };

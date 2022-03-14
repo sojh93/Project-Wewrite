@@ -44,7 +44,7 @@ function App() {
           <Route path="/write" element={<Write />} />
           <Route path="/unfinisheddetail/:postKey" element={<UnfinishedDetail />} />
           <Route path="/postDetail/:postKey" element={<PostDetail />} />
-          <Route path="/modifyprofile/:userKey" element={<ModifyProfile />} />
+          <Route path="/modifyprofile" element={<ModifyProfile />} />
           <Route path="/changePassword" element={<ChangePassword />} />
           <Route path="/withdrawMember" element={<WithdrawMember />} />
           <Route path="/socket" element={<Socket />} />

@@ -63,7 +63,7 @@ export default function Bottom(props) {
                 </Grid>
                 {props.thisPage==="postList"?   <Text><HomeIcon/></Text>                  : <Text onClick={()=>navigate('/postlist')}><HomeOutlinedIcon/></Text>}
                 
-                {props.thisPage==="userPage"?     <Text><PersonIcon/></Text>: _user.is_login? <Text onClick={()=>navigate(`userpage/${_user.user.userKey}`)}><PersonOutlineOutlinedIcon/></Text> :<Text onClick={()=>navigate('/login')}><PersonOutlineOutlinedIcon/></Text>}
+                {props.thisPage==="userPage"?     <Text><PersonIcon/></Text>: _user.is_login? <Text onClick={()=>navigate(`/userpage/${_user.user.userKey}`)}><PersonOutlineOutlinedIcon/></Text> :<Text onClick={()=>navigate('/login')}><PersonOutlineOutlinedIcon/></Text>}
             </Grid>
         </Grid>
     );

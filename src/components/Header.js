@@ -30,13 +30,15 @@ import SettingsIcon from '@mui/icons-material/Settings';
 
 
 //import Actions
-
+import { actionCreators as userActions } from '../redux/modules/user';
 
 
 
 const Header = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const _user = useSelector(state => state.user);
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -55,7 +57,9 @@ const Header = (props) => {
     };
 
     React.useEffect(async() => {
-
+        if(!_user.is_login){
+            dispatch(userActions.check());
+        }
     },[]);
     
 
@@ -68,8 +72,8 @@ const Header = (props) => {
                         <Modal
                             open={open}
                             onClose={handleClose}
-                            aria-labelledby="modal-modal-title"
-                            aria-describedby="modal-modal-description"
+                            ariaLabelledby="modal-modal-title"
+                            ariaDescribedby="modal-modal-description"
                         >
                             <Grid is_flex justifyContent='center' alignItems='center' {...style}>
                                 <Swiper
@@ -193,7 +197,7 @@ const Header = (props) => {
                     </Grid>
     
                     <Grid backgroundColor="#F9FAFB" is_flex border="0" >
-                        <Tooltip title="설정"><IconButton  onClick={()=>{navigate('/modifyprofile')}} sx={{width:"50px", height : "50px"}}><SettingsOutlinedIcon  sx={{ margin :"10px"}}/></IconButton></Tooltip>    
+                        <Tooltip title="설정"><IconButton  onClick={()=>{navigate(`/modifyprofile`)}} sx={{width:"50px", height : "50px"}}><SettingsOutlinedIcon  sx={{ margin :"10px"}}/></IconButton></Tooltip>    
                     </Grid>
                 </Grid>
             </Grid>
@@ -212,7 +216,7 @@ const Header = (props) => {
                     </Grid>
     
                     <Grid backgroundColor="#F9FAFB" is_flex border="0" >
-                    <Tooltip title="저장"><Text color="#6454FF" margin="0 20px 0 0" padding="0">완료</Text></Tooltip>    
+                    <Text onClick={props.onClick} color="#6454FF" margin="0 20px 0 0" padding="0">완료</Text>   
                     </Grid>
                 </Grid>
             </Grid>

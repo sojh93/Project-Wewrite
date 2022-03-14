@@ -70,6 +70,7 @@ const Input = ({
                 return(
                 <Wrap>
                     <ThemeTextarea
+                                defaultValue={defaultValue}
                                 onChange={onChange}
                                 ref={ref}
                                 style={{...props}}
@@ -84,6 +85,7 @@ const Input = ({
                         <ThemeInput
                             type={type}
                             onChange={onChange}
+                            defaultValue={defaultValue}
                             ref={ref}
                             placeholder={placeholder}
                             style={{...props}}
