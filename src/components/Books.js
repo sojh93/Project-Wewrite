@@ -11,7 +11,7 @@ const Books = (props) => {
     return(
         
         <Grid onClick={props.onClick} width='100%' height='100%' is_flex flexDirection='column' alignItems='center'>
-            <Image width='100%' minHeight='140px' maxHeight='150px' height='150px' src={props.src}/>
+            <Image border='1px solid #C4C4C4' boxSizing ='border-box' borderRadius='5px' width='100%' minHeight='140px' maxHeight='150px' height='150px' src={props.src}/>
 
             <Grid width='100%' height='26px' is_flex alignItems='flex-start'>
                 <Text margin='3px' width='auto' fontSize='16px' color='black'>
@@ -19,7 +19,11 @@ const Books = (props) => {
                     </Text>
             </Grid>
             <Grid margin='2px' width='100%' is_flex alignItems='flex-start'>
-                <Chip >장르</Chip>
+                {props.category?props.category.map((v,i)=>{
+                    return (
+                        <Chip key={i}>{v.category}</Chip>
+                    )
+                }):""}
             </Grid>
 
             <Grid is_flex fontSize='15px' color='#7E7E7E' fontWeight='300'>

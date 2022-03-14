@@ -80,7 +80,7 @@ const Input = ({
             
             else{
                 return(
-                    <Wrap>
+                    
                         <ThemeInput
                             type={type}
                             onChange={onChange}
@@ -88,7 +88,7 @@ const Input = ({
                             placeholder={placeholder}
                             style={{...props}}
                         />
-                    </Wrap>
+                    
                 )
             }
 

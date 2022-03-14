@@ -2,7 +2,10 @@
     font-family: "Noto";
     src: url("./fonts/NotoSansKR-Regular.otf");
 }
-
+@font-face {
+    font-family: "Nanum";
+    src: url("./fonts/NanumMyeongjo.ttf");
+}
 * {
     font-family: "Noto";
 }

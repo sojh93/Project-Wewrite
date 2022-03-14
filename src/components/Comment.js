@@ -30,11 +30,13 @@ export default function Comment({children}) {
 
     return (
         <Grid>
-            <Grid is_flex  margin='5px' width='310px' gap='5px'>
-                {/* <Image width='30px' height='30px' src='https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FkQ5wU%2Fbtrd5kEGcBi%2FHo0a7Hmj3V6LxRhxkC2KRk%2Fimg.jpg'/> */}
-                <Text><b>nick</b></Text>
-                <Grid  width='250px'  height='auto'>
-                    <Text>안녕하시오 이건 댓글인데 설마 길게 쓸까? 심지어 영어로...? 그럴리가 없어</Text>
+            <Grid is_flex  margin='0px 10px' width='310px' gap='5px'>
+                <Grid is_flex alignItems='center'>
+                    <Image width='30px' borderRadius = '5px' height='30px' src='https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjAxMTJfMTkw%2FMDAxNjQxOTgxMjM1MjM4.0qKjMr9rB08fijTC4jQdTXXV8378Vn2hnZsQC4x5U5Qg.x7pc07yAYvAgOgBZq4MqjanOLF3tUj54dhOmAPBnsTMg.JPEG.rmfnxkzh%2Fimage%25A3%25DF580922312.jpg&type=sc960_832'/>
+                </Grid>
+                <Grid width='250px' height='auto'>
+                    <Text fontSize='12px' fontWeight='700'>Nick</Text>
+                    <Text>안녕하시오 이건 댓글인데</Text>
                 </Grid>
                 <Grid is_flex flexDirection='column' alignItems='center' >
                     <IconButton
@@ -48,7 +50,10 @@ export default function Comment({children}) {
                     >
                         <MoreHorizIcon />
                     </IconButton>
-                    {/* <FavoriteBorderOutlinedIcon  sx={{width:'15px'}}/> */}
+                    <Grid is_flex alignItems='center' justifyContent='space-evenly'>
+                        <FavoriteBorderOutlinedIcon  sx={{width:'10px'}}/>
+                        <Text margin='0 2px 1px 2px' fontSize='10px'>32</Text>
+                    </Grid>
                     <Menu
                         id="basic-menu"
                         MenuListProps={{
@@ -75,8 +80,8 @@ export default function Comment({children}) {
                     </Menu>
                 </Grid>
             </Grid>
-            <Grid margin="0px 40px 10px 40px">
-                <Text margin='0px' fontSize="10px" color='gray'>2022년 03월 27일</Text>
+            <Grid is_flex fontSize="10px" color='gray' margin="0px 40px 10px 40px">
+                <Text margin='0px 5px 0px 10px'>2022년 03월 27일</Text><Text margin='0px'>(수정됨)</Text>
             </Grid>
     </Grid>
     );

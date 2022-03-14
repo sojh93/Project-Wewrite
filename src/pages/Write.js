@@ -91,22 +91,24 @@ function Write() {
         postData.append("color", colorList[color]);
         postData.append("limitCnt", sentenceCnt);
         postData.append("category", category);
+        postData.append("paragraph", sentence);
         postData.append("postImageUrl",refFileInput.current.files[0]);
 
         dispatch(postActions.addPost(postData));
+        navigate('/');
     }
 
 
     return (
         <Grid wrap>
-            <Header />
+            <Header isWrite/>
 
-            <Grid is_flex marginTop="100px" alignItems='center' flexDirection="column">
+            <Grid is_flex marginTop="100px" marginBottom='100px' alignItems='center' flexDirection="column">
                 
                 <Grid>
                     <img src={preview?preview:'/default_img/inputImage.png'} width="130px" height="150px"/>
                     <Button onClick={()=>{refFileInput.current.click()}} border="1px solid #dbdbdb" width = "130px" height="30px" fontSize="12px" fontWeight="600">표지 변경하기</Button>
-                    <input ref={refFileInput} onChange={selectFile} type="file" style={{display:'none'}}/>
+                    <input ref={refFileInput} onChange={selectFile} type="file" accept="image/*,.jpg,.png,.fif,.jfif,.jpeg,.tif,.webp" style={{display:'none'}}/>
                 </Grid>
 
                 <Grid width='90%'>
@@ -124,14 +126,14 @@ function Write() {
                     <Grid is_flex width='100%'>
                     <Slider
                         size="small"
-                        defaultValue={1}
+                        defaultValue={2}
                         aria-label="Small"
                         step={1}
-                        min={1}
+                        min={2}
                         max={10}
                         valueLabelDisplay="auto"
                         marks={
-                            [{value : 1, label:'1개'},{value : 10, label:'10개'}]
+                            [{value : 2, label:'2개'},{value : 10, label:'10개'}]
                         }
                         onChange={(e)=>{
                             keyPress(e.target.value)}}
@@ -139,9 +141,26 @@ function Write() {
                     </Grid>
                 </Grid>
 
-                <Grid is_flex margin='20px 0' width='90%'>
+                <Grid is_flex flexDirection='column' margin='20px 0' width='90%' gap='10px'>
                     <Text>카테고리</Text>
-                    
+                    <Grid is_flex justifyContent='space-between'>
+                        <Button onClick={()=>{setCategory('판타지')}} fontSize='12px' width='75px' height='40px' theme={category==='판타지'?'filled':'unfilled'}>판타지</Button>
+                        <Button onClick={()=>{setCategory('스릴러')}} fontSize='12px' width='75px' height='40px' theme={category==='스릴러'?'filled':'unfilled'}>스릴러</Button>
+                        <Button onClick={()=>{setCategory('공포')}} fontSize='12px' width='75px' height='40px' theme={category==='공포'?'filled':'unfilled'}>공포</Button>
+                        <Button onClick={()=>{setCategory('로맨스/멜로')}} fontSize='12px' width='75px' height='40px' theme={category==='로맨스/멜로'?'filled':'unfilled'}>로맨스 /<br/>멜로</Button>
+                    </Grid>
+                    <Grid is_flex justifyContent='space-between'>
+                        <Button onClick={()=>{setCategory('액션')}} fontSize='12px' width='75px' height='40px' theme={category==='액션'?'filled':'unfilled'}>액션</Button>
+                        <Button onClick={()=>{setCategory('코미디')}} fontSize='12px' width='75px' height='40px' theme={category==='코미디'?'filled':'unfilled'}>코미디</Button>
+                        <Button onClick={()=>{setCategory('무협')}} fontSize='12px' width='75px' height='40px' theme={category==='무협'?'filled':'unfilled'}>무협</Button>
+                        <Button onClick={()=>{setCategory('SF')}} fontSize='12px' width='75px' height='40px' theme={category==='SF'?'filled':'unfilled'}>SF</Button>
+                    </Grid>
+                    <Grid is_flex justifyContent='space-between'>
+                        <Button onClick={()=>{setCategory('추리/미스터리')}} fontSize='12px' width='75px' height='40px' theme={category==='추리/미스터리'?'filled':'unfilled'}>추리 /<br/>미스터리</Button>
+                        <Button onClick={()=>{setCategory('드라마')}} fontSize='12px' width='75px' height='40px' theme={category==='드라마'?'filled':'unfilled'}>드라마</Button>
+                        <Button onClick={()=>{setCategory('스포츠')}} fontSize='12px' width='75px' height='40px' theme={category==='스포츠'?'filled':'unfilled'}>스포츠</Button>
+                        <Button onClick={()=>{setCategory('하이틴')}} fontSize='12px' width='75px' height='40px' theme={category==='하이틴'?'filled':'unfilled'}>하이틴</Button>
+                    </Grid>
                 </Grid>
                 
                 <Button onClick={handleOpen} theme='unfilled'>게시하기</Button>
@@ -157,7 +176,7 @@ function Write() {
             >
                 <Grid is_flex flexDirection='column' justifyContent='center' alignItems='center' {...style}>
                     <Text fontSize='24px' color='black' fontWeight='700'>마지막으로 확인해주세요!</Text>
-                    <Image margin='10px' src='/default_img/book.png'></Image>
+                    <Image margin='10px' width='50px' height='50px' src='/default_img/book.png'></Image>
                     <Grid color='gray' margin='20px'>
                         <Text fontSize='14px' color='black' fontWeight='700'>유의사항</Text>
                         <Text fontSize='14px'> - 같은 사람이 연속으로 릴레리를 이어갈 수 없어요.</Text>
