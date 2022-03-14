@@ -22,8 +22,8 @@ import SockJS from "sockjs-client";
 // 채팅 방 컴포넌트
 const ChattingRoom = (props) => {
     // 소켓 통신 객체
-    // const sock = new SockJS("http://3.36.75.74:8080/ws-stomp");
-    const sock = new SockJS("http://binscot.shop/ws-stomp");
+    const sock = new SockJS("http://3.36.75.74:8080/ws-alarm");
+    // const sock = new SockJS("http://binscot.shop/ws-stomp");
     const ws = Stomp.over(sock);
 
     // 방 제목 가져오기
@@ -56,7 +56,7 @@ const ChattingRoom = (props) => {
             ws.connect(headers, () => {
                 ws.subscribe(
                     // websocket 구독 url 콜백함수 header 
-                    `/sub/api/chat/rooms/83`,
+                    "/sub/alarm/",
                     (data) => {
                         // const postId = JSON.parse(68);
                         // console.log(data)
@@ -73,6 +73,9 @@ const ChattingRoom = (props) => {
             console.log(error);
         }
     }
+
+ 
+    
 
     // 연결해제, 구독해제
     function wsDisConnectUnsubscribe() {
