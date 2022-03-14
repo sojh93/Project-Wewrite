@@ -176,7 +176,7 @@ function Write() {
             >
                 <Grid is_flex flexDirection='column' justifyContent='center' alignItems='center' {...style}>
                     <Text fontSize='24px' color='black' fontWeight='700'>마지막으로 확인해주세요!</Text>
-                    <Image margin='10px' src='/default_img/book.png'></Image>
+                    <Image margin='10px' width='50px' height='50px' src='/default_img/book.png'></Image>
                     <Grid color='gray' margin='20px'>
                         <Text fontSize='14px' color='black' fontWeight='700'>유의사항</Text>
                         <Text fontSize='14px'> - 같은 사람이 연속으로 릴레리를 이어갈 수 없어요.</Text>

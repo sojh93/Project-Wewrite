@@ -19,10 +19,10 @@ export default function Post(props) {
 
     return (
         <Grid is_flex width='100%' flexDirection='column'>
-            <Text fontSize="16px" fontWeight='700'>제목이 길면 얼마나 길까?</Text>
+            <Text fontSize="16px" fontWeight='700'>{props.title?props.title:''}</Text>
             <Grid is_flex justifyContent='space-between' width="100%" gap='10px'>
                 <Grid width='80px' is_flex flexDirection='column'>
-                    <Image width="80px" height="100px" borderRadius="5px" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA1MjJfMTcz%2FMDAxNjIxNjcwMzA3ODY1.PK5Q_yIQRr3ZyvTO_XhARkEF9aMJ0C1wavUEr2hEEjgg.kfG41tZDQtwvKtpwO7OhRguDv0C_E5JCSfyGnlpi1rEg.JPEG.vicky0170%2Fe6c17e085ded495c098f99cbea98477d.jpg&type=sc960_832"></Image>
+                    <Image width="80px" height="100px" borderRadius="5px" src={props.url?props.url:''}/>
                 </Grid>
                 <Grid is_flex flexDirection="column" width="calc(100% - 80px)" justifyContent='space-between'>
                     <Grid>

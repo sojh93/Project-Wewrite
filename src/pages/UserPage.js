@@ -79,11 +79,15 @@ const UserPage = (props) => {
 
 
                 <Grid is_flex flexDirection='column' alignItems='center' width="90%" marginTop='10px' gap='10px'>
-                    <Post/>
-                    <Post/>
+                    {pageUser?pageUser.postList.map((v,i)=>{
+                        return (
+                            <Post key={i} title={v.title} url={v.postImageUrl}/>
+                        )
+                    }):''}
 
                 </Grid>
             </Grid>
+            <Grid height='100px'/>
             <Bottom thisPage="myPage" />
         </Grid>
     );
