@@ -12,13 +12,13 @@ function ModifyProfile() {
 
     //profile image
     const refFileInput = React.useRef();
-    const [preview,setPreview] = React.useState('/default_img/inputImage.png');
-    
-    const selectFile = (e) =>{
+    const [preview, setPreview] = React.useState('/default_img/inputImage.png');
+
+    const selectFile = (e) => {
         const reader = new FileReader();
         const file = refFileInput.current.files[0];
         reader.readAsDataURL(file);
-        reader.addEventListener("load",function () {
+        reader.addEventListener("load", function () {
             setPreview(reader.result);
         })
 
@@ -28,48 +28,54 @@ function ModifyProfile() {
 
     return (
         <Grid wrap>
-            <Header isEditUser/>
+            <Header isEditUser />
             <Grid is_flex flexDirection="column" alignItems='center' margin="100px 0 0 0">
-
-                <Grid is_flex align-items="center" flexDirection="column" width="100%" gap='10px'>
-                    <Image is_circle size='100' src={preview}/>
-                    <Button onClick={()=>{refFileInput.current.click()}} border="1px solid #dbdbdb" width = "130px" height="30px" fontSize="12px" fontWeight="600">표지 변경하기</Button>
-                    <input ref={refFileInput} onChange={selectFile} type="file" style={{display:'none'}}/>
+                <Grid is_flex align-items="center" flexDirection="column" width="100%" gap='10px' is_scroll>
+                    <Image is_circle size='100' src={preview} />
+                    <Button onClick={() => { refFileInput.current.click() }} border="0px" width="95px" height="15px" backgroundColor="white" fontSize="12px" fontWeight="600" color="#7E7E7E" padding="0" margin="0 0 40px 0">프로필 사진 바꾸기</Button>
+                    <input ref={refFileInput} onChange={selectFile} type="file" style={{ display: 'none' }} />
                 </Grid>
-
-                <Grid margin="10px" is_flex>
-                    <Grid is_flex borderBottom='1px solid black'>
-                        <Text width='40px' margin='9px'>닉네임</Text>
-                        <Input isTheme width='250px' border='0'/>
+         
+                    <Grid is_flex borderBottom='1px solid #E0E0E0' width="350px">
+                        <Text width='40px' height="10px" margin='9px' fontSize="14px" fontWeight="bold" color="#424242" justifyContent="left">닉네임</Text>
+                        <Input isTheme width='350px' border='0' color="#424242" height="40px" margin="0 0 10px 0"/>
                     </Grid>
-                </Grid>
-
-                <Grid margin="10px" is_flex>
-                    <Grid is_flex borderBottom='1px solid black'>
-                        <Text width='40px' margin='9px'>소개</Text>
-                        <Input isTheme height='150px' type='textarea' width='250px' border='0'/>
+   
+                    <Grid is_flex borderBottom='1px solid #E0E0E0' width="350px" margin="15px 0 0 0">
+                        <Text width='34px' height="15px" margin='14px 9px 9px 9px' fontSize="14px" fontWeight="bold" color="#424242">소개</Text>
+                        <Input isTheme type='textarea' width='350px' height='60px' fontSize="12px" border='0' margin="0 0 0 10px" />
                     </Grid>
-                </Grid>
 
-                <Grid
-                    margin="10px"
-                    is_flex
-                    justifyContent="space-between"
-                    width="300px"
-                >
-                    <Text>비밀번호</Text>
-                    <Text>변경하기 {'>'}</Text>
+                    <Grid is_flex borderBottom='1px solid #E0E0E0' width="350px">
+                        <Text width='34px' height="15px" margin='20px 0 10px 9px' fontSize="14px" color="#9e9e9e">이메일</Text>
+                        <Input isTheme width='350px' border='0' color="#424242" margin="10px 9px 10px 9px" />
+                    </Grid>
+
+                <Grid is_flex width="350px" height="40px" margin="15px 0px 15px 0px" borderBottom="1px solid #E0E0E0" justifyContent="space-between" alignItems="center">
+                    <Text width="34px" height="15px" margin="0 9px 20px 9px" fontSize="14px" fontWeight="bold" color="#424242" >비밀번호</Text>
+                    <Text width="71px" height="32px" fontSize="12px" color="#424242" margin="0" padding="0">변경하기 {'>'}</Text>
                 </Grid>
-                <Button
-                    border='0px'
-                    color="#FF0000"
-                    margin="20px"
-                    is_flex
-                >회원 탈퇴</Button>
+                <Grid is_flex width="350px" height="40px" margin="0 10px 10px 10px" borderBottom="1px solid #E0E0E0" justifyContent="space-between">
+                    <Text width="34px" height="15px" margin='1px 0 0 9px' fontSize="14px" fontWeight="bold" color="#424242">호칭</Text>
+                    <Text display="block" width="71px" height="24px" fontSize="12px" color="#424242" margin="3px 0 0 0">변경하기 {'>'}</Text>
+                </Grid>
             </Grid>
+            <Grid is_flex flexDirection="column" margin="20px 0 0 0" justifyContent="center">
+                <Grid is_flex width="350px" height="40px" margin="10px" justifyContent="space-between">
+                    <Text color="#888888" margin="10px 10px 10px 15px">사용자 환경 설정</Text>
+                </Grid>
+                <Grid is_flex width="350px" height="40px" margin="10px 10px 10px 20px" borderBottom="1px solid #E0E0E0">
+                    <Text fontWeight="bold" width='34px' height="15px" margin='0 9px 0 5px' fontSize="14px" color="#424242">문의하기</Text>
+                </Grid>
+                <Grid is_flex width="350px" height="40px" margin="10px 10px 10px 20px" borderBottom="1px solid #E0E0E0" justifyContent="space-between" color="#424242">
+                    <Text fontWeight="bold" width='34px' height="15px" margin='0 9px 0 5px' fontSize="14px" color="#424242">이용약관</Text>
+                </Grid>
+                <Grid is_flex width="350px" height="40px" margin="10px 10px 10px 20px" borderBottom="1px solid #E0E0E0" justifyContent="space-between" color="#424242">
+                    <Text fontWeight="bold" width='34px' height="15px" margin='0 9px 0 5px' fontSize="14px" color="#424242">회원탈퇴</Text>
+                </Grid>
+            </Grid>
+            <Grid height="100px"/>
             
-            
-            <Bottom />
         </Grid >
     )
 }
