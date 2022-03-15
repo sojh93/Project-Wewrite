@@ -51,9 +51,31 @@ function PostDetail(props) {
     const _post = useSelector(state=> state.post);
     const postKey = useParams().postKey;
     const thisPost = _post.thisPost;
+    console.log(thisPost);
+    const users = thisPost.paragraphResDtoList?thisPost.paragraphResDtoList.reduce((x,v,i)=>{
+        let tempList = []
+        console.log(x);
+        if(x.length===0){
+            return [{nickname:v.userInfoResDto.nickname,userProfileImage:v.userInfoResDto.userProfileImage}]
+        }else{
+            for(let i of x){
+                tempList.push(i.nickname)
+            }
+    
+            if(tempList.includes(v.userInfoResDto.nickname)){
+                return x;
+            }else{
+                x.push({nickname:v.userInfoResDto.nickname,userProfileImage:v.userInfoResDto.userProfileImage})
+                return x;
+            }
+        }
+        
+    },[]):'';
+    console.log(users);
 
     const [category,setCategory] = React.useState(null)
 
+    const [writeUser, setWriteUser] = React.useState([]);
 
     //modal
     const [open, setOpen] = React.useState(false);
@@ -193,10 +215,11 @@ function PostDetail(props) {
                     modules={[FreeMode, Pagination]}
                     className="mySwiper"
                 >
-                    {thisPost.paragraphResDtoList?thisPost.paragraphResDtoList.map(v=>{
+                    {thisPost.paragraphResDtoList?users.map(v=>{
+
                         return(
                             <SwiperSlide>
-                                <Paragraph nick={v.userInfoResDto.nickname} src={v.userInfoResDto.userProfileImage}/>
+                                <Paragraph nick={v.nickname} src={v.userProfileImage}/>
                             </SwiperSlide>
                         )
                     }):''}
@@ -206,9 +229,7 @@ function PostDetail(props) {
                 <Grid is_flex flexDirection='column' width='90%'>
                     {thisPost.paragraphResDtoList?thisPost.paragraphResDtoList.map(v=>{
                         return(
-                            <>
                             <Sentence like={v.paragraphLikesCnt} contents={v.paragraph} src={v.userInfoResDto.userProfileImage}/>
-                            </>
                         )
                     }):''}
                 </Grid>
