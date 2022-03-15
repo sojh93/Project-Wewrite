@@ -39,7 +39,6 @@ function Main(props) {
 
     const _user = useSelector(state => state.user);
     const _post = useSelector(state => state.post);
-    console.log(_post);
 
     const tempImage = ["http://img.etoday.co.kr/pto_db/2017/06/20170630055356_1088133_710_340.jpg","https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/1jPF/image/oRhdR-gw5pIPzXu74IiCpUAkBb4.jpg","https://post-phinf.pstatic.net/MjAyMjAyMjRfMTQg/MDAxNjQ1Njc3NzEzMDk0.ZY8y6TgCWsQn-9PtU2NgyzZIZXxvmxxKovYVpcKP2I8g.z04ffjM409tGuMHlukshDSCcKNvQw2Y0aL6WQG0ApYwg.JPEG/CT5-V_%EB%B8%94%EB%9E%99%EC%9C%99_%ED%8B%B0%EC%A0%80_1.jpg?type=w1200"];
 
@@ -66,7 +65,7 @@ function Main(props) {
 
             <Grid is_flex flexDirection='column' alignItems='center' margin='60px 0 0 0'>
 
-                <Grid width='100%' height='350px' backgroundSize='contain' backgroundImage='url("/default_img/bookBackGround.png")'>
+                <Grid width='100%' height='350px' backgroundSize='contain' backgroundImage='url("/default_img/bookBackGround1.png")'>
                     <Swiper
                         style={{height : '320px', width : 'calc(100vw - 20px)', minWidth : '340px', maxWidth : '370px' ,margin : '10px'}}
                         rewind={true}
@@ -91,17 +90,17 @@ function Main(props) {
                             <BookCover src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTExMDRfMzgg%2FMDAxNjM2MDMwMDg5MjE4.HBm6vUSuOILUtW4kXWK58VhyzQW8M9-LLPjFdaLCb5Ug.x3pkyDJl3W_bqs9IpyJnHYaciGuME_MyhX6N9F_sIW8g.JPEG.yunalee1997%2Fde05ada82ea284740579a16d209105c4.jpg&type=sc960_832"/>
                         </SwiperSlide>
                         <SwiperSlide>
-                        <BookCover src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20140514_128%2F1hwanee_1399994124116ooYOF_JPEG%2F1Recovered_May_13_2014_107.JPG&type=sc960_832"/>
-
+                            <BookCover src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20140514_128%2F1hwanee_1399994124116ooYOF_JPEG%2F1Recovered_May_13_2014_107.JPG&type=sc960_832"/>
                         </SwiperSlide>
-                        <SwiperSlide><Image width="240px" height='320px' src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
-                        <SwiperSlide><Image width="240px" height='320px' src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
+                            
+                        <SwiperSlide><BookCover src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
+                        <SwiperSlide><BookCover src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
                     </Swiper>
 
                 </Grid>
 
-                <Grid width='100%' height='290px' is_flex flexDirection='column'>
-                    <Text margin='0px 10px' fontSize='24px' fontWeight='500'>새로운 이야기</Text>
+                <Grid width='100%' height='290px' marginTop='20px' is_flex flexDirection='column'>
+                    <Text margin='0px 10px' fontSize='24px' fontWeight='700'>새로운 이야기</Text>
                     <Swiper
                     style={{height : '230px', width : 'calc(100vw - 20px)', minWidth : '340px', maxWidth : '370px' ,margin : '10px'}}
                     slidesPerView={2.75}
@@ -114,9 +113,14 @@ function Main(props) {
                     className="mySwiper"
                     >
                         {_post.recentPostList.map((v,i)=>{
+                            const likeThis= v.postLikeClickersResponseDtoList
+                            .reduce((X,V)=>
+                                {   
+                                    return Object.values(V)[0]===_user.user.userKey?true:X}
+                            ,false)
                             return (
                             <SwiperSlide key={v.postKey}>
-                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} category={v.categoryList} title={v.title} like={v.postLikesCnt} src={v.postImageUrl} key={i} postKey={v.postKey}/>
+                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} category={v.categoryList} title={v.title} isLike={likeThis} like={v.postLikesCnt} src={v.postImageUrl} key={i} postKey={v.postKey}/>
                             </SwiperSlide>
                             )
                         })}
@@ -126,7 +130,7 @@ function Main(props) {
                 
 
                 <Grid width='100%'  is_flex flexDirection='column'>
-                    <Text margin='0px 10px' fontSize='24px' fontWeight='500'>당신에게 추천해요</Text>
+                    <Text margin='0px 10px' fontSize='24px' fontWeight='700'>당신에게 추천해요</Text>
                     <Swiper
                     style={{height : '230px', width : 'calc(100vw - 20px)', minWidth : '340px', maxWidth : '370px' ,margin : '10px'}}
                     slidesPerView={2.75}
@@ -138,18 +142,23 @@ function Main(props) {
                     modules={[FreeMode, Pagination]}
                     className="mySwiper"
                     >
-                        {_post.recommendPostList.map((v,i)=>{
+                        {_post.recommendPostList?_post.recommendPostList.map((v,i)=>{
+                            const likeThis= v.postLikeClickersResponseDtoList
+                            .reduce((X,V)=>
+                                {   
+                                    return Object.values(V)[0]===_user.user.userKey?true:X}
+                            ,false)
                             return (
                             <SwiperSlide key={v.postKey}>
-                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} category={v.categoryList} title={v.title} like={v.postLikesCnt} src={v.postImageUrl} key={v.postKey}/>
+                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} category={v.categoryList} title={v.title} isLike={likeThis} like={v.postLikesCnt} src={v.postImageUrl} postKey={v.postKey} key={v.postKey}/>
                             </SwiperSlide>
                             )
-                        })}
+                        }):''}
                     </Swiper>
                 </Grid>
 
                 <Grid width='100%'  is_flex flexDirection='column'>
-                    <Text margin='0px 10px' fontSize='24px' fontWeight='500'>당신이 완성해주세요</Text>
+                    <Text margin='0px 10px' fontSize='24px' fontWeight='700'>당신이 완성해주세요</Text>
                     <Swiper
                     style={{height : '230px', width : 'calc(100vw - 20px)', minWidth : '340px', maxWidth : '370px' ,margin : '10px'}}
                     slidesPerView={2.75}
@@ -162,9 +171,14 @@ function Main(props) {
                     className="mySwiper"
                     >
                         {_post.allPostList.map((v,i)=>{
+                            const likeThis= v.postLikeClickersResponseDtoList
+                            .reduce((X,V)=>
+                                {   
+                                    return Object.values(V)[0]===_user.user.userKey?true:X}
+                            ,false)
                             return (
                             <SwiperSlide key={v.postKey}>
-                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} category={v.categoryList} title={v.title} like={v.postLikesCnt} src={v.postImageUrl} key={v.postKey}/>
+                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} category={v.categoryList} title={v.title} isLike={likeThis} like={v.postLikesCnt} src={v.postImageUrl} postKey={v.postKey} key={v.postKey}/>
                             </SwiperSlide>
                             )
                         })}

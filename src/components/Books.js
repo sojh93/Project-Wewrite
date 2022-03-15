@@ -7,6 +7,7 @@ import { Grid, Image,Text,Chip } from "../elements";
 
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 import { actionCreators as userActions } from '../redux/modules/user';
 import { actionCreators as postActions } from '../redux/modules/post';
@@ -37,11 +38,11 @@ const Books = (props) => {
                 }):""}
             </Grid>
 
-            <Grid is_flex fontSize='15px' color='#7E7E7E' fontWeight='300'>
-                <Text><ThumbUpOutlinedIcon onClick={likePost}/></Text>
-                <Text>{props.like}</Text>
-                <Text><BookmarkBorderOutlinedIcon/></Text>
-                <Text>???</Text>
+            <Grid is_flex fontSize='15px' color={props.isLike?'#6454FF':'#7E7E7E'} margin='10px 0' alignItems='center' fontWeight='300'>
+                {props.isLike?<Text height='25px' margin="0 5px" color='#6454FF'><ThumbUpIcon onClick={likePost}/></Text>:<Text height='25px' margin="0 5px"><ThumbUpOutlinedIcon onClick={likePost}/></Text>}
+                <Text margin="0 5px" fontSize='12px' color={props.isLike?'#6454FF':'#7E7E7E'}>{props.like}</Text>
+                <Text height='25px' margin="0 5px" fontSize='12px' color={props.isLike?'#7E7E7E':'#7E7E7E'}><BookmarkBorderOutlinedIcon/></Text>
+                <Text margin="0 5px" fontSize='12px' color={props.isLike?'#7E7E7E':'#7E7E7E'}>???</Text>
 
             </Grid>
         </Grid>

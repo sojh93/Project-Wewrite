@@ -26,6 +26,11 @@ import Sentence from '../components/Sentence';
 import Comment from '../components/Comment';
 import Paragraph from "../components/Paragraph";
 
+// 소켓 통신
+import Stomp from "stompjs";
+import SockJS from "sockjs-client";
+import { getCookie } from "../shared/Cookie";
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -58,16 +63,98 @@ function PostDetail(props) {
     const [Copen, setCOpen] = React.useState(false);
     const handleOpenC = () => setCOpen(true);
     const handleCloseC = () => setCOpen(false);
-    
+
+    //socket
+    const sock = new SockJS("http://binscot.shop/ws-stomp");
+    const ws = Stomp.over(sock);
+    const token = getCookie('WW_user');
+
+    //contents
+    const [contents, setContents] = React.useState('');
+
+
+    var headers = {
+        Authorization: token
+    };
 
     React.useEffect(()=>{
         if(_post.thisPost.postKey !== postKey){
             dispatch(postActions.getOne(postKey));
-
         }
+        wsConnectSubscribe();
+        return() => {wsDisConnectUnsubscribe()};
     },[])
 
-    console.log(_post);
+
+    function wsConnectSubscribe() {
+        try {
+            ws.connect(headers, () => {
+                ws.subscribe(
+                    // websocket 구독 url 콜백함수 header 
+                    `/sub/api/chat/rooms/${postKey}`,
+                    (data) => {
+                        const tempData = data.body.split(',')
+                        
+                        console.log(tempData)
+                        // window.location.reload();
+                    },
+                    headers
+                );
+            });
+            console.log("success");
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    function wsDisConnectUnsubscribe() {
+        try {
+            ws.disconnect(() => {
+                ws.unsubscribe("sub-0");
+            }, headers);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    // 웹소켓이 연결될 때 까지 실행하는 함수
+    function waitForConnection(ws, callback) {
+        setTimeout(
+            function () {
+                // 연결되었을 때 콜백함수 실행
+                if (ws.ws.readyState === 1) {
+                    callback();
+                    // 연결이 안 되었으면 재호출
+                } else {
+                    waitForConnection(ws, callback);
+                }
+            },
+            1 // 밀리초 간격으로 실행
+        );
+    }
+
+    // 메시지 보내기
+    function sendMessage() {
+        try {
+
+            const data = {
+                type: "TALK",
+                postId: postKey,
+                userName: _user.user.username,
+                userId: _user.user.userKey,
+                paragraph : contents,
+                nickName: _user.user.nickname,
+            };
+            console.log(data);
+            // 로딩 중
+            waitForConnection(ws, function () {
+                ws.send("/pub/paragraph/complete", headers, JSON.stringify(data));
+            });
+        } catch (error) {
+            console.log(error);
+            console.log(ws.ws.readyState);
+        }
+    }
 
     return (
 
@@ -118,7 +205,6 @@ function PostDetail(props) {
                 </Grid>
                 <Grid is_flex flexDirection='column' width='90%'>
                     {thisPost.paragraphResDtoList?thisPost.paragraphResDtoList.map(v=>{
-                        console.log(v.userInfoResDto)
                         return(
                             <>
                             <Sentence like={v.paragraphLikesCnt} contents={v.paragraph} src={v.userInfoResDto.userProfileImage}/>
@@ -131,8 +217,8 @@ function PostDetail(props) {
             {thisPost.complete?
             '':
                 <Grid marginTop='30px' is_flex flexDirection='column' alignItems='center'>
-                    <Input height='200px' isTheme type='textarea'/>
-                    <Button onClick={handleOpenC} theme='unfilled'>작성하기</Button>
+                    <Input onChange={(e)=>{setContents(e.target.value)}} height='200px' isTheme type='textarea'/>
+                    <Button onClick={handleOpen} theme='unfilled'>작성하기</Button>
                 </Grid>}
 
             <Modal
@@ -165,7 +251,7 @@ function PostDetail(props) {
                         <Button onClick={()=>{setCategory('하이틴')}} fontSize='12px' width='70px' height='40px' theme={category==='하이틴'?'filled':'unfilled'}>하이틴</Button>
                     </Grid>
                     </Grid>
-                    <Button theme='unfilled'>확인했어요!</Button>
+                    <Button onClick={sendMessage} theme='unfilled'>확인했어요!</Button>
                 </Grid>
             </Modal>
 

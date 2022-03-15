@@ -215,7 +215,7 @@ function Signup() {
                 flexDirection="column"
                 marginTop = '80px'
             >
-                <Grid is_flex flexDirection='column' width='300px'>
+                <Grid is_flex flexDirection='column' width='350px'>
                     <Text fontSize="24px" fontWeight="700">
                         회원가입
                     </Text>
@@ -228,18 +228,19 @@ function Signup() {
                     onSubmit={handleSubmit}
                     noValidate
                     sx={{
-                        width: "300px",
+                        width: "350px",
                         mt: 1,
                         alignItems: "center",
                         textAlign: "center",
                     }}
                 >   
-                    <Grid marginTop='30px' is_flex flexDirection='column' alignItems='flex-start'>
+                    <Grid marginTop='30px' is_flex flexDirection='column' width='350px' alignItems='flex-start'>
                         <Text fontSize='14px' fontWeight='500' color='#7E7E7E'>이메일</Text>
                         <Grid is_flex flexDirection='column' height='75px' position='relative'>
                             <Input
                                 isTheme
                                 height='40px'
+                                width='350px'
                                 margin='10px 0 5px 0'
                                 id="loginID"
                                 placeholder='email'
@@ -264,6 +265,7 @@ function Signup() {
                         <Input
                             isTheme
                             height='40px'
+                            width='350px'
                             margin='15px 0 5px 0'
                             id="code"
                             placeholder="인증코드"
@@ -291,6 +293,7 @@ function Signup() {
                             <Input
                                 isTheme
                                 height='40px'
+                                width='350px'
                                 margin='15px 0 5px 0'
                                 name="nickname"
                                 placeholder="닉네임"
@@ -309,6 +312,7 @@ function Signup() {
                         <Input
                             isTheme
                             height='40px'
+                            width='350px'
                             margin='15px 0 5px 0'
                             name="password"
                             placeholder="비밀번호"
@@ -335,6 +339,7 @@ function Signup() {
                         <Input
                             isTheme
                             height='40px'
+                            width='350px'
                             margin='15px 0 5px 0'
                             name="passwordCheck"
                             placeholder="비밀번호 확인"
@@ -363,7 +368,7 @@ function Signup() {
                         is_flex
                         padding="10px"
                         margin="5px 0 0 0"
-                        width="300px"
+                        width="350px"
                         border="1px solid #6454FF"
                     >
                         <Input

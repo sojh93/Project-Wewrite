@@ -26,7 +26,6 @@ const UserPage = (props) => {
 
     const _user = useSelector(state => state.user);
     const _post = useSelector(state => state.post);
-    console.log(_user);
 
     const pageUserKey = useParams().userKey;
     let [pageUser,setPageUser] = React.useState(null);
@@ -44,7 +43,6 @@ const UserPage = (props) => {
         })
     },[])
 
-    console.log(pageUserKey);
     console.log(pageUser);
 
     const [index,setIndex] = React.useState(1);
@@ -54,7 +52,7 @@ const UserPage = (props) => {
     return (
     <Grid wrap>
             <Header isUserPage userKey={pageUserKey} UserName={pageUser?pageUser.nickname:''}/>
-            <Grid is_flex flexDirection='column' alignItems='center' width="100%" padding="0" marginTop="100px">
+            <Grid is_flex flexDirection='column' alignItems='center' width="100%" padding="0" marginTop="80px">
                 
                 <Image is_circle size='100' src={pageUser?pageUser.userProfileImage:''}/>
     
@@ -66,11 +64,11 @@ const UserPage = (props) => {
                     {pageUser?pageUser.nickname:''}
                 </Text>
 
-                <Text margin="5px" fontSize="8px" width="150px">
+                <Text margin="10px" fontSize="12px">
                     {pageUser?pageUser.introduction:''}
                 </Text>
 
-                <Grid borderBottom='1px solid black' is_flex width='100%'>
+                <Grid borderBottom='1px solid black' marginTop='10px' is_flex width='100%'>
                     <Grid height='35px' width='33%' textAlign='center' onClick={()=>setIndex(1)}><Text>내 참여작</Text></Grid>
                     <Grid height='35px' width='33%' textAlign='center' onClick={()=>setIndex(2)}><Text>북마크한 작품</Text></Grid>
                     <Grid height='35px' width='33%' textAlign='center' onClick={()=>setIndex(3)}><Text>좋아요한 작품</Text></Grid>
@@ -78,10 +76,15 @@ const UserPage = (props) => {
                 <Grid marginTop='-3px' borderRadius='1px' width="34%" height='1px' borderTop='3px solid black' transform={'translate(' + (- 2 + index)*100 + '%)'} transition='transform 0.5s ease 0.1s'/>
 
 
-                <Grid is_flex flexDirection='column' alignItems='center' width="90%" marginTop='10px' gap='10px'>
-                    {pageUser?pageUser.postList.map((v,i)=>{
+                <Grid is_flex flexDirection='column' alignItems='center' width="90%" marginTop='32px' gap='24px'>
+                    {pageUser?pageUser.postResponseDtoList.map((v,i)=>{
+                        const likeThis= v.postLikeClickersResponseDtoList
+                        .reduce((X,V)=>
+                            {   
+                                return Object.values(V)[0]===_user.user.userKey?true:X}
+                        ,false)
                         return (
-                            <Post key={i} title={v.title} url={v.postImageUrl}/>
+                            <Post key={i} category={v.categoryList} postKey={v.postKey} isLike={likeThis} first={v.paragraphResList[0].paragraph} like={v.postLikesCnt} title={v.title} url={v.postImageUrl}/>
                         )
                     }):''}
 

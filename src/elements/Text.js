@@ -8,9 +8,12 @@ const Text = ({
     ...props
     }) => {
     return (
-        <p onClick={onClick} style={{...props,margin,wordBreak : 'keep-all'}}>{children} </p>
+        <P onClick={onClick} style={{...props,margin,wordBreak : 'keep-all'}}>{children} </P>
     );
 }
+
+const P = styled.p`
+`;
 
 
 export default Text;

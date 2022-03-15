@@ -124,6 +124,7 @@ const likePost=(postKey) =>{
             }
         }).then(res=>{
             console.log(res);
+            dispatch(like(res.data));
         });
     }
 }
@@ -137,6 +138,28 @@ export default handleActions(
         [SET_ONE]: (state, action) =>
         produce(state, (draft) => {
             draft.thisPost = {...action.payload.postData};
+        }),
+        [LIKE]: (state, action) =>
+        produce(state, (draft) => {
+            draft.allPostList.map((v,i)=>{
+
+                if(action.payload.postData.postId === v.postKey){
+                    v.postLikeClickersResponseDtoList = action.payload.postData.postLikeClickersResponseDtos;
+                    v.postLikesCnt = action.payload.postData.totalLike
+                }else{return v}
+            });
+            draft.recentPostList.map((v,i)=>{
+                if(action.payload.postData.postId === v.postKey){
+                    v.postLikeClickersResponseDtoList = action.payload.postData.postLikeClickersResponseDtos;
+                    v.postLikesCnt = action.payload.postData.totalLike
+                }else{return v}
+            });
+            draft.recommendPostList.map((v,i)=>{
+                if(action.payload.postData.postId === v.postKey){
+                    v.postLikeClickersResponseDtoList = action.payload.postData.postLikeClickersResponseDtos;
+                    v.postLikesCnt = action.payload.postData.totalLike
+                }else{return v}
+            });
         }),
         
     },

@@ -39,6 +39,9 @@ const Header = (props) => {
     const navigate = useNavigate();
 
     const _user = useSelector(state => state.user);
+    const _post = useSelector(state => state.post);
+    console.log(_user)
+    console.log(_post)
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -66,9 +69,9 @@ const Header = (props) => {
     if(props.isMain)
     return(
             <Grid >
-                <Grid zIndex='9' boxShadow='rgb(217 217 217) 0px 2px 5px' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
-                    <Grid backgroundColor="#F9FAFB" is_flex border="0">
-                        <Tooltip title="장르 고르기"><IconButton onClick={handleOpen} sx={{width:"50px", height : "50px"}}><DensityMediumIcon  sx={{ width:"15px", height : "15px", margin :"10px"}}/></IconButton></Tooltip>    
+                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+                    <Grid margin='10px' onClick={handleOpen} backgroundColor="#F9FAFB" is_flex border="0">
+                        <Tooltip title="장르 고르기"><Image width='30px' height='30px' src="/Icon/menu.png"></Image></Tooltip>    
                         <Modal
                             open={open}
                             onClose={handleClose}
@@ -149,9 +152,9 @@ const Header = (props) => {
     if(props.isDetail){
         return(
             <Grid>
-                <Grid zIndex='9' boxShadow='rgb(217 217 217) 0px 2px 5px' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
-                    <Grid is_flex backgroundColor="#F9FAFB" border="0">
-                        <Tooltip title="뒤로가기"><IconButton  onClick={()=>{navigate(-1)}} sx={{width:"50px", height : "50px"}}><KeyboardArrowLeftIcon sx={{ width:"15px", height : "15px", margin :"10px"}}/></IconButton></Tooltip>    
+                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+                    <Grid margin='10px' onClick={()=>{navigate(-1)}} is_flex backgroundColor="#F9FAFB" border="0">
+                        <Tooltip title="뒤로가기"><Image  width='30px' height='30px' src="/Icon/left.png"></Image></Tooltip>     
                     </Grid>
     
                     <Grid backgroundColor="#F9FAFB">
@@ -167,10 +170,10 @@ const Header = (props) => {
     if(props.isChangePassword){
         return(
             <Grid>
-                <Grid zIndex='9' boxShadow='rgb(217 217 217) 0px 2px 5px' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
-                    <Grid is_flex border="0" backgroundColor="#F9FAFB">
-                        <Tooltip title="뒤로가기"><IconButton  onClick={()=>{navigate(-1)}} sx={{width:"50px", height : "50px", margin:"0"}}><KeyboardArrowLeftIcon sx={{ width:"15px", height : "15px", margin :"0 10px 0px 10px"}}/></IconButton></Tooltip>    
-                    </Grid>
+                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+                    <Grid margin='10px' onClick={()=>{navigate(-1)}} is_flex backgroundColor="#F9FAFB" border="0">
+                        <Tooltip title="뒤로가기"><Image  width='30px' height='30px' src="/Icon/left.png"></Image></Tooltip>     
+                    </Grid> 
     
                     <Grid backgroundColor="#F9FAFB">
                         <Text margin="0" backgroundColor="#F9FAFB">{props.ChangePassword}</Text>
@@ -187,17 +190,17 @@ const Header = (props) => {
     if(props.isUserPage){
         return(
             <Grid>
-                <Grid zIndex='9' boxShadow='rgb(217 217 217) 0px 2px 5px' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
-                    <Grid backgroundColor="#F9FAFB" is_flex border="0">
-                        <Tooltip title="뒤로가기"><IconButton onClick={()=>{navigate(-1)}} sx={{width:"50px", height : "50px"}}><KeyboardArrowLeftIcon sx={{ width:"15px", height : "15px", margin :"10px"}}/></IconButton></Tooltip>    
+                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+                    <Grid width='50px' height='50px' is_flex backgroundColor="#F9FAFB" border="0">
+                            
                     </Grid>
     
                     <Grid backgroundColor="#F9FAFB">
                         <Text>{props.UserName}</Text>
                     </Grid>
     
-                    <Grid backgroundColor="#F9FAFB" is_flex border="0" >
-                        <Tooltip title="설정"><IconButton  onClick={()=>{navigate(`/modifyprofile`)}} sx={{width:"50px", height : "50px"}}><SettingsOutlinedIcon  sx={{ margin :"10px"}}/></IconButton></Tooltip>    
+                    <Grid width='50px' height='50px' onClick={()=>{navigate(`/modifyprofile`)}} backgroundColor="#F9FAFB" is_flex alignItems='center' justifyContent='center' border="0" >
+                        <Tooltip title="설정"><Image width='24px' height='24px' src='/Icon/Frame.png'></Image></Tooltip>    
                     </Grid>
                 </Grid>
             </Grid>
@@ -206,9 +209,9 @@ const Header = (props) => {
     if(props.isEditUser){
         return(
             <Grid>
-                <Grid zIndex='9' boxShadow='rgb(217 217 217) 0px 2px 5px' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
-                    <Grid is_flex backgroundColor="#F9FAFB" border="0">
-                        <Tooltip title="뒤로가기"><IconButton onClick={()=>{navigate(-1)}} sx={{width:"50px", height : "50px"}}><KeyboardArrowLeftIcon sx={{ width:"15px", height : "15px", margin :"10px"}}/></IconButton></Tooltip>    
+                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+                    <Grid margin='10px' onClick={()=>{navigate(-1)}} is_flex backgroundColor="#F9FAFB" border="0">
+                        <Tooltip title="뒤로가기"><Image  width='30px' height='30px' src="/Icon/left.png"></Image></Tooltip>     
                     </Grid>
     
                     <Grid backgroundColor="#F9FAFB">
@@ -225,9 +228,9 @@ const Header = (props) => {
     if(props.isWrite){
         return(
             <Grid>
-                <Grid zIndex='9' boxShadow='rgb(217 217 217) 0px 2px 5px' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
-                    <Grid is_flex backgroundColor="#F9FAFB" border="0">
-                        <Tooltip title="뒤로가기"><IconButton  onClick={()=>{navigate(-1)}} sx={{width:"50px", height : "50px"}}><KeyboardArrowLeftIcon sx={{ width:"15px", height : "15px", margin :"10px"}}/></IconButton></Tooltip>    
+                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+                    <Grid margin='10px' onClick={()=>{navigate(-1)}} is_flex backgroundColor="#F9FAFB" border="0">
+                        <Tooltip title="뒤로가기"><Image  width='30px' height='30px' src="/Icon/left.png"></Image></Tooltip>     
                     </Grid>
     
                     <Grid backgroundColor="#F9FAFB">
@@ -243,9 +246,9 @@ const Header = (props) => {
     
     return(
         <Grid>
-            <Grid zIndex='9' boxShadow='rgb(217 217 217) 0px 2px 5px' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
-                <Grid is_flex backgroundColor="#F9FAFB" border="0">
-                    <Tooltip title="뒤로가기"><IconButton  onClick={()=>{navigate(-1)}} sx={{width:"50px", height : "50px"}}><KeyboardArrowLeftIcon sx={{ width:"15px", height : "15px", margin :"10px"}}/></IconButton></Tooltip>    
+            <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+                <Grid margin='10px' onClick={()=>{navigate(-1)}} is_flex backgroundColor="#F9FAFB" border="0">
+                    <Tooltip title="뒤로가기"><Image  width='30px' height='30px' src="/Icon/left.png"></Image></Tooltip>    
                 </Grid>
 
                 <Grid>
