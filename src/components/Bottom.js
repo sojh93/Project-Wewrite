@@ -43,9 +43,7 @@ export default function Bottom(props) {
     // console.log(_user);
     // console.log(_post);
     React.useEffect(()=>{
-        if(!_user.is_login){
-            dispatch(userActions.check());
-        }
+
     },[])
 
     const addBtn=()=>{

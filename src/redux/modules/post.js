@@ -9,10 +9,12 @@ import { getCookie } from "../../shared/Cookie";
 const SET_POST = "SET_POST";
 const SET_ONE = "SET_ONE";
 const LIKE = "LIKE";
+const USER_POST = "USER_POST";
 
 //action creatos
 const setPost = createAction(SET_POST, (postList,postType) => ({ postList,postType }));
 const setOnePost = createAction(SET_ONE, (postData) => ({ postData }));
+const setUserPost = createAction(USER_POST, (postList) => ({ postList }));
 const like = createAction(LIKE, (postData) => ({ postData }));
 
 //initialState
@@ -20,6 +22,7 @@ const initialState = {
     allPostList : [],
     recentPostList : [],
     recommendPostList : [],
+    userPostList : {},
     thisPost : {postKey:null},
 };
 
@@ -128,6 +131,21 @@ const likePost=(postKey) =>{
         });
     }
 }
+
+const userPost=(pageUserKey) =>{
+    return async function (dispatch,getState){
+        instance({
+            method : "get",
+            url : `/posts/userPage/${pageUserKey}?page=0&size=5`,
+            data : {},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8"
+            }
+        }).then(res=>{
+            dispatch(setUserPost(res.data));
+        })
+    }
+}
 //reducer
 export default handleActions(
     {
@@ -160,6 +178,16 @@ export default handleActions(
                     v.postLikesCnt = action.payload.postData.totalLike
                 }else{return v}
             });
+            draft.userPostList.postResponseDtoList.map((v,i)=>{
+                if(action.payload.postData.postId === v.postKey){
+                    v.postLikeClickersResponseDtoList = action.payload.postData.postLikeClickersResponseDtos;
+                    v.postLikesCnt = action.payload.postData.totalLike
+                }else{return v}
+            });
+        }),
+        [USER_POST]: (state, action) =>
+        produce(state, (draft) => {
+            draft.userPostList = {...action.payload.postList};
         }),
         
     },
@@ -175,7 +203,7 @@ const actionCreators = {
     addPost,
     getOne,
     likePost,
-
+    userPost,
 
 
 };

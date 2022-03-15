@@ -40,8 +40,8 @@ const Header = (props) => {
 
     const _user = useSelector(state => state.user);
     const _post = useSelector(state => state.post);
-    console.log(_user)
-    console.log(_post)
+    // console.log(_user)
+    // console.log(_post)
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -60,9 +60,9 @@ const Header = (props) => {
     };
 
     React.useEffect(async() => {
-        if(!_user.is_login){
-            dispatch(userActions.check());
-        }
+        
+        
+        
     },[]);
     
 
