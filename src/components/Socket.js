@@ -56,7 +56,8 @@ const ChattingRoom = (props) => {
             ws.connect(headers, () => {
                 ws.subscribe(
                     // websocket 구독 url 콜백함수 header 
-                    "/sub/alarm/",
+                    // "/sub/alarm/",
+                    `/sub/api/chat/rooms/68`,
                     (data) => {
                         // const postId = JSON.parse(68);
                         // console.log(data)
