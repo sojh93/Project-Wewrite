@@ -14,17 +14,21 @@ const NoticeBanner = () => {
 
     return(
     <Grid wrap>
-        <Grid is_flex width="335px" flexDirection="column" margin="20px 0 0 0" height="220px" backgroundColor="gray" alignItems="center" justifyContent="center">
-           <Image is_square color="gray"/>
-               <Text color="white">
+        <Grid is_flex width="335px" flexDirection="column" margin="20px 0 0 27px" height="220px" justifyContent="left" border="1px solid black">
+           <Image is_square width="335px" height="220px" src={blank} alt="blank" display="flex" border="1px solid black"/>
+               <Grid is_flex flexDirection="column" margin="10px 0 0 22px">
+               <Text color="black">
                    런칭 기념 상품증정
                </Text>
-               <Text color="white">
+               <Text color="black" fontSize="18px">
                    애플리케이션 오픈 이벤트
                </Text>
-               <Text color="white">
+               </Grid>
+               <Grid is_flex>
+               <Text color="black" margin="120px 0 0 22px" fontSize="11px">
                    더 알아보기 &#62;
                </Text>
+               </Grid>
         </Grid>
         <Bottom/>
 
