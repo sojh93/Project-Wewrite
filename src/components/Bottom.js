@@ -54,14 +54,14 @@ export default function Bottom(props) {
     return (
         <Grid zIndex='9' position="absolute" bottom="0px" borderRadius="10px 10px 0 0" >
             <Grid is_flex backgroundColor='#F9FAFB' borderRadius="10px 10px 0 0" alignItems="center" color='#7E7E7E' justifyContent="space-around" width="100vw" minWidth ="360px" maxWidth ="390px" height='60px'>
-                {props.thisPage==="main"?       <Text><WidgetsIcon /></Text>              : <Text onClick={()=>navigate('/')}><WidgetsOutlinedIcon/></Text>}
-                {props.thisPage==="book"?       <Text><BookmarkOutlinedIcon/></Text>      : <Text><BookmarkBorderOutlinedIcon/></Text>}
+                {props.thisPage==="main"?       <Image width='25px' height='40px' src='/Icon/Main.png'/>             : <Image onClick={()=>navigate('/')} width='25px' height='40px' src='/Icon/Main.png'/>}
+                {props.thisPage==="book"?       <Image width='37px' height='40px' src='/Icon/complete.png'/>      : <Image width='37px' height='40px' src='/Icon/complete.png'/>}
                 <Grid marginBottom='45px' width='60px' height='60px' borderRadius='30px' backgroundColor='#6454FF' is_flex alignItems='center' justifyContent='center' fontSize='40px'>
                     <Text color='white'  margin='0' height='53px' onClick={()=>navigate('/write')}><BiPlus/></Text>
                 </Grid>
-                {props.thisPage==="postList"?   <Text><HomeIcon/></Text>                  : <Text onClick={()=>navigate('/postlist')}><HomeOutlinedIcon/></Text>}
+                {props.thisPage==="postList"?    <Image width='37px' height='40px' src='/Icon/incomplete.png'/>      : <Image width='37px' height='40px' src='/Icon/incomplete.png'/>}
                 
-                {props.thisPage==="userPage"?     <Text><PersonIcon/></Text>: _user.is_login? <Text onClick={()=>navigate(`/userpage/${_user.user.userKey}`)}><PersonOutlineOutlinedIcon/></Text> :<Text onClick={()=>navigate('/login')}><PersonOutlineOutlinedIcon/></Text>}
+                {props.thisPage==="userPage"?    <Image width='46px' height='40px' src='/Icon/myPage.png'/>      : <Image width='46px' height='40px' src='/Icon/myPage.png'/>}
             </Grid>
         </Grid>
     );

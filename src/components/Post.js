@@ -33,15 +33,18 @@ export default function Post(props) {
         dispatch(postActions.likePost(props.postKey));
         console.log('done');
     }
+    const navigatePost = () => {
+        navigate(`/postdetail/${props.postKey}`);
+    }
 
     return (
         <Grid is_flex width='100%' flexDirection='column'>
             <Grid is_flex justifyContent='space-between' width="100%" gap='10px'>
-                <Grid width='80px' is_flex flexDirection='column'>
+                <Grid onClick={navigatePost} width='80px' is_flex flexDirection='column'>
                     <Image width="130px" height="150px" borderRadius="5px" src={props.url?props.url:''}/>
                 </Grid>
                 <Grid is_flex flexDirection="column" width="calc(100% - 130px)" justifyContent='flex-start'>
-                    <Text margin='0 10px' fontSize="16px" fontWeight='700'>{props.title?props.title:''}</Text>
+                    <Text onClick={navigatePost} margin='0 10px' fontSize="16px" fontWeight='700'>{props.title?props.title:''}</Text>
                     <Grid margin='5px 10px' is_flex flexDirection='column' height='50px' justifyContent='space-between'>
                         <Grid>
                             {props.category?props.category.map((v,i)=>{
@@ -55,7 +58,7 @@ export default function Post(props) {
                             <Text>???</Text>
                         </Grid>
                     </Grid>
-                    <Grid margin='0 10px'>
+                    <Grid onClick={navigatePost} margin='0 10px'>
                         <Text height='70px' fontSize="12px" margin="0px">
                             {props.first?charLimit(props.first,60):''}
                         </Text>

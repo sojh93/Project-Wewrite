@@ -37,7 +37,6 @@ const UserPage = (props) => {
     console.log(_user);
     
     React.useEffect(()=>{
-        dispatch(userActions.check());
         dispatch(postActions.userPost(pageUserKey));
     },[])
     

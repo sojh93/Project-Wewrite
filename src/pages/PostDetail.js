@@ -1,7 +1,7 @@
 //import Library
 import React from "react"
 import styled from "styled-components";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination } from "swiper";
@@ -9,9 +9,10 @@ import Modal from '@mui/material/Modal';
 
 //import Actions
 import { actionCreators as postActions } from "../redux/modules/post";
+import { actionCreators as userActions } from "../redux/modules/user";
 
 //import elements
-import { Button, Grid, Input, Image, Text,Chip } from "../elements" 
+import { Button, Grid, Input, Image, Text, Chip } from "../elements"
 
 //import Icon
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
@@ -38,7 +39,7 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: '330px',
     height: '600px',
-    borderRadius:'5px',
+    borderRadius: '5px',
     boxShadow: 24,
     p: 4,
 };
@@ -46,36 +47,34 @@ const style = {
 function PostDetail(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
-    const _user = useSelector(state=> state.user);
-    const _post = useSelector(state=> state.post);
+
+    const _user = useSelector(state => state.user);
+    const _post = useSelector(state => state.post);
     const postKey = useParams().postKey;
     const thisPost = _post.thisPost;
+
     console.log(thisPost);
-    const users = thisPost.paragraphResDtoList?thisPost.paragraphResDtoList.reduce((x,v,i)=>{
+
+    const users = thisPost.paragraphResDtoList ? thisPost.paragraphResDtoList.reduce((x, v, i) => {
         let tempList = []
-        console.log(x);
-        if(x.length===0){
-            return [{nickname:v.userInfoResDto.nickname,userProfileImage:v.userInfoResDto.userProfileImage}]
-        }else{
-            for(let i of x){
+        if (x.length === 0) {
+            return [{ nickname: v.userInfoResDto.nickname, userProfileImage: v.userInfoResDto.userProfileImage }]
+        } else {
+            for (let i of x) {
                 tempList.push(i.nickname)
             }
-    
-            if(tempList.includes(v.userInfoResDto.nickname)){
+
+            if (tempList.includes(v.userInfoResDto.nickname)) {
                 return x;
-            }else{
-                x.push({nickname:v.userInfoResDto.nickname,userProfileImage:v.userInfoResDto.userProfileImage})
+            } else {
+                x.push({ nickname: v.userInfoResDto.nickname, userProfileImage: v.userInfoResDto.userProfileImage })
                 return x;
             }
         }
-        
-    },[]):'';
-    console.log(users);
 
-    const [category,setCategory] = React.useState(null)
+    }, []) : '';
 
-    const [writeUser, setWriteUser] = React.useState([]);
+    const [category, setCategory] = React.useState(null)
 
     //modal
     const [open, setOpen] = React.useState(false);
@@ -93,19 +92,30 @@ function PostDetail(props) {
 
     //contents
     const [contents, setContents] = React.useState('');
+    const [writeStart, setWriteStart] = React.useState(false);
+    const [isWriting, setIsWriting] = React.useState(_post.thisPost.writing);
+    const [writer, setIsWriter] = React.useState(_post.thisPost.writer);
+    setIsWriting(_post.thisPost.writing);
+    setIsWriter(_post.thisPost.writer);
+    console.log(writer,isWriting);
 
 
     var headers = {
         Authorization: token
     };
 
-    React.useEffect(()=>{
-        if(_post.thisPost.postKey !== postKey){
+    React.useEffect(() => {
+        if (_post.thisPost.postKey !== postKey) {
             dispatch(postActions.getOne(postKey));
+            setIsWriting(_post.thisPost.writing);
+            setIsWriter(_post.thisPost.writer);
+        }
+        if(!_user.is_login){
+            dispatch(userActions.check())
         }
         wsConnectSubscribe();
-        return() => {wsDisConnectUnsubscribe()};
-    },[])
+        return () => { wsDisConnectUnsubscribe() };
+    }, [])
 
 
     function wsConnectSubscribe() {
@@ -115,9 +125,24 @@ function PostDetail(props) {
                     // websocket 구독 url 콜백함수 header 
                     `/sub/api/chat/rooms/${postKey}`,
                     (data) => {
-                        const tempData = data.body.split(',')
                         
-                        console.log(tempData)
+                        const tempData = data.body.split(",");
+
+                        if(data.body.split(',')[0].split('\"')[3] === 'ENTER'){
+                            console.log('Enter');
+                        }
+                        if(data.body.split(',')[0].split('\"')[3] === 'START'){
+                            console.log('START');
+                            setIsWriter(data.body.split(',')[6].split('\"')[3])
+                            setIsWriting(true);
+                        }
+                        if(data.body.split(',')[0].split('\"')[3] === 'TALK'){
+                            console.log('TALK');
+                            setIsWriter(null)
+                            setIsWriting(false);
+                            dispatch(postActions.getOne(postKey));
+                        }
+                        
                         // window.location.reload();
                     },
                     headers
@@ -156,7 +181,7 @@ function PostDetail(props) {
     }
 
     // 메시지 보내기
-    function sendMessage() {
+    function sendParagraph() {
         try {
 
             const data = {
@@ -164,7 +189,7 @@ function PostDetail(props) {
                 postId: postKey,
                 userName: _user.user.username,
                 userId: _user.user.userKey,
-                paragraph : contents,
+                paragraph: contents,
                 nickName: _user.user.nickname,
             };
             console.log(data);
@@ -178,69 +203,102 @@ function PostDetail(props) {
         }
     }
 
+    function startParagraph() {
+        try {
+
+            const data = {
+                type: "START",
+                postId: postKey,
+                userName: _user.user.username,
+                userId: _user.user.userKey,
+                nickName: _user.user.nickname,
+            };
+            console.log(data);
+
+            waitForConnection(ws, function () {
+                ws.send("/pub/paragraph/complete", headers, JSON.stringify(data));
+                setIsWriting(true);
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
 
-        <Grid wrap>   
-            <Header isDetail postTitle={thisPost.title?thisPost.title:""}/>
+        <Grid wrap>
+            <Header isDetail postTitle={thisPost.title ? thisPost.title : ""} />
             <Grid margin='60px 0 0 0' height=''>
-                <Image width='100%' height='400px' src={thisPost.postImageUrl?thisPost.postImageUrl:""}/>
+                <Image width='100%' height='400px' src={thisPost.postImageUrl ? thisPost.postImageUrl : ""} />
             </Grid>
-            <Grid is_flex flexDirection='column' alignItems='center' margin="-4px 0 0 0" width='100%'> 
-                <Grid margin='5px' width='90%'>
-                    {thisPost.categoryList?thisPost.categoryList.map(v=>{
+            <Grid is_flex flexDirection='column' alignItems='center' margin="-4px 0 0 0" width='100%'>
+                <Grid margin='10px' width='90%'>
+                    {thisPost.categoryList ? thisPost.categoryList.map(v => {
                         return (
-                                <Chip margin="10px">{v.category}</Chip> 
-                            )
-                        }):''}
-                            
+                            <Chip>{v.category}</Chip>
+                        )
+                    }) : ''}
+
                     <Grid is_flex justifyContent="space-between" alignItems="center" width='100%'>
-                        <Text fontSize='24px'>{thisPost.title?thisPost.title:""}</Text>
-                        <Grid is_flex>
-                            <Text><ThumbUpOutlinedIcon/></Text>
-                            <Text>{thisPost.postLikesCnt?thisPost.postLikesCnt:"0"}</Text>
-                            <Text><BookmarkBorderOutlinedIcon/></Text>
-                        </Grid>
+                        <Text fontSize='24px'>{thisPost.title ? thisPost.title : ""}</Text>
+
                     </Grid>
                 </Grid>
+
                 <Grid is_flex flexDirection='column' width='90%'>
-                    <Text>참여자</Text>
+                    {thisPost.paragraphResDtoList ? thisPost.paragraphResDtoList.map(v => {
+                        return (
+                            <Sentence like={v.paragraphLikesCnt} contents={v.paragraph} src={v.userInfoResDto.userProfileImage} />
+                        )
+                    }) : ''}
+                </Grid>
+                {thisPost.complete ?
+                    '' :
+                    <Grid marginTop='30px' width='100vw' is_flex flexDirection='column' alignItems='center'>
+                        <Input placeholder= {writeStart?'내용을 작성해주세요.':'아래 버튼을 눌러 작성을 시작해주세요.'} onChange={(e) => { setContents(e.target.value) }} width='350px' height='100px' isTheme type='textarea' />
+                        {isWriting?
+                        writer===_user.user.nickname?
+                        <Button margin='20px' marginTop='40px' onClick={sendParagraph} theme='unfilled'>작성하기</Button>:
+                        <Button margin='20px' marginTop='40px' backgroundColor='#CECECE' borderColor='#CECECE' color='#FFFFFF' theme='unfilled'>작성하기</Button>:
+                        <Button margin='20px' marginTop='40px' onClick={startParagraph} theme='unfilled'>작성 시작하기</Button>}
+                    </Grid>}
+
+                <Grid width='350px' height='1px' borderTop='1px solid #CECECE' />
+
+                <Grid is_flex flexDirection='column' alignItems='center' width='100%'>
+                    <Text marginTop='10px' width='90%'>참여자</Text>
                     <Swiper
-                    style={{height : '74px', width : 'calc(100% - 20px)', margin : '10px'}}
-                    slidesPerView={5}
-                    spaceBetween={20}
-                    freeMode={true}
-                    pagination={{
-                    clickable: true,
-                    }}
-                    modules={[FreeMode, Pagination]}
-                    className="mySwiper"
-                >
-                    {thisPost.paragraphResDtoList?users.map(v=>{
+                        style={{ height: '74px', width: 'calc(90% - 20px)', margin: '10px' }}
+                        slidesPerView={5}
+                        spaceBetween={20}
+                        freeMode={true}
+                        pagination={{
+                            clickable: true,
+                        }}
+                        modules={[FreeMode, Pagination]}
+                        className="mySwiper"
+                    >
+                        {thisPost.paragraphResDtoList ? users.map(v => {
 
-                        return(
-                            <SwiperSlide>
-                                <Paragraph nick={v.nickname} src={v.userProfileImage}/>
-                            </SwiperSlide>
-                        )
-                    }):''}
-                    
-                </Swiper>
+                            return (
+                                <SwiperSlide>
+                                    <Paragraph nick={v.nickname} src={v.userProfileImage} />
+                                </SwiperSlide>
+                            )
+                        }) : ''}
+
+                    </Swiper>
                 </Grid>
-                <Grid is_flex flexDirection='column' width='90%'>
-                    {thisPost.paragraphResDtoList?thisPost.paragraphResDtoList.map(v=>{
-                        return(
-                            <Sentence like={v.paragraphLikesCnt} contents={v.paragraph} src={v.userInfoResDto.userProfileImage}/>
-                        )
-                    }):''}
+                <Grid width='350px' height='1px' borderTop='1px solid #CECECE' />
+                <Grid>
+                    <Grid is_flex>
+                        <Text><ThumbUpOutlinedIcon /></Text>
+                        <Text>{thisPost.postLikesCnt ? thisPost.postLikesCnt : "0"}</Text>
+                        <Text><BookmarkBorderOutlinedIcon /></Text>
+                    </Grid>
                 </Grid>
+
             </Grid>
-
-            {thisPost.complete?
-            '':
-                <Grid marginTop='30px' is_flex flexDirection='column' alignItems='center'>
-                    <Input onChange={(e)=>{setContents(e.target.value)}} height='200px' isTheme type='textarea'/>
-                    <Button onClick={handleOpen} theme='unfilled'>작성하기</Button>
-                </Grid>}
 
             <Modal
                 open={open}
@@ -253,26 +311,26 @@ function PostDetail(props) {
                     <Image margin='10px' width='50px' height='60px' src='/default_img/book2.png'></Image>
                     <Text margin="0px 0px" fontSize='16px' color='#7E7E7E' fontWeight='500'>추가 장르를 선택할 수 있습니다.</Text>
                     <Grid color='gray' margin='20px'>
-                    <Grid is_flex justifyContent='space-between' gap='5px'>
-                        <Button onClick={()=>{setCategory('판타지')}} fontSize='12px' width='70px' height='40px' theme={category==='판타지'?'filled':'unfilled'}>판타지</Button>
-                        <Button onClick={()=>{setCategory('스릴러')}} fontSize='12px' width='70px' height='40px' theme={category==='스릴러'?'filled':'unfilled'}>스릴러</Button>
-                        <Button onClick={()=>{setCategory('공포')}} fontSize='12px' width='70px' height='40px' theme={category==='공포'?'filled':'unfilled'}>공포</Button>
-                        <Button onClick={()=>{setCategory('로맨스/멜로')}} fontSize='12px' width='70px' height='40px' theme={category==='로맨스/멜로'?'filled':'unfilled'}>로맨스 /<br/>멜로</Button>
+                        <Grid is_flex justifyContent='space-between' gap='5px'>
+                            <Button onClick={() => { setCategory('판타지') }} fontSize='12px' width='70px' height='40px' theme={category === '판타지' ? 'filled' : 'unfilled'}>판타지</Button>
+                            <Button onClick={() => { setCategory('스릴러') }} fontSize='12px' width='70px' height='40px' theme={category === '스릴러' ? 'filled' : 'unfilled'}>스릴러</Button>
+                            <Button onClick={() => { setCategory('공포') }} fontSize='12px' width='70px' height='40px' theme={category === '공포' ? 'filled' : 'unfilled'}>공포</Button>
+                            <Button onClick={() => { setCategory('로맨스/멜로') }} fontSize='12px' width='70px' height='40px' theme={category === '로맨스/멜로' ? 'filled' : 'unfilled'}>로맨스 /<br />멜로</Button>
+                        </Grid>
+                        <Grid is_flex justifyContent='space-between' margin='5px 0' gap='5px'>
+                            <Button onClick={() => { setCategory('액션') }} fontSize='12px' width='70px' height='40px' theme={category === '액션' ? 'filled' : 'unfilled'}>액션</Button>
+                            <Button onClick={() => { setCategory('코미디') }} fontSize='12px' width='70px' height='40px' theme={category === '코미디' ? 'filled' : 'unfilled'}>코미디</Button>
+                            <Button onClick={() => { setCategory('무협') }} fontSize='12px' width='70px' height='40px' theme={category === '무협' ? 'filled' : 'unfilled'}>무협</Button>
+                            <Button onClick={() => { setCategory('SF') }} fontSize='12px' width='70px' height='40px' theme={category === 'SF' ? 'filled' : 'unfilled'}>SF</Button>
+                        </Grid>
+                        <Grid is_flex justifyContent='space-between' gap='5px'>
+                            <Button onClick={() => { setCategory('추리/미스터리') }} fontSize='12px' width='70px' height='40px' theme={category === '추리/미스터리' ? 'filled' : 'unfilled'}>추리 /<br />미스터리</Button>
+                            <Button onClick={() => { setCategory('드라마') }} fontSize='12px' width='70px' height='40px' theme={category === '드라마' ? 'filled' : 'unfilled'}>드라마</Button>
+                            <Button onClick={() => { setCategory('스포츠') }} fontSize='12px' width='70px' height='40px' theme={category === '스포츠' ? 'filled' : 'unfilled'}>스포츠</Button>
+                            <Button onClick={() => { setCategory('하이틴') }} fontSize='12px' width='70px' height='40px' theme={category === '하이틴' ? 'filled' : 'unfilled'}>하이틴</Button>
+                        </Grid>
                     </Grid>
-                    <Grid is_flex justifyContent='space-between' margin='5px 0' gap='5px'>
-                        <Button onClick={()=>{setCategory('액션')}} fontSize='12px' width='70px' height='40px' theme={category==='액션'?'filled':'unfilled'}>액션</Button>
-                        <Button onClick={()=>{setCategory('코미디')}} fontSize='12px' width='70px' height='40px' theme={category==='코미디'?'filled':'unfilled'}>코미디</Button>
-                        <Button onClick={()=>{setCategory('무협')}} fontSize='12px' width='70px' height='40px' theme={category==='무협'?'filled':'unfilled'}>무협</Button>
-                        <Button onClick={()=>{setCategory('SF')}} fontSize='12px' width='70px' height='40px' theme={category==='SF'?'filled':'unfilled'}>SF</Button>
-                    </Grid>
-                    <Grid is_flex justifyContent='space-between'  gap='5px'>
-                        <Button onClick={()=>{setCategory('추리/미스터리')}} fontSize='12px' width='70px' height='40px' theme={category==='추리/미스터리'?'filled':'unfilled'}>추리 /<br/>미스터리</Button>
-                        <Button onClick={()=>{setCategory('드라마')}} fontSize='12px' width='70px' height='40px' theme={category==='드라마'?'filled':'unfilled'}>드라마</Button>
-                        <Button onClick={()=>{setCategory('스포츠')}} fontSize='12px' width='70px' height='40px' theme={category==='스포츠'?'filled':'unfilled'}>스포츠</Button>
-                        <Button onClick={()=>{setCategory('하이틴')}} fontSize='12px' width='70px' height='40px' theme={category==='하이틴'?'filled':'unfilled'}>하이틴</Button>
-                    </Grid>
-                    </Grid>
-                    <Button onClick={sendMessage} theme='unfilled'>확인했어요!</Button>
+                    <Button onClick={sendParagraph} theme='unfilled'>확인했어요!</Button>
                 </Grid>
             </Modal>
 
@@ -283,30 +341,30 @@ function PostDetail(props) {
                 aria-describedby="modal-modal-description"
             >
                 <Grid is_flex flexDirection='column' justifyContent='center' alignItems='center' {...style}>
-                    
+
                     <Grid>
                         <Text fontSize='24px' color='black' fontWeight='700'>댓글을 확인하세요</Text>
                     </Grid>
 
-                    
+
                     <Image margin='10px' width='50px' height='50px' src='/default_img/talkIocn.png'></Image>
-                    
+
                     <Grid margin='0px 20px' is_flex alignItems='flex-end' width='100%'>
                         <Text margin='5px 0 5px 10px' fontSize='16px' alignItems='center' fontWeight='500'>댓글</Text><Text fontSize='10px' color='#C4C4C4' fontWeight='400'>3</Text>
                     </Grid>
 
                     <Grid width='100%'>
-                        <Comment/>
+                        <Comment />
                     </Grid>
-                    
+
                     <Input placeholder={'댓글 달기'} margin='20px' width='80%' isTheme></Input>
-                    
+
                     <Button theme='unfilled'>작성하기</Button>
                 </Grid>
             </Modal>
 
-            <Grid height="100px"/>
-            <Bottom thisPage="detail"/>
+            <Grid height="100px" />
+            <Bottom thisPage="detail" />
         </Grid>
     );
 }

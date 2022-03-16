@@ -43,10 +43,14 @@ const Header = (props) => {
     // console.log(_user)
     // console.log(_post)
 
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-
+    const [categoryopen, setCategoryOpen] = React.useState(false);
+    const handleOpen = () => {
+        setCategoryOpen(true)
+    };
+        
+    const handleClose = () => {
+        setCategoryOpen(false);
+}
     const style = {
         position: 'absolute',
         top: '50%',
@@ -60,8 +64,8 @@ const Header = (props) => {
     };
 
     React.useEffect(async() => {
-        
-        
+        if(!_user.is_login)
+            dispatch(userActions.check())
         
     },[]);
     
@@ -70,14 +74,14 @@ const Header = (props) => {
     return(
             <Grid >
                 <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
-                    <Grid margin='10px' onClick={handleOpen} backgroundColor="#F9FAFB" is_flex border="0">
-                        <Tooltip title="장르 고르기"><Image width='30px' height='30px' src="/Icon/menu.png"></Image></Tooltip>    
+                    <Grid margin='10px' backgroundColor="#F9FAFB" is_flex border="0">
+                        <Tooltip title="장르 고르기"><Image onClick={handleOpen} width='30px' height='30px' src="/Icon/menu.png"></Image></Tooltip>    
                         <Modal
-                            open={open}
+                            open={categoryopen}
                             onClose={handleClose}
-                            ariaLabelledby="modal-modal-title"
-                            ariaDescribedby="modal-modal-description"
-                        >
+                        >   
+                        <>
+                            <Image onClick={handleClose} width='30px' zIndex='2' position='absolute' top='50%' left='50%' transform='translate(120px,-300px)' height='30px' src='/Icon/X.png'/>
                             <Grid is_flex justifyContent='center' alignItems='center' {...style}>
                                 <Swiper
                                     direction={"vertical"}
@@ -139,6 +143,7 @@ const Header = (props) => {
                                         </SwiperSlide>
                                 </Swiper>
                             </Grid>
+                            </>
                         </Modal>
                     </Grid>
                     <Grid backgroundColor="#F9FAFB" is_flex border="0">
