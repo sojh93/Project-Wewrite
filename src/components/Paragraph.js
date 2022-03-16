@@ -2,7 +2,7 @@ import React from "react";
 import { SwiperSlide } from "swiper/react";
 import { Grid, Image,Text } from "../elements";
 
-const Paragraph = (props) => {
+const Paragraph = React.memo((props) => {
 
     const charLimit = (text, limit) =>{
         return text.slice(0,limit)
@@ -16,6 +16,6 @@ const Paragraph = (props) => {
         </Grid>
         
     )
-}
+})
 
 export default Paragraph;

@@ -74,7 +74,7 @@ const Input = ({
                                 defaultValue={defaultValue}
                                 onChange={onChange}
                                 onClick ={onClick}
-                                ref={ref}
+                                ref={_ref}
                                 style={{...props}}
                             />
                 </Wrap>

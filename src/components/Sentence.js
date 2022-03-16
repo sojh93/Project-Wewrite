@@ -15,8 +15,7 @@ import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 //import elements
 import { Button, Grid, Input, Image, Text } from "../elements" 
 
-export default function Sentence(props) {
-
+const Sentence = React.memo((props)=>{
     return (
         <Grid is_flex margin='5px' justifyContent='space-between' width='100%' gap='10px'>
             <Grid is_flex flexDirection='column'>
@@ -34,5 +33,7 @@ export default function Sentence(props) {
             </Grid>
         </Grid>
     );
-} 
+}
+)
 
+export default Sentence;

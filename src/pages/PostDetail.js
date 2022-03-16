@@ -53,7 +53,9 @@ function PostDetail(props) {
     const postKey = useParams().postKey;
     const thisPost = _post.thisPost;
 
-    console.log(thisPost);
+    const refInput = React.useRef(null);
+
+    // console.log(thisPost);
 
     const users = thisPost.paragraphResDtoList ? thisPost.paragraphResDtoList.reduce((x, v, i) => {
         let tempList = []
@@ -86,18 +88,20 @@ function PostDetail(props) {
     const handleCloseC = () => setCOpen(false);
 
     //socket
-    const sock = new SockJS("http://binscot.shop/ws-stomp");
+    const sock = new SockJS("http://13.209.70.1/ws-stomp");
+    // const sock = new SockJS("http://binscot.shop/ws-stomp");
     const ws = Stomp.over(sock);
     const token = getCookie('WW_user');
 
     //contents
     const [contents, setContents] = React.useState('');
-    const [writeStart, setWriteStart] = React.useState(false);
-    const [isWriting, setIsWriting] = React.useState(_post.thisPost.writing);
-    const [writer, setIsWriter] = React.useState(_post.thisPost.writer);
-    setIsWriting(_post.thisPost.writing);
-    setIsWriter(_post.thisPost.writer);
-    console.log(writer,isWriting);
+    // const [isWriting, setIsWriting] = React.useState(false);
+    // const [writer, setWriter] = React.useState(null);
+    
+    //setIsWriting(_post.thisPost.writing);
+    //setWriter(_post.thisPost.writer);
+    let writer = _post.thisPost.writer;
+    let isWriting = _post.thisPost.writing;
 
 
     var headers = {
@@ -107,8 +111,7 @@ function PostDetail(props) {
     React.useEffect(() => {
         if (_post.thisPost.postKey !== postKey) {
             dispatch(postActions.getOne(postKey));
-            setIsWriting(_post.thisPost.writing);
-            setIsWriter(_post.thisPost.writer);
+            
         }
         if(!_user.is_login){
             dispatch(userActions.check())
@@ -125,7 +128,6 @@ function PostDetail(props) {
                     // websocket 구독 url 콜백함수 header 
                     `/sub/api/chat/rooms/${postKey}`,
                     (data) => {
-                        
                         const tempData = data.body.split(",");
 
                         if(data.body.split(',')[0].split('\"')[3] === 'ENTER'){
@@ -133,17 +135,16 @@ function PostDetail(props) {
                         }
                         if(data.body.split(',')[0].split('\"')[3] === 'START'){
                             console.log('START');
-                            setIsWriter(data.body.split(',')[6].split('\"')[3])
-                            setIsWriting(true);
+                            // setWriter(data.body.split(',')[6].split('\"')[3])
+                            // setIsWriting(true);
+                            dispatch(postActions.getOne(postKey));
                         }
                         if(data.body.split(',')[0].split('\"')[3] === 'TALK'){
                             console.log('TALK');
-                            setIsWriter(null)
-                            setIsWriting(false);
+                            // setWriter(null)
+                            // setIsWriting(false);
                             dispatch(postActions.getOne(postKey));
                         }
-                        
-                        // window.location.reload();
                     },
                     headers
                 );
@@ -193,6 +194,7 @@ function PostDetail(props) {
                 nickName: _user.user.nickname,
             };
             console.log(data);
+            refInput.current.value='';
             // 로딩 중
             waitForConnection(ws, function () {
                 ws.send("/pub/paragraph/complete", headers, JSON.stringify(data));
@@ -217,7 +219,8 @@ function PostDetail(props) {
 
             waitForConnection(ws, function () {
                 ws.send("/pub/paragraph/complete", headers, JSON.stringify(data));
-                setIsWriting(true);
+                // setIsWriting(true);
+
             });
         } catch (error) {
             console.log(error);
@@ -255,7 +258,7 @@ function PostDetail(props) {
                 {thisPost.complete ?
                     '' :
                     <Grid marginTop='30px' width='100vw' is_flex flexDirection='column' alignItems='center'>
-                        <Input placeholder= {writeStart?'내용을 작성해주세요.':'아래 버튼을 눌러 작성을 시작해주세요.'} onChange={(e) => { setContents(e.target.value) }} width='350px' height='100px' isTheme type='textarea' />
+                        <Input _ref={refInput} placeholder= {isWriting?'내용을 작성해주세요.':'아래 버튼을 눌러 작성을 시작해주세요.'} onChange={(e) => { setContents(e.target.value) }} width='350px' height='100px' isTheme type='textarea' />
                         {isWriting?
                         writer===_user.user.nickname?
                         <Button margin='20px' marginTop='40px' onClick={sendParagraph} theme='unfilled'>작성하기</Button>:
