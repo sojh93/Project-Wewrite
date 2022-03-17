@@ -75,7 +75,7 @@ const Header = (props) => {
             <Grid >
                 <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
                     <Grid margin='10px' backgroundColor="#F9FAFB" is_flex border="0">
-                        <Tooltip title="장르 고르기"><Image onClick={handleOpen} width='30px' height='30px' src="/Icon/menu.png"></Image></Tooltip>    
+                        <Image onClick={handleOpen} width='30px' height='30px' src="/Icon/menu.png"></Image>
                         <Modal
                             open={categoryopen}
                             onClose={handleClose}
@@ -147,7 +147,7 @@ const Header = (props) => {
                         </Modal>
                     </Grid>
                     <Grid backgroundColor="#F9FAFB" is_flex border="0">
-                        <Tooltip title="알람"><IconButton sx={{width:"50px", height : "50px"}}><NotificationsNoneOutlinedIcon  sx={{ margin :"10px"}}/></IconButton></Tooltip>    
+                       <IconButton sx={{width:"50px", height : "50px"}}><NotificationsNoneOutlinedIcon  sx={{ margin :"10px"}}/></IconButton> 
                     </Grid>
                 </Grid>
             </Grid>
@@ -159,7 +159,7 @@ const Header = (props) => {
             <Grid>
                 <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
                     <Grid margin='10px' onClick={()=>{navigate(-1)}} is_flex backgroundColor="#F9FAFB" border="0">
-                        <Tooltip title="뒤로가기"><Image  width='30px' height='30px' src="/Icon/left.png"></Image></Tooltip>     
+                        <Image  width='30px' height='30px' src="/Icon/left.png"></Image>
                     </Grid>
     
                     <Grid backgroundColor="#F9FAFB">
@@ -177,7 +177,7 @@ const Header = (props) => {
             <Grid>
                 <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
                     <Grid margin='10px' onClick={()=>{navigate(-1)}} is_flex backgroundColor="#F9FAFB" border="0">
-                        <Tooltip title="뒤로가기"><Image  width='30px' height='30px' src="/Icon/left.png"></Image></Tooltip>     
+                        <Image  width='30px' height='30px' src="/Icon/left.png"></Image>   
                     </Grid> 
     
                     <Grid backgroundColor="#F9FAFB">
@@ -185,7 +185,7 @@ const Header = (props) => {
                     </Grid>
     
                     <Grid backgroundColor="#F9FAFB" is_flex border="0">
-                        <Tooltip title="저장"><Text color="#6454FF" margin="0 20px 0 0" padding="0">저장</Text></Tooltip>    
+                        <Text color="#6454FF" margin="0 20px 0 0" padding="0">저장</Text>  
                     </Grid>
                 </Grid>
             </Grid>
@@ -205,7 +205,7 @@ const Header = (props) => {
                     </Grid>
     
                     <Grid width='50px' height='50px' onClick={()=>{navigate(`/modifyprofile`)}} backgroundColor="#F9FAFB" is_flex alignItems='center' justifyContent='center' border="0" >
-                        <Tooltip title="설정"><Image width='24px' height='24px' src='/Icon/Frame.png'></Image></Tooltip>    
+                        <Image width='24px' height='24px' src='/Icon/Frame.png'></Image>  
                     </Grid>
                 </Grid>
             </Grid>
@@ -216,7 +216,7 @@ const Header = (props) => {
             <Grid>
                 <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
                     <Grid margin='10px' onClick={()=>{navigate(-1)}} is_flex backgroundColor="#F9FAFB" border="0">
-                        <Tooltip title="뒤로가기"><Image  width='30px' height='30px' src="/Icon/left.png"></Image></Tooltip>     
+                        <Image  width='30px' height='30px' src="/Icon/left.png"></Image>   
                     </Grid>
     
                     <Grid backgroundColor="#F9FAFB">
@@ -235,7 +235,7 @@ const Header = (props) => {
             <Grid>
                 <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
                     <Grid margin='10px' onClick={()=>{navigate(-1)}} is_flex backgroundColor="#F9FAFB" border="0">
-                        <Tooltip title="뒤로가기"><Image  width='30px' height='30px' src="/Icon/left.png"></Image></Tooltip>     
+                        <Image  width='30px' height='30px' src="/Icon/left.png"></Image>   
                     </Grid>
     
                     <Grid backgroundColor="#F9FAFB">

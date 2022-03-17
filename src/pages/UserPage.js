@@ -34,8 +34,6 @@ const UserPage = (props) => {
     const pageUser=_post.userPostList
     // const [pageUser,setPageUser] = React.useState(false)
     console.log(pageUser);
-    console.log(_user);
-    
     React.useEffect(()=>{
         dispatch(postActions.userPost(pageUserKey));
     },[])
@@ -65,7 +63,7 @@ const UserPage = (props) => {
                 </Text>
 
                 <Grid borderBottom='1px solid black' marginTop='10px' is_flex width='100%'>
-                    <Grid height='35px' width='33%' textAlign='center' onClick={()=>setIndex(1)}><Text>내 참여작</Text></Grid>
+                    <Grid height='35px' width='33%' textAlign='center' onClick={()=>setIndex(1)}><Text fontSize='14px' fontWeight='500' >내 참여작</Text></Grid>
                     <Grid height='35px' width='33%' textAlign='center' onClick={()=>setIndex(2)}><Text>북마크한 작품</Text></Grid>
                     <Grid height='35px' width='33%' textAlign='center' onClick={()=>setIndex(3)}><Text>좋아요한 작품</Text></Grid>
                 </Grid> 
@@ -79,7 +77,7 @@ const UserPage = (props) => {
                                 return Object.values(V)[0]===myKey?true:X}
                         ,false)
                         return (
-                            <Post key={i} category={v.categoryList} postKey={v.postKey} isLike={likeThis} first={v.paragraphResList[0].paragraph} like={v.postLikesCnt} title={v.title} url={v.postImageUrl}/>
+                            <Post bookmarkLikesCnt={v.bookmarkLikesCnt} key={i} category={v.categoryList} postKey={v.postKey} isLike={likeThis} first={v.paragraphResList[0].paragraph} like={v.postLikesCnt} title={v.title} url={v.postImageUrl}/>
                         )
                     }):''}
 

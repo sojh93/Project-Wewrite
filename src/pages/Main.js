@@ -39,6 +39,7 @@ function Main(props) {
 
     const _user = useSelector(state => state.user);
     const _post = useSelector(state => state.post);
+    console.log(_post);
 
 
     React.useEffect(() => {
@@ -95,7 +96,7 @@ function Main(props) {
 
                 </Grid>
 
-                <Grid width='100%' height='290px' marginTop='20px' is_flex flexDirection='column'>
+                <Grid width='100%' height='310px' marginTop='20px' is_flex flexDirection='column'>
                     <Text margin='0px 10px' fontSize='24px' fontWeight='700'>새로운 이야기</Text>
                     <Swiper
                     style={{height : '230px', width : 'calc(100vw - 20px)', minWidth : '340px', maxWidth : '370px' ,margin : '10px'}}
@@ -116,7 +117,7 @@ function Main(props) {
                             ,false)
                             return (
                             <SwiperSlide key={v.postKey}>
-                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} category={v.categoryList} title={v.title} isLike={likeThis} like={v.postLikesCnt} src={v.postImageUrl} key={i} postKey={v.postKey}/>
+                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} bookmarkLikesCnt={v.bookmarkLikesCnt} category={v.categoryList} title={v.title} isLike={likeThis} like={v.postLikesCnt} src={v.postImageUrl} key={i} postKey={v.postKey}/>
                             </SwiperSlide>
                             )
                         })}
@@ -125,7 +126,7 @@ function Main(props) {
 
                 
 
-                <Grid width='100%'  is_flex flexDirection='column'>
+                <Grid width='100%' height='310px' is_flex flexDirection='column'>
                     <Text margin='0px 10px' fontSize='24px' fontWeight='700'>당신에게 추천해요</Text>
                     <Swiper
                     style={{height : '230px', width : 'calc(100vw - 20px)', minWidth : '340px', maxWidth : '370px' ,margin : '10px'}}
@@ -146,7 +147,7 @@ function Main(props) {
                             ,false)
                             return (
                             <SwiperSlide key={v.postKey}>
-                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} category={v.categoryList} title={v.title} isLike={likeThis} like={v.postLikesCnt} src={v.postImageUrl} postKey={v.postKey} key={v.postKey}/>
+                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}}  bookmarkLikesCnt={v.bookmarkLikesCnt} category={v.categoryList} title={v.title} isLike={likeThis} like={v.postLikesCnt} src={v.postImageUrl} postKey={v.postKey} key={v.postKey}/>
                             </SwiperSlide>
                             )
                         }):''}
@@ -174,7 +175,7 @@ function Main(props) {
                             ,false)
                             return (
                             <SwiperSlide key={v.postKey}>
-                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} category={v.categoryList} title={v.title} isLike={likeThis} like={v.postLikesCnt} src={v.postImageUrl} postKey={v.postKey} key={v.postKey}/>
+                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} bookmarkLikesCnt={v.bookmarkLikesCnt} category={v.categoryList} title={v.title} isLike={likeThis} like={v.postLikesCnt} src={v.postImageUrl} postKey={v.postKey} key={v.postKey}/>
                             </SwiperSlide>
                             )
                         })}

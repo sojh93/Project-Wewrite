@@ -7,6 +7,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination } from "swiper";
 import Modal from '@mui/material/Modal';
 
+import moment from "moment";
+import 'moment/locale/ko'
+
 //import Actions
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as userActions } from "../redux/modules/user";
@@ -45,6 +48,7 @@ const style = {
 };
 
 function PostDetail(props) {
+    moment.locale('ko');
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -52,7 +56,7 @@ function PostDetail(props) {
     const _post = useSelector(state => state.post);
     const postKey = useParams().postKey;
     const thisPost = _post.thisPost;
-
+    console.log(thisPost);
     const refInput = React.useRef(null);
 
     // console.log(thisPost);
@@ -76,7 +80,17 @@ function PostDetail(props) {
 
     }, []) : '';
 
-    const [category, setCategory] = React.useState(null)
+    const [category, setCategory] = React.useState(null);
+    const [calcTime,setTime] = React.useState('-');
+    const interval = React.useRef(null);
+    // if(thisPost.paragraphStartTime !==null){
+    //     interval.current = setInterval(() => {
+    //             console.log(thisPost.paragraphStartTime)
+    //             let t1 = new Date(thisPost.paragraphStartTime);
+    //             setTime(moment.duration(moment()-t1).asSeconds());
+    //             console.log(calcTime);
+    //         }, 1000);
+    //     }
 
     //modal
     const [open, setOpen] = React.useState(false);
@@ -88,8 +102,9 @@ function PostDetail(props) {
     const handleCloseC = () => setCOpen(false);
 
     //socket
-    const sock = new SockJS("http://13.209.70.1/ws-stomp");
-    // const sock = new SockJS("http://binscot.shop/ws-stomp");
+    // const sock = new SockJS("http://13.209.70.1/ws-stomp");
+    // const sock = new SockJS("http://3.34.179.104/ws-stomp");
+    const sock = new SockJS("http://binscot.shop/ws-stomp");
     const ws = Stomp.over(sock);
     const token = getCookie('WW_user');
 
@@ -109,6 +124,7 @@ function PostDetail(props) {
     };
 
     React.useEffect(() => {
+        
         if (_post.thisPost.postKey !== postKey) {
             dispatch(postActions.getOne(postKey));
             
@@ -117,6 +133,7 @@ function PostDetail(props) {
             dispatch(userActions.check())
         }
         wsConnectSubscribe();
+        
         return () => { wsDisConnectUnsubscribe() };
     }, [])
 
@@ -137,13 +154,14 @@ function PostDetail(props) {
                             console.log('START');
                             // setWriter(data.body.split(',')[6].split('\"')[3])
                             // setIsWriting(true);
-                            dispatch(postActions.getOne(postKey));
+                            setTimeout(()=>{dispatch(postActions.getOne(postKey));},1000)
+                            
                         }
                         if(data.body.split(',')[0].split('\"')[3] === 'TALK'){
                             console.log('TALK');
                             // setWriter(null)
                             // setIsWriting(false);
-                            dispatch(postActions.getOne(postKey));
+                            setTimeout(()=>{dispatch(postActions.getOne(postKey));},1000)
                         }
                     },
                     headers
@@ -183,6 +201,10 @@ function PostDetail(props) {
 
     // 메시지 보내기
     function sendParagraph() {
+        if(!_user.is_login){
+            console.log('로그인이 필요합니다.')
+            return;
+        }
         try {
 
             const data = {
@@ -206,6 +228,10 @@ function PostDetail(props) {
     }
 
     function startParagraph() {
+        if(!_user.is_login){
+            console.log('로그인이 필요합니다.')
+            return;
+        }
         try {
 
             const data = {
@@ -236,9 +262,9 @@ function PostDetail(props) {
             </Grid>
             <Grid is_flex flexDirection='column' alignItems='center' margin="-4px 0 0 0" width='100%'>
                 <Grid margin='10px' width='90%'>
-                    {thisPost.categoryList ? thisPost.categoryList.map(v => {
+                    {thisPost.categoryList ? thisPost.categoryList.map((v,i) => {
                         return (
-                            <Chip>{v.category}</Chip>
+                            <Chip key={i}>{v.category}</Chip>
                         )
                     }) : ''}
 
@@ -259,11 +285,16 @@ function PostDetail(props) {
                     '' :
                     <Grid marginTop='30px' width='100vw' is_flex flexDirection='column' alignItems='center'>
                         <Input _ref={refInput} placeholder= {isWriting?'내용을 작성해주세요.':'아래 버튼을 눌러 작성을 시작해주세요.'} onChange={(e) => { setContents(e.target.value) }} width='350px' height='100px' isTheme type='textarea' />
+                        
                         {isWriting?
                         writer===_user.user.nickname?
-                        <Button margin='20px' marginTop='40px' onClick={sendParagraph} theme='unfilled'>작성하기</Button>:
-                        <Button margin='20px' marginTop='40px' backgroundColor='#CECECE' borderColor='#CECECE' color='#FFFFFF' theme='unfilled'>작성하기</Button>:
-                        <Button margin='20px' marginTop='40px' onClick={startParagraph} theme='unfilled'>작성 시작하기</Button>}
+                        <Grid><Text>제한 시간 {calcTime} 남았습니다.</Text></Grid>:
+                        <Grid><Text>다른 유저가 작성중입니다.</Text></Grid>:''}
+                        {isWriting?
+                        writer===_user.user.nickname?
+                        <Button margin='20px' marginTop='10px' onClick={sendParagraph} theme='unfilled'>작성하기</Button>:
+                        <Button margin='20px' marginTop='10px' backgroundColor='#CECECE' borderColor='#CECECE' color='#FFFFFF' theme='unfilled'>작성하기</Button>:
+                        <Button margin='20px' marginTop='10px' onClick={startParagraph} theme='unfilled'>작성 시작하기</Button>}
                     </Grid>}
 
                 <Grid width='350px' height='1px' borderTop='1px solid #CECECE' />

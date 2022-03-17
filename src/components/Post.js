@@ -36,6 +36,10 @@ export default function Post(props) {
     const navigatePost = () => {
         navigate(`/postdetail/${props.postKey}`);
     }
+    const markPost =() =>{
+        dispatch(postActions.markPost(props.postKey));
+        console.log('done');
+    }
 
     return (
         <Grid is_flex width='100%' flexDirection='column'>
@@ -52,10 +56,10 @@ export default function Post(props) {
                             }):''}
                         </Grid>
                         <Grid is_flex fontSize='15px' color='#7E7E7E' fontWeight='300'>
-                            {props.isLike?<Image onClick={likePost} width='20px' height='20px' margin='4px' src='/Icon/thumbs-up-filled.png'/>:<Image onClick={likePost} width='20px' height='20px' margin='4px' src='/Icon/thumbs-up.png'/>}
+                            <Image onClick={likePost} width='20px' height='20px' margin='4px' src={props.isLike?'/Icon/thumbs-up-filled.png':'/Icon/thumbs-up.png'}/>   
                             <Text>{props.like?props.like:'0'}</Text>
-                            <Image width='12.5px' height='16px' margin='6px' src='/Icon/bookmark.png'/>
-                            <Text>???</Text>
+                            <Image width='14px' onClick={markPost} height='18px' margin='6px' src={props.isMark?'/Icon/bookmark.png':'/Icon/bookmark.png'}/>
+                            <Text>{props.bookmarkLikesCnt}</Text>
                         </Grid>
                     </Grid>
                     <Grid onClick={navigatePost} margin='0 10px'>

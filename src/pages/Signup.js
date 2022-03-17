@@ -219,7 +219,7 @@ function Signup() {
                     <Text fontSize="24px" fontWeight="700">
                         회원가입
                     </Text>
-                    <Text color='#7E7E7E' fontSize="12px" fontWeight="400">
+                    <Text color='#7E7E7E' fontSize="14px" fontWeight="400">
                     원활한 서비스 이용을 위한 기본 정보를 입력해주세요.
                     </Text>
                 </Grid>
@@ -255,7 +255,7 @@ function Signup() {
                             <Chip position='absolute' right='10px' top='17px' width="70px" height="24px" backgroundColor='#EAEAEA'>인증코드</Chip>
                             }                        
                             
-                            <Text display={emailVeri?'':'none'} margin="0" color='#6454FF' fontWeight='400' fontSize='14px'>인증 코드를 발급했습니다. 이메일을 확인해주세요.</Text>
+                            <Text text-align='left' width='350px' display={emailVeri?'':'none'} margin="0" color='#6454FF' fontWeight='400' fontSize='14px'>인증 코드를 발급했습니다.</Text>
                             <Grid is_flex width='100%'><Text display={emailCheck?'':'none'} margin="0" color='red' fontWeight='400' fontSize='14px'>이메일 형식이 맞지 않습니다.</Text></Grid>
 
                         </Grid>
@@ -359,7 +359,7 @@ function Signup() {
                         marginTop='30px'
                         textAlign="left"
                     >
-                        <Text fontSize="3px">
+                        <Text fontSize='14px'>
                             서비스의 이용을 위한 약관동의와 개인정보 수집에 대한 동의가 필요합니다.
                         </Text>
                     </Grid>
