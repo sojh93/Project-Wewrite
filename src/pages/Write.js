@@ -94,6 +94,7 @@ function Write() {
         postData.append("paragraph", sentence);
         postData.append("postImageUrl",refFileInput.current.files[0]);
 
+        console.log(sentence);
         dispatch(postActions.addPost(postData));
         navigate('/');
     }

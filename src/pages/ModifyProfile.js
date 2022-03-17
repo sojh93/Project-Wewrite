@@ -44,21 +44,20 @@ function ModifyProfile() {
     const selectFile = (e) => {
         const reader = new FileReader();
         const file = refFileInput.current.files[0];
-        console.log(file);
         userProfile.append("userProfile",file);
-        userProfile.append("nickName","dsadas");
 
+        
         instance({
-            method : "post",
+            method : "put",
             url : "/user/updateProfile",
             data : userProfile,
             headers : {
                 "Content-Type": "multipart/form-data",
-                token: getCookie('WW_user')
+                'authorization': getCookie('WW_user')
             }
             
-        }).then(()=>{
-            console.log('done');
+        }).then((res)=>{
+            console.log('done',res);
         })
         
         reader.readAsDataURL(file);
