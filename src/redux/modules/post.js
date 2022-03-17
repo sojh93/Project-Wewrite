@@ -8,16 +8,23 @@ import { getCookie } from "../../shared/Cookie";
 //action
 const SET_POST = "SET_POST";
 const SET_ONE = "SET_ONE";
+const LIKE = "LIKE";
+const MARK ="MARK";
+const USER_POST = "USER_POST";
 
 //action creatos
 const setPost = createAction(SET_POST, (postList,postType) => ({ postList,postType }));
 const setOnePost = createAction(SET_ONE, (postData) => ({ postData }));
+const setUserPost = createAction(USER_POST, (postList) => ({ postList }));
+const like = createAction(LIKE, (postData) => ({ postData }));
+const mark = createAction(MARK, (postData,postKey) => ({ postData,postKey }));
 
 //initialState
 const initialState = {
     allPostList : [],
     recentPostList : [],
     recommendPostList : [],
+    userPostList : {},
     thisPost : {postKey:null},
 };
 
@@ -27,7 +34,7 @@ const getAll=() =>{
     return async function (dispatch,getState){
         instance({
             method : "get",
-            url : "/posts/incomplete",
+            url : "/posts/incomplete?page=0&size=5",
             data : {},
             headers : {
                 "Content-Type": "application/json;charset-UTF-8"
@@ -44,7 +51,7 @@ const getRecent=() =>{
     return async function (dispatch,getState){
         instance({
             method : "get",
-            url : "/posts/recent",
+            url : "/posts/recent?page=0&size=5",
             data : {},
             headers : {
                 "Content-Type": "application/json;charset-UTF-8"
@@ -60,7 +67,7 @@ const getRecommend=() =>{
     return async function (dispatch,getState){
         instance({
             method : "get",
-            url : "/posts/recommend",
+            url : "/posts/recommend?page=0&size=5",
             data : {},
             headers : {
                 "Content-Type": "application/json;charset-UTF-8"
@@ -89,6 +96,7 @@ const addPost=(postData) =>{
     }
 }
 
+
 const getOne=(postKey) =>{
     return async function (dispatch,getState){
         const token = getCookie('WW_user');
@@ -106,6 +114,59 @@ const getOne=(postKey) =>{
         });
     }
 }
+
+const likePost=(postKey) =>{
+    return async function (dispatch,getState){
+        const token = getCookie('WW_user');
+
+        instance({
+            method : "post",
+            url : `/postLikes/${postKey}`,
+            data : {},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8",
+                'authorization' : token,
+            }
+        }).then(res=>{
+            console.log(res);
+            dispatch(like(res.data));
+        });
+    }
+}
+
+const markPost=(postKey) =>{
+    return async function (dispatch,getState){
+        const token = getCookie('WW_user');
+
+        instance({
+            method : "post",
+            url : `/bookmark/${postKey}`,
+            data : {},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8",
+                'authorization' : token,
+            }
+        }).then(res=>{
+            console.log(res.data);
+            dispatch(mark(res.data,postKey))
+        });
+    }
+}
+
+const userPost=(pageUserKey) =>{
+    return async function (dispatch,getState){
+        instance({
+            method : "get",
+            url : `/posts/userPage/${pageUserKey}?page=0&size=5`,
+            data : {},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8"
+            }
+        }).then(res=>{
+            dispatch(setUserPost(res.data));
+        })
+    }
+}
 //reducer
 export default handleActions(
     {
@@ -116,6 +177,66 @@ export default handleActions(
         [SET_ONE]: (state, action) =>
         produce(state, (draft) => {
             draft.thisPost = {...action.payload.postData};
+        }),
+        [LIKE]: (state, action) =>
+        produce(state, (draft) => {
+            draft.allPostList.map((v,i)=>{
+
+                if(action.payload.postData.postId === v.postKey){
+                    v.postLikeClickersResponseDtoList = action.payload.postData.postLikeClickersResponseDtos;
+                    v.postLikesCnt = action.payload.postData.totalLike
+                }else{return v}
+            });
+            draft.recentPostList.map((v,i)=>{
+                if(action.payload.postData.postId === v.postKey){
+                    v.postLikeClickersResponseDtoList = action.payload.postData.postLikeClickersResponseDtos;
+                    v.postLikesCnt = action.payload.postData.totalLike
+                }else{return v}
+            });
+            draft.recommendPostList.map((v,i)=>{
+                if(action.payload.postData.postId === v.postKey){
+                    v.postLikeClickersResponseDtoList = action.payload.postData.postLikeClickersResponseDtos;
+                    v.postLikesCnt = action.payload.postData.totalLike
+                }else{return v}
+            });
+            if(draft.userPostList.postResponseDtoList)
+            {draft.userPostList.postResponseDtoList.map((v,i)=>{
+                if(action.payload.postData.postId === v.postKey){
+                    v.postLikeClickersResponseDtoList = action.payload.postData.postLikeClickersResponseDtos;
+                    v.postLikesCnt = action.payload.postData.totalLike
+                }else{return v}
+            });}
+        }),
+        [MARK]: (state, action) =>
+        produce(state, (draft) => {
+            draft.allPostList.map((v,i)=>{
+                if(action.payload.postKey === v.postKey){
+                    v.bookmarkClickUserKeyResDtoList = action.payload.postData.bookmarkClickUserKeyResDtos;
+                    v.bookmarkLikesCnt = action.payload.postData.bookmarkCnt
+                }else{return v}
+            });
+            draft.recentPostList.map((v,i)=>{
+                if(action.payload.postKey === v.postKey){
+                    v.bookmarkClickUserKeyResDtoList = [...action.payload.postData.bookmarkClickUserKeyResDtos];
+                    v.bookmarkLikesCnt = action.payload.postData.bookmarkCnt
+                }else{return v}
+            });
+            draft.recommendPostList.map((v,i)=>{
+                if(action.payload.postKey === v.postKey){
+                    v.bookmarkClickUserKeyResDtoList = action.payload.postData.bookmarkClickUserKeyResDtos;
+                    v.bookmarkLikesCnt = action.payload.postData.bookmarkCnt
+                }else{return v}
+            });
+            draft.userPostList.postResponseDtoList.map((v,i)=>{
+                if(action.payload.postKey === v.postKey){
+                    v.bookmarkClickUserKeyResDtoList = action.payload.postData.bookmarkClickUserKeyResDtos;
+                    v.bookmarkLikesCnt = action.payload.postData.bookmarkCnt
+                }else{return v}
+            });
+        }),
+        [USER_POST]: (state, action) =>
+        produce(state, (draft) => {
+            draft.userPostList = {...action.payload.postList};
         }),
         
     },
@@ -130,6 +251,9 @@ const actionCreators = {
     getRecommend,
     addPost,
     getOne,
+    likePost,
+    userPost,
+    markPost,
 
 
 };

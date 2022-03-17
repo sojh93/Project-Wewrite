@@ -13,7 +13,7 @@ const Input = ({
 
     defaultValue,type,placeholder,
 
-    onChange,_ref,ref,
+    onChange,onClick,_ref,ref,
 
     isTheme=false,
     id, label, name, value,
@@ -33,7 +33,7 @@ const Input = ({
                 return (
                     <WrapRadio style={{...props}}>
                     <label>
-                        <div><Radio type='radio' ref={ref} name={name} value={value}/><span>{value}</span></div>
+                        <div><Radio type='radio' ref={_ref} name={name} value={value}/><span>{value}</span></div>
                     </label>
                     </WrapRadio>
                 )
@@ -51,12 +51,30 @@ const Input = ({
                     </Wrap>
                 )
             }
+            if(type === 'pwd'){
+                return (
+                    <Wrap>
+                        <PasswordChange
+                        type='password'
+                        className="Password"
+                        onChange={onChange}
+                        ref={_ref}
+                        placeholder={placeholder}
+                        name={name}>
+                            {children}
+                        </PasswordChange>
+                    </Wrap>
+                )
+            }
             if(type === 'textarea'){
                 return(
                 <Wrap>
                     <ThemeTextarea
+                                placeholder={placeholder}
+                                defaultValue={defaultValue}
                                 onChange={onChange}
-                                ref={ref}
+                                onClick ={onClick}
+                                ref={_ref}
                                 style={{...props}}
                             />
                 </Wrap>
@@ -65,15 +83,16 @@ const Input = ({
             
             else{
                 return(
-                    <Wrap>
+                    
                         <ThemeInput
                             type={type}
                             onChange={onChange}
+                            defaultValue={defaultValue}
                             ref={ref}
                             placeholder={placeholder}
                             style={{...props}}
                         />
-                    </Wrap>
+                    
                 )
             }
 
@@ -89,7 +108,6 @@ const Input = ({
 }
 
 const Wrap = styled.div`
-    position : relative;
 `;
 
 const ThemeInput = styled.input`
@@ -103,11 +121,30 @@ const ThemeInput = styled.input`
     box-sizing: border-box;
 
     &:focus-visible{
-        & + div { display : block }
         outline : none;
         border : 1.5px solid ${props => props.theme.mainTheme.primary};
     }
 `;
+
+const PasswordChange = styled.input`
+    border-bottom : 1px solid #e0e0e0;
+    width : 350px;
+    height : 60px;
+    padding : 15px;
+    box-sizing: border-box;
+    resize: none;
+    border-left-color: white;
+    border-top-color: white;
+    border-right-color: white;
+    border: none;
+    &:focus-visible{
+        & + div { display : block }
+        outline : none;
+        border : none;
+    }
+    }
+`
+
 
 const ThemeTextarea = styled.textarea`
     border : 1.5px solid #9E9E9E;

@@ -8,41 +8,68 @@ import { useNavigate } from "react-router-dom";
 
 
 //import Icon
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
+import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 
 
 //import elements
-import { Button, Grid, Input, Image, Text } from "../elements" 
+import { Button, Grid, Input, Image, Text,Chip } from "../elements" 
 
-export default function Post({children}) {
-    console.log(children);
+//import Actions
+import { actionCreators as postActions } from '../redux/modules/post';
+
+export default function Post(props) {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const charLimit = (text, limit) =>{
+        if(text.length > limit){
+            return text.slice(0,limit)+' ...'
+        }
+        return text.slice(0,limit)
+    }
+
+    const likePost = () =>{
+        dispatch(postActions.likePost(props.postKey));
+        console.log('done');
+    }
+    const navigatePost = () => {
+        navigate(`/postdetail/${props.postKey}`);
+    }
+    const markPost =() =>{
+        dispatch(postActions.markPost(props.postKey));
+        console.log('done');
+    }
 
     return (
-        <Grid is_flex justifyContent='space-between' width="100%" gap='10px'>
-                <Grid width='100px' is_flex flexDirection='column'>
-                    <Image age width="100px" height="100px" borderRadius="5px" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA1MjJfMTcz%2FMDAxNjIxNjcwMzA3ODY1.PK5Q_yIQRr3ZyvTO_XhARkEF9aMJ0C1wavUEr2hEEjgg.kfG41tZDQtwvKtpwO7OhRguDv0C_E5JCSfyGnlpi1rEg.JPEG.vicky0170%2Fe6c17e085ded495c098f99cbea98477d.jpg&type=sc960_832"></Image>
-                    <Text fontSize="13px" fontWeight='700'>제목이 길면 얼마나 길까?</Text>
+        <Grid is_flex width='100%' flexDirection='column'>
+            <Grid is_flex justifyContent='space-between' width="100%" gap='10px'>
+                <Grid onClick={navigatePost} width='80px' is_flex flexDirection='column'>
+                    <Image width="130px" height="150px" borderRadius="5px" src={props.url?props.url:''}/>
                 </Grid>
-                <Grid is_flex flexDirection="column" width="210px" height="100px" justifyContents="">
-                    <Grid>
-                        <Text font-size="12px" margin="0px" height="50px">이젠 괜찮을 법도 해졌지
-                            이것저것 겪어봤으니
-                            대충 속이 썩을 정도
-                            물론 이건 꼭
-                            내 얘기뿐만은 아냐 너도
-                            아팠겠지 나를 품는 건
-                            모두 이성적으로 생각하래 어떻게
-                            감정 문제를 이성적으로 판단하겠어
-                            내가 없을 너의 하루가 걱정되지만
-                            이게 사랑이 아닐 수도 있다는 말이야 내 말은
+                <Grid is_flex flexDirection="column" width="calc(100% - 130px)" justifyContent='flex-start'>
+                    <Text onClick={navigatePost} margin='0 10px' fontSize="16px" fontWeight='700'>{props.title?props.title:''}</Text>
+                    <Grid margin='5px 10px' is_flex flexDirection='column' height='50px' justifyContent='space-between'>
+                        <Grid>
+                            {props.category?props.category.map((v,i)=>{
+                                return (<Chip key={i}>{v.category}</Chip>)
+                            }):''}
+                        </Grid>
+                        <Grid is_flex fontSize='15px' color='#7E7E7E' fontWeight='300'>
+                            <Image onClick={likePost} width='20px' height='20px' margin='4px' src={props.isLike?'/Icon/thumbs-up-filled.png':'/Icon/thumbs-up.png'}/>   
+                            <Text>{props.like?props.like:'0'}</Text>
+                            <Image width='14px' onClick={markPost} height='18px' margin='6px' src={props.isMark?'/Icon/bookmark.png':'/Icon/bookmark.png'}/>
+                            <Text>{props.bookmarkLikesCnt}</Text>
+                        </Grid>
+                    </Grid>
+                    <Grid onClick={navigatePost} margin='0 10px'>
+                        <Text height='70px' fontSize="12px" margin="0px">
+                            {props.first?charLimit(props.first,60):''}
                         </Text>
                     </Grid>
                 </Grid>
-                <Grid is_flex flexDirection='column' alignItems='center' width="20px" height="20px" padding="0px">
-                    <FavoriteBorderOutlinedIcon sx={{width:"20px", height:"20px"}}/>
-                    <Text margin='0'>?</Text>
-                </Grid>
+            </Grid>
+            
         </Grid>
     );
 } 
