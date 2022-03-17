@@ -22,7 +22,7 @@ import SockJS from "sockjs-client";
 // 채팅 방 컴포넌트
 const ChattingRoom = (props) => {
     // 소켓 통신 객체
-    const sock = new SockJS("http://3.36.75.74:8080/ws-alarm");
+    const sock = new SockJS("http://13.209.70.1:8080/ws-stomp");
     // const sock = new SockJS("http://binscot.shop/ws-stomp");
     const ws = Stomp.over(sock);
 
@@ -33,7 +33,7 @@ const ChattingRoom = (props) => {
     console.log(postId);
     // 토큰
     const token =
-        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0NkBnbWFpbC5jb20iLCJpYXQiOjE2NDcwNzQ3NzYsImV4cCI6MTY0NzMzMzk3Nn0.gWs8x5ZPZwA0Cs77jchMo267yVnTkUtT3qaS7HDIyCc";
+        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MUBnbWFpbC5jb20iLCJpYXQiOjE2NDc1MDg4NjAsImV4cCI6MTY0Nzc2ODA2MH0.2Y4fhS9Jls1kBV0xmMOSMs0p5vc4gokRHi_L2Pg7Oxo";
     var headers = {
         Authorization: token
     };
@@ -114,25 +114,25 @@ const ChattingRoom = (props) => {
             //     alert("토큰이 없습니다. 다시 로그인 해주세요.");
             // }
             // send할 데이터
-            const data = {
-                type: "TALK",
-                postId: "83",
-                userName: headers.userName,
-                userId: "null",
-                paragraph: "MVP 가즈아아",
-                nickName: 'noname',
-            };
+            // const data = {
+            //     type: "TALK",
+            //     postId: "83",
+            //     userName: headers.userName,
+            //     userId: "null",
+            //     paragraph: "MVP 가즈아아",
+            //     nickName: 'noname',
+            // };
             // console.log(data);
             // 빈문자열이면 리턴
             if (messageText === "") {
                 return;
             }
             // 로딩 중
-            waitForConnection(ws, function () {
-                ws.send("/pub/paragraph/complete", headers, JSON.stringify(data));
+            // waitForConnection(ws, function () {
+            //     ws.send("/pub/paragraph/complete", headers, JSON.stringify(data));
                 // 메세지 보내는 곳. url/헤더/데이터 -> 데이터를 문자열화 해주는 것
                 console.log(ws.ws.readyState);
-            });
+            // });
         } catch (error) {
             console.log(error);
             console.log(ws.ws.readyState);

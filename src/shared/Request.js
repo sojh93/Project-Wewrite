@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: "http://3.36.75.74:8080/ws-alarm",
-    // baseURL: "http://binscot.shop/"
+    baseURL: "http://13.209.70.1:8080/ws-stomp",
+    // baseURL: "http://binscot.shop/",
     headers: {
         "content-type": "application/json;charset-UTF-8",
         accept: "application/json,",

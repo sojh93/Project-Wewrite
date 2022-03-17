@@ -13,7 +13,7 @@ const NoticeBanner = () => {
     
 
     return(
-    <Grid wrap>
+    <Grid>
         <Grid is_flex width="335px" flexDirection="column" margin="20px 0 0 27px" height="220px" justifyContent="left" border="1px solid black">
            <Image is_square width="335px" height="220px" src={blank} alt="blank" display="flex" border="1px solid black"/>
                <Grid is_flex flexDirection="column" margin="10px 0 0 22px">
@@ -30,10 +30,9 @@ const NoticeBanner = () => {
                </Text>
                </Grid>
         </Grid>
-        <Bottom/>
-
-
+        
     </Grid>
+    
     );
 };
 
