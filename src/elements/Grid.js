@@ -5,7 +5,9 @@ const Grid = ({
     onClick,
     children,
     is_flex,
+    kakao=false,
     wrap,
+    notice,
     ...props
 
 }) => {
@@ -18,11 +20,27 @@ const Grid = ({
             </Wrap>
         )
     }
+    if(notice){
+        return(
+            <WrapNotice style={{display:"flex"}}>
+                <div onClick={onClick} style={{...props}}>
+                    {children}
+                </div>
+            </WrapNotice>
+        )
+    }
     if(is_flex){
         return(
             <Flex onClick={onClick} style={{...props}}>
                 {children}
             </Flex>
+        )
+    }
+    if(kakao){
+        return(
+            <Kakao onClick={onClick} style={{...props}}>
+                {children}
+            </Kakao>
         )
     }
     return(
@@ -47,6 +65,19 @@ const Wrap = styled.div`
     }
 `;
 
+const WrapNotice = styled.div`
+    width : 100vw;
+    max-width : 800px;
+    min-width : 780px;
+    height : ${props => props.theme.size.height};
+    background-color : ${props => props.theme.mainTheme.tertiary};
+    overflow : hidden;
+    flex-direction : column;
+    ::-webkit-scrollbar { 
+    display: none;
+    }
+`;
+
 const Div = styled.div`
     background-color : ${props => props.theme.mainTheme.tertiary};
     box-sizing : border-box;
@@ -58,5 +89,12 @@ const Flex = styled.div`
     box-sizing : border-box;
 `;
 
+const Kakao = styled.div`
+    display : flex;
+    background-image : url('/default_img/kakao_login_medium_wide.png');
+    background-size : cover;
+    background-position : center;
+    box-sizing : border-box;
+`;
 
 export default Grid;

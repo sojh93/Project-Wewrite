@@ -72,13 +72,17 @@ function Login() {
                 is_flex
                 alignItems="center"
                 flexDirection="column"
-                margin="100px 0 0 0"
-                height="90px"
-                width="320px"
+                margin="150px 0 0 0"
+                width="100%"
             >
-                <Text fontSize="16px" fontWeight="400">
-                    로그인
-                </Text>
+                <Grid is_flex flexDirection='column' width='300px'>
+                    <Text color='#6454FF' fontSize="24px" fontWeight="900">
+                        Welcome
+                    </Text>
+                    <Text color='#7E7E7E' fontSize="12px" fontWeight="400">
+                        서비스 이용을 위해 로그인 해주세요.
+                    </Text>
+                </Grid>
                 <Box
                     component="form"
                     onSubmit={handleSubmit}
@@ -122,35 +126,40 @@ function Login() {
                         id="password"
                         // autoComplete="current-password"
                     />
-                    <Button theme="unfilled" margin="50px">
-                        다음
+                    <Button theme="unfilled" width='100%' height='40px' margin='50px 0 20px 0'>
+                        로그인
                     </Button>
                 </Box>
-                <Grid
-                    width="280px"
-                    heigh="1px"
-                    borderBottom="1px solid gray"
-                ></Grid>
-                <Grid padding="1px">
-                    <Text>or</Text>
+                <Grid is_flex alignItems='center' width='80%'>
+                    <Grid
+                        width="45%"
+                        heigh="1px"
+                        borderBottom="1px solid gray"/>
+                    
+                        <Text>또는</Text>
+                    
+                        <Grid
+                        width="45%"
+                        heigh="1px"
+                        borderBottom="1px solid gray"/>
+
+                    
                 </Grid>
-                <Grid margin="10px" padding="0 10px 0 10px">
-                    <Button
+
+                <Grid is_flex flexDirection='column' alignItems='center' margin="10px" width='100%' padding="0 10px 0 10px">
+                    <Grid kakao
+                        width='300px'
+                        height = '40px'
+                        borderRadius='5px'
                         onClick={() =>
                             window.location.assign(
                                 "https://kauth.kakao.com/oauth/authorize?client_id=43268aa6f88af6282a341e3b61b9a761&redirect_uri=http://localhost:3000/login/kakaoLogin&response_type=code"
                             )
                         }
-                        backgroundImage="https://developers.kakao.com/tool/resource/static/img/button/login/full/ko/kakao_login_medium_wide.png"
-                        width=""
-                        heigh=""
-                        border="0px"
-                        backgroundColor="#00000000"
-                    >
-                        카카오로 로그인하기
-                    </Button>
+                    > 
+                    </Grid>
                 </Grid>
-                <Grid is_flex justifyContent="space-between" width="100%">
+                <Grid is_flex justifyContent="center" alignItems='center' width="100%">
                     <Button
                         border="0px"
                         backgroundColor="#00000000"
@@ -158,6 +167,7 @@ function Login() {
                     >
                         회원가입
                     </Button>
+                    <Text>|</Text>
                     <Button border="0px" backgroundColor="#00000000">
                         비밀번호 찾기
                     </Button>

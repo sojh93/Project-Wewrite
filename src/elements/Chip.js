@@ -11,12 +11,12 @@ const Chip = ({
 
 
     return (
-        <Default style={{...props, height}}><span style={{padding : "10px"}}>{children}</span></Default>
+        <Default onClick={onClick} style={{...props, height}}><span style={{padding : "10px"}}>{children}</span></Default>
     )
 }
 
 const Default = styled.div`
-    background-color : #424242;
+    background-color : #CECECE;
     color : ${props => props.theme.mainTheme.tertiary};
     border-radius : 5px;
     display: inline-flex;

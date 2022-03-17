@@ -34,8 +34,6 @@ const KakaoLogin = () => {
     // 카카오에서 준 인증코드
 
     React.useEffect(() => {
-        console.log(router.search.split('=')[1])
-
         const data = {
             grant_type : "authorization_code",
             client_id : "43268aa6f88af6282a341e3b61b9a761",
@@ -57,7 +55,6 @@ const KakaoLogin = () => {
                 "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
             }
         }).then(res=>{
-            console.log(res);
             instance({
                 method : "post",
                 url : "/login/kakaoLogin",
@@ -66,9 +63,9 @@ const KakaoLogin = () => {
                 }
             }).then(res=>{
                 const token = res.headers.authorization;
-                console.log(token);
                 setCookie('WW_user',token);
                 dispatch(userActions.check(token))
+                navigate('/');
             });
         })
 
