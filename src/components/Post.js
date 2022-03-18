@@ -58,7 +58,7 @@ export default function Post(props) {
                         <Grid is_flex fontSize='15px' color='#7E7E7E' fontWeight='300'>
                             <Image onClick={likePost} width='20px' height='20px' margin='4px' src={props.isLike?'/Icon/thumbs-up-filled.png':'/Icon/thumbs-up.png'}/>   
                             <Text>{props.like?props.like:'0'}</Text>
-                            <Image width='14px' onClick={markPost} height='18px' margin='6px' src={props.isMark?'/Icon/bookmark.png':'/Icon/bookmark.png'}/>
+                            <Image width='14px' onClick={markPost} height='18px' margin='6px' src={props.isMark?'/Icon/bookmark_filled.png':'/Icon/bookmark.png'}/>
                             <Text>{props.bookmarkLikesCnt}</Text>
                         </Grid>
                     </Grid>

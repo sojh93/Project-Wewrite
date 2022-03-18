@@ -60,10 +60,7 @@ function Login() {
             username: data.get("loginID"),
             password: data.get("password"),
         };
-
         dispatch(userActions.login(userInfo));
-
-        navigate("/");
     };
 
     return (

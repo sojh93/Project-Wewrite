@@ -77,14 +77,10 @@ function PostDetail(props) {
     }, []) : '';
 
 
-    const initialTime = React.useRef(15 * 60);
-    const padNumber = (num, length) => {
-        return String(num).padStart(length, '0');
-    };
+
 
     const [category, setCategory] = React.useState(null);
     const [timer,setTimer] = React.useState(false);
-    const [calcTime,setTime] = React.useState(0);
 
 
     //modal
@@ -107,6 +103,21 @@ function PostDetail(props) {
     const [contents, setContents] = React.useState('');
     let writer = _post.thisPost.writer;
     let isWriting = _post.thisPost.writing;
+
+
+
+    const isLike= thisPost.postLikeClickersResponseDtoList?
+            thisPost.postLikeClickersResponseDtoList
+            .reduce((X,V)=>
+                {   
+                    return Object.values(V)[0]===_user.user.userKey?true:X}
+            ,false):false;
+    const isMark= thisPost.bookmarkClickUserKeyResDtoList?
+    thisPost.bookmarkClickUserKeyResDtoList
+    .reduce((X,V)=>
+        {   
+            return Object.values(V)[0]===_user.user.userKey?true:X}
+    ,false):false;
 
     const likePost =() =>{
         dispatch(postActions.likePost(postKey));
@@ -343,7 +354,7 @@ function PostDetail(props) {
                 {thisPost.complete ?
                     '' :
                     <Grid marginTop='30px' width='100vw' is_flex flexDirection='column' alignItems='center'>
-                        <Input _ref={refInput} placeholder= {isWriting?'내용을 작성해주세요.':'아래 버튼을 눌러 작성을 시작해주세요.'} onChange={(e) => { setContents(e.target.value) }} width='350px' height='100px' isTheme type='textarea' />
+                        <Input _ref={refInput} disabled={isWriting?writer===_user.user.nickname?false:true:true} placeholder= {isWriting?writer===_user.user.nickname?'내용을 작성해주세요.':'다른 유저가 작성중입니다.':'아래 버튼을 눌러 작성을 시작해주세요.'} onChange={(e) => { setContents(e.target.value) }} width='350px' height='100px' isTheme type='textarea' />
                         
                         {isWriting?
                         writer===_user.user.nickname?
@@ -385,9 +396,9 @@ function PostDetail(props) {
                 <Grid width='350px' height='1px' borderTop='1px solid #CECECE' />
                 <Grid>
                     <Grid is_flex alignItems='center'>
-                        <Image onClick={likePost} width='20px' height='20px' margin='4px' src={props.isLike?'/Icon/thumbs-up-filled.png':'/Icon/thumbs-up.png'}/>   
+                        <Image onClick={likePost} width='20px' height='20px' margin='4px' src={isLike?'/Icon/thumbs-up-filled.png':'/Icon/thumbs-up.png'}/>   
                         <Text fontSize='12px' color='#7E7E7E'>{thisPost.postLikesCnt ? thisPost.postLikesCnt : "0"}</Text>
-                        <Image width='14px' onClick={markPost} height='18px' margin='6px' src={props.isMark?'/Icon/bookmark.png':'/Icon/bookmark.png'}/>
+                        <Image width='14px' onClick={markPost} height='18px' margin='6px' src={isMark?'/Icon/bookmark_filled.png':'/Icon/bookmark.png'}/>
                         <Text fontSize='12px' color='#7E7E7E'>{thisPost.bookmarkLikesCnt ? thisPost.bookmarkLikesCnt : "0"}</Text>
                         <Image width='16px' onClick={markPost} height='16px' margin='6px' src={props.isMark?'/Icon/talk.png':'/Icon/talk.png'}/>
                         <Text fontSize='12px' color='#7E7E7E'>댓글보기</Text>

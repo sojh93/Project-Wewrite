@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import SwitchSelector from "react-switch-selector";
 
 //import Actions
+import { actionCreators as postActions } from "../redux/modules/post";
 
 
 //import elements
@@ -25,41 +26,40 @@ import Post from '../components/Post';
 function PostList() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
 
-    const options = [
-        {
-            label: "추천",
-            value: "recommend",
-            width : "100px",
-        },
-        {
-            label: "최신",
-            value: "recent",
-            width : "100px",
-        }
-    ];
-    const onChange = (newValue) => {
-        console.log(newValue);
-    };
+    const _user = useSelector(state => state.user);
+    const _post = useSelector(state => state.post);
+    console.log(_post);
+
+
+    React.useEffect(() => {
+        dispatch(postActions.getRecent())
+    }, []);
     
-    const initialSelectedIndex = options.findIndex(({value}) => value === "recommend");
 
     return (
         <Grid wrap>
             <Header/>
+            <Grid is_flex height="500px" marginTop='70px' width="100%" flexDirection="column" alignItems="center">
+            <Grid width='100%'><Text fontSize='24px' fontWeight='700'>#완결 작품</Text></Grid>
+            <Grid is_flex flexDirection='column' alignItems='center' width="90%" marginTop='32px' gap='24px'>
+                    {_post.recentPostList?_post.recentPostList.map((v,i)=>{
+                        const likeThis= v.postLikeClickersResponseDtoList
+                        .reduce((X,V)=>
+                            {   
+                                return Object.values(V)[0]===_user.user.userKey?true:X}
+                        ,false)
+                        const markThis= v.bookmarkClickUserKeyResDtoList
+                        .reduce((X,V)=>
+                            {   
+                                return Object.values(V)[0]===_user.user.userKey?true:X}
+                        ,false)
+                        return (
+                            <Post bookmarkLikesCnt={v.bookmarkLikesCnt} key={i} category={v.categoryList} postKey={v.postKey} isMark={markThis} isLike={likeThis} first={v.paragraphResList[0].paragraph} like={v.postLikesCnt} title={v.title} url={v.postImageUrl}/>
+                        )
+                    }):''}
 
-            <Grid margin="15px" width="100px" height="30px">
-                <SwitchSelector
-                    onChange={onChange}
-                    options={options}
-                    initialSelectedIndex={initialSelectedIndex}            
-                    
-                />
-            </Grid>
-
-            <Grid is_flex height="500px" width="320px" flexDirection="column" alignItems="center">
-                <Post/>
+                </Grid>
             </Grid>
 
 

@@ -278,6 +278,7 @@ export default handleActions(
                 }else{return v}
             });}
             if(draft.thisPost.postKey===action.payload.postKey){
+                console.log(state.thisPost);
                 draft.thisPost.bookmarkClickUserKeyResDtoList = action.payload.postData.bookmarkClickUserKeyResDtos;
                 draft.thisPost.bookmarkLikesCnt = action.payload.postData.bookmarkCnt
             }

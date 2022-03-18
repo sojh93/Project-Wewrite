@@ -11,7 +11,7 @@ import { Children } from "react";
 
 const Input = ({
 
-    defaultValue,type,placeholder,
+    defaultValue,type,placeholder,disabled=false,
 
     onChange,onClick,_ref,ref,
 
@@ -70,6 +70,7 @@ const Input = ({
                 return(
                 <Wrap>
                     <ThemeTextarea
+                                disabled={disabled}
                                 placeholder={placeholder}
                                 defaultValue={defaultValue}
                                 onChange={onChange}

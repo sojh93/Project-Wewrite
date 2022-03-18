@@ -74,6 +74,8 @@ function ModifyProfile() {
         }
         console.log(userData);
         dispatch(userActions.editData(userData))
+        dispatch(postActions.userPost(user.user.userKey));
+        navigate(-1);
     }
 
     return (
