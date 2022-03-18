@@ -22,7 +22,7 @@ import SockJS from "sockjs-client";
 // 채팅 방 컴포넌트
 const ChattingRoom = (props) => {
     // 소켓 통신 객체
-    const sock = new SockJS("http://3.36.75.74:8080/ws-alarm");
+    const sock = new SockJS("http://13.209.70.1:8080/ws-stomp");
     // const sock = new SockJS("http://binscot.shop/ws-stomp");
     const ws = Stomp.over(sock);
 
@@ -33,7 +33,7 @@ const ChattingRoom = (props) => {
     console.log(postId);
     // 토큰
     const token =
-        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0NkBnbWFpbC5jb20iLCJpYXQiOjE2NDcwNzQ3NzYsImV4cCI6MTY0NzMzMzk3Nn0.gWs8x5ZPZwA0Cs77jchMo267yVnTkUtT3qaS7HDIyCc";
+        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MUBnbWFpbC5jb20iLCJpYXQiOjE2NDc1MDg4NjAsImV4cCI6MTY0Nzc2ODA2MH0.2Y4fhS9Jls1kBV0xmMOSMs0p5vc4gokRHi_L2Pg7Oxo";
     var headers = {
         Authorization: token
     };
@@ -56,7 +56,8 @@ const ChattingRoom = (props) => {
             ws.connect(headers, () => {
                 ws.subscribe(
                     // websocket 구독 url 콜백함수 header 
-                    "/sub/alarm/",
+                    // "/sub/alarm/",
+                    `/sub/api/chat/rooms/68`,
                     (data) => {
                         // const postId = JSON.parse(68);
                         // console.log(data)
@@ -121,7 +122,7 @@ const ChattingRoom = (props) => {
                 paragraph: "MVP 가즈아아",
                 nickName: 'noname',
             };
-            // console.log(data);
+            console.log(data);
             // 빈문자열이면 리턴
             if (messageText === "") {
                 return;
