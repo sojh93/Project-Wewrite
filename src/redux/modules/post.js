@@ -206,6 +206,10 @@ export default handleActions(
                     v.postLikesCnt = action.payload.postData.totalLike
                 }else{return v}
             });}
+            if(draft.thisPost.postKey===action.payload.postKey){
+                draft.thisPost.postLikeClickersResponseDtoList = action.payload.postData.postLikeClickersResponseDtos;
+                draft.thisPost.postLikesCnt = action.payload.postData.totalLike
+            }
         }),
         [MARK]: (state, action) =>
         produce(state, (draft) => {
@@ -227,12 +231,17 @@ export default handleActions(
                     v.bookmarkLikesCnt = action.payload.postData.bookmarkCnt
                 }else{return v}
             });
+            if(draft.userPostList.postResponseDtoList){
             draft.userPostList.postResponseDtoList.map((v,i)=>{
                 if(action.payload.postKey === v.postKey){
                     v.bookmarkClickUserKeyResDtoList = action.payload.postData.bookmarkClickUserKeyResDtos;
                     v.bookmarkLikesCnt = action.payload.postData.bookmarkCnt
                 }else{return v}
-            });
+            });}
+            if(draft.thisPost.postKey===action.payload.postKey){
+                draft.thisPost.bookmarkClickUserKeyResDtoList = action.payload.postData.bookmarkClickUserKeyResDtos;
+                draft.thisPost.bookmarkLikesCnt = action.payload.postData.bookmarkCnt
+            }
         }),
         [USER_POST]: (state, action) =>
         produce(state, (draft) => {
