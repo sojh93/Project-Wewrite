@@ -114,25 +114,25 @@ const ChattingRoom = (props) => {
             //     alert("토큰이 없습니다. 다시 로그인 해주세요.");
             // }
             // send할 데이터
-            // const data = {
-            //     type: "TALK",
-            //     postId: "83",
-            //     userName: headers.userName,
-            //     userId: "null",
-            //     paragraph: "MVP 가즈아아",
-            //     nickName: 'noname',
-            // };
-            // console.log(data);
+            const data = {
+                type: "TALK",
+                postId: "83",
+                userName: headers.userName,
+                userId: "null",
+                paragraph: "MVP 가즈아아",
+                nickName: 'noname',
+            };
+            console.log(data);
             // 빈문자열이면 리턴
             if (messageText === "") {
                 return;
             }
             // 로딩 중
-            // waitForConnection(ws, function () {
-            //     ws.send("/pub/paragraph/complete", headers, JSON.stringify(data));
+            waitForConnection(ws, function () {
+                ws.send("/pub/paragraph/complete", headers, JSON.stringify(data));
                 // 메세지 보내는 곳. url/헤더/데이터 -> 데이터를 문자열화 해주는 것
                 console.log(ws.ws.readyState);
-            // });
+            });
         } catch (error) {
             console.log(error);
             console.log(ws.ws.readyState);
