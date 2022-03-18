@@ -11,6 +11,7 @@ const SET_ONE = "SET_ONE";
 const LIKE = "LIKE";
 const MARK ="MARK";
 const USER_POST = "USER_POST";
+const LIKE_PARA = "LIKE_PARA";
 
 //action creatos
 const setPost = createAction(SET_POST, (postList,postType) => ({ postList,postType }));
@@ -18,6 +19,7 @@ const setOnePost = createAction(SET_ONE, (postData) => ({ postData }));
 const setUserPost = createAction(USER_POST, (postList) => ({ postList }));
 const like = createAction(LIKE, (postData) => ({ postData }));
 const mark = createAction(MARK, (postData,postKey) => ({ postData,postKey }));
+const like_Para = createAction(LIKE_PARA, (postData) => ({ postData }));
 
 //initialState
 const initialState = {
@@ -164,6 +166,43 @@ const userPost=(pageUserKey) =>{
             }
         }).then(res=>{
             dispatch(setUserPost(res.data));
+            console.log(res.data);
+        })
+    }
+}
+
+const likePara=(paragraphKey) =>{
+    return async function (dispatch,getState){
+        const token = getCookie('WW_user');
+        console.log(paragraphKey)
+        instance({
+            method : "post",
+            url : `/paragraph/likes/${paragraphKey}`,
+            data : {},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8",
+                'authorization' : token,
+            }
+        }).then(res=>{
+            console.log(res.data);
+            dispatch(like_Para(res.data));
+        })
+    }
+}
+
+const completePara=(postKey,category) =>{
+    return async function (dispatch,getState){
+        const token = getCookie('WW_user');
+        instance({
+            method : "patch",
+            url : `/posts/complete/${postKey}`,
+            data : {category},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8",
+                'authorization' : token,
+            }
+        }).then(res=>{
+            console.log(res.data);
         })
     }
 }
@@ -247,6 +286,15 @@ export default handleActions(
         produce(state, (draft) => {
             draft.userPostList = {...action.payload.postList};
         }),
+        [LIKE_PARA]: (state, action) =>
+        produce(state, (draft) => {
+            draft.thisPost.paragraphResDtoList.map((v,i)=>{
+                if(v.paragraphKey === action.payload.postData.paragraphKey){
+                    v.paragraphLikesClickUserKeyResDtoList = [...action.payload.postData.paragraphLikesClickUserKeyResDtoList];
+                    v.paragraphLikesCnt = action.payload.postData.paragraphTotalLikes;
+                }
+            })
+        }),
         
     },
     initialState
@@ -263,6 +311,8 @@ const actionCreators = {
     likePost,
     userPost,
     markPost,
+    likePara,
+    completePara,
 
 
 };

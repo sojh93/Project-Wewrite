@@ -26,7 +26,6 @@ import { Button, Grid, Input, Image, Text } from "../elements"
 import Post from '../components/Post';
 import Header from '../components/Header'
 import Bottom from '../components/Bottom';
-import Carousel from '../components/Carousel'
 import Books from '../components/Books';
 import BookCover from '../components/BookCover';
 
