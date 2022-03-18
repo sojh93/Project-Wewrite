@@ -67,12 +67,13 @@ const Wrap = styled.div`
 
 const WrapNotice = styled.div`
     width : 100vw;
-    max-width : 800px;
-    min-width : 780px;
+    max-width : 390px;
+    min-width : 360px;
     height : ${props => props.theme.size.height};
     background-color : ${props => props.theme.mainTheme.tertiary};
     overflow : hidden;
     flex-direction : column;
+    overflow: hidden;
     ::-webkit-scrollbar { 
     display: none;
     }
