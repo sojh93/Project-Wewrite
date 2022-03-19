@@ -2,8 +2,8 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 
 import axios from "axios";
-import { commentApis } from "../../shared/apis";
-import { postApis } from "../../shared/apis";
+import { commentApis } from "../../shared/api";
+import { postApis } from "../../shared/api";
 import { actionCreators as postActions } from "./post";
 
 const GET_COMMENT = "GET_COMMENT";
