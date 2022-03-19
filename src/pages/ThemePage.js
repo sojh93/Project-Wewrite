@@ -36,8 +36,7 @@ function ThemePage() {
 
 
     React.useEffect(() => {
-        dispatch(postActions.getRecent())
-        dispatch(postActions.getAll())
+        dispatch(postActions.getTheme(theme))
     }, []);
     
 
