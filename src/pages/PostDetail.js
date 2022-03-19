@@ -29,6 +29,7 @@ import Bottom from '../components/Bottom';
 import Sentence from '../components/Sentence';
 import Comment from '../components/Comment';
 import Paragraph from "../components/Paragraph";
+import Timer from "../components/Timer";
 
 // 소켓 통신
 import Stomp from "stompjs";
@@ -80,17 +81,16 @@ function PostDetail(props) {
 
     }, []) : '';
 
+
+    const initialTime = React.useRef(15 * 60);
+    const padNumber = (num, length) => {
+        return String(num).padStart(length, '0');
+    };
+
     const [category, setCategory] = React.useState(null);
-    const [calcTime,setTime] = React.useState('-');
-    const interval = React.useRef(null);
-    // if(thisPost.paragraphStartTime !==null){
-    //     interval.current = setInterval(() => {
-    //             console.log(thisPost.paragraphStartTime)
-    //             let t1 = new Date(thisPost.paragraphStartTime);
-    //             setTime(moment.duration(moment()-t1).asSeconds());
-    //             console.log(calcTime);
-    //         }, 1000);
-    //     }
+    const [timer,setTimer] = React.useState(false);
+    const [calcTime,setTime] = React.useState(0);
+
 
     //modal
     const [open, setOpen] = React.useState(false);
@@ -110,14 +110,17 @@ function PostDetail(props) {
 
     //contents
     const [contents, setContents] = React.useState('');
-    // const [isWriting, setIsWriting] = React.useState(false);
-    // const [writer, setWriter] = React.useState(null);
-    
-    //setIsWriting(_post.thisPost.writing);
-    //setWriter(_post.thisPost.writer);
     let writer = _post.thisPost.writer;
     let isWriting = _post.thisPost.writing;
 
+    const likePost =() =>{
+        dispatch(postActions.likePost(postKey));
+        console.log('done');
+    }
+    const markPost =() =>{
+        dispatch(postActions.markPost(postKey));
+        console.log('done');
+    }
 
     var headers = {
         Authorization: token
@@ -154,14 +157,14 @@ function PostDetail(props) {
                             console.log('START');
                             // setWriter(data.body.split(',')[6].split('\"')[3])
                             // setIsWriting(true);
-                            setTimeout(()=>{dispatch(postActions.getOne(postKey));},1000)
-                            
+                            setTimeout(()=>{dispatch(postActions.getOne(postKey));},500)
+                            setTimer(true);
                         }
                         if(data.body.split(',')[0].split('\"')[3] === 'TALK'){
                             console.log('TALK');
                             // setWriter(null)
                             // setIsWriting(false);
-                            setTimeout(()=>{dispatch(postActions.getOne(postKey));},1000)
+                            setTimeout(()=>{dispatch(postActions.getOne(postKey));},500)
                         }
                     },
                     headers
@@ -288,7 +291,7 @@ function PostDetail(props) {
                         
                         {isWriting?
                         writer===_user.user.nickname?
-                        <Grid><Text>제한 시간 {calcTime} 남았습니다.</Text></Grid>:
+                        <Grid is_flex alignItems='center'><Text>제한 시간</Text> <Timer min='15'/> <Text>남았습니다.</Text></Grid>:
                         <Grid><Text>다른 유저가 작성중입니다.</Text></Grid>:''}
                         {isWriting?
                         writer===_user.user.nickname?
@@ -326,9 +329,10 @@ function PostDetail(props) {
                 <Grid width='350px' height='1px' borderTop='1px solid #CECECE' />
                 <Grid>
                     <Grid is_flex>
-                        <Text><ThumbUpOutlinedIcon /></Text>
+                        <Image onClick={likePost} width='20px' height='20px' margin='4px' src={props.isLike?'/Icon/thumbs-up-filled.png':'/Icon/thumbs-up.png'}/>   
                         <Text>{thisPost.postLikesCnt ? thisPost.postLikesCnt : "0"}</Text>
-                        <Text><BookmarkBorderOutlinedIcon /></Text>
+                        <Image width='14px' onClick={markPost} height='18px' margin='6px' src={props.isMark?'/Icon/bookmark.png':'/Icon/bookmark.png'}/>
+                        <Text>{thisPost.bookmarkLikesCnt ? thisPost.bookmarkLikesCnt : "0"}</Text>
                     </Grid>
                 </Grid>
 

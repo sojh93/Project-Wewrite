@@ -42,12 +42,11 @@ const Books = (props) => {
                 }):""}
             </Grid>
 
-            <Grid is_flex fontSize='15px' width='100%' color={props.isLike?'#6454FF':'#7E7E7E'} margin='0' marginTop='3px' alignItems='center' fontWeight='300'>
+            <Grid is_flex fontSize='15px' width='100%' margin='0' marginTop='3px' alignItems='center' fontWeight='300'>
                 <Image onClick={likePost} width='20px' height='20px' margin='0px' src={props.isLike?'/Icon/thumbs-up-filled.png':'/Icon/thumbs-up.png'}/>
                 <Text width='35px' margin="0 " fontSize='12px' color={props.isLike?'#6454FF':'#7E7E7E'}>{props.like}</Text>
                 <Image width='14px' onClick={markPost} height='18px' margin='0px' src={props.isMark?'/Icon/bookmark.png':'/Icon/bookmark.png'}/>
                 <Text margin="0 5px" fontSize='12px' color={props.isLike?'#7E7E7E':'#7E7E7E'}>{props.bookmarkLikesCnt}</Text>
-
             </Grid>
         </Grid>
         

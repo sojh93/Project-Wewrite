@@ -17,13 +17,13 @@ import Mywrite from "../pages/Mywrite";
 import NewsList from "../pages/NewsList";
 import PostList from "../pages/PostList";
 import Write from '../pages/Write';
-import UnfinishedDetail from '../pages/UnfinishedDetail';
 import PostDetail from '../pages/PostDetail';
 import KakaoLogin from '../pages/KakaoLogin';
 import ModifyProfile from "../pages/ModifyProfile";
 import ChangePassword from "../pages/ChangePassword";
 import WithdrawMember from "../pages/withdrawMember";
 import Socket from '../components/Socket'
+import Notice from '../pages/Notice';
 
 
 
@@ -42,12 +42,12 @@ function App() {
           <Route path="/newslist" element={<NewsList />} />
           <Route path="/postlist" element={<PostList />} />
           <Route path="/write" element={<Write />} />
-          <Route path="/unfinisheddetail/:postKey" element={<UnfinishedDetail />} />
           <Route path="/postDetail/:postKey" element={<PostDetail />} />
           <Route path="/modifyprofile" element={<ModifyProfile />} />
           <Route path="/changePassword" element={<ChangePassword />} />
           <Route path="/withdrawMember" element={<WithdrawMember />} />
           <Route path="/socket" element={<Socket />} />
+          <Route path="/notice" element={<Notice />} />
 
         </Routes>
       </ThemeProvider>

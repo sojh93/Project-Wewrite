@@ -7,6 +7,7 @@ const Grid = ({
     is_flex,
     kakao=false,
     wrap,
+    notice,
     ...props
 
 }) => {
@@ -17,6 +18,15 @@ const Grid = ({
                     {children}
                 </div>
             </Wrap>
+        )
+    }
+    if(notice){
+        return(
+            <WrapNotice style={{display:"flex"}}>
+                <div onClick={onClick} style={{...props}}>
+                    {children}
+                </div>
+            </WrapNotice>
         )
     }
     if(is_flex){
@@ -52,6 +62,19 @@ const Wrap = styled.div`
     overflow : auto;
     ::-webkit-scrollbar { 
     display: none; 
+    }
+`;
+
+const WrapNotice = styled.div`
+    width : 100vw;
+    max-width : 800px;
+    min-width : 780px;
+    height : ${props => props.theme.size.height};
+    background-color : ${props => props.theme.mainTheme.tertiary};
+    overflow : hidden;
+    flex-direction : column;
+    ::-webkit-scrollbar { 
+    display: none;
     }
 `;
 
