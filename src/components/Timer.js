@@ -1,10 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { getCookie } from "../shared/Cookie";
+import instance from "../shared/Request";
 
+const token = getCookie('WW_user');
 const padNumber = (num, length) => {
     return String(num).padStart(length, '0');
 };
 
 const Timer = (props) => {
+    const _post = useSelector(state => state.post);
+    const postKey = _post.thisPost.postKey
     // 아무것도 입력하지 않으면 undefined가 들어오기 때문에 유효성 검사부터..
     const tempHour = props.hour ? parseInt(props.hour) : 0;
     const tempMin = props.min ? parseInt(props.min) : 15;
@@ -32,6 +38,17 @@ const Timer = (props) => {
     useEffect(() => {
         if (initialTime.current <= 0) {
         clearInterval(interval.current);
+        instance({
+            method : "post",
+            url : `/cancelIsWriting/${postKey}`,
+            data : {},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8",
+                'Authorization' : token,
+            }
+        }).then(res=>{
+            console.log(res);
+        });
         }
     }, [sec]);
 

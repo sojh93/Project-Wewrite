@@ -26,7 +26,6 @@ import { Button, Grid, Input, Image, Text } from "../elements"
 import Post from '../components/Post';
 import Header from '../components/Header'
 import Bottom from '../components/Bottom';
-import Carousel from '../components/Carousel'
 import Books from '../components/Books';
 import BookCover from '../components/BookCover';
 
@@ -43,17 +42,11 @@ function Main(props) {
 
 
     React.useEffect(() => {
-        if(_post.allPostList.length === 0){
-            dispatch(postActions.getAll())
-        }
-        if(_post.recentPostList.length === 0){
-            dispatch(postActions.getRecent())
-        }
-        if(_post.recommendPostList.length === 0){
-            dispatch(postActions.getRecommend())
-        }
+        dispatch(postActions.getAll())
+        dispatch(postActions.getRecent())
+        dispatch(postActions.getRecommend())
         
-    }, []);
+    },[ ]);
 
     return (
         <>
@@ -62,7 +55,7 @@ function Main(props) {
 
             <Grid is_flex flexDirection='column' alignItems='center' margin='60px 0 0 0'>
 
-                <Grid width='100%' height='350px' backgroundSize='contain' backgroundImage='url("/default_img/bookBackGround1.png")'>
+                <Grid width='100%' height='350px' backgroundSize='contain'>
                     <Swiper
                         style={{height : '320px', width : 'calc(100vw - 20px)', minWidth : '340px', maxWidth : '370px' ,margin : '10px'}}
                         rewind={true}
@@ -115,9 +108,14 @@ function Main(props) {
                                 {   
                                     return Object.values(V)[0]===_user.user.userKey?true:X}
                             ,false)
+                            const markThis= v.bookmarkClickUserKeyResDtoList
+                            .reduce((X,V)=>
+                                {   
+                                    return Object.values(V)[0]===_user.user.userKey?true:X}
+                            ,false)
                             return (
                             <SwiperSlide key={v.postKey}>
-                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} bookmarkLikesCnt={v.bookmarkLikesCnt} category={v.categoryList} title={v.title} isLike={likeThis} like={v.postLikesCnt} src={v.postImageUrl} key={i} postKey={v.postKey}/>
+                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} bookmarkLikesCnt={v.bookmarkLikesCnt} isMark={markThis} category={v.categoryList} title={v.title} isLike={likeThis} like={v.postLikesCnt} src={v.postImageUrl} key={i} postKey={v.postKey}/>
                             </SwiperSlide>
                             )
                         })}
@@ -145,9 +143,14 @@ function Main(props) {
                                 {   
                                     return Object.values(V)[0]===_user.user.userKey?true:X}
                             ,false)
+                            const markThis= v.bookmarkClickUserKeyResDtoList
+                            .reduce((X,V)=>
+                                {   
+                                    return Object.values(V)[0]===_user.user.userKey?true:X}
+                            ,false)
                             return (
                             <SwiperSlide key={v.postKey}>
-                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}}  bookmarkLikesCnt={v.bookmarkLikesCnt} category={v.categoryList} title={v.title} isLike={likeThis} like={v.postLikesCnt} src={v.postImageUrl} postKey={v.postKey} key={v.postKey}/>
+                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} bookmarkLikesCnt={v.bookmarkLikesCnt} isMark={markThis} category={v.categoryList} title={v.title} isLike={likeThis} like={v.postLikesCnt} src={v.postImageUrl} key={i} postKey={v.postKey}/>
                             </SwiperSlide>
                             )
                         }):''}
@@ -173,9 +176,14 @@ function Main(props) {
                                 {   
                                     return Object.values(V)[0]===_user.user.userKey?true:X}
                             ,false)
+                            const markThis= v.bookmarkClickUserKeyResDtoList
+                            .reduce((X,V)=>
+                                {   
+                                    return Object.values(V)[0]===_user.user.userKey?true:X}
+                            ,false)
                             return (
                             <SwiperSlide key={v.postKey}>
-                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} bookmarkLikesCnt={v.bookmarkLikesCnt} category={v.categoryList} title={v.title} isLike={likeThis} like={v.postLikesCnt} src={v.postImageUrl} postKey={v.postKey} key={v.postKey}/>
+                                <Books onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} bookmarkLikesCnt={v.bookmarkLikesCnt} isMark={markThis} category={v.categoryList} title={v.title} isLike={likeThis} like={v.postLikesCnt} src={v.postImageUrl} key={i} postKey={v.postKey}/>
                             </SwiperSlide>
                             )
                         })}

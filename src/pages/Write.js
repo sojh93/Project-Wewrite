@@ -57,7 +57,7 @@ function Write() {
     const [sentence,setSentence] = React.useState(null);
 
     //set sentence count
-    const [sentenceCnt,setSentenceCnt] = React.useState(1);
+    const [sentenceCnt,setSentenceCnt] = React.useState(2);
     
     //category
     const refCategory = React.useRef();
@@ -96,6 +96,7 @@ function Write() {
 
         console.log(sentence);
         dispatch(postActions.addPost(postData));
+        dispatch(postActions.getAll())
         navigate('/');
     }
 
