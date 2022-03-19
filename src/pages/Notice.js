@@ -14,6 +14,7 @@ const Notice = () => {
     const [index,setIndex] = React.useState(1);
     const [move, setMove] = useState({transform:'translate(390px, 0)'})
     const [back, setBack] = useState({transform:'translate(-390px, 0)'})
+    
     return(
         <>
     <Grid notice>
