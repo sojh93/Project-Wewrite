@@ -36,7 +36,7 @@ const getAll=() =>{
     return async function (dispatch,getState){
         instance({
             method : "get",
-            url : "/posts/incomplete?page=0&size=5",
+            url : "/posts/incomplete?page=0&size=30",
             data : {},
             headers : {
                 "Content-Type": "application/json;charset-UTF-8"
@@ -53,7 +53,7 @@ const getRecent=() =>{
     return async function (dispatch,getState){
         instance({
             method : "get",
-            url : "/posts/recent?page=0&size=5",
+            url : "/posts/recent?page=0&size=30",
             data : {},
             headers : {
                 "Content-Type": "application/json;charset-UTF-8"
@@ -69,7 +69,7 @@ const getRecommend=() =>{
     return async function (dispatch,getState){
         instance({
             method : "get",
-            url : "/posts/recommend?page=0&size=5",
+            url : "/posts/recommend?page=0&size=30",
             data : {},
             headers : {
                 "Content-Type": "application/json;charset-UTF-8"
@@ -159,7 +159,7 @@ const userPost=(pageUserKey) =>{
     return async function (dispatch,getState){
         instance({
             method : "get",
-            url : `/posts/userPage/${pageUserKey}?page=0&size=5`,
+            url : `/posts/userPage/${pageUserKey}?page=0&size=30`,
             data : {},
             headers : {
                 "Content-Type": "application/json;charset-UTF-8"

@@ -96,6 +96,7 @@ function Write() {
 
         console.log(sentence);
         dispatch(postActions.addPost(postData));
+        dispatch(postActions.getAll())
         navigate('/');
     }
 

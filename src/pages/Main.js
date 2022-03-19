@@ -46,7 +46,7 @@ function Main(props) {
         dispatch(postActions.getRecent())
         dispatch(postActions.getRecommend())
         
-    }, []);
+    },[ ]);
 
     return (
         <>

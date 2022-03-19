@@ -37,7 +37,7 @@ const Books = (props) => {
             <Grid margin='2px' marginTop='5px' width='100%' is_flex alignItems='flex-start'>
                 {props.category?props.category.map((v,i)=>{
                     return (
-                        <Chip key={i}>{v.category}</Chip>
+                        <Chip marginRight='5px' key={i}>{v.category}</Chip>
                     )
                 }):""}
             </Grid>

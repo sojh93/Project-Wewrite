@@ -37,7 +37,7 @@ function App() {
           <Route path="/Signup" element={<Signup />} />
           <Route path="/userpage/:userKey" element={<UserPage />} />
           <Route path="/newslist" element={<NewsList />} />
-          <Route path="/postlist" element={<PostList />} />
+          <Route path="/postlist/:listType" element={<PostList />} />
           <Route path="/write" element={<Write />} />
           <Route path="/postDetail/:postKey" element={<PostDetail />} />
           <Route path="/modifyprofile" element={<ModifyProfile />} />
