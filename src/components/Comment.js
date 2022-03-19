@@ -48,12 +48,15 @@ export default function Comment({children}) {
                         onClick={handleClick}
                         sx={{margin : '0 5px',padding:'0'}}
                     >
+                        {/* ... 아이콘 */}
                         <MoreHorizIcon />
+                        {/* 아이콘 버튼화 & 위치 선정 */}
                     </IconButton>
                     <Grid is_flex alignItems='center' justifyContent='space-evenly'>
                         <FavoriteBorderOutlinedIcon  sx={{width:'10px'}}/>
                         <Text margin='0 2px 1px 2px' fontSize='10px'>32</Text>
                     </Grid>
+                    {/* 아이콘 누르면 나오는 것들 설정 */}
                     <Menu
                         id="basic-menu"
                         MenuListProps={{
@@ -65,7 +68,7 @@ export default function Comment({children}) {
                         PaperProps={{
                         style: {
                             fontSize:"12px",
-                            height : "115px",
+                            height : "55px",
                             padding : '0',
                             margin : '0',
                         },

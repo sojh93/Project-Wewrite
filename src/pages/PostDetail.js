@@ -13,6 +13,7 @@ import 'moment/locale/ko'
 //import Actions
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as userActions } from "../redux/modules/user";
+import { actionCreators as commentActions } from "../redux/modules/comment";
 
 //import elements
 import { Button, Grid, Input, Image, Text, Chip } from "../elements"
@@ -93,9 +94,9 @@ function PostDetail(props) {
     const handleCloseC = () => setCOpen(false);
 
     //socket
-    // const sock = new SockJS("http://13.209.70.1/ws-stomp");
+    const sock = new SockJS("http://13.209.70.1/ws-stomp");
     // const sock = new SockJS("http://3.34.179.104/ws-stomp");
-    const sock = new SockJS("http://binscot.shop/ws-stomp");
+    // const sock = new SockJS("http://binscot.shop/ws-stomp");
     const ws = Stomp.over(sock);
     const token = getCookie('WW_user');
 
@@ -105,13 +106,14 @@ function PostDetail(props) {
     let isWriting = _post.thisPost.writing;
 
 
-
+    // 좋아요 버튼 관련 로직
     const isLike= thisPost.postLikeClickersResponseDtoList?
             thisPost.postLikeClickersResponseDtoList
             .reduce((X,V)=>
                 {   
                     return Object.values(V)[0]===_user.user.userKey?true:X}
             ,false):false;
+    // 북마크 버튼 관련 로직
     const isMark= thisPost.bookmarkClickUserKeyResDtoList?
     thisPost.bookmarkClickUserKeyResDtoList
     .reduce((X,V)=>
@@ -149,6 +151,20 @@ function PostDetail(props) {
             };
     }, [])
 
+    const [comment,setComment] = React.useState();
+
+    const onChange = (e) => { //인풋 값 가져오기
+        setComment(e.target.value);
+    };
+
+    const addComment = () => {
+        if (comment === "") {
+            alert("답글을 입력해주세요.");
+            return;
+        }
+       dispatch(commentActions.addCommentDB(props.postId,comment));
+       setComment("");
+    };   
 
     function wsConnectSubscribe() {
         try {
@@ -371,6 +387,7 @@ function PostDetail(props) {
 
                 <Grid is_flex flexDirection='column' alignItems='center' width='100%'>
                     <Text marginTop='10px' width='90%'>참여자</Text>
+                    {/* Swiper => 화면넘기는 효과를 부여한다. React Components */}
                     <Swiper
                         style={{ height: '74px', width: 'calc(90% - 20px)', margin: '10px' }}
                         slidesPerView={5}
@@ -401,7 +418,7 @@ function PostDetail(props) {
                         <Image width='14px' onClick={markPost} height='18px' margin='6px' src={isMark?'/Icon/bookmark_filled.png':'/Icon/bookmark.png'}/>
                         <Text fontSize='12px' color='#7E7E7E'>{thisPost.bookmarkLikesCnt ? thisPost.bookmarkLikesCnt : "0"}</Text>
                         <Image width='16px' onClick={markPost} height='16px' margin='6px' src={props.isMark?'/Icon/talk.png':'/Icon/talk.png'}/>
-                        <Text fontSize='12px' color='#7E7E7E'>댓글보기</Text>
+                        <Text fontSize='12px' color='#7E7E7E' onClick={() => handleOpenC(true)}>댓글보기</Text>
                     </Grid>
                 </Grid>
 
