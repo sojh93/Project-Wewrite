@@ -106,40 +106,40 @@ const Header = (props) => {
                                     className="mySwiper"
                                     >
                                         <SwiperSlide>
-                                            <Text onClick={(e)=>navigate('/스릴러')}>스릴러</Text>
+                                            <Text onClick={(e)=>navigate('/themepage/스릴러')}>스릴러</Text>
                                         </SwiperSlide>
                                         <SwiperSlide>
-                                            <Text onClick={(e)=>navigate('/공포')}>공포</Text>
+                                            <Text onClick={(e)=>navigate('/themepage/공포')}>공포</Text>
                                         </SwiperSlide>
                                         <SwiperSlide>
-                                            <Text onClick={(e)=>navigate('/로맨스')}>로맨스</Text>
+                                            <Text onClick={(e)=>navigate('/themepage/로맨스')}>로맨스</Text>
                                         </SwiperSlide>
                                         <SwiperSlide>
-                                            <Text onClick={(e)=>navigate('/판타지')}>판타지</Text>
+                                            <Text onClick={(e)=>navigate('/themepage/판타지')}>판타지</Text>
                                         </SwiperSlide>
                                         <SwiperSlide>
-                                            <Text onClick={(e)=>navigate('/액션')}>액션</Text>
+                                            <Text onClick={(e)=>navigate('/themepage/액션')}>액션</Text>
                                         </SwiperSlide>
                                         <SwiperSlide>
-                                            <Text onClick={(e)=>navigate('/코미디')}>코미디</Text>
+                                            <Text onClick={(e)=>navigate('/themepage/코미디')}>코미디</Text>
                                         </SwiperSlide>
                                         <SwiperSlide>
-                                            <Text onClick={(e)=>navigate('/무협')}>무협</Text>
+                                            <Text onClick={(e)=>navigate('/themepage/무협')}>무협</Text>
                                         </SwiperSlide>
                                         <SwiperSlide>
-                                            <Text onClick={(e)=>navigate('/SF')}>SF</Text>
+                                            <Text onClick={(e)=>navigate('/themepage/SF')}>SF</Text>
                                         </SwiperSlide>
                                         <SwiperSlide>
-                                            <Text onClick={(e)=>navigate('/미스테리')}>미스테리</Text>
+                                            <Text onClick={(e)=>navigate('/themepage/미스테리')}>미스테리</Text>
                                         </SwiperSlide>
                                         <SwiperSlide>
-                                            <Text onClick={(e)=>navigate('/스포츠')}>스포츠</Text>
+                                            <Text onClick={(e)=>navigate('/themepage/스포츠')}>스포츠</Text>
                                         </SwiperSlide>
                                         <SwiperSlide>
-                                            <Text onClick={(e)=>navigate('/하이틴')}>하이틴</Text>
+                                            <Text onClick={(e)=>navigate('/themepage/하이틴')}>하이틴</Text>
                                         </SwiperSlide>
                                         <SwiperSlide>
-                                            <Text onClick={(e)=>navigate('/어드벤쳐')}>어드벤쳐</Text>
+                                            <Text onClick={(e)=>navigate('/themepage/어드벤쳐')}>어드벤쳐</Text>
                                         </SwiperSlide>
                                 </Swiper>
                             </Grid>
@@ -147,7 +147,7 @@ const Header = (props) => {
                         </Modal>
                     </Grid>
                     <Grid backgroundColor="#F9FAFB" is_flex border="0">
-                       <IconButton sx={{width:"50px", height : "50px"}}><NotificationsNoneOutlinedIcon  sx={{ margin :"10px"}}/></IconButton> 
+                        <IconButton sx={{width:"50px", height : "50px"}}><NotificationsNoneOutlinedIcon  sx={{ margin :"10px"}}/></IconButton> 
                     </Grid>
                 </Grid>
             </Grid>
