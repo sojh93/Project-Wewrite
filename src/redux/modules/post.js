@@ -26,6 +26,7 @@ const initialState = {
     allPostList : [],
     recentPostList : [],
     recommendPostList : [],
+    themePostList : [],
     userPostList : {},
     thisPost : {postKey:null},
 };
@@ -76,6 +77,23 @@ const getRecommend=() =>{
             }
         }).then(res=>{
             dispatch(setPost(res.data,'recommend'));
+        });
+    }
+}
+
+const getTheme=(theme) =>{
+    return async function (dispatch,getState){
+        instance({
+            method : "get",
+            url : "/category/posts?page=0&size=30",
+            data : {
+                "category": theme
+                },
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8"
+            }
+        }).then(res=>{
+            dispatch(setPost(res.data,'theme'));
         });
     }
 }
@@ -314,6 +332,7 @@ const actionCreators = {
     markPost,
     likePara,
     completePara,
+    getTheme,
 
 
 };
