@@ -246,7 +246,7 @@ function Signup() {
                                 placeholder='email'
                                 name="loginID"
                                 onChange={checkId}
-                                borderColor={emailVeri?'#6454FF':''}
+                                borderColor={emailCheck?'red':emailVeri?'#6454FF':''}
                             >
                             </Input>
                             
@@ -271,7 +271,7 @@ function Signup() {
                             placeholder="인증코드"
                             name="code"
                             onChange={checkCode}
-                            borderColor={codeVeri?'#6454FF':''}
+                            borderColor={codeCheck?'red':codeVeri?'#6454FF':''}
                         />
 
                         {code?
@@ -299,10 +299,10 @@ function Signup() {
                                 placeholder="닉네임"
                                 id="nickname"
                                 onChange={nickChange}
-                                borderColor={nickCheck?'#6454FF':''}
+                                borderColor={nickCant?'red':nickCheck?'#6454FF':''}
                             />
                         <Text display={nickCheck?'':'none'} margin="0" color='#6454FF' fontWeight='400' fontSize='14px'>사용가능한 닉네임입니다.</Text>
-                        <Text display={nickCant?'':'none'} margin="0" color='#6454FF' fontWeight='400' fontSize='14px'>중복된 닉네임입니다.</Text>
+                        <Text display={nickCant?'':'none'} margin="0" color='red' fontWeight='400' fontSize='14px'>중복된 닉네임입니다.</Text>
 
                         </Grid>
                     </Grid>
@@ -319,6 +319,7 @@ function Signup() {
                             type="password"
                             id="password"
                             onChange={pwdChange}
+                            borderColor={pwdFormCheck&&!pwdForm?'red':''}
                         />
                         <Grid is_flex flexDirection='column' fontSize="8px" alignItems='flex-start' width="100%" padding="0">
                             <Text margin="0">
@@ -346,6 +347,7 @@ function Signup() {
                             type="password"
                             id="passwordCheck"
                             onChange={pwdCheckChange}
+                            borderColor={pwdCheckFormCheck&&!pwdCheckForm?'red':''}
                         />
                         <Text display={pwdCheckFormCheck&&pwdCheckForm?'':'none'} margin="0" color='#6454FF' fontWeight='400' fontSize='14px'>비밀번호와 일치합니다.</Text>
                         <Text display={pwdCheckFormCheck&&!pwdCheckForm?'':'none'} margin="0" color='red' fontWeight='400' fontSize='14px'>비밀번호와 일치하지 않습니다.</Text>

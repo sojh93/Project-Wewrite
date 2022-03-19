@@ -66,10 +66,9 @@ const login=(user_data) =>{
         }).then(res=>{
             const token = res.headers.authorization;
             setCookie('WW_user',token);
-            console.log(res);
             const userInfo={...res.data}
             dispatch(set_user(userInfo));
-            // window.location.assign('/');
+            window.location.assign('/');
             
         });
         

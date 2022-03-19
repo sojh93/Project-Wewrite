@@ -17,12 +17,6 @@ import { actionCreators as userActions } from "../redux/modules/user";
 //import elements
 import { Button, Grid, Input, Image, Text, Chip } from "../elements"
 
-//import Icon
-import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-
 // impot Component
 import Header from '../components/Header';
 import Bottom from '../components/Bottom';
@@ -35,6 +29,7 @@ import Timer from "../components/Timer";
 import Stomp from "stompjs";
 import SockJS from "sockjs-client";
 import { getCookie } from "../shared/Cookie";
+import instance from "../shared/Request";
 
 const style = {
     position: 'absolute',
@@ -82,14 +77,10 @@ function PostDetail(props) {
     }, []) : '';
 
 
-    const initialTime = React.useRef(15 * 60);
-    const padNumber = (num, length) => {
-        return String(num).padStart(length, '0');
-    };
+
 
     const [category, setCategory] = React.useState(null);
     const [timer,setTimer] = React.useState(false);
-    const [calcTime,setTime] = React.useState(0);
 
 
     //modal
@@ -112,6 +103,21 @@ function PostDetail(props) {
     const [contents, setContents] = React.useState('');
     let writer = _post.thisPost.writer;
     let isWriting = _post.thisPost.writing;
+
+
+
+    const isLike= thisPost.postLikeClickersResponseDtoList?
+            thisPost.postLikeClickersResponseDtoList
+            .reduce((X,V)=>
+                {   
+                    return Object.values(V)[0]===_user.user.userKey?true:X}
+            ,false):false;
+    const isMark= thisPost.bookmarkClickUserKeyResDtoList?
+    thisPost.bookmarkClickUserKeyResDtoList
+    .reduce((X,V)=>
+        {   
+            return Object.values(V)[0]===_user.user.userKey?true:X}
+    ,false):false;
 
     const likePost =() =>{
         dispatch(postActions.likePost(postKey));
@@ -137,7 +143,10 @@ function PostDetail(props) {
         }
         wsConnectSubscribe();
         
-        return () => { wsDisConnectUnsubscribe() };
+        return () => { 
+            wsDisConnectUnsubscribe();
+            
+            };
     }, [])
 
 
@@ -159,6 +168,7 @@ function PostDetail(props) {
                             // setIsWriting(true);
                             setTimeout(()=>{dispatch(postActions.getOne(postKey));},500)
                             setTimer(true);
+                            console.log(timer);
                         }
                         if(data.body.split(',')[0].split('\"')[3] === 'TALK'){
                             console.log('TALK');
@@ -181,6 +191,8 @@ function PostDetail(props) {
             ws.disconnect(() => {
                 ws.unsubscribe("sub-0");
             }, headers);
+            cancelParagraph();
+            
         } catch (error) {
             console.log(error);
         }
@@ -206,6 +218,10 @@ function PostDetail(props) {
     function sendParagraph() {
         if(!_user.is_login){
             console.log('로그인이 필요합니다.')
+            return;
+        }
+        if(thisPost.limitCnt - 1 === thisPost.paragraphResDtoList.length){
+            handleOpen()
             return;
         }
         try {
@@ -256,6 +272,52 @@ function PostDetail(props) {
         }
     }
 
+    function finishParagraph() {
+        try {
+            const data = {
+                type: "TALK",
+                postId: postKey,
+                userName: _user.user.username,
+                userId: _user.user.userKey,
+                paragraph: contents,
+                nickName: _user.user.nickname,
+            };
+            console.log(data);
+            refInput.current.value='';
+            // 로딩 중
+            waitForConnection(ws, function () {
+                ws.send("/pub/paragraph/complete", headers, JSON.stringify(data));
+            });
+
+            
+            
+        } catch (error) {
+
+        }
+        dispatch(postActions.completePara(postKey,category));
+        setTimeout(()=>{dispatch(postActions.getOne(postKey));
+                        handleClose()},500)
+    }
+
+    function cancelParagraph() {
+        console.log(isWriting, writer===_user.user.nickname)
+        if(writer===_user.user.nickname){
+            instance({
+                method : "post",
+                url : `/cancelIsWriting/${postKey}`,
+                data : {},
+                headers : {
+                    "Content-Type": "application/json;charset-UTF-8",
+                    'Authorization' : token,
+                }
+            }).then(res=>{
+                console.log(res);
+            });
+        }
+    }
+
+    
+
     return (
 
         <Grid wrap>
@@ -267,7 +329,7 @@ function PostDetail(props) {
                 <Grid margin='10px' width='90%'>
                     {thisPost.categoryList ? thisPost.categoryList.map((v,i) => {
                         return (
-                            <Chip key={i}>{v.category}</Chip>
+                            <Chip margin='0 5px 0 0' key={i}>{v.category}</Chip>
                         )
                     }) : ''}
 
@@ -279,15 +341,20 @@ function PostDetail(props) {
 
                 <Grid is_flex flexDirection='column' width='90%'>
                     {thisPost.paragraphResDtoList ? thisPost.paragraphResDtoList.map(v => {
+                        const likeThis= v.paragraphLikesClickUserKeyResDtoList
+                        .reduce((X,V)=>
+                            {   
+                                return Object.values(V)[0]===_user.user.userKey?true:X}
+                        ,false)
                         return (
-                            <Sentence like={v.paragraphLikesCnt} contents={v.paragraph} src={v.userInfoResDto.userProfileImage} />
+                            <Sentence paraKey={v.paragraphKey} isLike={likeThis} like={v.paragraphLikesCnt} contents={v.paragraph} src={v.userInfoResDto.userProfileImage} />
                         )
                     }) : ''}
                 </Grid>
                 {thisPost.complete ?
                     '' :
                     <Grid marginTop='30px' width='100vw' is_flex flexDirection='column' alignItems='center'>
-                        <Input _ref={refInput} placeholder= {isWriting?'내용을 작성해주세요.':'아래 버튼을 눌러 작성을 시작해주세요.'} onChange={(e) => { setContents(e.target.value) }} width='350px' height='100px' isTheme type='textarea' />
+                        <Input _ref={refInput} display={isWriting?writer===_user.user.nickname?'':'none':'none'} placeholder= {isWriting?writer===_user.user.nickname?'내용을 작성해주세요.':'다른 유저가 작성중입니다.':'아래 버튼을 눌러 작성을 시작해주세요.'} onChange={(e) => { setContents(e.target.value) }} width='350px' height='100px' isTheme type='textarea' />
                         
                         {isWriting?
                         writer===_user.user.nickname?
@@ -328,11 +395,13 @@ function PostDetail(props) {
                 </Grid>
                 <Grid width='350px' height='1px' borderTop='1px solid #CECECE' />
                 <Grid>
-                    <Grid is_flex>
-                        <Image onClick={likePost} width='20px' height='20px' margin='4px' src={props.isLike?'/Icon/thumbs-up-filled.png':'/Icon/thumbs-up.png'}/>   
-                        <Text>{thisPost.postLikesCnt ? thisPost.postLikesCnt : "0"}</Text>
-                        <Image width='14px' onClick={markPost} height='18px' margin='6px' src={props.isMark?'/Icon/bookmark.png':'/Icon/bookmark.png'}/>
-                        <Text>{thisPost.bookmarkLikesCnt ? thisPost.bookmarkLikesCnt : "0"}</Text>
+                    <Grid is_flex alignItems='center'>
+                        <Image onClick={likePost} width='20px' height='20px' margin='4px' src={isLike?'/Icon/thumbs-up-filled.png':'/Icon/thumbs-up.png'}/>   
+                        <Text fontSize='12px' color='#7E7E7E'>{thisPost.postLikesCnt ? thisPost.postLikesCnt : "0"}</Text>
+                        <Image width='14px' onClick={markPost} height='18px' margin='6px' src={isMark?'/Icon/bookmark_filled.png':'/Icon/bookmark.png'}/>
+                        <Text fontSize='12px' color='#7E7E7E'>{thisPost.bookmarkLikesCnt ? thisPost.bookmarkLikesCnt : "0"}</Text>
+                        <Image width='16px' onClick={markPost} height='16px' margin='6px' src={props.isMark?'/Icon/talk.png':'/Icon/talk.png'}/>
+                        <Text fontSize='12px' color='#7E7E7E'>댓글보기</Text>
                     </Grid>
                 </Grid>
 
@@ -368,7 +437,7 @@ function PostDetail(props) {
                             <Button onClick={() => { setCategory('하이틴') }} fontSize='12px' width='70px' height='40px' theme={category === '하이틴' ? 'filled' : 'unfilled'}>하이틴</Button>
                         </Grid>
                     </Grid>
-                    <Button onClick={sendParagraph} theme='unfilled'>확인했어요!</Button>
+                    <Button onClick={finishParagraph} theme='unfilled'>확인했어요!</Button>
                 </Grid>
             </Modal>
 

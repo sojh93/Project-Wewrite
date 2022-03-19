@@ -37,7 +37,7 @@ const Books = (props) => {
             <Grid margin='2px' marginTop='5px' width='100%' is_flex alignItems='flex-start'>
                 {props.category?props.category.map((v,i)=>{
                     return (
-                        <Chip key={i}>{v.category}</Chip>
+                        <Chip marginRight='5px' key={i}>{v.category}</Chip>
                     )
                 }):""}
             </Grid>
@@ -45,7 +45,7 @@ const Books = (props) => {
             <Grid is_flex fontSize='15px' width='100%' margin='0' marginTop='3px' alignItems='center' fontWeight='300'>
                 <Image onClick={likePost} width='20px' height='20px' margin='0px' src={props.isLike?'/Icon/thumbs-up-filled.png':'/Icon/thumbs-up.png'}/>
                 <Text width='35px' margin="0 " fontSize='12px' color={props.isLike?'#6454FF':'#7E7E7E'}>{props.like}</Text>
-                <Image width='14px' onClick={markPost} height='18px' margin='0px' src={props.isMark?'/Icon/bookmark.png':'/Icon/bookmark.png'}/>
+                <Image width='14px' onClick={markPost} height='18px' margin='0px' src={props.isMark?'/Icon/bookmark_filled.png':'/Icon/bookmark.png'}/>
                 <Text margin="0 5px" fontSize='12px' color={props.isLike?'#7E7E7E':'#7E7E7E'}>{props.bookmarkLikesCnt}</Text>
             </Grid>
         </Grid>
