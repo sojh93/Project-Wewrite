@@ -7,7 +7,6 @@ import { produce } from "immer";
 
 import axios from "axios";
 import { commentApis } from "../../shared/api";
-import { postApis } from "../../shared/api";
 import { actionCreators as postActions } from "./post";
 
 
@@ -61,7 +60,7 @@ const addCommentDB = (postId,comment) => {
             }).catch((err)=>{
                 console.log("댓글 불러오기 실패",err);
             });            
-            window.alert("댓글 작성 성공! 😝")
+            window.alert("댓글 작성 성공")
         }).catch((err)=>{
             console.log("댓글 작성 실패",err);
         })
@@ -76,10 +75,10 @@ const deleteCommentDB = (postId,commentId) => {
         .then((res)=>{
             console.log("댓글 삭제 성공",res);
             dispatch(deleteComment(postId,commentId));
-            window.alert("댓글이 삭제되었습니다 😣")
+            window.alert("댓글이 삭제되었습니다.")
         }).catch((err)=>{
             console.log("댓글 삭제 실패",err);
-            window.alert("댓글 삭제에 실패했습니다😣")
+            window.alert("댓글 삭제에 실패했습니다.")
         })
     }
 };
