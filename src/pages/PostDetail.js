@@ -151,6 +151,7 @@ function PostDetail(props) {
             };
     }, [])
 
+    // 댓글 설정
     const [comment,setComment] = React.useState();
 
     const onChange = (e) => { //인풋 값 가져오기
@@ -201,12 +202,14 @@ function PostDetail(props) {
             console.log(error);
         }
     }
-
+    // 웹소캣 연결 및 구독 중지
     function wsDisConnectUnsubscribe() {
         try {
             ws.disconnect(() => {
+                // 웹소캣 구독 없애버림.
                 ws.unsubscribe("sub-0");
             }, headers);
+            // paragraph 취소
             cancelParagraph();
             
         } catch (error) {
@@ -232,7 +235,9 @@ function PostDetail(props) {
 
     // 메시지 보내기
     function sendParagraph() {
+        // 로그인이 안되어있다면
         if(!_user.is_login){
+        // console로 '로그인이 필요합니다' 출력.
             console.log('로그인이 필요합니다.')
             return;
         }
@@ -261,7 +266,7 @@ function PostDetail(props) {
             console.log(ws.ws.readyState);
         }
     }
-
+    // 글작성 시작
     function startParagraph() {
         if(!_user.is_login){
             console.log('로그인이 필요합니다.')
@@ -287,7 +292,7 @@ function PostDetail(props) {
             console.log(error);
         }
     }
-
+    // 글작성 완료
     function finishParagraph() {
         try {
             const data = {
@@ -310,6 +315,7 @@ function PostDetail(props) {
         } catch (error) {
 
         }
+        // 글작성 종료. postaction함수 실행
         dispatch(postActions.completePara(postKey,category));
         setTimeout(()=>{dispatch(postActions.getOne(postKey));
                         handleClose()},500)
@@ -481,9 +487,9 @@ function PostDetail(props) {
                         <Comment />
                     </Grid>
 
-                    <Input placeholder={'댓글 달기'} margin='20px' width='80%' isTheme></Input>
+                    <Input placeholder={'댓글 달기'} margin='20px' width='80%' isTheme _onChange={onChange} onSubmit={addComment}></Input>
 
-                    <Button theme='unfilled'>작성하기</Button>
+                    <Button theme='unfilled' onClick={addComment}>작성하기</Button>
                 </Grid>
             </Modal>
 

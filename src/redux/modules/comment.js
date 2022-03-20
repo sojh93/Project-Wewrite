@@ -6,6 +6,8 @@ import { commentApis } from "../../shared/api";
 import { postApis } from "../../shared/api";
 import { actionCreators as postActions } from "./post";
 
+
+
 const GET_COMMENT = "GET_COMMENT";
 const ADD_COMMENT = "ADD_COMMENT";
 const DELETE_COMMENT = "DELETE_COMMENT";
@@ -21,7 +23,7 @@ const initialState = {
 };
 
 const getCommentDB = (postId) => {
-    return function (dispatch, getState, {history}){
+    return function (dispatch, {history}){
         console.log("댓글",postId);
 
         commentApis.getComment(postId)
@@ -37,7 +39,7 @@ const getCommentDB = (postId) => {
 };
 
 const addCommentDB = (postId,comment) => {
-    return function (dispatch, getState, {history}){
+    return function (dispatch){
         console.log(postId,comment);
 
         commentApis.addComment(postId,comment)
@@ -63,7 +65,7 @@ const addCommentDB = (postId,comment) => {
 };
 
 const deleteCommentDB = (postId,commentId) => {
-    return function (dispatch, getState, {history}){
+    return function (dispatch){
         console.log(postId, commentId);
 
         commentApis.deleteComment(commentId)
