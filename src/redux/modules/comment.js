@@ -1,3 +1,7 @@
+// Redux handleAction 관리하는 곳.
+// Ducks구조에서 Reducer 파일안에 액션타입과 액션 생성자 함수를 함께 넣어서 관리하는데 이를 모듈(module)이라고 함.
+
+
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 
