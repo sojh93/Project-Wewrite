@@ -39,33 +39,16 @@ export const userApis = {
   
 }
 
-export const postApis = {
-    //포스트 가져오기
-    getPost: () => apis.get("/"),
-
-    //포스트 1개 가져오기
-    getOnePost: (postId) => apis.get(`/post/${postId}`),
-
-    
-    //게시글 삭제
-    deletePost: (postId) => 
-        apis.delete(`/post/${postId}`)
-    ,  
-    //좋아요 
-    likePost: (postId) => 
-        apis.get(`/like/${postId}`)
-    ,
-}
 
 export const commentApis = {
     //댓글 가져오기
-    getComment: (postId) => apis.get(`/comment/${postId}`),
+    getComment: (post_id) => apis.get(`/comment/${post_id}`),
     //댓글 추가하기
-    addComment: (postId,comment) => apis.post(`/comment/${postId}`,{
+    addComment: (post_id,comment) => apis.post(`/comment/${post_id}`,{
         comment:comment
     }),
     //댓글 삭제하기
-    deleteComment: (commentId) => apis.delete(`/comment/${commentId}`),
+    deleteComment: (commentKey) => apis.delete(`/comment/${commentKey}`),
 
 }
 

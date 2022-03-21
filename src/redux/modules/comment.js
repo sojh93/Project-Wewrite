@@ -87,20 +87,20 @@ const deleteCommentDB = (postId,commentId) => {
 // handleActions 설정.(Get, Add, Delete)
 export default handleActions ({
     [GET_COMMENT]: (state,action) => produce(state, (draft) => {
-        const postId = action.payload.postId;
+        const post_id = action.payload.post_id;
         const comment_list = action.payload.comment_list;
-        draft.list[postId] = comment_list;
+        draft.list[post_id] = comment_list;
     }),
     [ADD_COMMENT]: (state,action) => produce(state, (draft) => {
         const comment = action.payload.comment[0];
-        draft.list[action.payload.postId].push(comment);
+        draft.list[action.payload.post_id].push(comment);
     }),
     [DELETE_COMMENT]: (state,action) => produce(state, (draft) => {
-        const postId = action.payload.postId;
-        const commentId = action.payload.commentId;
-        draft.list[postId] = draft.list[postId].filter(
+        const post_id = action.payload.post_id;
+        const commentKey = action.payload.commentKey;
+        draft.list[post_id] = draft.list[post_id].filter(
           (el) => {
-            if (el.commentId === commentId) {
+            if (el.commentKey === commentKey) {
               return false;
             }
             return true;
