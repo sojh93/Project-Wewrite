@@ -3,7 +3,7 @@ import { getCookie } from "./Cookie";
 
 
 const apis = axios.create({
-    baseURL: "http://13.209.70.1/", //*요청을 www.aa.com/user로 보낸다면, www.aa.com까지 기록*/
+    baseURL: "http://3.34.179.104/", //*요청을 www.aa.com/user로 보낸다면, www.aa.com까지 기록*/
 });
 
 
@@ -42,9 +42,9 @@ export const userApis = {
 
 export const commentApis = {
     //댓글 가져오기
-    getComment: (post_id) => apis.get(`/comment/${post_id}`),
+    getComment: (commentList) => apis.get(`/comment/${commentList}`),
     //댓글 추가하기
-    addComment: (post_id,comment) => apis.post(`/comment/${post_id}`,{
+    addComment: (commentList,comment) => apis.post(`/comment/${commentList}`,{
         comment:comment
     }),
     //댓글 삭제하기

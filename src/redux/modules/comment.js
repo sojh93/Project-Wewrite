@@ -16,23 +16,23 @@ const ADD_COMMENT = "ADD_COMMENT";
 const DELETE_COMMENT = "DELETE_COMMENT";
 
 
-const getComment = createAction(GET_COMMENT, (post_id,comment_list)=>({post_id, comment_list}));
-const addComment = createAction(ADD_COMMENT, (post_id,comment)=>({post_id,comment}));
-const deleteComment = createAction(DELETE_COMMENT, (post_id,commentKey)=>({post_id,commentKey}));
+const getComment = createAction(GET_COMMENT, (postId,comment_list)=>({postId, comment_list}));
+const addComment = createAction(ADD_COMMENT, (postId,comment)=>({postId,comment}));
+const deleteComment = createAction(DELETE_COMMENT, (postId,commentId)=>({postId,commentId}));
 
 
 const initialState = {
     list:{},
 };
 // 댓글 DB에서 가져오기
-const getCommentDB = (post_id) => {
+const getCommentDB = (postId) => {
     return function (dispatch, {history}){
-        console.log("댓글",post_id);
+        console.log("댓글",postId);
 
-        commentApis.getComment(post_id)
+        commentApis.getComment(postId)
         .then((res)=>{
             console.log("댓글 불러오기 성공",res);
-            dispatch(getComment(post_id,res.data));
+            dispatch(getComment(postId,res.data));
         }).catch((err)=>{
             console.log("댓글 불러오기 실패",err);
             history.replace("/main");
@@ -41,21 +41,21 @@ const getCommentDB = (post_id) => {
     }
 };
 // 댓글 DB에 추가
-const addCommentDB = (post_id,comment) => {
+const addCommentDB = (postId,comment) => {
     return function (dispatch){
-        console.log(post_id,comment);
+        console.log(postId,comment);
 
-        commentApis.addComment(post_id,comment)
+        commentApis.addComment(postId,comment)
         .then((res)=>{
             console.log("댓글 작성 성공",res);
-            const commentKey = res.data;
+            const commentId = res.data;
 
-            commentApis.getComment(post_id)
+            commentApis.getComment(postId)
             .then((res)=>{
                 const _comment = res.data.filter((item) => {
-                    return item.commentKey === commentKey;
+                    return item.commentId === commentId;
                 });
-                dispatch(addComment(post_id,_comment));
+                dispatch(addComment(postId,_comment));
 
             }).catch((err)=>{
                 console.log("댓글 불러오기 실패",err);
@@ -67,14 +67,14 @@ const addCommentDB = (post_id,comment) => {
     }
 };
 // 댓글 DB에서 삭제하기
-const deleteCommentDB = (post_id,commentKey) => {
+const deleteCommentDB = (postId,commentId) => {
     return function (dispatch){
-        console.log(post_id, commentKey);
+        console.log(postId, commentId);
 
-        commentApis.deleteComment(commentKey)
+        commentApis.deleteComment(commentId)
         .then((res)=>{
             console.log("댓글 삭제 성공",res);
-            dispatch(deleteComment(post_id,commentKey));
+            dispatch(deleteComment(postId,commentId));
             window.alert("댓글이 삭제되었습니다.")
         }).catch((err)=>{
             console.log("댓글 삭제 실패",err);
@@ -87,20 +87,20 @@ const deleteCommentDB = (post_id,commentKey) => {
 // handleActions 설정.(Get, Add, Delete)
 export default handleActions ({
     [GET_COMMENT]: (state,action) => produce(state, (draft) => {
-        const post_id = action.payload.post_id;
+        const postId = action.payload.postId;
         const comment_list = action.payload.comment_list;
-        draft.list[post_id] = comment_list;
+        draft.list[postId] = comment_list;
     }),
     [ADD_COMMENT]: (state,action) => produce(state, (draft) => {
         const comment = action.payload.comment[0];
-        draft.list[action.payload.post_id].push(comment);
+        draft.list[action.payload.postId].push(comment);
     }),
     [DELETE_COMMENT]: (state,action) => produce(state, (draft) => {
-        const post_id = action.payload.post_id;
-        const commentKey = action.payload.commentKey;
-        draft.list[post_id] = draft.list[post_id].filter(
+        const postId = action.payload.postId;
+        const commentId = action.payload.commentId;
+        draft.list[postId] = draft.list[postId].filter(
           (el) => {
-            if (el.commentKey === commentKey) {
+            if (el.commentId === commentId) {
               return false;
             }
             return true;

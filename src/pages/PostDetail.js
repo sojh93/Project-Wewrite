@@ -94,9 +94,11 @@ function PostDetail(props) {
     const handleCloseC = () => setCOpen(false);
 
     //socket
-    const sock = new SockJS("http://13.209.70.1/ws-stomp");
+    // const sock = new SockJS("http://13.209.70.1/ws-stomp");
     // const sock = new SockJS("http://3.34.179.104/ws-stomp");
     // const sock = new SockJS("http://binscot.shop/ws-stomp");
+    const sock = new SockJS("http://3.34.179.104/ws-stomp");
+    
     const ws = Stomp.over(sock);
     const token = getCookie('WW_user');
 
@@ -160,13 +162,14 @@ function PostDetail(props) {
 
     const addComment = () => {
         if (comment === "") {
-            alert("답글을 입력해주세요.");
+            alert("댓글을 입력해주세요.");
             return;
         }
        dispatch(commentActions.addCommentDB(props.postId,comment));
        setComment("");
     };   
-
+    
+    // 웹소캣 구독
     function wsConnectSubscribe() {
         try {
             ws.connect(headers, () => {
@@ -321,6 +324,7 @@ function PostDetail(props) {
                         handleClose()},500)
     }
 
+    // 문단작성 취소 
     function cancelParagraph() {
         console.log(isWriting, writer===_user.user.nickname)
         if(writer===_user.user.nickname){

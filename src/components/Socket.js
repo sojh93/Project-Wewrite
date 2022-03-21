@@ -22,8 +22,10 @@ import SockJS from "sockjs-client";
 // 채팅 방 컴포넌트
 const ChattingRoom = (props) => {
     // 소켓 통신 객체
-    const sock = new SockJS("http://13.209.70.1:8080/ws-stomp");
+    // const sock = new SockJS("http://13.209.70.1:8080/ws-stomp");
     // const sock = new SockJS("http://binscot.shop/ws-stomp");
+    const sock = new SockJS("http://3.34.179.104/ws-stomp");
+
     const ws = Stomp.over(sock);
 
     // 방 제목 가져오기
