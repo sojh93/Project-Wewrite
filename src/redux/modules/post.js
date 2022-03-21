@@ -13,7 +13,7 @@ const MARK ="MARK";
 const USER_POST = "USER_POST";
 const LIKE_PARA = "LIKE_PARA";
 
-//action creatos
+//action creators
 const setPost = createAction(SET_POST, (postList,postType) => ({ postList,postType }));
 const setOnePost = createAction(SET_ONE, (postData) => ({ postData }));
 const setUserPost = createAction(USER_POST, (postList) => ({ postList }));

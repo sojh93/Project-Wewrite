@@ -52,6 +52,7 @@ function PostDetail(props) {
     const _user = useSelector(state => state.user);
     const _post = useSelector(state => state.post);
     const postKey = useParams().postKey;
+    const postId = useParams().postId;
     const thisPost = _post.thisPost;
     console.log(thisPost);
     const refInput = React.useRef(null);
@@ -153,21 +154,6 @@ function PostDetail(props) {
             };
     }, [])
 
-    // 댓글 설정
-    const [comment,setComment] = React.useState();
-
-    const onChange = (e) => { //인풋 값 가져오기
-        setComment(e.target.value);
-    };
-
-    const addComment = () => {
-        if (comment === "") {
-            alert("댓글을 입력해주세요.");
-            return;
-        }
-       dispatch(commentActions.addCommentDB(props.postId,comment));
-       setComment("");
-    };   
     
     // 웹소캣 구독
     function wsConnectSubscribe() {
@@ -342,7 +328,25 @@ function PostDetail(props) {
         }
     }
 
-    
+    // 댓글 추가
+    function addComment() {
+        try {
+            const data = {
+                type: "POST",
+                postId: postId,
+            };
+            console.log(data);
+            refInput.current.value='';
+                 
+            
+        } catch (error) {
+
+        }
+  
+        
+        dispatch(postActions.addComment(postId));
+        console.log('done');
+    }
 
     return (
 
@@ -491,7 +495,7 @@ function PostDetail(props) {
                         <Comment />
                     </Grid>
 
-                    <Input placeholder={'댓글 달기'} margin='20px' width='80%' isTheme _onChange={onChange} onSubmit={addComment}></Input>
+                    <Input placeholder={'댓글 달기'} margin='20px' width='80%' isTheme ></Input>
 
                     <Button theme='unfilled' onClick={addComment}>작성하기</Button>
                 </Grid>
