@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination } from "swiper";
 import Modal from '@mui/material/Modal';
-
+import { useState } from "react";
 import moment from "moment";
 import 'moment/locale/ko'
 
@@ -78,8 +78,7 @@ function PostDetail(props) {
 
     }, []) : '';
 
-
-
+    const [comment, setComment] = useState("");
 
     const [category, setCategory] = React.useState(null);
     const [timer,setTimer] = React.useState(false);
@@ -328,25 +327,24 @@ function PostDetail(props) {
         }
     }
 
-    // 댓글 추가
-    function addComment() {
-        try {
-            const data = {
-                type: "POST",
-                postId: postId,
-            };
-            console.log(data);
-            refInput.current.value='';
-                 
-            
-        } catch (error) {
-
+   // 댓글 추가
+   function addComment() {
+    try {
+        const data = {
+            method: "post",
+            comment: comment,
         }
-  
+        console.log(data);
+        refInput.current.value='';
+             
         
-        dispatch(postActions.addComment(postId));
-        console.log('done');
+    } catch (error) {
+
     }
+
+    dispatch(commentActions.addComment(postId));
+    console.log('done');
+}
 
     return (
 

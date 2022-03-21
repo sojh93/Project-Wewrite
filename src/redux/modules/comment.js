@@ -17,7 +17,7 @@ import { getCookie } from "../../shared/Cookie";
 const SET_COMMENT = "SET_COMMENT";
 
 //action creators
-const setComment = createAction(SET_COMMENT, (postId) => ({ postId }));
+const setComment = createAction(SET_COMMENT, (comment) => ({ comment }));
 
 //initialState
 const initialState = {
@@ -51,14 +51,14 @@ const initialState = {
 //     }
 // };
 
-const addComment = (postId) => {
+const addComment = (comment) => {
     return async function (dispatch){
         const token = getCookie('WW_user');
 
         instance({
             method : "post",
             url : "/comment",
-            data : postId,
+            data : comment,
             headers : {
                 "Content-Type": "multipart/form-data",
                 'authorization' : token,

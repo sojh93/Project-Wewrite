@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import { useState } from "react";
 //import MUI
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
@@ -17,27 +17,53 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 //import elements
 import { Button, Grid, Input, Image, Text } from "../elements" 
 
+//import modules
+import { actionCreators as commentActions } from "../redux/modules/comment";
 
 export default function Comment({children}) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
+    const [comment, setComment] = useState("");
+    const [comments, setComments] = useState(Post.comments);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
         setAnchorEl(null);
     };
+    
+    // commentSubmit
+    const commentSubmit = (e) => {
+        e.preventDefault();
+    }
+    // 쏴줄 데이터
+    let body = {
+        comment : comment,
+        userKey: userKey,
+        username: username,
+        nickname: nickname,
+        userProfileImage : userProfileImage,
+      };
+  
 
     return (
+        
         <Grid>
             <Grid is_flex  margin='0px 10px' width='310px' gap='5px'>
                 <Grid is_flex alignItems='center'>
+                {Comments &&
+            Comments.map(
+              (comment, index) =>
+                !comment.responseTo && (
                     <Image width='30px' borderRadius = '5px' height='30px' src='https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjAxMTJfMTkw%2FMDAxNjQxOTgxMjM1MjM4.0qKjMr9rB08fijTC4jQdTXXV8378Vn2hnZsQC4x5U5Qg.x7pc07yAYvAgOgBZq4MqjanOLF3tUj54dhOmAPBnsTMg.JPEG.rmfnxkzh%2Fimage%25A3%25DF580922312.jpg&type=sc960_832'/>
                 </Grid>
                 <Grid width='250px' height='auto'>
                     <Text fontSize='12px' fontWeight='700'>Nick</Text>
                     <Text>안녕하시오 이건 댓글인데</Text>
                 </Grid>
+                )
+            )
+    )}
                 <Grid is_flex flexDirection='column' alignItems='center' >
                     <IconButton
                         aria-label="more"
@@ -74,13 +100,13 @@ export default function Comment({children}) {
                         },
                         }}
                     >
-                        <MenuItem sx={{ fontSize : "12px", height:'20px', }} onClick={handleClose}>
-                            <Text>수정</Text>
-                        </MenuItem>
-                        <MenuItem sx={{ fontSize : "12px", height:'20px',}} onClick={handleClose}>
-                            <Text>삭제</Text>
-                        </MenuItem>
-                    </Menu>
+                       <MenuItem sx={{ fontSize : "12px", height:'20px', }} onClick={handleClose}>
+                           <Text>수정</Text>
+                       </MenuItem>
+                       <MenuItem sx={{ fontSize : "12px", height:'20px',}} onClick={handleClose}>
+                           <Text>삭제</Text>
+                       </MenuItem>
+                   </Menu>
                 </Grid>
             </Grid>
             <Grid is_flex fontSize="10px" color='gray' margin="0px 40px 10px 40px">
@@ -88,5 +114,4 @@ export default function Comment({children}) {
             </Grid>
     </Grid>
     );
-} 
-
+};
