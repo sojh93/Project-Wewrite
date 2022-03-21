@@ -16,23 +16,23 @@ const ADD_COMMENT = "ADD_COMMENT";
 const DELETE_COMMENT = "DELETE_COMMENT";
 
 
-const getComment = createAction(GET_COMMENT, (postId,comment_list)=>({postId, comment_list}));
-const addComment = createAction(ADD_COMMENT, (postId,comment)=>({postId,comment}));
-const deleteComment = createAction(DELETE_COMMENT, (postId,commentId)=>({postId,commentId}));
+const getComment = createAction(GET_COMMENT, (post_id,comment_list)=>({post_id, comment_list}));
+const addComment = createAction(ADD_COMMENT, (post_id,comment)=>({post_id,comment}));
+const deleteComment = createAction(DELETE_COMMENT, (post_id,commentKey)=>({post_id,commentKey}));
 
 
 const initialState = {
     list:{},
 };
 // 댓글 DB에서 가져오기
-const getCommentDB = (postId) => {
+const getCommentDB = (post_id) => {
     return function (dispatch, {history}){
-        console.log("댓글",postId);
+        console.log("댓글",post_id);
 
-        commentApis.getComment(postId)
+        commentApis.getComment(post_id)
         .then((res)=>{
             console.log("댓글 불러오기 성공",res);
-            dispatch(getComment(postId,res.data));
+            dispatch(getComment(post_id,res.data));
         }).catch((err)=>{
             console.log("댓글 불러오기 실패",err);
             history.replace("/main");
@@ -41,21 +41,21 @@ const getCommentDB = (postId) => {
     }
 };
 // 댓글 DB에 추가
-const addCommentDB = (postId,comment) => {
+const addCommentDB = (post_id,comment) => {
     return function (dispatch){
-        console.log(postId,comment);
+        console.log(post_id,comment);
 
-        commentApis.addComment(postId,comment)
+        commentApis.addComment(post_id,comment)
         .then((res)=>{
             console.log("댓글 작성 성공",res);
-            const commentId = res.data;
+            const commentKey = res.data;
 
-            commentApis.getComment(postId)
+            commentApis.getComment(post_id)
             .then((res)=>{
                 const _comment = res.data.filter((item) => {
-                    return item.commentId === commentId;
+                    return item.commentKey === commentKey;
                 });
-                dispatch(addComment(postId,_comment));
+                dispatch(addComment(post_id,_comment));
 
             }).catch((err)=>{
                 console.log("댓글 불러오기 실패",err);
@@ -67,14 +67,14 @@ const addCommentDB = (postId,comment) => {
     }
 };
 // 댓글 DB에서 삭제하기
-const deleteCommentDB = (postId,commentId) => {
+const deleteCommentDB = (post_id,commentKey) => {
     return function (dispatch){
-        console.log(postId, commentId);
+        console.log(post_id, commentKey);
 
-        commentApis.deleteComment(commentId)
+        commentApis.deleteComment(commentKey)
         .then((res)=>{
             console.log("댓글 삭제 성공",res);
-            dispatch(deleteComment(postId,commentId));
+            dispatch(deleteComment(post_id,commentKey));
             window.alert("댓글이 삭제되었습니다.")
         }).catch((err)=>{
             console.log("댓글 삭제 실패",err);
