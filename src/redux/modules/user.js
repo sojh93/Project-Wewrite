@@ -9,15 +9,18 @@ import { set } from "lodash";
 //action
 const SET_USER = "SET_USER";
 const DEL_USER = "DEL_USER";
+const SUB = "SUB";
 
 //action creatos
 const set_user = createAction(SET_USER, (user_data) => ({ user_data }));
 const del_user = createAction(DEL_USER, () => ({  }));
+const sub = createAction(SUB, (noti) => ({noti}));
 
 //initialState
 const initialState = {
     is_login : false,
     user : {},
+    sub : false,
 };
 
 
@@ -114,6 +117,12 @@ const editData=(userData) =>{
         });
     }
 }
+const subNoti=(noti) =>{
+    return async function (dispatch,getState){
+        dispatch(sub(noti));
+    }
+}
+
 
 //reducer
 export default handleActions(
@@ -128,6 +137,10 @@ export default handleActions(
             draft.is_login = false;
             draft.user = {};
         }),
+        [SUB]: (state, action) =>
+        produce(state, (draft) => {
+            draft.sub = action.payload.noti;
+        }),
     },
     initialState
 );
@@ -141,7 +154,7 @@ const actionCreators = {
     logout,
     editData,
     nickCheck,
-
+    subNoti,
 };
 
 export { actionCreators };

@@ -4,11 +4,12 @@ import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCards } from "swiper";
-import { FreeMode, Pagination,EffectCoverflow } from "swiper";
+import { FreeMode, Autoplay, Pagination,EffectFade,Navigation } from "swiper";
 
 import "swiper/css";
-import "swiper/css/effect-cards";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import "swiper/css/effect-fade";
 
 import "./styles.css";
 
@@ -19,16 +20,11 @@ import { actionCreators as postActions } from '../redux/modules/post';
 //import elements
 import { Button, Grid, Input, Image, Text } from "../elements" 
 
-// 소켓 통신
-import Stomp from "stompjs";
-import SockJS from "sockjs-client";
-import { getCookie } from "../shared/Cookie";
-import instance from "../shared/Request";
+
 
 
 
 // impot Component
-import Post from '../components/Post';
 import Header from '../components/Header'
 import Bottom from '../components/Bottom';
 import Books from '../components/Books';
@@ -43,58 +39,7 @@ function Main(props) {
 
     const _user = useSelector(state => state.user);
     const _post = useSelector(state => state.post);
-    console.log(_post);
 
-
-    //socket
-    const sock = new SockJS("http://13.209.70.1/ws-alarm");
-    // const sock = new SockJS("http://3.34.179.104/ws-stomp");
-    // const sock = new SockJS("http://binscot.shop/ws-stomp");
-    const ws = Stomp.over(sock);
-    const token = getCookie('WW_user');
-
-    var headers = {
-        Authorization: token
-    };
-
-    function wsConnectSubscribe() {
-        try {
-            ws.connect(headers, () => {
-                ws.subscribe(
-                    // websocket 구독 url 콜백함수 header 
-                    `/sub/alarm/${_user.user.userKey}`,
-                    (data) => {
-                        console.log(data.body)
-                    },
-                    headers
-                );
-            });
-            console.log("success");
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    function wsDisConnectUnsubscribe() {
-        if(!_user.is_login)
-            return;
-
-        try {
-            ws.disconnect(() => {
-                ws.unsubscribe("sub-0");
-            }, headers);
-            
-        } catch (error) {
-            console.log(error);
-        }
-    }
-    React.useEffect(() => {
-        if(_user.is_login){
-            wsConnectSubscribe()
-        }
-
-        return (wsDisConnectUnsubscribe())
-    },[_user.is_login]);
 
     React.useEffect(() => {
 
@@ -109,20 +54,20 @@ function Main(props) {
             <Header isMain/>
         <Grid wrap>   
 
-            <Grid is_flex flexDirection='column' alignItems='center' margin='60px 0 0 0'>
+            <Grid is_flex flexDirection='column' alignItems='center' margin='0'>
 
-                <Grid width='100%' height='380px'  backgroundColor='#E0E0E0AA' backgroundSize='contain'>
-                    <Text margin='0px 10px' fontSize='24px' fontWeight='700'>추천작</Text>
-
+                <Grid width='100%' height='400px'  backgroundColor='#E0E0E0AA' backgroundSize='contain'>
                     <Swiper
-                        style={{height : '320px', width : 'calc(100vw - 20px)', minWidth : '340px', maxWidth : '370px' ,margin : '10px',}}
+                        style={{height : '400px', width : '100vw', minWidth : '340px', }}
                         rewind={true}
-                        effect={"coverflow"}
+                        effect={"fade"}
                         grabCursor={true}
                         centeredSlides={true}
-                        slidesPerView={5}
-                        loop={false}
-                        navigation={true}
+                        autoplay={{
+                            delay: 5000,
+                            disableOnInteraction: false,
+                        }}
+                        slidesPerView={1}
                         coverflowEffect={{
                             rotate: 0,
                             stretch: 0,
@@ -130,8 +75,9 @@ function Main(props) {
                             modifier: 1,
                             slideShadows: false,
                         }}
+                        navigation={false}
                         pagination={true}
-                        modules={[EffectCoverflow, Pagination]}
+                        modules={[Autoplay, EffectFade, Pagination, Navigation]}
                         className="mySwiper"
                     >
                         <SwiperSlide>
