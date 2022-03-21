@@ -55,9 +55,11 @@ function Main(props) {
 
             <Grid is_flex flexDirection='column' alignItems='center' margin='60px 0 0 0'>
 
-                <Grid width='100%' height='350px' backgroundSize='contain'>
+                <Grid width='100%' height='380px' backgroundSize='contain'>
+                    <Text margin='0px 10px' fontSize='24px' fontWeight='700'>추천작</Text>
+
                     <Swiper
-                        style={{height : '320px', width : 'calc(100vw - 20px)', minWidth : '340px', maxWidth : '370px' ,margin : '10px'}}
+                        style={{height : '320px', width : 'calc(100vw - 20px)', minWidth : '340px', maxWidth : '370px' ,margin : '10px', backgroundColor :'#E0E0E0AA'}}
                         rewind={true}
                         effect={"coverflow"}
                         grabCursor={true}
