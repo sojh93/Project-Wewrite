@@ -58,7 +58,7 @@ function Main(props) {
 
                 <Grid width='100%' height='400px'  backgroundColor='#E0E0E0AA' backgroundSize='contain'>
                     <Swiper
-                        style={{height : '400px', width : '100vw', minWidth : '340px', }}
+                        style={{height : '400px', width : '100%', minWidth : '340px', }}
                         rewind={true}
                         effect={"fade"}
                         grabCursor={true}
@@ -80,15 +80,13 @@ function Main(props) {
                         modules={[Autoplay, EffectFade, Pagination, Navigation]}
                         className="mySwiper"
                     >
-                        <SwiperSlide>
-                            <BookCover src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTExMDRfMzgg%2FMDAxNjM2MDMwMDg5MjE4.HBm6vUSuOILUtW4kXWK58VhyzQW8M9-LLPjFdaLCb5Ug.x3pkyDJl3W_bqs9IpyJnHYaciGuME_MyhX6N9F_sIW8g.JPEG.yunalee1997%2Fde05ada82ea284740579a16d209105c4.jpg&type=sc960_832"/>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <BookCover src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20140514_128%2F1hwanee_1399994124116ooYOF_JPEG%2F1Recovered_May_13_2014_107.JPG&type=sc960_832"/>
-                        </SwiperSlide>
-                            
-                        <SwiperSlide><BookCover src="https://t1.daumcdn.net/cfile/blog/134C1D0D49CC27E117"/></SwiperSlide>
-                        <SwiperSlide><BookCover src="https://image.aladin.co.kr/product/5686/87/cover500/s702536164_1.jpg"/></SwiperSlide>
+                        {_post.recommendPostList.map((v,i)=>{
+                            return (
+                            <SwiperSlide key={v.postKey}>
+                                <BookCover onClick={()=>{navigate(`/PostDetail/${v.postKey}`)}} category={v.categoryList} title={v.title} para={v.paragraphResList[0].paragraph} src={v.postImageUrl} key={i} postKey={v.postKey}/>
+                            </SwiperSlide>
+                            )
+                        })}
                     </Swiper>
 
                 </Grid>
@@ -100,10 +98,7 @@ function Main(props) {
                     slidesPerView={2.75}
                     spaceBetween={20}
                     freeMode={true}
-                    pagination={{
-                    clickable: true,
-                    }}
-                    modules={[FreeMode, Pagination]}
+                    modules={[FreeMode]}
                     className="mySwiper"
                     >
                         {_post.recentPostList.map((v,i)=>{
@@ -135,10 +130,7 @@ function Main(props) {
                     slidesPerView={2.75}
                     spaceBetween={20}
                     freeMode={true}
-                    pagination={{
-                    clickable: true,
-                    }}
-                    modules={[FreeMode, Pagination]}
+                    modules={[FreeMode]}
                     className="mySwiper"
                     >
                         {_post.recommendPostList?_post.recommendPostList.map((v,i)=>{
@@ -168,10 +160,7 @@ function Main(props) {
                     slidesPerView={2.75}
                     spaceBetween={20}
                     freeMode={true}
-                    pagination={{
-                    clickable: true,
-                    }}
-                    modules={[FreeMode, Pagination]}
+                    modules={[FreeMode]}
                     className="mySwiper"
                     >
                         {_post.allPostList.map((v,i)=>{

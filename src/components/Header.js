@@ -44,8 +44,8 @@ const Header = (props) => {
 
     const _user = useSelector(state => state.user);
     const _post = useSelector(state => state.post);
-    console.log(_user)
-    // console.log(_post)
+    // console.log(_user)
+    console.log(_post)
 
 
         //socket
@@ -196,8 +196,12 @@ const Header = (props) => {
                             </>
                         </Modal>
                     </Grid>
+
                     <Grid backgroundColor="#F9FAFB00" is_flex border="0">
-                        <IconButton sx={{width:"50px", height : "50px"}}><NotificationsNoneOutlinedIcon  sx={{ margin :"10px"}}/></IconButton> 
+                        <Image backgroundSize='contain' backgroundRepeat='no-repeat' width='150px' height='45px' src="/Logo/Logo_w.png"></Image>
+                    </Grid>
+                    <Grid margin='10px' backgroundColor="#F9FAFB00" is_flex border="0">
+                        <Image onClick={handleOpen} width='24px' height='24px' src="/Icon/bell.png"></Image>
                     </Grid>
                 </Grid>
             </Grid>
