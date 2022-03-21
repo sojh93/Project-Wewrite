@@ -77,8 +77,6 @@ function PostDetail(props) {
     }, []) : '';
 
 
-
-
     const [category, setCategory] = React.useState(null);
     const [timer,setTimer] = React.useState(false);
 

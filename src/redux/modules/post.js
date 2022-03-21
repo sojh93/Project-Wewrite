@@ -83,16 +83,18 @@ const getRecommend=() =>{
 
 const getTheme=(theme) =>{
     return async function (dispatch,getState){
+        console.log(theme);
         instance({
-            method : "get",
+            method : "post",
             url : "/category/posts?page=0&size=30",
             data : {
-                "category": theme
+                category : theme
                 },
             headers : {
                 "Content-Type": "application/json;charset-UTF-8"
             }
         }).then(res=>{
+            console.log(res)
             dispatch(setPost(res.data,'theme'));
         });
     }

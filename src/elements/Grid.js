@@ -5,6 +5,7 @@ const Grid = ({
     onClick,
     children,
     is_flex,
+    _ref,
     kakao=false,
     wrap,
     ...props
@@ -21,7 +22,7 @@ const Grid = ({
     }
     if(is_flex){
         return(
-            <Flex onClick={onClick} style={{...props}}>
+            <Flex ref={_ref} onClick={onClick} style={{...props}}>
                 {children}
             </Flex>
         )

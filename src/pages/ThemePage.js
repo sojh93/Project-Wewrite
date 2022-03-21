@@ -47,7 +47,7 @@ function ThemePage() {
             <Grid is_flex marginTop='70px' width="100%" flexDirection="column" alignItems="center">
             <Grid width='100%'><Text marginBottom='-15px' fontSize='24px' fontWeight='700'>#{theme}</Text></Grid>
             <Grid is_flex flexDirection='column' alignItems='center' width="90%" marginTop='32px' gap='24px'>
-                    {_post.allPostList?_post.allPostList.map((v,i)=>{
+                    {_post.themePostList?_post.themePostList.map((v,i)=>{
                         const likeThis= v.postLikeClickersResponseDtoList
                         .reduce((X,V)=>
                             {   

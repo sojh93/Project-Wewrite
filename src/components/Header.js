@@ -43,6 +43,7 @@ const Header = (props) => {
     // console.log(_user)
     // console.log(_post)
 
+
     const [categoryopen, setCategoryOpen] = React.useState(false);
     const handleOpen = () => {
         setCategoryOpen(true)
@@ -81,7 +82,7 @@ const Header = (props) => {
                             onClose={handleClose}
                         >   
                         <>
-                            <Image onClick={handleClose} width='30px' zIndex='2' position='absolute' top='50%' left='50%' transform='translate(120px,-300px)' height='30px' src='/Icon/X.png'/>
+                            <Image onClick={handleClose} width='30px' zIndex='2' position='absolute' top='50%' left='50%' transform='translate(-150px,-300px)' height='30px' src='/Icon/X.png'/>
                             <Grid is_flex justifyContent='center' alignItems='center' {...style}>
                                 <Swiper
                                     direction={"vertical"}

@@ -19,7 +19,12 @@ import { actionCreators as postActions } from '../redux/modules/post';
 //import elements
 import { Button, Grid, Input, Image, Text } from "../elements" 
 
-//import Icon
+// 소켓 통신
+import Stomp from "stompjs";
+import SockJS from "sockjs-client";
+import { getCookie } from "../shared/Cookie";
+import instance from "../shared/Request";
+
 
 
 // impot Component
@@ -41,7 +46,58 @@ function Main(props) {
     console.log(_post);
 
 
+    //socket
+    const sock = new SockJS("http://13.209.70.1/ws-alarm");
+    // const sock = new SockJS("http://3.34.179.104/ws-stomp");
+    // const sock = new SockJS("http://binscot.shop/ws-stomp");
+    const ws = Stomp.over(sock);
+    const token = getCookie('WW_user');
+
+    var headers = {
+        Authorization: token
+    };
+
+    function wsConnectSubscribe() {
+        try {
+            ws.connect(headers, () => {
+                ws.subscribe(
+                    // websocket 구독 url 콜백함수 header 
+                    `/sub/alarm/${_user.user.userKey}`,
+                    (data) => {
+                        console.log(data.body)
+                    },
+                    headers
+                );
+            });
+            console.log("success");
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    function wsDisConnectUnsubscribe() {
+        if(!_user.is_login)
+            return;
+
+        try {
+            ws.disconnect(() => {
+                ws.unsubscribe("sub-0");
+            }, headers);
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
     React.useEffect(() => {
+        if(_user.is_login){
+            wsConnectSubscribe()
+        }
+
+        return (wsDisConnectUnsubscribe())
+    },[_user.is_login]);
+
+    React.useEffect(() => {
+
         dispatch(postActions.getAll())
         dispatch(postActions.getRecent())
         dispatch(postActions.getRecommend())
@@ -55,11 +111,11 @@ function Main(props) {
 
             <Grid is_flex flexDirection='column' alignItems='center' margin='60px 0 0 0'>
 
-                <Grid width='100%' height='380px' backgroundSize='contain'>
+                <Grid width='100%' height='380px'  backgroundColor='#E0E0E0AA' backgroundSize='contain'>
                     <Text margin='0px 10px' fontSize='24px' fontWeight='700'>추천작</Text>
 
                     <Swiper
-                        style={{height : '320px', width : 'calc(100vw - 20px)', minWidth : '340px', maxWidth : '370px' ,margin : '10px', backgroundColor :'#E0E0E0AA'}}
+                        style={{height : '320px', width : 'calc(100vw - 20px)', minWidth : '340px', maxWidth : '370px' ,margin : '10px',}}
                         rewind={true}
                         effect={"coverflow"}
                         grabCursor={true}
