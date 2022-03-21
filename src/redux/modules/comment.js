@@ -24,7 +24,7 @@ const deleteComment = createAction(DELETE_COMMENT, (postId,commentId)=>({postId,
 const initialState = {
     list:{},
 };
-
+// 댓글 DB에서 가져오기
 const getCommentDB = (postId) => {
     return function (dispatch, {history}){
         console.log("댓글",postId);
@@ -40,7 +40,7 @@ const getCommentDB = (postId) => {
 
     }
 };
-
+// 댓글 DB에 추가
 const addCommentDB = (postId,comment) => {
     return function (dispatch){
         console.log(postId,comment);
@@ -66,7 +66,7 @@ const addCommentDB = (postId,comment) => {
         })
     }
 };
-
+// 댓글 DB에서 삭제하기
 const deleteCommentDB = (postId,commentId) => {
     return function (dispatch){
         console.log(postId, commentId);
@@ -84,7 +84,7 @@ const deleteCommentDB = (postId,commentId) => {
 };
 
 
-
+// handleActions 설정.(Get, Add, Delete)
 export default handleActions ({
     [GET_COMMENT]: (state,action) => produce(state, (draft) => {
         const postId = action.payload.postId;

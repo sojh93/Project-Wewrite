@@ -33,7 +33,7 @@ const ChattingRoom = (props) => {
     console.log(postId);
     // 토큰
     const token =
-        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MUBnbWFpbC5jb20iLCJpYXQiOjE2NDc1MDg4NjAsImV4cCI6MTY0Nzc2ODA2MH0.2Y4fhS9Jls1kBV0xmMOSMs0p5vc4gokRHi_L2Pg7Oxo";
+        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MUBnbWFpbC5jb20iLCJpYXQiOjE2NDc4MjU5MTcsImV4cCI6MTY0ODA4NTExN30.enxzNmm-Stn2BzvF7wqMXdNyc9SiQ_ZjbUfVvCqfae0";
     var headers = {
         Authorization: token
     };
