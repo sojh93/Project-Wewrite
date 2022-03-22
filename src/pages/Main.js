@@ -190,6 +190,9 @@ function Main(props) {
                         </Swiper>
                     </Grid>
                 </Grid>
+                <Grid>
+                    <Image width='100%' height='1000px' src='/banner/howTo.png'/>
+                </Grid>
 
                 <Grid height='65px'></Grid>
                 <Bottom thisPage="main" />

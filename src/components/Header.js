@@ -49,7 +49,8 @@ const Header = (props) => {
 
 
         //socket
-        //const sock = new SockJS("http://13.209.70.1/ws-alarm");
+
+        // const sock = new SockJS("http://13.209.70.1/ws-alarm");
         // const sock = new SockJS("http://3.34.179.104/ws-stomp");
         const sock = new SockJS("https://binscot.shop/ws-stomp");
         const ws = Stomp.over(sock);
@@ -123,7 +124,7 @@ const Header = (props) => {
     if(props.isMain)
     return(
             <Grid >
-                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB00"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFBBB" is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
                     <Grid margin='10px' backgroundColor="#F9FAFB00" is_flex border="0">
                         <Image onClick={handleOpen} width='30px' height='30px' src="/Icon/menu.png"></Image>
                         <Modal
@@ -135,7 +136,7 @@ const Header = (props) => {
                             <Grid is_flex justifyContent='center' alignItems='center' {...style}>
                                 <Swiper
                                     direction={"vertical"}
-                                    style={{height : '500px', width : '100px',margin : '10px'}}
+                                    style={{height : '500px', width : '120px',margin : '10px'}}
                                     slidesPerView={6}
                                     spaceBetween={0}
                                     freeMode={true}
@@ -149,10 +150,8 @@ const Header = (props) => {
                                         modifier: 1,
                                         slideShadows: false,
                                     }}
-                                    pagination={{
-                                    clickable: true,
-                                    }}
-                                    modules={[FreeMode, EffectCoverflow, Pagination]}
+                                    
+                                    modules={[FreeMode, EffectCoverflow]}
                                     className="mySwiper"
                                     >
                                         <SwiperSlide>
@@ -171,7 +170,7 @@ const Header = (props) => {
                                             <Text onClick={(e)=>navigate('/themepage/액션')}>액션</Text>
                                         </SwiperSlide>
                                         <SwiperSlide>
-                                            <Text onClick={(e)=>navigate('/themepage/코미디')}>코미디</Text>
+                                            <Text onClick={(e)=>navigate('/themepage/코미디')}>💦코미디</Text>
                                         </SwiperSlide>
                                         <SwiperSlide>
                                             <Text onClick={(e)=>navigate('/themepage/무협')}>무협</Text>
@@ -198,7 +197,7 @@ const Header = (props) => {
                     </Grid>
 
                     <Grid backgroundColor="#F9FAFB00" is_flex border="0">
-                        <Image backgroundSize='contain' backgroundRepeat='no-repeat' width='150px' height='45px' src="/Logo/Logo_w.png"></Image>
+                        <Image backgroundSize='contain' backgroundRepeat='no-repeat' width='150px' height='45px' src="/Logo/Logo_p.png"></Image>
                     </Grid>
                     <Grid margin='10px' backgroundColor="#F9FAFB00" is_flex border="0">
                         <Image onClick={handleOpen} width='24px' height='24px' src="/Icon/bell.png"></Image>
