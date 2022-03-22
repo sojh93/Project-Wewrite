@@ -18,7 +18,8 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { Button, Grid, Input, Image, Text } from "../elements" 
 
 //import modules
-import { actionCreators as commentActions } from "../redux/modules/comment";
+import { actionCreators as userActions } from "../redux/modules/user";
+
 
 export default function Comment({children}) {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -29,7 +30,22 @@ export default function Comment({children}) {
     const handleClose = () => {
         setAnchorEl(null);
     };
-    
+    const [comment, setComment] = useState(0)
+    const user_info = {
+        user_name: _user.user_name,
+        user_id: _user.uid,
+        user_profile: _user.user_profile,
+      };
+
+      function addUserInfo({ ...user_info, ..._post })
+      .then((doc) => {
+      let post = { user_info, ..._post, id: doc.id };
+      dispatch(addPost(post));
+      history.replace("/");
+    })
+      .catch((err) => {
+      console.log("post 작성에 실패했습니다", err);
+    });
 
 
     return (
@@ -37,11 +53,11 @@ export default function Comment({children}) {
         <Grid>
             <Grid is_flex  margin='0px 10px' width='310px' gap='5px'>
                 <Grid is_flex alignItems='center'>
-                    <Image width='30px' borderRadius = '5px' height='30px' src='https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjAxMTJfMTkw%2FMDAxNjQxOTgxMjM1MjM4.0qKjMr9rB08fijTC4jQdTXXV8378Vn2hnZsQC4x5U5Qg.x7pc07yAYvAgOgBZq4MqjanOLF3tUj54dhOmAPBnsTMg.JPEG.rmfnxkzh%2Fimage%25A3%25DF580922312.jpg&type=sc960_832'/>
+                    <Image width='30px' borderRadius = '5px' height='30px' src={_user.user_profile}/>
                 </Grid>
                 <Grid width='250px' height='auto'>
                     <Text fontSize='12px' fontWeight='700'>Nick</Text>
-                    <Text>안녕하시오 이건 댓글인데</Text>
+                    <Text>{comment}</Text>
                 </Grid>
                 <Grid is_flex flexDirection='column' alignItems='center' >
                     <IconButton

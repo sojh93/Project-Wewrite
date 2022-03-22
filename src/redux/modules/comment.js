@@ -24,32 +24,6 @@ const initialState = {
   
 };
 
-// 댓글 DB에 추가
-// const addCommentDB = (postId,comment) => {
-//     return function (dispatch){
-//         console.log(postId,comment);
-
-//         commentApis.addComment(postId,comment)
-//         .then((res)=>{
-//             console.log("댓글 작성 성공",res);
-//             const commentId = res.data;
-
-//             commentApis.getComment(postId)
-//             .then((res)=>{
-//                 const _comment = res.data.filter((item) => {
-//                     return item.commentId === commentId;
-//                 });
-//                 dispatch(addComment(postId,_comment));
-
-//             }).catch((err)=>{
-//                 console.log("댓글 불러오기 실패",err);
-//             });            
-//             window.alert("댓글 작성 성공")
-//         }).catch((err)=>{
-//             console.log("댓글 작성 실패",err);
-//         })
-//     }
-// };
 
 const addComment = (comment) => {
     return async function (dispatch){
@@ -69,7 +43,7 @@ const addComment = (comment) => {
         
     };
     };
-    
+
 
 // handleActions 설정.(Get, Add, Delete)
 export default handleActions ({

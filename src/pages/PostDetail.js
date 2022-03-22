@@ -133,8 +133,8 @@ function PostDetail(props) {
         console.log('done');
     }
 
-    const addComment =() =>{
-        dispatch(commentActions.addComment(_comment));
+    const addComment =(comment) =>{
+        dispatch(commentActions.addComment(comment));
         console.log('done');
     }
 
