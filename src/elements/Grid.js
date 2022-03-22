@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const Grid = ({
     onClick,
+    onSubmit,
     children,
     is_flex,
     _ref,
@@ -22,7 +23,7 @@ const Grid = ({
     }
     if(is_flex){
         return(
-            <Flex ref={_ref} onClick={onClick} style={{...props}}>
+            <Flex ref={_ref} onClick={onClick} onSubmit={onSubmit} style={{...props}}>
                 {children}
             </Flex>
         )

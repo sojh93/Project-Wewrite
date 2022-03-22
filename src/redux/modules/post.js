@@ -226,6 +226,23 @@ const completePara=(postKey,category) =>{
         })
     }
 }
+
+const addComment=(comment,post_id) =>{
+    return async function (dispatch,getState){
+        const token = getCookie('WW_user');
+        instance({
+            method : "post",
+            url : `/comment/${post_id}`,
+            data : {comment},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8",
+                'authorization' : token,
+            }
+        }).then(res=>{
+            console.log(res.data);
+        })
+    }
+}
 //reducer
 export default handleActions(
     {
@@ -335,6 +352,7 @@ const actionCreators = {
     likePara,
     completePara,
     getTheme,
+    addComment,
 
 
 };
