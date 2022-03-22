@@ -18,7 +18,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { Button, Grid, Input, Image, Text } from "../elements" 
 
 
-export default function Comment({children}) {
+export default function Comment(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -28,15 +28,19 @@ export default function Comment({children}) {
         setAnchorEl(null);
     };
 
+    const data = props.commentInfo;
+    const user= data.userInfoResponseDto;
+    const fix = false;
+
     return (
         <Grid>
             <Grid is_flex  margin='0px 10px' width='310px' gap='5px'>
                 <Grid is_flex alignItems='center'>
-                    <Image width='30px' borderRadius = '5px' height='30px' src='https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjAxMTJfMTkw%2FMDAxNjQxOTgxMjM1MjM4.0qKjMr9rB08fijTC4jQdTXXV8378Vn2hnZsQC4x5U5Qg.x7pc07yAYvAgOgBZq4MqjanOLF3tUj54dhOmAPBnsTMg.JPEG.rmfnxkzh%2Fimage%25A3%25DF580922312.jpg&type=sc960_832'/>
+                    <Image width='30px' borderRadius = '5px' height='30px' src={user.userProfileImage}/>
                 </Grid>
                 <Grid width='250px' height='auto'>
-                    <Text fontSize='12px' fontWeight='700'>Nick</Text>
-                    <Text>안녕하시오 이건 댓글인데</Text>
+                    <Text fontSize='12px' fontWeight='700'>{user.nickname}</Text>
+                    <Text>{data.comment}</Text>
                 </Grid>
                 <Grid is_flex flexDirection='column' alignItems='center' >
                     <IconButton
@@ -52,7 +56,7 @@ export default function Comment({children}) {
                     </IconButton>
                     <Grid is_flex alignItems='center' justifyContent='space-evenly'>
                         <FavoriteBorderOutlinedIcon  sx={{width:'10px'}}/>
-                        <Text margin='0 2px 1px 2px' fontSize='10px'>32</Text>
+                        <Text margin='0 2px 1px 2px' fontSize='10px'>{data.commentLikesCnt}</Text>
                     </Grid>
                     <Menu
                         id="basic-menu"
@@ -81,7 +85,7 @@ export default function Comment({children}) {
                 </Grid>
             </Grid>
             <Grid is_flex fontSize="10px" color='gray' margin="0px 40px 10px 40px">
-                <Text margin='0px 5px 0px 10px'>2022년 03월 27일</Text><Text margin='0px'>(수정됨)</Text>
+                <Text margin='0px 5px 0px 10px'>{props.date}</Text><Text margin='0px'>{fix?"(수정됨)":""}</Text>
             </Grid>
     </Grid>
     );

@@ -77,11 +77,11 @@ function PostDetail(props) {
     }, []) : '';
 
 
-
-
     const [category, setCategory] = React.useState(null);
     const [timer,setTimer] = React.useState(false);
 
+    const [comment,setComment] = React.useState('');
+    const commentRef = React.useRef();
 
     //modal
     const [open, setOpen] = React.useState(false);
@@ -93,9 +93,9 @@ function PostDetail(props) {
     const handleCloseC = () => setCOpen(false);
 
     //socket
-    // const sock = new SockJS("http://13.209.70.1/ws-stomp");
+    const sock = new SockJS("http://13.209.70.1/ws-stomp");
     // const sock = new SockJS("http://3.34.179.104/ws-stomp");
-    const sock = new SockJS("http://binscot.shop/ws-stomp");
+    // const sock = new SockJS("http://binscot.shop/ws-stomp");
     const ws = Stomp.over(sock);
     const token = getCookie('WW_user');
 
@@ -123,10 +123,17 @@ function PostDetail(props) {
         dispatch(postActions.likePost(postKey));
         console.log('done');
     }
-    const markPost =() =>{
+    const markPost = () =>{
         dispatch(postActions.markPost(postKey));
         console.log('done');
     }
+    const addComment = () =>{
+        dispatch(postActions.addComment(comment,postKey));
+        commentRef.current.value='';
+        setComment('');
+        console.log(comment);
+    }
+    
 
     var headers = {
         Authorization: token
@@ -400,8 +407,10 @@ function PostDetail(props) {
                         <Text fontSize='12px' color='#7E7E7E'>{thisPost.postLikesCnt ? thisPost.postLikesCnt : "0"}</Text>
                         <Image width='14px' onClick={markPost} height='18px' margin='6px' src={isMark?'/Icon/bookmark_filled.png':'/Icon/bookmark.png'}/>
                         <Text fontSize='12px' color='#7E7E7E'>{thisPost.bookmarkLikesCnt ? thisPost.bookmarkLikesCnt : "0"}</Text>
-                        <Image width='16px' onClick={markPost} height='16px' margin='6px' src={props.isMark?'/Icon/talk.png':'/Icon/talk.png'}/>
-                        <Text fontSize='12px' color='#7E7E7E'>댓글보기</Text>
+                        <Grid is_flex onClick={handleOpenC}>
+                            <Image width='16px' onClick={markPost} height='16px' margin='6px' src={props.isMark?'/Icon/talk.png':'/Icon/talk.png'}/>
+                            <Text fontSize='12px'  color='#7E7E7E'>댓글보기</Text>
+                        </Grid>
                     </Grid>
                 </Grid>
 
@@ -447,26 +456,30 @@ function PostDetail(props) {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Grid is_flex flexDirection='column' justifyContent='center' alignItems='center' {...style}>
+                <Grid is_flex flexDirection='column' justifyContent='flex-start' alignItems='center' {...style} height='' maxHeight='500px'>
 
-                    <Grid>
+                    <Grid marginTop='35px'>
                         <Text fontSize='24px' color='black' fontWeight='700'>댓글을 확인하세요</Text>
                     </Grid>
 
-
-                    <Image margin='10px' width='50px' height='50px' src='/default_img/talkIocn.png'></Image>
-
+                    <Grid width='70px' height='77px'>
+                        <Image width='70px' height='77px' src='/default_img/talkIocn.png'></Image>
+                    </Grid>
                     <Grid margin='0px 20px' is_flex alignItems='flex-end' width='100%'>
-                        <Text margin='5px 0 5px 10px' fontSize='16px' alignItems='center' fontWeight='500'>댓글</Text><Text fontSize='10px' color='#C4C4C4' fontWeight='400'>3</Text>
+                        <Text margin='5px 0 5px 10px' fontSize='16px' alignItems='center' fontWeight='500'>댓글</Text><Text fontSize='10px' color='#C4C4C4' fontWeight='400'>{thisPost.commentList?thisPost.commentList.length:'0'}</Text>
                     </Grid>
 
                     <Grid width='100%'>
-                        <Comment />
+                        {thisPost.commentList?thisPost.commentList.map((v)=>{
+                            return(<Comment commentInfo={v} date={moment(v.commentModifiedAt).format('lll')}/>)
+                        }):''}
                     </Grid>
+                    <Grid width='100%' is_flex flexDirection='column' alignItems='center'>
+                        <Input _ref={commentRef} placeholder={'댓글 달기'} onChange={(e)=>{setComment(e.target.value)}} margin='20px' width='90%' isTheme></Input>
 
-                    <Input placeholder={'댓글 달기'} margin='20px' width='80%' isTheme></Input>
-
-                    <Button theme='unfilled'>작성하기</Button>
+                        <Button onClick={addComment} theme='unfilled'>작성하기</Button>
+                    </Grid>
+                    <Grid height='30px'/>
                 </Grid>
             </Modal>
 
