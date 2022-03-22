@@ -45,14 +45,14 @@ const Header = (props) => {
     const _user = useSelector(state => state.user);
     const _post = useSelector(state => state.post);
     // console.log(_user)
-    console.log(_post)
+    // console.log(_post)
 
 
         //socket
 
-        // const sock = new SockJS("http://13.209.70.1/ws-alarm");
+        const sock = new SockJS("http://13.209.70.1/ws-alarm");
         // const sock = new SockJS("http://3.34.179.104/ws-stomp");
-        const sock = new SockJS("https://binscot.shop/ws-stomp");
+        // const sock = new SockJS("https://binscot.shop/ws-stomp");
         const ws = Stomp.over(sock);
         const token = getCookie('WW_user');
     
