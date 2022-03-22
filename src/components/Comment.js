@@ -19,15 +19,10 @@ import { Button, Grid, Input, Image, Text } from "../elements"
 
 //import modules
 import { actionCreators as commentActions } from "../redux/modules/comment";
-import { actionCreators as userActions } from "../redux/modules/user";
-import axios from 'axios';
-
 
 export default function Comment({children}) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
-    const [comment, setComment] = useState("");
-    const [comments, setComments] = useState(comments);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -35,51 +30,19 @@ export default function Comment({children}) {
         setAnchorEl(null);
     };
     
-    // commentSubmit
-    const commentSubmit = (e) => {
-        e.preventDefault();
-    }
-    // 쏴줄 데이터
-    let body = {
-        comment : comment,
-        // userKey: userKey,
-        // username: username,
-        // nickname: _user.user.nickname,
-        // userProfileImage : userProfileImage,
-      };
-  
-      axios.post("/api/comment/save", body).then((res) => {
-        // 댓글을 썼으니 댓글창을 닫아야 합니다.
-        
-        if (res.data.commentsaved) {
-          setComments(comments.concat(res.data.comment));
-        } else {
-          alert("코멘트 저장에 실패했습니다.");
-        }
-      });
 
 
     return (
         
-        <Grid> 
+        <Grid>
             <Grid is_flex  margin='0px 10px' width='310px' gap='5px'>
-            {comments &&
-            comments.map(
-              (comment, index) =>
-                !comment.responseTo && (
-                    <>
                 <Grid is_flex alignItems='center'>
-               
                     <Image width='30px' borderRadius = '5px' height='30px' src='https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjAxMTJfMTkw%2FMDAxNjQxOTgxMjM1MjM4.0qKjMr9rB08fijTC4jQdTXXV8378Vn2hnZsQC4x5U5Qg.x7pc07yAYvAgOgBZq4MqjanOLF3tUj54dhOmAPBnsTMg.JPEG.rmfnxkzh%2Fimage%25A3%25DF580922312.jpg&type=sc960_832'/>
                 </Grid>
                 <Grid width='250px' height='auto'>
-                    <Text fontSize='12px' fontWeight='700'>{comment.nickname}</Text>
-                    <Text>{comment.comment}</Text>
+                    <Text fontSize='12px' fontWeight='700'>Nick</Text>
+                    <Text>안녕하시오 이건 댓글인데</Text>
                 </Grid>
-                </>
-                )
-            )
-            }
                 <Grid is_flex flexDirection='column' alignItems='center' >
                     <IconButton
                         aria-label="more"
@@ -128,6 +91,6 @@ export default function Comment({children}) {
             <Grid is_flex fontSize="10px" color='gray' margin="0px 40px 10px 40px">
                 <Text margin='0px 5px 0px 10px'>2022년 03월 27일</Text><Text margin='0px'>(수정됨)</Text>
             </Grid>
-        </Grid>
+    </Grid>
     );
 };

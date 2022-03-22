@@ -68,8 +68,8 @@ const addComment = (comment) => {
         });
         
     };
+    };
     
-};
 
 // handleActions 설정.(Get, Add, Delete)
 export default handleActions ({
