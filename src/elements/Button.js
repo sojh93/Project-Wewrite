@@ -81,6 +81,7 @@ const Button = ({
                 ref={ref}
                 onClick={onClick}
                 disabled={disabled}
+                type={props.type}
             >
                 {children}
             </Btn>

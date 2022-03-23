@@ -11,6 +11,7 @@ const SET_ONE = "SET_ONE";
 const LIKE = "LIKE";
 const MARK ="MARK";
 const USER_POST = "USER_POST";
+const LIKE_PARA = "LIKE_PARA";
 
 //action creatos
 const setPost = createAction(SET_POST, (postList,postType) => ({ postList,postType }));
@@ -18,12 +19,14 @@ const setOnePost = createAction(SET_ONE, (postData) => ({ postData }));
 const setUserPost = createAction(USER_POST, (postList) => ({ postList }));
 const like = createAction(LIKE, (postData) => ({ postData }));
 const mark = createAction(MARK, (postData,postKey) => ({ postData,postKey }));
+const like_Para = createAction(LIKE_PARA, (postData) => ({ postData }));
 
 //initialState
 const initialState = {
     allPostList : [],
     recentPostList : [],
     recommendPostList : [],
+    themePostList : [],
     userPostList : {},
     thisPost : {postKey:null},
 };
@@ -34,7 +37,7 @@ const getAll=() =>{
     return async function (dispatch,getState){
         instance({
             method : "get",
-            url : "/posts/incomplete?page=0&size=5",
+            url : "/posts/incomplete?page=0&size=30",
             data : {},
             headers : {
                 "Content-Type": "application/json;charset-UTF-8"
@@ -51,7 +54,7 @@ const getRecent=() =>{
     return async function (dispatch,getState){
         instance({
             method : "get",
-            url : "/posts/recent?page=0&size=5",
+            url : "/posts/recent?page=0&size=30",
             data : {},
             headers : {
                 "Content-Type": "application/json;charset-UTF-8"
@@ -67,13 +70,32 @@ const getRecommend=() =>{
     return async function (dispatch,getState){
         instance({
             method : "get",
-            url : "/posts/recommend?page=0&size=5",
+            url : "/posts/recommend?page=0&size=30",
             data : {},
             headers : {
                 "Content-Type": "application/json;charset-UTF-8"
             }
         }).then(res=>{
             dispatch(setPost(res.data,'recommend'));
+        });
+    }
+}
+
+const getTheme=(theme) =>{
+    return async function (dispatch,getState){
+        console.log(theme);
+        instance({
+            method : "post",
+            url : "/category/posts?page=0&size=30",
+            data : {
+                category : theme
+                },
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8"
+            }
+        }).then(res=>{
+            console.log(res)
+            dispatch(setPost(res.data,'theme'));
         });
     }
 }
@@ -157,13 +179,67 @@ const userPost=(pageUserKey) =>{
     return async function (dispatch,getState){
         instance({
             method : "get",
-            url : `/posts/userPage/${pageUserKey}?page=0&size=5`,
+            url : `/posts/userPage/${pageUserKey}?page=0&size=30`,
             data : {},
             headers : {
                 "Content-Type": "application/json;charset-UTF-8"
             }
         }).then(res=>{
             dispatch(setUserPost(res.data));
+            console.log(res.data);
+        })
+    }
+}
+
+const likePara=(paragraphKey) =>{
+    return async function (dispatch,getState){
+        const token = getCookie('WW_user');
+        console.log(paragraphKey)
+        instance({
+            method : "post",
+            url : `/paragraph/likes/${paragraphKey}`,
+            data : {},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8",
+                'authorization' : token,
+            }
+        }).then(res=>{
+            console.log(res.data);
+            dispatch(like_Para(res.data));
+        })
+    }
+}
+
+const completePara=(postKey,category) =>{
+    return async function (dispatch,getState){
+        const token = getCookie('WW_user');
+        instance({
+            method : "patch",
+            url : `/posts/complete/${postKey}`,
+            data : {category},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8",
+                'authorization' : token,
+            }
+        }).then(res=>{
+            console.log(res.data);
+        })
+    }
+}
+
+const addComment=(comment,post_id) =>{
+    return async function (dispatch,getState){
+        const token = getCookie('WW_user');
+        instance({
+            method : "post",
+            url : `/comment/${post_id}`,
+            data : {comment},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8",
+                'authorization' : token,
+            }
+        }).then(res=>{
+            console.log(res.data);
         })
     }
 }
@@ -239,6 +315,7 @@ export default handleActions(
                 }else{return v}
             });}
             if(draft.thisPost.postKey===action.payload.postKey){
+                console.log(state.thisPost);
                 draft.thisPost.bookmarkClickUserKeyResDtoList = action.payload.postData.bookmarkClickUserKeyResDtos;
                 draft.thisPost.bookmarkLikesCnt = action.payload.postData.bookmarkCnt
             }
@@ -246,6 +323,15 @@ export default handleActions(
         [USER_POST]: (state, action) =>
         produce(state, (draft) => {
             draft.userPostList = {...action.payload.postList};
+        }),
+        [LIKE_PARA]: (state, action) =>
+        produce(state, (draft) => {
+            draft.thisPost.paragraphResDtoList.map((v,i)=>{
+                if(v.paragraphKey === action.payload.postData.paragraphKey){
+                    v.paragraphLikesClickUserKeyResDtoList = [...action.payload.postData.paragraphLikesClickUserKeyResDtoList];
+                    v.paragraphLikesCnt = action.payload.postData.paragraphTotalLikes;
+                }
+            })
         }),
         
     },
@@ -263,6 +349,10 @@ const actionCreators = {
     likePost,
     userPost,
     markPost,
+    likePara,
+    completePara,
+    getTheme,
+    addComment,
 
 
 };

@@ -73,11 +73,17 @@ const UserPage = (props) => {
                 <Grid is_flex flexDirection='column' alignItems='center' width="90%" marginTop='32px' gap='24px'>
                     {pageUser.postResponseDtoList?pageUser.postResponseDtoList.map((v,i)=>{
                         const likeThis= v.postLikeClickersResponseDtoList
-                        .reduce((X,V)=>{   
-                                return Object.values(V)[0]===myKey?true:X}
+                        .reduce((X,V)=>
+                            {   
+                                return Object.values(V)[0]===_user.user.userKey?true:X}
+                        ,false)
+                        const markThis= v.bookmarkClickUserKeyResDtoList
+                        .reduce((X,V)=>
+                            {   
+                                return Object.values(V)[0]===_user.user.userKey?true:X}
                         ,false)
                         return (
-                            <Post bookmarkLikesCnt={v.bookmarkLikesCnt} key={i} category={v.categoryList} postKey={v.postKey} isLike={likeThis} first={v.paragraphResList[0].paragraph} like={v.postLikesCnt} title={v.title} url={v.postImageUrl}/>
+                            <Post bookmarkLikesCnt={v.bookmarkLikesCnt} key={i} category={v.categoryList} postKey={v.postKey} isMark={markThis} isLike={likeThis} first={v.paragraphResList[0].paragraph} like={v.postLikesCnt} title={v.title} url={v.postImageUrl}/>
                         )
                     }):''}
 

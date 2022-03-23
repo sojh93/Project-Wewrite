@@ -60,10 +60,7 @@ function Login() {
             username: data.get("loginID"),
             password: data.get("password"),
         };
-
         dispatch(userActions.login(userInfo));
-
-        navigate("/");
     };
 
     return (
@@ -152,8 +149,11 @@ function Login() {
                         height = '40px'
                         borderRadius='5px'
                         onClick={() =>
+                            // window.location.assign(
+                            //     "https://kauth.kakao.com/oauth/authorize?client_id=43268aa6f88af6282a341e3b61b9a761&redirect_uri=http://localhost:3000/login/kakaoLogin&response_type=code"
+                            // )
                             window.location.assign(
-                                "https://kauth.kakao.com/oauth/authorize?client_id=43268aa6f88af6282a341e3b61b9a761&redirect_uri=http://localhost:3000/login/kakaoLogin&response_type=code"
+                                "https://kauth.kakao.com/oauth/authorize?client_id=43268aa6f88af6282a341e3b61b9a761&redirect_uri=https://main.d2l6bnge3hnh7g.amplifyapp.com/login/kakaoLogin&response_type=code"
                             )
                         }
                     > 
