@@ -16,35 +16,11 @@ import Signup from "./Signup";
 
 //import elements
 import { Button, Grid, Input, Image, Text } from "../elements";
-//import Icon
-
-//impot Component
 
 //import Actions
 import { actionCreators as userActions } from "../redux/modules/user";
 
-//import axios
 
-//43268aa6f88af6282a341e3b61b9a761
-import instance from "../shared/Request";
-
-function Copyright(props) {
-    return (
-        <Typography
-            variant="body2"
-            color="text.secondary"
-            align="center"
-            {...props}
-        >
-            {"Copyright © "}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{" "}
-            {new Date().getFullYear()}
-            {"."}
-        </Typography>
-    );
-}
 
 function Login() {
     const navigate = useNavigate();

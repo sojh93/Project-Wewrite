@@ -36,6 +36,8 @@ const style = {
 function Write() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const testRef = React.useRef();
     
     //lodash
     const debounce = _.debounce((k) => setSentenceCnt(k), 500);
@@ -60,7 +62,6 @@ function Write() {
     const [sentenceCnt,setSentenceCnt] = React.useState(2);
     
     //category
-    const refCategory = React.useRef();
     const [category,setCategory] = React.useState(null)
 
     //book cover image
@@ -166,7 +167,6 @@ function Write() {
                 </Grid>
                 
                 <Button onClick={handleOpen} theme='unfilled'>게시하기</Button>
-                
             </Grid>
             <Bottom />
 

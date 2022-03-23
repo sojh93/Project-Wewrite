@@ -22,9 +22,6 @@ const NoticeAlarm = (props) => {
             <Text fontSize="14px" margin="5px 0 0 0">{props.msg}</Text>
             </Grid>
         </Grid>
-      
-
-
     </Grid>
     );
 };

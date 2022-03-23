@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import _, { set } from "lodash";
+import _ from "lodash";
 
 //import MUI
 import TextField from "@mui/material/TextField";
@@ -42,7 +42,6 @@ function Signup() {
                 "Content-Type": "application/json;charset-UTF-8"
             }
         }).then(res=>{
-            console.log(res);
             setNickCheck(true);
         }).catch(err=>{
             setNickCant(true);
@@ -250,10 +249,7 @@ function Signup() {
                             >
                             </Input>
                             
-                            {email?
-                            <Chip onClick={emailVerification} position='absolute' right='10px' top='17px' width="70px" height="24px" backgroundColor='#6454FF'>인증코드</Chip> :
-                            <Chip position='absolute' right='10px' top='17px' width="70px" height="24px" backgroundColor='#EAEAEA'>인증코드</Chip>
-                            }                        
+                            <Chip onClick={email?emailVerification:null} position='absolute' right='10px' top='17px' width="70px" height="24px" backgroundColor={email?'#6454FF':'#EAEAEA'}>인증코드</Chip>
                             
                             <Text text-align='left' width='350px' display={emailVeri?'':'none'} margin="0" color='#6454FF' fontWeight='400' fontSize='14px'>인증 코드를 발급했습니다.</Text>
                             <Grid is_flex width='100%'><Text display={emailCheck?'':'none'} margin="0" color='red' fontWeight='400' fontSize='14px'>이메일 형식이 맞지 않습니다.</Text></Grid>

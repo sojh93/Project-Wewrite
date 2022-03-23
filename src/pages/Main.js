@@ -40,6 +40,7 @@ function Main(props) {
 
     const _user = useSelector(state => state.user);
     const _post = useSelector(state => state.post);
+    
     console.log(_post);
 
     React.useEffect(() => {
