@@ -12,6 +12,7 @@ const LIKE = "LIKE";
 const MARK ="MARK";
 const USER_POST = "USER_POST";
 const LIKE_PARA = "LIKE_PARA";
+const BOOKMARK_POST = "BOOKMARK_POST";
 
 //action creatos
 const setPost = createAction(SET_POST, (postList,postType) => ({ postList,postType }));
@@ -20,14 +21,18 @@ const setUserPost = createAction(USER_POST, (postList) => ({ postList }));
 const like = createAction(LIKE, (postData) => ({ postData }));
 const mark = createAction(MARK, (postData,postKey) => ({ postData,postKey }));
 const like_Para = createAction(LIKE_PARA, (postData) => ({ postData }));
+const setUserBookmark = createAction(BOOKMARK_POST, (postList) => ({ postList }));
+
 
 //initialState
 const initialState = {
     allPostList : [],
     recentPostList : [],
     recommendPostList : [],
+    bestPostList : [],
     themePostList : [],
     userPostList : {},
+    bookmarkList : [],
     thisPost : {postKey:null},
 };
 
@@ -81,6 +86,22 @@ const getRecommend=() =>{
     }
 }
 
+const getBest=() =>{
+    return async function (dispatch,getState){
+        instance({
+            method : "get",
+            url : "/posts/viewMain",
+            data : {},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8"
+            }
+        }).then(res=>{
+            dispatch(setPost(res.data,'best'));
+        });
+    }
+}
+
+
 const getTheme=(theme) =>{
     return async function (dispatch,getState){
         console.log(theme);
@@ -94,7 +115,6 @@ const getTheme=(theme) =>{
                 "Content-Type": "application/json;charset-UTF-8"
             }
         }).then(res=>{
-            console.log(res)
             dispatch(setPost(res.data,'theme'));
         });
     }
@@ -186,6 +206,24 @@ const userPost=(pageUserKey) =>{
             }
         }).then(res=>{
             dispatch(setUserPost(res.data));
+            console.log(res.data);
+        })
+    }
+}
+
+const userBookmark=() =>{
+    return async function (dispatch,getState){
+        const token = getCookie('WW_user');
+        instance({
+            method : "get",
+            url : `/bookmark?page=0&size=30`,
+            data : {},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8",
+                'authorization' : token,
+            }
+        }).then(res=>{
+            dispatch(setUserBookmark(res.data));
             console.log(res.data);
         })
     }
@@ -333,6 +371,10 @@ export default handleActions(
                 }
             })
         }),
+        [BOOKMARK_POST]: (state, action) =>
+        produce(state, (draft) => {
+            draft.bookmarkList = {...action.payload.postList};
+        }),
         
     },
     initialState
@@ -353,6 +395,8 @@ const actionCreators = {
     completePara,
     getTheme,
     addComment,
+    userBookmark,
+    getBest,
 
 
 };

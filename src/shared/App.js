@@ -23,6 +23,7 @@ import ChangePassword from "../pages/ChangePassword";
 import WithdrawMember from "../pages/withdrawMember";
 import Socket from '../components/Socket'
 import ThemePage from "../pages/ThemePage";
+import Notice from "../pages/Notice";
 
 
 
@@ -46,6 +47,7 @@ function App() {
           <Route path="/changePassword" element={<ChangePassword />} />
           <Route path="/withdrawMember" element={<WithdrawMember />} />
           <Route path="/socket" element={<Socket />} />
+          <Route path="/notice" element={<Notice />} />
 
         </Routes>
       </ThemeProvider>

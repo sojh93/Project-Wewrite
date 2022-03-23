@@ -119,6 +119,24 @@ const editData=(userData) =>{
 }
 const subNoti=(noti) =>{
     return async function (dispatch,getState){
+        const token = getCookie('WW_user');
+
+        instance({
+            method : "get",
+            url : "/api/alarm?page=0&size=30",
+            data : {},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8",
+                'authorization' : token,
+            }
+        }).then(res=>{
+            console.log(res);
+        });
+    }
+}
+
+const notice=(noti) =>{
+    return async function (dispatch,getState){
         dispatch(sub(noti));
     }
 }
@@ -155,6 +173,7 @@ const actionCreators = {
     editData,
     nickCheck,
     subNoti,
+    notice,
 };
 
 export { actionCreators };

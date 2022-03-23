@@ -4,34 +4,22 @@ import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Pagination,EffectCoverflow } from "swiper";
+import { FreeMode,EffectCoverflow } from "swiper";
 //import Actions
 
 
 //import elements
-import {  Grid, Input, Image, Text } from "../elements" 
+import {  Grid, Image, Text } from "../elements" 
 
 //import Mui
-import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Modal from '@mui/material/Modal';
 
-//import Icon
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
-import DensityMediumIcon from '@mui/icons-material/DensityMedium';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import SettingsIcon from '@mui/icons-material/Settings';
 
 // 소켓 통신
 import Stomp from "stompjs";
 import SockJS from "sockjs-client";
 import { getCookie } from "../shared/Cookie";
-import instance from "../shared/Request";
-
 
 //import Actions
 import { actionCreators as userActions } from '../redux/modules/user';
@@ -200,7 +188,7 @@ const Header = (props) => {
                         <Image backgroundSize='contain' backgroundRepeat='no-repeat' width='150px' height='45px' src="/Logo/Logo_p.png"></Image>
                     </Grid>
                     <Grid margin='10px' backgroundColor="#F9FAFB00" is_flex border="0">
-                        <Image onClick={handleOpen} width='24px' height='24px' src="/Icon/bell.png"></Image>
+                        <Image onClick={()=>{navigate('/notice')}} width='24px' height='24px' src="/Icon/bell.png"></Image>
                     </Grid>
                 </Grid>
             </Grid>
@@ -240,21 +228,6 @@ const Header = (props) => {
                     <Grid backgroundColor="#F9FAFB" is_flex border="0">
                         <Text color="#6454FF" margin="0 20px 0 0" padding="0">저장</Text>  
                     </Grid>
-                </Grid>
-            </Grid>
-        );
-    }
-    if(props.isWithdrawMember){
-        return(
-            <Grid>
-                <Grid zIndex='9' boxShadow='rgb(217 217 217) 0px 2px 5px' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
-                    <Grid is_flex border="0" backgroundColor="#F9FAFB">
-                        <Tooltip title="뒤로가기"><IconButton  onClick={()=>{navigate(-1)}} sx={{width:"50px", height : "50px", margin:"0"}}><KeyboardArrowLeftIcon sx={{ width:"15px", height : "15px", margin :"0 10px 0px 10px"}}/></IconButton></Tooltip>    
-                    </Grid>   
-                    <Grid backgroundColor="#F9FAFB">
-                        <Text margin="auto" backgroundColor="#F9FAFB">{props.WithdrawMember}</Text>
-                    </Grid>
-                    <Grid width="50px" height="50px" backgroundColor="#F9FAFB"></Grid>
                 </Grid>
             </Grid>
         );
@@ -317,22 +290,6 @@ const Header = (props) => {
         );
     }
 
-    if(props.isNotice){
-        return(
-            <Grid>
-                <Grid zIndex='9' boxShadow='rgb(217 217 217) 0px 2px 5px' position="relative" top="0px"  backgroundColor="#F9FAFB"  is_flex justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
-                    <Grid is_flex border="0" backgroundColor="#F9FAFB">
-                        <Tooltip title="뒤로가기"><IconButton  onClick={()=>{navigate(-1)}} sx={{width:"50px", height : "50px", margin:"0"}}><KeyboardArrowLeftIcon sx={{ width:"15px", height : "15px", margin :"0 10px 0px 10px"}}/></IconButton></Tooltip>    
-                    </Grid>   
-                    <Grid backgroundColor="#F9FAFB">
-                        
-                    </Grid>
-                    <Grid width="50px" height="50px" backgroundColor="#F9FAFB"></Grid>
-                </Grid>
-            </Grid>
-        );
-    }
-    
     return(
         <Grid>
             <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >

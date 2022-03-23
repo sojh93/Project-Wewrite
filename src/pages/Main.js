@@ -40,13 +40,14 @@ function Main(props) {
 
     const _user = useSelector(state => state.user);
     const _post = useSelector(state => state.post);
-
+    console.log(_post);
 
     React.useEffect(() => {
 
-        dispatch(postActions.getAll())
-        dispatch(postActions.getRecent())
-        dispatch(postActions.getRecommend())
+        dispatch(postActions.getAll());
+        dispatch(postActions.getRecent());
+        dispatch(postActions.getRecommend());
+        dispatch(postActions.getBest());
 
     }, []);
 
@@ -127,9 +128,12 @@ function Main(props) {
                     <Grid width='100%' backgroundColor='#E0E0E0' height='500px' is_flex flexDirection='column'>
                         <Text margin='10px' marginTop='30px' fontSize='24px' fontWeight='700'>당신에게 추천해요</Text>
                         <Grid backgroundColor='#E0E0E0' width='100%' is_flex flexDirection='column' alignItems='center' gap='20px'>
-                            <Popular title="test"></Popular>
-                            <Popular title="test"></Popular>
-                            <Popular title="test"></Popular>
+                            {_post.bestPostList?_post.bestPostList.map((v,i)=>{
+                                return (
+                                    <Popular key={i} title={v.title} postKey={v.postKey} comment={v.commentList[0].comment}></Popular>
+                                )
+                            }):''}
+
                         </Grid>
                         {/* <Swiper
                             style={{ height: '230px', width: 'calc(100vw - 20px)', minWidth: '340px', maxWidth: '370px', margin: '10px' }}

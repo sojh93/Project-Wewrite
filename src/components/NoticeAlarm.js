@@ -1,21 +1,19 @@
 import React from "react";
 
 // import Elements
-import { Grid, Button, Text, Image} from "../elements";
+import { Grid, Text, Image} from "../elements";
 
 //import Components
-import Bottom from "../components/Bottom";
-
-//import Image
 
 
-const NoticeAlarm = () => {
+
+const NoticeAlarm = (props) => {
     
 
     return(
     
     <Grid>
-        <Grid is_flex width="390px" margin="0" height="80px" borderBottom="1px solid gray">
+        <Grid is_flex width="100%" margin="0" height="80px" borderBottom="1px solid gray">
             <Grid is_flex width="40px" height="79px" flexDirection="column" margin="0 0 0 20px" padding="0" justifyContent="center">
             <Image is_square backgroundColor="gray" width="27px" height="27px" padding="0"/>
             </Grid>
