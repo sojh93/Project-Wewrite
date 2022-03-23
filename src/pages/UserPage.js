@@ -69,24 +69,58 @@ const UserPage = (props) => {
                 </Grid> 
                 <Grid marginTop='-3px' borderRadius='1px' width="34%" height='1px' borderTop='3px solid black' transform={'translate(' + (- 2 + index)*100 + '%)'} transition='transform 0.5s ease 0.1s'/>
 
-
-                <Grid is_flex flexDirection='column' alignItems='center' width="90%" marginTop='32px' gap='24px'>
-                    {pageUser.postResponseDtoList?pageUser.postResponseDtoList.map((v,i)=>{
-                        const likeThis= v.postLikeClickersResponseDtoList
-                        .reduce((X,V)=>
-                            {   
-                                return Object.values(V)[0]===_user.user.userKey?true:X}
-                        ,false)
-                        const markThis= v.bookmarkClickUserKeyResDtoList
-                        .reduce((X,V)=>
-                            {   
-                                return Object.values(V)[0]===_user.user.userKey?true:X}
-                        ,false)
-                        return (
-                            <Post bookmarkLikesCnt={v.bookmarkLikesCnt} key={i} category={v.categoryList} postKey={v.postKey} isMark={markThis} isLike={likeThis} first={v.paragraphResList[0].paragraph} like={v.postLikesCnt} title={v.title} url={v.postImageUrl}/>
-                        )
-                    }):''}
-
+                <Grid is_flex width='290%' justifyContent='space-between' transform={'translate(' + (2 - index)*33 + '%)'} transition='transform 0.5s ease 0.1s'>
+                    <Grid is_flex flexDirection='column' alignItems='center' width="30%" marginTop='32px' gap='24px'>
+                        {pageUser.postResponseDtoList?pageUser.postResponseDtoList.map((v,i)=>{
+                            const likeThis= v.postLikeClickersResponseDtoList
+                            .reduce((X,V)=>
+                                {   
+                                    return Object.values(V)[0]===_user.user.userKey?true:X}
+                            ,false)
+                            const markThis= v.bookmarkClickUserKeyResDtoList
+                            .reduce((X,V)=>
+                                {   
+                                    return Object.values(V)[0]===_user.user.userKey?true:X}
+                            ,false)
+                            return (
+                                <Post bookmarkLikesCnt={v.bookmarkLikesCnt} key={i} category={v.categoryList} postKey={v.postKey} isMark={markThis} isLike={likeThis} first={v.paragraphResList[0].paragraph} like={v.postLikesCnt} title={v.title} url={v.postImageUrl}/>
+                            )
+                        }):''}
+                    </Grid>
+                    <Grid is_flex flexDirection='column' alignItems='center' width="30%" marginTop='32px' gap='24px'>
+                        {pageUser.postResponseDtoList?pageUser.postResponseDtoList.map((v,i)=>{
+                            const likeThis= v.postLikeClickersResponseDtoList
+                            .reduce((X,V)=>
+                                {   
+                                    return Object.values(V)[0]===_user.user.userKey?true:X}
+                            ,false)
+                            const markThis= v.bookmarkClickUserKeyResDtoList
+                            .reduce((X,V)=>
+                                {   
+                                    return Object.values(V)[0]===_user.user.userKey?true:X}
+                            ,false)
+                            return (
+                                <Post bookmarkLikesCnt={v.bookmarkLikesCnt} key={i} category={v.categoryList} postKey={v.postKey} isMark={markThis} isLike={likeThis} first={v.paragraphResList[0].paragraph} like={v.postLikesCnt} title={v.title} url={v.postImageUrl}/>
+                            )
+                        }):''}
+                    </Grid>
+                    <Grid is_flex flexDirection='column' alignItems='center' width="30%" marginTop='32px' gap='24px'>
+                        {pageUser.postResponseDtoList?pageUser.postResponseDtoList.map((v,i)=>{
+                            const likeThis= v.postLikeClickersResponseDtoList
+                            .reduce((X,V)=>
+                                {   
+                                    return Object.values(V)[0]===_user.user.userKey?true:X}
+                            ,false)
+                            const markThis= v.bookmarkClickUserKeyResDtoList
+                            .reduce((X,V)=>
+                                {   
+                                    return Object.values(V)[0]===_user.user.userKey?true:X}
+                            ,false)
+                            return (
+                                <Post bookmarkLikesCnt={v.bookmarkLikesCnt} key={i} category={v.categoryList} postKey={v.postKey} isMark={markThis} isLike={likeThis} first={v.paragraphResList[0].paragraph} like={v.postLikesCnt} title={v.title} url={v.postImageUrl}/>
+                            )
+                        }):''}
+                    </Grid>
                 </Grid>
             </Grid>
             <Grid height='100px'/>
