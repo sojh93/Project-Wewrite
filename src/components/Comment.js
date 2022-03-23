@@ -21,7 +21,7 @@ import { Button, Grid, Input, Image, Text } from "../elements"
 import { actionCreators as userActions } from "../redux/modules/user";
 
 
-export default function Comment({children}) {
+export default function Comment(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const _user = useSelector(state => state.user);
@@ -31,13 +31,9 @@ export default function Comment({children}) {
     const handleClose = () => {
         setAnchorEl(null);
     };
-    const [comment, addComment] = useState(0)
-    const user_info = {
-        user_name: _user.user_name,
-        user_id: _user.uid,
-        user_profile: _user.user_profile,
-      };
-
+    // children이 아니라 props로 PostDetail서 정보 가져온다.
+    const data = props.commentInfo;
+    const user = data.userInfoResponseDto;
 
 
     return (
@@ -45,11 +41,11 @@ export default function Comment({children}) {
         <Grid>
             <Grid is_flex  margin='0px 10px' width='310px' gap='5px'>
                 <Grid is_flex alignItems='center'>
-                    <Image width='30px' borderRadius = '5px' height='30px' src={_user.user_profile}/>
+                    <Image width='30px' borderRadius = '5px' height='30px' src={user.userProfileImage}/>
                 </Grid>
                 <Grid width='250px' height='auto'>
-                    <Text fontSize='12px' fontWeight='700'>Nick</Text>
-                    <Text>{comment}</Text>
+                    <Text fontSize='12px' fontWeight='700'>{user.nickname}</Text>
+                    <Text>{data.comment}</Text>
                 </Grid>
                 <Grid is_flex flexDirection='column' alignItems='center' >
                     <IconButton

@@ -26,7 +26,6 @@ const initialState = {
     allPostList : [],
     recentPostList : [],
     recommendPostList : [],
-    themePostList : [],
     userPostList : {},
     thisPost : {postKey:null},
 };
@@ -77,25 +76,6 @@ const getRecommend=() =>{
             }
         }).then(res=>{
             dispatch(setPost(res.data,'recommend'));
-        });
-    }
-}
-
-const getTheme=(theme) =>{
-    return async function (dispatch,getState){
-        console.log(theme);
-        instance({
-            method : "post",
-            url : "/category/posts?page=0&size=30",
-            data : {
-                category : theme
-                },
-            headers : {
-                "Content-Type": "application/json;charset-UTF-8"
-            }
-        }).then(res=>{
-            console.log(res)
-            dispatch(setPost(res.data,'theme'));
         });
     }
 }
@@ -227,22 +207,6 @@ const completePara=(postKey,category) =>{
     }
 }
 
-const addComment=(comment,post_id) =>{
-    return async function (dispatch,getState){
-        const token = getCookie('WW_user');
-        instance({
-            method : "post",
-            url : `/comment/${post_id}`,
-            data : {comment},
-            headers : {
-                "Content-Type": "application/json;charset-UTF-8",
-                'authorization' : token,
-            }
-        }).then(res=>{
-            console.log(res.data);
-        })
-    }
-}
 //reducer
 export default handleActions(
     {
@@ -351,8 +315,6 @@ const actionCreators = {
     markPost,
     likePara,
     completePara,
-    getTheme,
-    addComment,
 
 
 };
