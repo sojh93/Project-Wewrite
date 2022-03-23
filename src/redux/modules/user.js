@@ -9,17 +9,20 @@ import { set } from "lodash";
 //action
 const SET_USER = "SET_USER";
 const DEL_USER = "DEL_USER";
+const SET_NOTICE = "SET_NOTICE";
 const SUB = "SUB";
 
 //action creatos
 const set_user = createAction(SET_USER, (user_data) => ({ user_data }));
 const del_user = createAction(DEL_USER, () => ({  }));
+const setNotice = createAction(SET_NOTICE, (noticeList) => ({ noticeList }));
 const sub = createAction(SUB, (noti) => ({noti}));
 
 //initialState
 const initialState = {
     is_login : false,
     user : {},
+    notice : [],
     sub : false,
 };
 
@@ -123,14 +126,14 @@ const subNoti=(noti) =>{
 
         instance({
             method : "get",
-            url : "/api/alarm?page=0&size=30",
+            url : "/api/alarm?page=0&size=20",
             data : {},
             headers : {
                 "Content-Type": "application/json;charset-UTF-8",
                 'authorization' : token,
             }
         }).then(res=>{
-            console.log(res);
+            dispatch(setNotice(res.data));
         });
     }
 }
@@ -154,6 +157,10 @@ export default handleActions(
         produce(state, (draft) => {
             draft.is_login = false;
             draft.user = {};
+        }),
+        [SET_NOTICE]: (state, action) =>
+        produce(state, (draft) => {
+            draft.noticeList = [...action.payload.noticeList];
         }),
         [SUB]: (state, action) =>
         produce(state, (draft) => {

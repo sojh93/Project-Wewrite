@@ -39,6 +39,7 @@ const UserPage = (props) => {
     React.useEffect(()=>{
         dispatch(postActions.userPost(pageUserKey));
         dispatch(postActions.userBookmark());
+        dispatch(postActions.likePostList());
     },[])
     
 
@@ -90,27 +91,17 @@ const UserPage = (props) => {
                             )
                         }):''}
                     </Grid>
-                    <Grid is_flex flexDirection='column' alignItems='center' width="30%" marginTop='32px' gap='24px'>
+                    <Grid is_flex alignItems='center' width="30%" flexWrap='wrap' marginTop='32px' height='100px' gap='5px'>
                         {_post.bookmarkList?_post.bookmarkList.map((v,i)=>{
                             return (
-                                <BookmarkPost key={i} category={v.post.categoryList} postKey={v.post.postKey} title={v.post.title} url={v.post.postImageUrl}/>
+                                <BookmarkPost key={i} category={v.categoryResponseDtoList} postKey={v.postKey} title={v.post.title} url={v.post.postImageUrl}/>
                             )
                         }):''}
                     </Grid>
-                    <Grid is_flex flexDirection='column' alignItems='center' width="30%" marginTop='32px' gap='24px'>
-                        {pageUser.postResponseDtoList?pageUser.postResponseDtoList.map((v,i)=>{
-                            const likeThis= v.postLikeClickersResponseDtoList
-                            .reduce((X,V)=>
-                                {   
-                                    return Object.values(V)[0]===_user.user.userKey?true:X}
-                            ,false)
-                            const markThis= v.bookmarkClickUserKeyResDtoList
-                            .reduce((X,V)=>
-                                {   
-                                    return Object.values(V)[0]===_user.user.userKey?true:X}
-                            ,false)
+                    <Grid is_flex alignItems='center' width="30%" flexWrap='wrap' marginTop='32px' height='100px' gap='5px'>
+                        {_post.likeList?_post.likeList.map((v,i)=>{
                             return (
-                                <Post bookmarkLikesCnt={v.bookmarkLikesCnt} key={i} category={v.categoryList} postKey={v.postKey} isMark={markThis} isLike={likeThis} first={v.paragraphResList[0].paragraph} like={v.postLikesCnt} title={v.title} url={v.postImageUrl}/>
+                                <BookmarkPost key={i} category={v.categoryList} postKey={v.postKey} title={v.title} url={v.postImageUrl}/>
                             )
                         }):''}
                     </Grid>

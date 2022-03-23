@@ -22,6 +22,7 @@ export default function BookmarkPost(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+
     const charLimit = (text, limit) =>{
         if(text.length > limit){
             return text.slice(0,limit)+' ...'
@@ -42,8 +43,8 @@ export default function BookmarkPost(props) {
     }
 
     return (
-        <Grid width='100%' height='100%' is_flex flexDirection='column' alignItems='center'>
-            <Image onClick={props.onClick} border='1px solid #C4C4C4' boxSizing ='border-box' borderRadius='5px' width='100%' minHeight='140px' maxHeight='150px' height='150px' src={props.src}/>
+        <Grid width={'calc((100% - 10px) / 3)'} is_flex flexDirection='column' alignItems='center'>
+            <Image onClick={props.onClick} border='1px solid #C4C4C4' boxSizing ='border-box' borderRadius='5px' width='100%' height='150px' src={props.url}/>
 
             <Grid onClick={props.onClick} width='100%' height='26px' is_flex alignItems='flex-start'>
                 <Text margin='3px' width='auto' fontSize='16px' color='black'>

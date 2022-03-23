@@ -20,7 +20,7 @@ const Notice = () => {
     const navigate = useNavigate();
 
     const _user = useSelector(state => state.user);
-    
+    console.log(_user);
     const [index,setIndex] = React.useState(1);
 
     React.useEffect(()=>{
@@ -38,8 +38,9 @@ const Notice = () => {
 
         <Grid is_flex width='200%' justifyContent='space-around' transform={'translate(' + (1 - index)*50 + '%)'} transition='transform 0.5s ease 0.1s'>
             <Grid is_flex flexDirection='column' width='45%'>
-                <NoticeAlarm/>
-                <NoticeAlarm/>
+                {_user.noticeList?_user.noticeList.map((v,i)=>{
+                    return (<NoticeAlarm key={i} title={v.postTitle} postKey={v.postKey} src={v.postUrl} msg={v.message}/>)
+                }):''}
             </Grid>
             <Grid is_flex flexDirection='column' width='45%'>
                 <NoticeBanner/>

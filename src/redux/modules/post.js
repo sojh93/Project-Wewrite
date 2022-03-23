@@ -12,6 +12,7 @@ const LIKE = "LIKE";
 const MARK ="MARK";
 const USER_POST = "USER_POST";
 const LIKE_PARA = "LIKE_PARA";
+const LIKE_POST = "LIKE_POST";
 const BOOKMARK_POST = "BOOKMARK_POST";
 
 //action creatos
@@ -21,6 +22,7 @@ const setUserPost = createAction(USER_POST, (postList) => ({ postList }));
 const like = createAction(LIKE, (postData) => ({ postData }));
 const mark = createAction(MARK, (postData,postKey) => ({ postData,postKey }));
 const like_Para = createAction(LIKE_PARA, (postData) => ({ postData }));
+const like_Post = createAction(LIKE_POST, (postList) => ({ postList }));
 const setUserBookmark = createAction(BOOKMARK_POST, (postList) => ({ postList }));
 
 
@@ -33,6 +35,7 @@ const initialState = {
     themePostList : [],
     userPostList : {},
     bookmarkList : [],
+    likeList : [],
     thisPost : {postKey:null},
 };
 
@@ -194,6 +197,23 @@ const markPost=(postKey) =>{
         });
     }
 }
+const likePostList=(postKey) =>{
+    return async function (dispatch,getState){
+        const token = getCookie('WW_user');
+        instance({
+            method : "get",
+            url : `/posts/viewMyLikesPost?page=0&size=30`,
+            data : {},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8",
+                'authorization' : token,
+            }
+        }).then(res=>{
+            dispatch(like_Post(res.data));
+            console.log(res.data);
+        })
+    }
+}
 
 const userPost=(pageUserKey) =>{
     return async function (dispatch,getState){
@@ -224,7 +244,6 @@ const userBookmark=() =>{
             }
         }).then(res=>{
             dispatch(setUserBookmark(res.data));
-            console.log(res.data);
         })
     }
 }
@@ -373,7 +392,11 @@ export default handleActions(
         }),
         [BOOKMARK_POST]: (state, action) =>
         produce(state, (draft) => {
-            draft.bookmarkList = {...action.payload.postList};
+            draft.bookmarkList = [...action.payload.postList];
+        }),
+        [LIKE_POST]: (state, action) =>
+        produce(state, (draft) => {
+            draft.likeList = [...action.payload.postList];
         }),
         
     },
@@ -397,6 +420,7 @@ const actionCreators = {
     addComment,
     userBookmark,
     getBest,
+    likePostList
 
 
 };
