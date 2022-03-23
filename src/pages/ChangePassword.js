@@ -10,9 +10,9 @@ import Header from "../components/Header";
 import Bottom from '../components/Bottom';
 
 function ChangePassword() {
-    const [pwd, setPwd] = React.useState();
+    const [pwd, setPwd] = React.useState(0);
 
-    const submitMessage = (e) => {
+    const submitMessage = () => {
         console.log("비밀번호를 변경하였습니다!");
     }
 
@@ -41,7 +41,7 @@ function ChangePassword() {
             <Button
                 theme="unfilled"
                 type="submit"
-                onClick="submitMessage"
+                onClick={submitMessage}
             > 콘솔로 보내기 </Button>
 
         </Grid>
