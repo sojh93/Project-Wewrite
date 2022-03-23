@@ -25,7 +25,7 @@ const initialState = {
 };
 
 
-const addComment = (comment) => {
+const addCommentDB = (comment) => {
     return async function (dispatch){
         const token = getCookie('WW_user');
 
@@ -38,7 +38,7 @@ const addComment = (comment) => {
                 'authorization' : token,
             }
         }).then(res=>{
-            dispatch(setComment(res.data));
+            dispatch(addComment(res.data));
         });
         
     };
@@ -58,6 +58,7 @@ export default handleActions ({
 )
 const actionCreators = { //액션 생성자 내보내기
     addComment,
+    addCommentDB,
 };
 
 export {actionCreators};
