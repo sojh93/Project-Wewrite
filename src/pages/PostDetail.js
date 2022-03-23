@@ -13,7 +13,6 @@ import 'moment/locale/ko'
 //import Actions
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as userActions } from "../redux/modules/user";
-import { actionCreators as commentActions } from "../redux/modules/comment";
 
 //import elements
 import { Button, Grid, Input, Image, Text, Chip } from "../elements"
@@ -51,9 +50,7 @@ function PostDetail(props) {
 
     const _user = useSelector(state => state.user);
     const _post = useSelector(state => state.post);
-    const _comment = useSelector(state => state.comment);
     const postKey = useParams().postKey;
-    const postId = useParams().postId;
     const thisPost = _post.thisPost;
     console.log(thisPost);
     const refInput = React.useRef(null);
@@ -79,11 +76,12 @@ function PostDetail(props) {
 
     }, []) : '';
 
-    
 
     const [category, setCategory] = React.useState(null);
     const [timer,setTimer] = React.useState(false);
 
+    const [comment,setComment] = React.useState('');
+    const commentRef = React.useRef();
 
     //modal
     const [open, setOpen] = React.useState(false);
@@ -97,9 +95,7 @@ function PostDetail(props) {
     //socket
     // const sock = new SockJS("http://13.209.70.1/ws-stomp");
     // const sock = new SockJS("http://3.34.179.104/ws-stomp");
-    // const sock = new SockJS("http://binscot.shop/ws-stomp");
-    const sock = new SockJS("http://3.34.179.104/ws-stomp");
-    
+    const sock = new SockJS("https://binscot.shop/ws-stomp");
     const ws = Stomp.over(sock);
     const token = getCookie('WW_user');
 
@@ -109,14 +105,13 @@ function PostDetail(props) {
     let isWriting = _post.thisPost.writing;
 
 
-    // 좋아요 버튼 관련 로직
+
     const isLike= thisPost.postLikeClickersResponseDtoList?
             thisPost.postLikeClickersResponseDtoList
             .reduce((X,V)=>
                 {   
                     return Object.values(V)[0]===_user.user.userKey?true:X}
             ,false):false;
-    // 북마크 버튼 관련 로직
     const isMark= thisPost.bookmarkClickUserKeyResDtoList?
     thisPost.bookmarkClickUserKeyResDtoList
     .reduce((X,V)=>
@@ -128,15 +123,17 @@ function PostDetail(props) {
         dispatch(postActions.likePost(postKey));
         console.log('done');
     }
-    const markPost =() =>{
+    const markPost = () =>{
         dispatch(postActions.markPost(postKey));
         console.log('done');
     }
-
-    const addComment =(comment) =>{
-        dispatch(commentActions.addComment(comment));
-        console.log('done');
+    const addComment = () =>{
+        dispatch(postActions.addComment(comment,postKey));
+        commentRef.current.value='';
+        setComment('');
+        console.log(comment);
     }
+    
 
     var headers = {
         Authorization: token
@@ -159,8 +156,7 @@ function PostDetail(props) {
             };
     }, [])
 
-    
-    // 웹소캣 구독
+
     function wsConnectSubscribe() {
         try {
             ws.connect(headers, () => {
@@ -196,14 +192,12 @@ function PostDetail(props) {
             console.log(error);
         }
     }
-    // 웹소캣 연결 및 구독 중지
+
     function wsDisConnectUnsubscribe() {
         try {
             ws.disconnect(() => {
-                // 웹소캣 구독 없애버림.
                 ws.unsubscribe("sub-0");
             }, headers);
-            // paragraph 취소
             cancelParagraph();
             
         } catch (error) {
@@ -229,9 +223,7 @@ function PostDetail(props) {
 
     // 메시지 보내기
     function sendParagraph() {
-        // 로그인이 안되어있다면
         if(!_user.is_login){
-        // console로 '로그인이 필요합니다' 출력.
             console.log('로그인이 필요합니다.')
             return;
         }
@@ -260,7 +252,7 @@ function PostDetail(props) {
             console.log(ws.ws.readyState);
         }
     }
-    // 글작성 시작
+
     function startParagraph() {
         if(!_user.is_login){
             console.log('로그인이 필요합니다.')
@@ -286,7 +278,7 @@ function PostDetail(props) {
             console.log(error);
         }
     }
-    // 글작성 완료
+
     function finishParagraph() {
         try {
             const data = {
@@ -309,13 +301,11 @@ function PostDetail(props) {
         } catch (error) {
 
         }
-        // 글작성 종료. postaction함수 실행
         dispatch(postActions.completePara(postKey,category));
         setTimeout(()=>{dispatch(postActions.getOne(postKey));
                         handleClose()},500)
     }
 
-    // 문단작성 취소 
     function cancelParagraph() {
         console.log(isWriting, writer===_user.user.nickname)
         if(writer===_user.user.nickname){
@@ -333,8 +323,7 @@ function PostDetail(props) {
         }
     }
 
-   
-
+    
 
     return (
 
@@ -389,7 +378,6 @@ function PostDetail(props) {
 
                 <Grid is_flex flexDirection='column' alignItems='center' width='100%'>
                     <Text marginTop='10px' width='90%'>참여자</Text>
-                    {/* Swiper => 화면넘기는 효과를 부여한다. React Components */}
                     <Swiper
                         style={{ height: '74px', width: 'calc(90% - 20px)', margin: '10px' }}
                         slidesPerView={5}
@@ -419,8 +407,10 @@ function PostDetail(props) {
                         <Text fontSize='12px' color='#7E7E7E'>{thisPost.postLikesCnt ? thisPost.postLikesCnt : "0"}</Text>
                         <Image width='14px' onClick={markPost} height='18px' margin='6px' src={isMark?'/Icon/bookmark_filled.png':'/Icon/bookmark.png'}/>
                         <Text fontSize='12px' color='#7E7E7E'>{thisPost.bookmarkLikesCnt ? thisPost.bookmarkLikesCnt : "0"}</Text>
-                        <Image width='16px' onClick={markPost} height='16px' margin='6px' src={props.isMark?'/Icon/talk.png':'/Icon/talk.png'}/>
-                        <Text fontSize='12px' color='#7E7E7E' onClick={() => handleOpenC(true)}>댓글보기</Text>
+                        <Grid is_flex onClick={handleOpenC}>
+                            <Image width='16px' onClick={markPost} height='16px' margin='6px' src={props.isMark?'/Icon/talk.png':'/Icon/talk.png'}/>
+                            <Text fontSize='12px'  color='#7E7E7E'>댓글보기</Text>
+                        </Grid>
                     </Grid>
                 </Grid>
 
@@ -466,26 +456,30 @@ function PostDetail(props) {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Grid is_flex flexDirection='column' justifyContent='center' alignItems='center' {...style}>
+                <Grid is_flex flexDirection='column' justifyContent='flex-start' alignItems='center' {...style} height='' maxHeight='500px'>
 
-                    <Grid>
+                    <Grid marginTop='35px'>
                         <Text fontSize='24px' color='black' fontWeight='700'>댓글을 확인하세요</Text>
                     </Grid>
 
-
-                    <Image margin='10px' width='50px' height='50px' src='/default_img/talkIocn.png'></Image>
-
+                    <Grid width='70px' height='77px'>
+                        <Image width='70px' height='77px' src='/default_img/talkIocn.png'></Image>
+                    </Grid>
                     <Grid margin='0px 20px' is_flex alignItems='flex-end' width='100%'>
-                        <Text margin='5px 0 5px 10px' fontSize='16px' alignItems='center' fontWeight='500'>댓글</Text><Text fontSize='10px' color='#C4C4C4' fontWeight='400'>3</Text>
+                        <Text margin='5px 0 5px 10px' fontSize='16px' alignItems='center' fontWeight='500'>댓글</Text><Text fontSize='10px' color='#C4C4C4' fontWeight='400'>{thisPost.commentList?thisPost.commentList.length:'0'}</Text>
                     </Grid>
 
                     <Grid width='100%'>
-                        <Comment />
+                        {thisPost.commentList?thisPost.commentList.map((v)=>{
+                            return(<Comment commentInfo={v} date={moment(v.commentModifiedAt).format('lll')}/>)
+                        }):''}
                     </Grid>
+                    <Grid width='100%' is_flex flexDirection='column' alignItems='center'>
+                        <Input _ref={commentRef} placeholder={'댓글 달기'} onChange={(e)=>{setComment(e.target.value)}} margin='20px' width='90%' isTheme></Input>
 
-                    <Input placeholder={'댓글 달기'} margin='20px' width='80%' isTheme ></Input>
-
-                    <Button theme='unfilled' onClick={addComment}>작성하기</Button>
+                        <Button onClick={addComment} theme='unfilled'>작성하기</Button>
+                    </Grid>
+                    <Grid height='30px'/>
                 </Grid>
             </Modal>
 

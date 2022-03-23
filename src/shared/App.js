@@ -22,7 +22,7 @@ import ModifyProfile from "../pages/ModifyProfile";
 import ChangePassword from "../pages/ChangePassword";
 import WithdrawMember from "../pages/withdrawMember";
 import Socket from '../components/Socket'
-import Notice from '../pages/Notice';
+import ThemePage from "../pages/ThemePage";
 
 
 
@@ -39,13 +39,13 @@ function App() {
           <Route path="/userpage/:userKey" element={<UserPage />} />
           <Route path="/newslist" element={<NewsList />} />
           <Route path="/postlist/:listType" element={<PostList />} />
+          <Route path="/themepage/:theme" element={<ThemePage />} />
           <Route path="/write" element={<Write />} />
           <Route path="/postDetail/:postKey" element={<PostDetail />} />
           <Route path="/modifyprofile" element={<ModifyProfile />} />
           <Route path="/changePassword" element={<ChangePassword />} />
           <Route path="/withdrawMember" element={<WithdrawMember />} />
           <Route path="/socket" element={<Socket />} />
-          <Route path="/notice" element={<Notice />} />
 
         </Routes>
       </ThemeProvider>
