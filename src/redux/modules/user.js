@@ -101,7 +101,7 @@ const check=() =>{
 const logout=() =>{
     return async function (dispatch,getState){
         deleteCookie('WW_user');
-
+        dispatch(del_user());
     }
 }
 const editData=(userData) =>{

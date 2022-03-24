@@ -84,6 +84,9 @@ function Main(props) {
                             className="mySwiper"
                         >
                             {_post.recommendPostList.map((v, i) => {
+                                if(i>5){
+                                    return null;
+                                }
                                 return (
                                     <SwiperSlide key={v.postKey}>
                                         <BookCover onClick={() => { navigate(`/PostDetail/${v.postKey}`) }} category={v.categoryList} title={v.title} para={v.paragraphResList[0].paragraph} src={v.postImageUrl} key={i} postKey={v.postKey} />
@@ -97,7 +100,7 @@ function Main(props) {
                     <Grid width='100%' height='310px' marginTop='20px' is_flex flexDirection='column'>
                         <Text margin='0px 10px' fontSize='24px' fontWeight='700'>새로운 이야기</Text>
                         <Swiper
-                            style={{ height: '230px', width: 'calc(100vw - 20px)', minWidth: '340px', maxWidth: '370px', margin: '10px' }}
+                            style={{ height: '230px', width: 'calc(100vw - 20px)', minWidth: '340px', maxWidth: '400px', margin: '10px' }}
                             slidesPerView={2.75}
                             spaceBetween={20}
                             freeMode={true}
@@ -168,7 +171,7 @@ function Main(props) {
                     <Grid width='100%' is_flex flexDirection='column'>
                         <Text margin='0px 10px' fontSize='24px' fontWeight='700'>당신이 완성해주세요</Text>
                         <Swiper
-                            style={{ height: '230px', width: 'calc(100vw - 20px)', minWidth: '340px', maxWidth: '370px', margin: '10px' }}
+                            style={{ height: '230px', width: 'calc(100vw - 20px)', minWidth: '340px', maxWidth: '400px', margin: '10px' }}
                             slidesPerView={2.75}
                             spaceBetween={20}
                             freeMode={true}
