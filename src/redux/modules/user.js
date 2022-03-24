@@ -183,11 +183,11 @@ export default handleActions(
         }),
         [NOTICE]: (state, action) =>
         produce(state, (draft) => {
-            draft.user.alarmRead = false;
+            draft.user.alaramRead = false;
         }),
         [NOTICE_CHECK]: (state, action) =>
         produce(state, (draft) => {
-            draft.user.alarmRead = true;
+            draft.user.alaramRead = true;
         }),
     },
     initialState
