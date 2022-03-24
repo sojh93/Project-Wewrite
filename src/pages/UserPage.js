@@ -56,7 +56,7 @@ const UserPage = (props) => {
     <Grid wrap>
             <Header isUserPage userKey={pageUserKey} UserName={pageUser.nickname?pageUser.nickname:''}/>
             <Grid position='relative' is_flex flexDirection='column' alignItems='center' width="100%" padding="0" marginTop="80px">
-                <Button onClick={logout} fontSize='12px' theme='unfilled' width='60px' height='30px' right='20px' position='absolute'>로그아웃</Button>
+                {myKey === pageUserKey?<Button onClick={logout} fontSize='12px' theme='unfilled' width='60px' height='30px' right='20px' position='absolute'>로그아웃</Button>:''}
                 <Image is_circle size='100' src={pageUser.userProfileImage?pageUser.userProfileImage:''}/>
     
                 {/* <Text margin="5px 5px 0px 5px" fontSize="12px">
