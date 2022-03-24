@@ -30,6 +30,7 @@ import Bottom from '../components/Bottom';
 import Books from '../components/Books';
 import BookCover from '../components/BookCover';
 import Popular from '../components/popular';
+import LoginBanner from '../components/LoginBanner';
 
 
 
@@ -40,14 +41,15 @@ function Main(props) {
 
     const _user = useSelector(state => state.user);
     const _post = useSelector(state => state.post);
-    
+
+    console.log(_user);
     console.log(_post);
 
     React.useEffect(() => {
 
-        dispatch(postActions.getAll());
-        dispatch(postActions.getRecent());
-        dispatch(postActions.getRecommend());
+        dispatch(postActions.getAll(0,6));
+        dispatch(postActions.getRecent(0,6));
+        dispatch(postActions.getRecommend(0,6));
         dispatch(postActions.getBest());
 
     }, []);
@@ -84,6 +86,9 @@ function Main(props) {
                             className="mySwiper"
                         >
                             {_post.recommendPostList.map((v, i) => {
+                                if(i>5){
+                                    return null;
+                                }
                                 return (
                                     <SwiperSlide key={v.postKey}>
                                         <BookCover onClick={() => { navigate(`/PostDetail/${v.postKey}`) }} category={v.categoryList} title={v.title} para={v.paragraphResList[0].paragraph} src={v.postImageUrl} key={i} postKey={v.postKey} />
@@ -97,7 +102,7 @@ function Main(props) {
                     <Grid width='100%' height='310px' marginTop='20px' is_flex flexDirection='column'>
                         <Text margin='0px 10px' fontSize='24px' fontWeight='700'>새로운 이야기</Text>
                         <Swiper
-                            style={{ height: '230px', width: 'calc(100vw - 20px)', minWidth: '340px', maxWidth: '370px', margin: '10px' }}
+                            style={{ height: '230px', width: 'calc(100vw - 20px)', minWidth: '340px', maxWidth: '400px', margin: '10px' }}
                             slidesPerView={2.75}
                             spaceBetween={20}
                             freeMode={true}
@@ -168,7 +173,7 @@ function Main(props) {
                     <Grid width='100%' is_flex flexDirection='column'>
                         <Text margin='0px 10px' fontSize='24px' fontWeight='700'>당신이 완성해주세요</Text>
                         <Swiper
-                            style={{ height: '230px', width: 'calc(100vw - 20px)', minWidth: '340px', maxWidth: '370px', margin: '10px' }}
+                            style={{ height: '230px', width: 'calc(100vw - 20px)', minWidth: '340px', maxWidth: '400px', margin: '10px' }}
                             slidesPerView={2.75}
                             spaceBetween={20}
                             freeMode={true}

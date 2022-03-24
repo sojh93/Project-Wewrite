@@ -41,11 +41,11 @@ const initialState = {
 
 
 //middleware actions
-const getAll=() =>{
+const getAll=(start=0,size=30) =>{
     return async function (dispatch,getState){
         instance({
             method : "get",
-            url : "/posts/incomplete?page=0&size=30",
+            url : `/posts/incomplete?page=${start}&size=${size}`,
             data : {},
             headers : {
                 "Content-Type": "application/json;charset-UTF-8"
@@ -58,11 +58,11 @@ const getAll=() =>{
     }
 }
 
-const getRecent=() =>{
+const getRecent=(start=0,size=30) =>{
     return async function (dispatch,getState){
         instance({
             method : "get",
-            url : "/posts/recent?page=0&size=30",
+            url : `/posts/recent?page=${start}&size=${size}`,
             data : {},
             headers : {
                 "Content-Type": "application/json;charset-UTF-8"
@@ -74,11 +74,11 @@ const getRecent=() =>{
         });
     }
 }
-const getRecommend=() =>{
+const getRecommend=(start=0,size=30) =>{
     return async function (dispatch,getState){
         instance({
             method : "get",
-            url : "/posts/recommend?page=0&size=30",
+            url : `/posts/recommend?page=${start}&size=${size}`,
             data : {},
             headers : {
                 "Content-Type": "application/json;charset-UTF-8"
@@ -105,7 +105,7 @@ const getBest=() =>{
 }
 
 
-const getTheme=(theme) =>{
+const getTheme=(theme,start=0,size=30) =>{
     return async function (dispatch,getState){
         console.log(theme);
         instance({

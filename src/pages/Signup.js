@@ -49,6 +49,22 @@ function Signup() {
     }
     , 1000);
     
+    const debounceEmail = _.debounce((k) =>  {
+        instance({
+            method : "post",
+            url : "/user/signup/checkID",
+            data : {username:k},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8"
+            }
+        }).then(res=>{
+            setEmailDup(true);
+        }).catch(err=>{
+            setEmailCant(true);
+        });
+    }
+    , 1000);
+
     const debouncePwd = _.debounce((k) =>  {
         setPwdForm(k);
         setPwdFormCheck(true);
@@ -63,12 +79,15 @@ function Signup() {
     , 1000);
 
     const keyPress = React.useCallback(debounce, []);
+    const keyPressEmail = React.useCallback(debounceEmail, []);
     const keyPressPwd = React.useCallback(debouncePwd, []);
     const keyPressPwdCheck = React.useCallback(debouncePwdCheck, []);
 
     //email
     const [email, setEmail] = React.useState(null);
     const [emailCheck, setEmailCheck] = React.useState(false);
+    const [emailDup, setEmailDup] = React.useState(false);
+    const [emailCant, setEmailCant] = React.useState(false);
     const [emailVeri, setEmailVeri] = React.useState(false);
 
     //Code
@@ -131,9 +150,11 @@ function Signup() {
         if(e.target.value === ''){
             setEmail(false);
             setEmailCheck(false);
+            setEmailCant(false);
         }else{
             setEmail(e.target.value);
             setEmailCheck(false);
+            setEmailCant(false);
         }
     };
 
@@ -144,19 +165,42 @@ function Signup() {
             console.log("형식이 맞지 않습니다.");
             setEmailCheck(true);
             return;
+        }else{
+            
+            instance({
+                method : "post",
+                url : "/user/signup/checkID",
+                data : {username:email},
+                headers : {
+                    "Content-Type": "application/json;charset-UTF-8"
+                }
+            })
+            .then(res=>{
+                console.log(res.data);
+                if(res.data){
+                    setEmailDup(true);
+                    instance({
+                        method : "post",
+                        url : "/mailCheck",
+                        data : {email},
+                        headers : {
+                            "Content-Type": "application/json;charset-UTF-8"
+                        }
+                    }).then(res=>{
+                        setEmailVeri(true);
+                        console.log(res.data.key)
+                        setMailCode(res.data.key);
+                    });
+                }   
+            })
+            .catch(err =>{
+                setEmailCant(true);
+                console.log('중복입니다.');
+            })
+
+        
         }
-        setEmailVeri(true);
-        instance({
-            method : "post",
-            url : "/mailCheck",
-            data : {email},
-            headers : {
-                "Content-Type": "application/json;charset-UTF-8"
-            }
-        }).then(res=>{
-            console.log(res.data.key)
-            setMailCode(res.data.key);
-        });
+        
     };
 
     const codeVerification = (e)=>{
@@ -253,7 +297,7 @@ function Signup() {
                             
                             <Text text-align='left' width='350px' display={emailVeri?'':'none'} margin="0" color='#6454FF' fontWeight='400' fontSize='14px'>인증 코드를 발급했습니다.</Text>
                             <Grid is_flex width='100%'><Text display={emailCheck?'':'none'} margin="0" color='red' fontWeight='400' fontSize='14px'>이메일 형식이 맞지 않습니다.</Text></Grid>
-
+                            <Grid is_flex width='100%'><Text display={emailCant?'':'none'} margin="0" color='red' fontWeight='400' fontSize='14px'>중복인 이메일입니다.</Text></Grid>
                         </Grid>
                     </Grid>
                     
@@ -419,6 +463,7 @@ function Signup() {
                     <Button
                         theme="unfilled"
                         type="submit"
+                        disabled={!codeVeri}
                     >
                         가입
                     </Button>

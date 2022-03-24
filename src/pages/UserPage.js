@@ -1,9 +1,7 @@
 //import Library
 import React from "react";
-import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate,useParams } from "react-router-dom";
-import SwitchSelector from "react-switch-selector";
 
 //import Actions
 import { actionCreators as postActions } from "../redux/modules/post";
@@ -20,9 +18,6 @@ import Post from "../components/Post";
 import BookmarkPost from "../components/BookmarkPost";
 
 
-import instance from "../shared/Request";
-import { set } from "lodash";
-import { setUseProxies } from "immer";
 
 
 const UserPage = (props) => {
@@ -48,8 +43,7 @@ const UserPage = (props) => {
 
     const logout= () => {
         dispatch(userActions.logout());
-        navigate('/');
-        window.location.reload();
+        setTimeout(()=>{navigate('/');},500)
     }
 
     return (
@@ -85,7 +79,6 @@ const UserPage = (props) => {
                 <Grid borderBottom='1px solid black' marginTop='10px' justifyContent='center' is_flex width='100%'>
                     <Grid height='35px' width='33%' textAlign='center' onClick={()=>setIndex(1)}><Text fontSize='14px' fontWeight='500' >참여작</Text></Grid>
                 </Grid> 
-                <Grid marginTop='-3px' borderRadius='1px' width="34%" height='1px' borderTop='3px solid black'/>
                 </>
                 }
 
