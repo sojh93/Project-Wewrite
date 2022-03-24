@@ -30,6 +30,7 @@ import Bottom from '../components/Bottom';
 import Books from '../components/Books';
 import BookCover from '../components/BookCover';
 import Popular from '../components/popular';
+import LoginBanner from '../components/LoginBanner';
 
 
 
@@ -40,14 +41,15 @@ function Main(props) {
 
     const _user = useSelector(state => state.user);
     const _post = useSelector(state => state.post);
-    
+
+    console.log(_user);
     console.log(_post);
 
     React.useEffect(() => {
 
-        dispatch(postActions.getAll());
-        dispatch(postActions.getRecent());
-        dispatch(postActions.getRecommend());
+        dispatch(postActions.getAll(0,6));
+        dispatch(postActions.getRecent(0,6));
+        dispatch(postActions.getRecommend(0,6));
         dispatch(postActions.getBest());
 
     }, []);

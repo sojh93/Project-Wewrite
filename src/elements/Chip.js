@@ -11,7 +11,7 @@ const Chip = ({
 
 
     return (
-        <Default onClick={onClick} style={{...props, height}}><span style={{padding : "0 10px"}}>{children}</span></Default>
+        <Default onClick={onClick} style={{...props, height}}><span style={{padding : "0 10px 3px 10px"}}>{children}</span></Default>
     )
 }
 
@@ -22,6 +22,7 @@ const Default = styled.div`
     display: inline-flex;
     align-items: center;
     vertical-align: middle;
+    justify-content : center;
     box-sizing: border-box;
     font-size : 12px;
 `;

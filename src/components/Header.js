@@ -5,8 +5,8 @@ import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode,EffectCoverflow } from "swiper";
-//import Actions
 
+import LoginBanner from "./LoginBanner";
 
 //import elements
 import {  Grid, Image, Text } from "../elements" 
@@ -35,57 +35,59 @@ const Header = (props) => {
     // console.log(_user)
     // console.log(_post)
 
+    const [alrt,setAlrt] = React.useState(true);
 
-        //socket
 
-        const sock = new SockJS("http://13.209.70.1/ws-alarm");
-        // const sock = new SockJS("http://3.34.179.104/ws-stomp");
-        // const sock = new SockJS("https://binscot.shop/ws-stomp");
-        const ws = Stomp.over(sock);
-        const token = getCookie('WW_user');
-    
-        var headers = {
-            Authorization: token
-        };
-    
-        function wsConnectSubscribe() {
-            try {
-                ws.connect(headers, () => {
-                    ws.subscribe(
-                        // websocket 구독 url 콜백함수 header 
-                        `/sub/alarm/${_user.user.userKey}`,
-                        (data) => {
-                            // console.log(data.body)
-                        },
-                        headers
-                    );
-                    dispatch(userActions.subNoti(true));
-                });
-                
-            } catch (error) {
-                console.log(error);
-            }
+    //socket
+
+    const sock = new SockJS("http://13.209.70.1/ws-alarm");
+    // const sock = new SockJS("http://3.34.179.104/ws-stomp");
+    // const sock = new SockJS("https://binscot.shop/ws-stomp");
+    const ws = Stomp.over(sock);
+    const token = getCookie('WW_user');
+
+    var headers = {
+        Authorization: token
+    };
+
+    function wsConnectSubscribe() {
+        try {
+            ws.connect(headers, () => {
+                ws.subscribe(
+                    // websocket 구독 url 콜백함수 header 
+                    `/sub/alarm/${_user.user.userKey}`,
+                    (data) => {
+                        dispatch(userActions.Alrt())
+                    },
+                    headers
+                );
+                dispatch(userActions.subNoti(true));
+            });
+            
+        } catch (error) {
+            console.log(error);
         }
-    
-        function wsDisConnectUnsubscribe() {
-            try {
-                ws.disconnect(() => {
-                    ws.unsubscribe("sub-0");
-                }, headers);
-                dispatch(userActions.subNoti(false));
-            } catch (error) {
-                console.log(error);
-            }
-        }
+    }
 
-        React.useEffect(async() => {
-            if(!_user.is_login){
-                dispatch(userActions.check());
-            }
-            if(_user.is_login & !_user.sub){
-                wsConnectSubscribe()
-            }
-        },[_user.is_login]);
+    function wsDisConnectUnsubscribe() {
+        try {
+            ws.disconnect(() => {
+                ws.unsubscribe("sub-0");
+            }, headers);
+            dispatch(userActions.subNoti(false));
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    React.useEffect(async() => {
+        if(!_user.is_login){
+            dispatch(userActions.check());
+        }
+        if(_user.is_login & !_user.sub){
+            wsConnectSubscribe()
+        }
+    },[_user.is_login]);
 
     const [categoryopen, setCategoryOpen] = React.useState(false);
     const handleOpen = () => {
@@ -95,6 +97,12 @@ const Header = (props) => {
     const handleClose = () => {
         setCategoryOpen(false);
 }
+    const loginAlrt = () => {
+        setAlrt(false);
+        setTimeout(()=>{
+            setAlrt(true);
+        },5000)
+    }
 
     const style = {
         position: 'absolute',
@@ -108,10 +116,15 @@ const Header = (props) => {
         p: 4,
     };
 
+    const checkNotice = () =>{
+        dispatch(userActions.AlrtCheck());
+        setTimeout(()=>{navigate('/notice')},500);
+    }
 
     if(props.isMain)
     return(
             <Grid >
+                <LoginBanner hide={alrt}/>
                 <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFBBB" is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="420px" height='60px' margin='0'  >
                     <Grid margin='10px' backgroundColor="#F9FAFB00" is_flex border="0">
                         <Image onClick={handleOpen} width='30px' height='30px' src="/Icon/menu_p.png"></Image>
@@ -187,8 +200,9 @@ const Header = (props) => {
                     <Grid backgroundColor="#F9FAFB00" is_flex border="0">
                         <Image backgroundSize='contain' backgroundRepeat='no-repeat' width='150px' height='45px' src="/Logo/Logo_p.png"></Image>
                     </Grid>
-                    <Grid margin='10px' backgroundColor="#F9FAFB00" is_flex border="0">
-                        <Image onClick={()=>{navigate('/notice')}} width='24px' height='24px' src="/Icon/bell_p.png"></Image>
+                    <Grid margin='10px' position='relative' backgroundColor="#F9FAFB00" is_flex border="0">
+                        <Image onClick={()=>{_user.is_login?checkNotice():loginAlrt()}} width='24px' height='24px' src="/Icon/bell_p.png"></Image>
+                        <Grid position='absolute' width='10px' height='10px' backgroundColor='red' borderRadius='5px' top='10px' display={_user.user.alarmRead?'none':''}/>
                     </Grid>
                 </Grid>
             </Grid>
