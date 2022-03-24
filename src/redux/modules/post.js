@@ -270,6 +270,7 @@ const likePara=(paragraphKey) =>{
 const completePara=(postKey,category) =>{
     return async function (dispatch,getState){
         const token = getCookie('WW_user');
+        console.log("카테고리",category);
         instance({
             method : "patch",
             url : `/posts/complete/${postKey}`,

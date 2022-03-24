@@ -114,7 +114,7 @@ const Header = (props) => {
             <Grid >
                 <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFBBB" is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
                     <Grid margin='10px' backgroundColor="#F9FAFB00" is_flex border="0">
-                        <Image onClick={handleOpen} width='30px' height='30px' src="/Icon/menu.png"></Image>
+                        <Image onClick={handleOpen} width='30px' height='30px' src="/Icon/menu_p.png"></Image>
                         <Modal
                             open={categoryopen}
                             onClose={handleClose}
@@ -188,7 +188,7 @@ const Header = (props) => {
                         <Image backgroundSize='contain' backgroundRepeat='no-repeat' width='150px' height='45px' src="/Logo/Logo_p.png"></Image>
                     </Grid>
                     <Grid margin='10px' backgroundColor="#F9FAFB00" is_flex border="0">
-                        <Image onClick={()=>{navigate('/notice')}} width='24px' height='24px' src="/Icon/bell.png"></Image>
+                        <Image onClick={()=>{navigate('/notice')}} width='24px' height='24px' src="/Icon/bell_p.png"></Image>
                     </Grid>
                 </Grid>
             </Grid>
