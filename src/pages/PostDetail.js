@@ -42,6 +42,17 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
+const styleComment = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '330px',
+    height: '600px',
+    borderRadius: '5px',
+    boxShadow: 24,
+    p: 4,
+};
 
 function PostDetail(props) {
     moment.locale('ko');
@@ -60,7 +71,7 @@ function PostDetail(props) {
     const users = thisPost.paragraphResDtoList ? thisPost.paragraphResDtoList.reduce((x, v, i) => {
         let tempList = []
         if (x.length === 0) {
-            return [{ nickname: v.userInfoResDto.nickname, userProfileImage: v.userInfoResDto.userProfileImage }]
+            return [{ nickname: v.userInfoResDto.nickname, userProfileImage: v.userInfoResDto.userProfileImage, userKey : v.userInfoResDto.userKey }]
         } else {
             for (let i of x) {
                 tempList.push(i.nickname)
@@ -69,7 +80,7 @@ function PostDetail(props) {
             if (tempList.includes(v.userInfoResDto.nickname)) {
                 return x;
             } else {
-                x.push({ nickname: v.userInfoResDto.nickname, userProfileImage: v.userInfoResDto.userProfileImage })
+                x.push({ nickname: v.userInfoResDto.nickname, userProfileImage: v.userInfoResDto.userProfileImage, userKey : v.userInfoResDto.userKey })
                 return x;
             }
         }
@@ -131,7 +142,7 @@ function PostDetail(props) {
         dispatch(postActions.addComment(comment,postKey));
         commentRef.current.value='';
         setComment('');
-        console.log(comment);
+        dispatch(postActions.getOne(postKey));
     }
     
 
@@ -393,7 +404,7 @@ function PostDetail(props) {
 
                             return (
                                 <SwiperSlide>
-                                    <Paragraph nick={v.nickname} src={v.userProfileImage} />
+                                    <Paragraph nick={v.nickname} userKey={v.userKey} src={v.userProfileImage} />
                                 </SwiperSlide>
                             )
                         }) : ''}
@@ -456,7 +467,7 @@ function PostDetail(props) {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Grid is_flex flexDirection='column' justifyContent='flex-start' alignItems='center' {...style} height='' maxHeight='500px'>
+                <Grid is_flex flexDirection='column' justifyContent='flex-start' alignItems='center' {...styleComment}>
 
                     <Grid marginTop='35px'>
                         <Text fontSize='24px' color='black' fontWeight='700'>댓글을 확인하세요</Text>
@@ -469,7 +480,7 @@ function PostDetail(props) {
                         <Text margin='5px 0 5px 10px' fontSize='16px' alignItems='center' fontWeight='500'>댓글</Text><Text fontSize='10px' color='#C4C4C4' fontWeight='400'>{thisPost.commentList?thisPost.commentList.length:'0'}</Text>
                     </Grid>
 
-                    <Grid width='100%'>
+                    <Grid width='100%' overflow='scroll' height="300px">
                         {thisPost.commentList?thisPost.commentList.map((v)=>{
                             return(<Comment commentInfo={v} date={moment(v.commentModifiedAt).format('lll')}/>)
                         }):''}

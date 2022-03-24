@@ -1,4 +1,4 @@
-    //import Library
+//import Library
 import React from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,10 +32,11 @@ const UserPage = (props) => {
     const _user = useSelector(state => state.user);
     const _post = useSelector(state => state.post);
     const myKey = _user.user.userKey;
-    const pageUserKey = useParams().userKey;
+    const pageUserKey = parseInt(useParams().userKey);
     const pageUser=_post.userPostList
     // const [pageUser,setPageUser] = React.useState(false)
-    console.log(_post);
+    // console.log(_post);
+    console.log(myKey, pageUserKey);
     React.useEffect(()=>{
         dispatch(postActions.userPost(pageUserKey));
         dispatch(postActions.userBookmark());
@@ -45,18 +46,22 @@ const UserPage = (props) => {
 
     const [index,setIndex] = React.useState(1);
 
-
+    const logout= () => {
+        dispatch(userActions.logout());
+        navigate('/');
+        window.location.reload();
+    }
 
     return (
     <Grid wrap>
             <Header isUserPage userKey={pageUserKey} UserName={pageUser.nickname?pageUser.nickname:''}/>
-            <Grid is_flex flexDirection='column' alignItems='center' width="100%" padding="0" marginTop="80px">
-                
+            <Grid position='relative' is_flex flexDirection='column' alignItems='center' width="100%" padding="0" marginTop="80px">
+                <Button onClick={logout} fontSize='12px' theme='unfilled' width='60px' height='30px' right='20px' position='absolute'>로그아웃</Button>
                 <Image is_circle size='100' src={pageUser.userProfileImage?pageUser.userProfileImage:''}/>
     
-                <Text margin="5px 5px 0px 5px" fontSize="12px">
+                {/* <Text margin="5px 5px 0px 5px" fontSize="12px">
                     [호칭]
-                </Text>
+                </Text> */}
 
                 <Text margin="5px 5px 0px 5px" fontSize="24px">
                     {pageUser.nickname?pageUser.nickname:''}
@@ -66,13 +71,26 @@ const UserPage = (props) => {
                     {pageUser.introduction?pageUser.introduction:''}
                 </Text>
 
+                {myKey === pageUserKey?
+                <>
                 <Grid borderBottom='1px solid black' marginTop='10px' is_flex width='100%'>
-                    <Grid height='35px' width='33%' textAlign='center' onClick={()=>setIndex(1)}><Text fontSize='14px' fontWeight='500' >내 참여작</Text></Grid>
+                    <Grid height='35px' width='33%' textAlign='center' onClick={()=>setIndex(1)}><Text fontSize='14px' fontWeight='500' >참여작</Text></Grid>
                     <Grid height='35px' width='33%' textAlign='center' onClick={()=>setIndex(2)}><Text>북마크한 작품</Text></Grid>
                     <Grid height='35px' width='33%' textAlign='center' onClick={()=>setIndex(3)}><Text>좋아요한 작품</Text></Grid>
                 </Grid> 
                 <Grid marginTop='-3px' borderRadius='1px' width="34%" height='1px' borderTop='3px solid black' transform={'translate(' + (- 2 + index)*100 + '%)'} transition='transform 0.5s ease 0.1s'/>
+                </>
+                :
+                <>
+                <Grid borderBottom='1px solid black' marginTop='10px' justifyContent='center' is_flex width='100%'>
+                    <Grid height='35px' width='33%' textAlign='center' onClick={()=>setIndex(1)}><Text fontSize='14px' fontWeight='500' >참여작</Text></Grid>
+                </Grid> 
+                <Grid marginTop='-3px' borderRadius='1px' width="34%" height='1px' borderTop='3px solid black'/>
+                </>
+                }
 
+
+                
                 <Grid is_flex width='300%' justifyContent='space-around' transform={'translate(' + (2 - index) * (1 / 3) * 100 + '%)'} transition='transform 0.5s ease 0.1s'>
                     <Grid is_flex flexDirection='column' alignItems='center' width="30%" marginTop='32px' gap='24px'>
                         {pageUser.postResponseDtoList?pageUser.postResponseDtoList.map((v,i)=>{

@@ -67,14 +67,12 @@ function ModifyProfile() {
     }
 
     const finishEdit = ()=>{
-        console.log(nick);
         const userData={
             nickName: nick,
             introduction:intro
         }
-        console.log(userData);
         dispatch(userActions.editData(userData))
-        dispatch(postActions.userPost(user.user.userKey));
+        dispatch(postActions.userPost(_user.user.userKey));
         navigate(-1);
     }
 
