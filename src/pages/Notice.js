@@ -29,7 +29,7 @@ const Notice = () => {
     return(
         <>
     <Grid wrap>
-        <Header isMain/>
+        <Header/>
         <Grid margin="70px 0 0 0" borderBottom='1px solid black' is_flex width='390px' height="40px">
                     <Grid height='35px' width='195px' textAlign='center' onClick={()=>setIndex(1)}><Text color="gray">알림</Text></Grid>
                     <Grid height='35px' width='195px' textAlign='center' onClick={()=>setIndex(2)}><Text color="gray">공지&#183;이벤트</Text></Grid>
@@ -39,7 +39,7 @@ const Notice = () => {
         <Grid is_flex width='200%' justifyContent='space-around' transform={'translate(' + (1 - index)*50 + '%)'} transition='transform 0.5s ease 0.1s'>
             <Grid is_flex flexDirection='column' width='45%'>
                 {_user.noticeList?_user.noticeList.map((v,i)=>{
-                    return (<NoticeAlarm key={i} title={v.postTitle} postKey={v.postKey} src={v.postUrl} msg={v.message}/>)
+                    return (<NoticeAlarm key={i} title={v.postTitle} postKey={v.postKey} src={v.postUrl} msg={v.message.split('[알림]')[1]}/>)
                 }):''}
             </Grid>
             <Grid is_flex flexDirection='column' width='45%'>

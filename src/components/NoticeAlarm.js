@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate,useParams } from "react-router-dom";
 
 // import Elements
 import { Grid, Text, Image} from "../elements";
@@ -8,12 +9,13 @@ import { Grid, Text, Image} from "../elements";
 
 
 const NoticeAlarm = (props) => {
+    const navigate = useNavigate();
     
 
     return(
     
     <Grid>
-        <Grid is_flex width="100%" margin="0" height="80px" borderBottom="1px solid gray">
+        <Grid onClick={()=>{navigate(`/postdetail/${props.postKey}`)}} is_flex width="100%" margin="0" height="80px" borderBottom="1px solid gray">
             <Grid is_flex width="30px" height="79px" flexDirection="column" margin="0 0 0 10px" padding="0" justifyContent="center">
             <Image is_square backgroundColor="gray" src={props.src} width="27px" height="27px" padding="0"/>
             </Grid>

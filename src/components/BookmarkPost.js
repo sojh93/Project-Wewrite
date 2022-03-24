@@ -43,7 +43,7 @@ export default function BookmarkPost(props) {
     }
 
     return (
-        <Grid width={'calc((100% - 10px) / 3)'} is_flex flexDirection='column' alignItems='center'>
+        <Grid onClick={()=>{navigate(`/postdetail/${props.postKey}`)}} width={'calc((100% - 10px) / 3)'} is_flex flexDirection='column' alignItems='center'>
             <Image onClick={props.onClick} border='1px solid #C4C4C4' boxSizing ='border-box' borderRadius='5px' width='100%' height='150px' src={props.url}/>
 
             <Grid onClick={props.onClick} width='100%' height='26px' is_flex alignItems='flex-start'>
