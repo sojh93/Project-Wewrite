@@ -125,7 +125,7 @@ const Header = (props) => {
     return(
             <Grid >
                 <LoginBanner hide={alrt}/>
-                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFBBB" is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="420px" height='60px' margin='0'  >
+                <Grid zIndex='9' top="0px"  backgroundColor="#F9FAFBBB" is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="420px" height='60px' margin='0'  >
                     <Grid margin='10px' backgroundColor="#F9FAFB00" is_flex border="0">
                         <Image onClick={handleOpen} width='30px' height='30px' src="/Icon/menu_p.png"></Image>
                         <Modal
