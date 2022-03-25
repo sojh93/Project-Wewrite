@@ -38,7 +38,7 @@ const KakaoLogin = () => {
             grant_type : "authorization_code",
             client_id : "43268aa6f88af6282a341e3b61b9a761",
 //             redirect_uri : "http://localhost:3000/login/kakaoLogin",
-            redirect_uri : "https://main.d2l6bnge3hnh7g.amplifyapp.com/login/kakaoLogin",
+            redirect_uri : "https://wewrite.co.kr/login/kakaoLogin",
             code : router.search.split('=')[1],
             client_secret : "rPfOmfcisQud180j3Kyp9jxytSXQuTrH",
         }
