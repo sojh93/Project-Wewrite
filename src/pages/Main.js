@@ -55,7 +55,7 @@ function Main(props) {
 
     return (
         <>
-            <Grid wrap marginTop='0px'>
+            <Grid wrap marginTop='60px'>
             <Header isMain />
 
                 <Grid is_flex flexDirection='column' alignItems='center' margin='0'>
