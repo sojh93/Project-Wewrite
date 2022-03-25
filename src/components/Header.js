@@ -202,7 +202,7 @@ const Header = (props) => {
                     </Grid>
                     <Grid margin='10px' position='relative' backgroundColor="#F9FAFB00" is_flex border="0">
                         <Image onClick={()=>{_user.is_login?checkNotice():loginAlrt()}} width='24px' height='24px' src="/Icon/bell_p.png"></Image>
-                        <Grid position='absolute' width='10px' height='10px' backgroundColor='red' borderRadius='5px' top='10px' display={_user.user.alarmRead?'none':''}/>
+                        <Grid position='absolute' width='10px' height='10px' backgroundColor='red' borderRadius='5px' top='10px' display={_user.user.alaramRead?'none':''}/>
                     </Grid>
                 </Grid>
             </Grid>
@@ -212,7 +212,7 @@ const Header = (props) => {
     if(props.isDetail){
         return(
             <Grid>
-                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="420px" height='60px' margin='0'  >
                     <Grid margin='10px' onClick={()=>{navigate(-1)}} is_flex backgroundColor="#F9FAFB" border="0">
                         <Image  width='30px' height='30px' src="/Icon/left.png"></Image>
                     </Grid>
@@ -230,7 +230,7 @@ const Header = (props) => {
     if(props.isChangePassword){
         return(
             <Grid>
-                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="420px" height='60px' margin='0'  >
                     <Grid margin='10px' onClick={()=>{navigate(-1)}} is_flex backgroundColor="#F9FAFB" border="0">
                         <Image  width='30px' height='30px' src="/Icon/left.png"></Image>   
                     </Grid> 
@@ -250,7 +250,7 @@ const Header = (props) => {
     if(props.isUserPage){
         return(
             <Grid>
-                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="420px" height='60px' margin='0'  >
                     <Grid width='50px' height='50px' is_flex backgroundColor="#F9FAFB" border="0">
                             
                     </Grid>
@@ -269,7 +269,7 @@ const Header = (props) => {
     if(props.isEditUser){
         return(
             <Grid>
-                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="420px" height='60px' margin='0'  >
                     <Grid margin='10px' onClick={()=>{navigate(-1)}} is_flex backgroundColor="#F9FAFB" border="0">
                         <Image  width='30px' height='30px' src="/Icon/left.png"></Image>   
                     </Grid>
@@ -288,7 +288,7 @@ const Header = (props) => {
     if(props.isWrite){
         return(
             <Grid>
-                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="420px" height='60px' margin='0'  >
                     <Grid margin='10px' onClick={()=>{navigate(-1)}} is_flex backgroundColor="#F9FAFB" border="0">
                         <Image  width='30px' height='30px' src="/Icon/left.png"></Image>   
                     </Grid>
@@ -306,7 +306,7 @@ const Header = (props) => {
 
     return(
         <Grid>
-            <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+            <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="420px" height='60px' margin='0'  >
                 <Grid margin='10px' onClick={()=>{navigate(-1)}} is_flex backgroundColor="#F9FAFB" border="0">
                     <Tooltip title="뒤로가기"><Image  width='30px' height='30px' src="/Icon/left.png"></Image></Tooltip>    
                 </Grid>

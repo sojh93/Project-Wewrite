@@ -16,7 +16,7 @@ const LIKE_POST = "LIKE_POST";
 const BOOKMARK_POST = "BOOKMARK_POST";
 
 //action creatos
-const setPost = createAction(SET_POST, (postList,postType) => ({ postList,postType }));
+const setPost = createAction(SET_POST, (postList,postType,size,start) => ({ postList,postType,size,start }));
 const setOnePost = createAction(SET_ONE, (postData) => ({ postData }));
 const setUserPost = createAction(USER_POST, (postList) => ({ postList }));
 const like = createAction(LIKE, (postData) => ({ postData }));
@@ -28,6 +28,7 @@ const setUserBookmark = createAction(BOOKMARK_POST, (postList) => ({ postList })
 
 //initialState
 const initialState = {
+    paging : { start : null, next : null, size : 6, page : null},
     allPostList : [],
     recentPostList : [],
     recommendPostList : [],
@@ -307,6 +308,8 @@ export default handleActions(
         [SET_POST]: (state, action) =>
         produce(state, (draft) => {
             draft[`${action.payload.postType}PostList`] = [...action.payload.postList];
+            // draft.paging.page = action.payload.postType;
+            // draft.paging.start += action.payload.start;
         }),
         [SET_ONE]: (state, action) =>
         produce(state, (draft) => {

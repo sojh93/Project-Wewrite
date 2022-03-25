@@ -30,7 +30,6 @@ import Bottom from '../components/Bottom';
 import Books from '../components/Books';
 import BookCover from '../components/BookCover';
 import Popular from '../components/popular';
-import LoginBanner from '../components/LoginBanner';
 
 
 
@@ -100,7 +99,10 @@ function Main(props) {
                     </Grid>
                     <Image width='100%' height='83px' src='/banner/mainBanner.png'/>
                     <Grid width='100%' height='310px' marginTop='20px' is_flex flexDirection='column'>
-                        <Text margin='0px 10px' fontSize='24px' fontWeight='700'>새로운 이야기</Text>
+                        <Grid is_flex>
+                            <Text margin='0px 10px' fontSize='24px' fontWeight='700'>새로운 이야기</Text>
+                            <Text onClick={()=>{navigate('/postlist/recent')}} margin='13px 0 0 0' color="#888888" fontSize="14px">더보기 +</Text>
+                        </Grid>
                         <Swiper
                             style={{ height: '230px', width: 'calc(100vw - 20px)', minWidth: '340px', maxWidth: '400px', margin: '10px' }}
                             slidesPerView={2.75}
@@ -171,7 +173,10 @@ function Main(props) {
                     <Grid width='100%' height='10px' backgroundColor='#F9FAFB'/>
                     
                     <Grid width='100%' is_flex flexDirection='column'>
-                        <Text margin='0px 10px' fontSize='24px' fontWeight='700'>당신이 완성해주세요</Text>
+                    <Grid is_flex>
+                            <Text margin='0px 10px' fontSize='24px' fontWeight='700'>당신이 완성해주세요</Text>
+                            <Text onClick={()=>{navigate('/postlist/all')}} margin='13px 0 0 0' color="#888888" fontSize="14px">더보기 +</Text>
+                        </Grid>
                         <Swiper
                             style={{ height: '230px', width: 'calc(100vw - 20px)', minWidth: '340px', maxWidth: '400px', margin: '10px' }}
                             slidesPerView={2.75}
