@@ -344,6 +344,12 @@ export default handleActions(
                     v.postLikesCnt = action.payload.postData.totalLike
                 }else{return v}
             });
+            draft.themePostList.map((v,i)=>{
+                if(action.payload.postData.postId === v.postKey){
+                    v.postLikeClickersResponseDtoList = action.payload.postData.postLikeClickersResponseDtos;
+                    v.postLikesCnt = action.payload.postData.totalLike
+                }else{return v}
+            });
             if(draft.userPostList.postResponseDtoList)
             {draft.userPostList.postResponseDtoList.map((v,i)=>{
                 if(action.payload.postData.postId === v.postKey){
@@ -371,6 +377,12 @@ export default handleActions(
                 }else{return v}
             });
             draft.recommendPostList.map((v,i)=>{
+                if(action.payload.postKey === v.postKey){
+                    v.bookmarkClickUserKeyResDtoList = action.payload.postData.bookmarkClickUserKeyResDtos;
+                    v.bookmarkLikesCnt = action.payload.postData.bookmarkCnt
+                }else{return v}
+            });
+            draft.themePostList.map((v,i)=>{
                 if(action.payload.postKey === v.postKey){
                     v.bookmarkClickUserKeyResDtoList = action.payload.postData.bookmarkClickUserKeyResDtos;
                     v.bookmarkLikesCnt = action.payload.postData.bookmarkCnt
