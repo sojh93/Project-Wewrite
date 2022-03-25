@@ -343,7 +343,7 @@ export default handleActions(
                     v.postLikesCnt = action.payload.postData.totalLike
                 }else{return v}
             });}
-            if(draft.thisPost.postKey===action.payload.postKey){
+            if(draft.thisPost.postKey===action.payload.postData.postId){
                 draft.thisPost.postLikeClickersResponseDtoList = action.payload.postData.postLikeClickersResponseDtos;
                 draft.thisPost.postLikesCnt = action.payload.postData.totalLike
             }
