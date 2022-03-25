@@ -375,8 +375,7 @@ export default handleActions(
                     v.bookmarkLikesCnt = action.payload.postData.bookmarkCnt
                 }else{return v}
             });}
-            if(draft.thisPost.postKey===action.payload.postKey){
-                console.log(state.thisPost);
+            if(draft.thisPost.postKey===action.postData.postId){
                 draft.thisPost.bookmarkClickUserKeyResDtoList = action.payload.postData.bookmarkClickUserKeyResDtos;
                 draft.thisPost.bookmarkLikesCnt = action.payload.postData.bookmarkCnt
             }
