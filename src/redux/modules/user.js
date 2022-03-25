@@ -172,6 +172,7 @@ export default handleActions(
         produce(state, (draft) => {
             draft.is_login = false;
             draft.user = {};
+            window.location.assign('/')
         }),
         [SET_NOTICE]: (state, action) =>
         produce(state, (draft) => {
