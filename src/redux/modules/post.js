@@ -127,7 +127,6 @@ const getTheme=(theme,start=0,size=30) =>{
 const addPost=(postData) =>{
     return async function (dispatch,getState){
         const token = getCookie('WW_user');
-
         instance({
             method : "post",
             url : "/posts",
@@ -137,7 +136,16 @@ const addPost=(postData) =>{
                 'authorization' : token,
             }
         }).then(res=>{
-            console.log(res);
+            instance({
+                method : "get",
+                url : `/posts/incomplete?page=0&size=6`,
+                data : {},
+                headers : {
+                    "Content-Type": "application/json;charset-UTF-8"
+                }
+            }).then(res=>{
+                dispatch(setPost(res.data,'all'));
+            });
         });
     }
 }

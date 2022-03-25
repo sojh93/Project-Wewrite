@@ -345,15 +345,20 @@ function PostDetail(props) {
             </Grid>
             <Grid is_flex flexDirection='column' alignItems='center' margin="-4px 0 0 0" width='100%'>
                 <Grid margin='10px' width='90%'>
-                    {thisPost.categoryList ? thisPost.categoryList.map((v,i) => {
-                        return (
-                            <Chip margin='0 5px 0 0' key={i}>{v.category}</Chip>
-                        )
-                    }) : ''}
+                    <Grid is_flex justifyContent='space-between'>
+                        <Grid>
+                        {thisPost.categoryList ? thisPost.categoryList.map((v,i) => {
+                            return (
+                                <Chip margin='0 5px 0 0' key={i}>{v.category}</Chip>
+                            )
+                        }) : ''}
+                        </Grid>
+                    
+                    {thisPost.complete ?"":<Text margin="0">작성 가능 문단 수 {thisPost.paragraphResDtoList.length} / {thisPost.limitCnt}</Text>}
+                    </Grid>
 
                     <Grid is_flex justifyContent="space-between" alignItems="center" width='100%'>
                         <Text fontSize='24px'>{thisPost.title ? thisPost.title : ""}</Text>
-
                     </Grid>
                 </Grid>
 
