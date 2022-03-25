@@ -32,6 +32,9 @@ const UserPage = (props) => {
     // const [pageUser,setPageUser] = React.useState(false)
     // console.log(_post);
     console.log(myKey, pageUserKey);
+    if(pageUserKey !== pageUser.userKey){
+        dispatch(postActions.userPost(pageUserKey));
+    }
     React.useEffect(()=>{
         dispatch(postActions.userPost(pageUserKey));
         dispatch(postActions.userBookmark());
