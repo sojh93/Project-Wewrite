@@ -10,6 +10,7 @@ const Grid = ({
     kakao=false,
     wrap,
     notice,
+    className,
     ...props
 
 }) => {
@@ -46,7 +47,7 @@ const Grid = ({
         )
     }
     return(
-            <Div onClick={onClick} style={{...props}}>
+            <Div className={className} onClick={onClick} style={{...props}}>
                 {children}
             </Div>
 

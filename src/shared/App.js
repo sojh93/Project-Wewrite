@@ -6,7 +6,11 @@ import ReactGA from 'react-ga';
 
 //import CSS
 import './App.css';
+import '../CSS/Frame.css';
 import theme from '../theme/theme';
+
+import { Button, Grid, Input, Image, Text } from "../elements" 
+
 
 //import Pages
 import Main from "../pages/Main";
@@ -45,25 +49,32 @@ function App() {
   return (
     <React.Fragment>
       <ThemeProvider theme={theme}>
-        <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/login/kakaoLogin" element={<KakaoLogin />} />
-          <Route path="/clause" element={<Clause />} />
-          <Route path="/Signup" element={<Signup />} />
-          <Route path="/userpage/:userKey" element={<UserPage />} />
-          <Route path="/newslist" element={<NewsList />} />
-          <Route path="/postlist/:listType" element={<PostList />} />
-          <Route path="/themepage/:theme" element={<ThemePage />} />
-          <Route path="/write" element={<Write />} />
-          <Route path="/postDetail/:postKey" element={<PostDetail />} />
-          <Route path="/modifyprofile" element={<ModifyProfile />} />
-          <Route path="/changePassword" element={<ChangePassword />} />
-          <Route path="/withdrawMember" element={<WithdrawMember />} />
-          <Route path="/socket" element={<Socket />} />
-          <Route path="/notice" element={<Notice />} />
+        <div className="Frame">
+        <Image position='relative' backgroundSize='contain' backgroundRepeat='no-repeat' width='100vw' height='100vh' src='/background.png'/>
+        </div>
+        <div className="screen" >
+          <Grid borderRadius='10px' boxSizing='border-box' border='5px solid #beb8ff'>
+            <Routes>
+              <Route path="/" element={<Main />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/login/kakaoLogin" element={<KakaoLogin />} />
+              <Route path="/clause" element={<Clause />} />
+              <Route path="/Signup" element={<Signup />} />
+              <Route path="/userpage/:userKey" element={<UserPage />} />
+              <Route path="/newslist" element={<NewsList />} />
+              <Route path="/postlist/:listType" element={<PostList />} />
+              <Route path="/themepage/:theme" element={<ThemePage />} />
+              <Route path="/write" element={<Write />} />
+              <Route path="/postDetail/:postKey" element={<PostDetail />} />
+              <Route path="/modifyprofile" element={<ModifyProfile />} />
+              <Route path="/changePassword" element={<ChangePassword />} />
+              <Route path="/withdrawMember" element={<WithdrawMember />} />
+              <Route path="/socket" element={<Socket />} />
+              <Route path="/notice" element={<Notice />} />
 
-        </Routes>
+            </Routes>
+          </Grid>
+        </div>
       </ThemeProvider>
     </React.Fragment>
   );
