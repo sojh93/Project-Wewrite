@@ -5,10 +5,11 @@ import App from './shared/App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";
 import {BrowserRouter} from "react-router-dom";
-
+import ReactGA from 'react-ga'
 
 import store from "./redux/configureStore";
 
+ReactGA.initialize("UA-223927553-2");
 
 ReactDOM.render(
   <Provider store={store}>
