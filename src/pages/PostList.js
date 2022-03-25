@@ -36,13 +36,14 @@ function PostList() {
 
     const [kind, setKind] = React.useState('recent');
 
-
+    window.scrollTo(0,0)
     React.useEffect(() => {
         dispatch(postActions.getRecent());
         dispatch(postActions.getRecommend());
         dispatch(postActions.getAll());
     }, []);
     
+    React.useEffect(() => {window.scrollTo(0,0)}, [kind,listType]);
 
 
     return (

@@ -40,7 +40,7 @@ export default function Bottom(props) {
                 <Grid marginBottom='45px' width='60px' height='60px' borderRadius='30px' backgroundColor='#6454FF' is_flex alignItems='center' justifyContent='center' fontSize='40px'>
                     <Image width='30px' height='30px' src='/Icon/Plus.png' onClick={()=>_user.is_login?navigate(`/write`):loginAlrt()}/>
                 </Grid>
-                <Grid is_flex justifyContent='center'  backgroundColor='#F9FAFB' width='50px'>{props.thisPage==="postList"?    <Image width='37px' height='40px'  onClick={()=>navigate('/postlist/all')} src='/Icon/incomplete.png'/>      : <Image onClick={()=>navigate('/postlist/all')} width='37px' height='40px' src='/Icon/incomplete.png'/>}</Grid>
+                <Grid is_flex justifyContent='center'  backgroundColor='#F9FAFB' width='50px'>{props.thisPage==="postList"?    <Image width='37px' height='40px'  onClick={()=>navigate('/postlistincomplete')} src='/Icon/incomplete.png'/>      : <Image onClick={()=>navigate('/postlist/all')} width='37px' height='40px' src='/Icon/incomplete.png'/>}</Grid>
                 <Grid is_flex justifyContent='center'  backgroundColor='#F9FAFB' width='50px'><Image onClick={()=>_user.is_login?navigate(`/userpage/${_user.user.userKey}`):loginAlrt()} width='46px' height='40px' src='/Icon/myPage.png'/></Grid>
             </Grid>
             {/* <Grid height='100px' width='100%' backgroundColor='#F9FAFB'/> */}

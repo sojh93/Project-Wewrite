@@ -29,6 +29,7 @@ import WithdrawMember from "../pages/withdrawMember";
 import Socket from '../components/Socket'
 import ThemePage from "../pages/ThemePage";
 import Notice from "../pages/Notice";
+import PostListIncomplete from '../pages/PostListIncomplete'
 
 ReactGA.event({
   category: 'User',
@@ -53,7 +54,7 @@ function App() {
           <Image position='relative' backgroundSize='contain' backgroundRepeat='no-repeat' width='100%' height='100%' src='/background.png'/>
         </div>
         <div className="screen" >
-          <Grid position='relative' overflow='hidden' is_flex  borderRadius='0px' height='90vh' boxSizing='border-box'>
+          <Grid position='relative' overflow='hidden' is_flex  borderRadius='0px' height='95vh' boxSizing='border-box'>
             <Routes>
               <Route path="/" element={<Main />} />
               <Route path="/login" element={<Login />} />
@@ -63,6 +64,7 @@ function App() {
               <Route path="/userpage/:userKey" element={<UserPage />} />
               <Route path="/newslist" element={<NewsList />} />
               <Route path="/postlist/:listType" element={<PostList />} />
+              <Route path="/PostListIncomplete" element={<PostListIncomplete />} />
               <Route path="/themepage/:theme" element={<ThemePage />} />
               <Route path="/write" element={<Write />} />
               <Route path="/postDetail/:postKey" element={<PostDetail />} />
