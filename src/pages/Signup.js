@@ -224,7 +224,7 @@ function Signup() {
 
 
     const nickChange = (e) => {
-        let _reg = /^[-_.!0-9a-zA-Z]{6,15}$/;
+        let _reg = /^[-_.@!0-9a-zA-Z]{2,15}$/;
         setNick(e.target.value);
         setNickCant(false);
         setNickCheck(false);
@@ -234,7 +234,7 @@ function Signup() {
 
 
     const pwdChange = (e) => {
-        let _reg = /^[-_.!0-9a-zA-Z]{6,15}$/;
+        let _reg = /^[-_.@!0-9a-zA-Z]{6,15}$/;
         setPwd(e.target.value);
         setPwdFormCheck(false);
         keyPressPwd(_reg.test(e.target.value));
@@ -363,11 +363,10 @@ function Signup() {
                         />
                         <Grid is_flex flexDirection='column' fontSize="8px" alignItems='flex-start' width="100%" padding="0">
                             <Text margin="0">
-                                ※ 10~20자 사이로 비밀번호를 생성해주세요.
+                                ※ 6~15자 사이로 비밀번호를 생성해주세요.
                             </Text>
                             <Text margin="0">
-                                ※ 대/소문자, 숫자, 특수문자 등 2개 이상을
-                                사용해주세요.
+                                ※ 대/소문자, 숫자, 특수문자(!,@,_) 사용하여 지정주세요.
                             </Text>
                         </Grid>
                         <Text display={pwdFormCheck&&pwdForm?'':'none'} margin="0" color='#6454FF' fontWeight='400' fontSize='14px'>사용가능한 비밀번호입니다.</Text>
@@ -406,7 +405,7 @@ function Signup() {
                         </Text>
                     </Grid>
 
-                    <Grid
+                    {/* <Grid
                         is_flex
                         padding="10px"
                         margin="5px 0 0 0"
@@ -427,7 +426,7 @@ function Signup() {
                                 setAgree3(true);
                             }}
                         />
-                    </Grid>
+                    </Grid> */}
                     <Grid
                         is_flex
                         flexDirection="column"
