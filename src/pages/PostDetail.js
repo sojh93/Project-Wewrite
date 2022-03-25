@@ -354,7 +354,7 @@ function PostDetail(props) {
                         }) : ''}
                         </Grid>
                     
-                    {thisPost.complete?"":<Text margin="0">작성 가능 문단 수 {thisPost.paragraphResDtoList.length?thisPost.paragraphResDtoList.length:""} / {thisPost.limitCnt?thisPost.limitCnt:""}</Text>}
+                    {thisPost.complete?"":<Text margin="0">작성 가능 문단 수 {thisPost.paragraphResDtoList?thisPost.paragraphResDtoList.length:""} / {thisPost.limitCnt?thisPost.limitCnt:""}</Text>}
                     </Grid>
 
                     <Grid is_flex justifyContent="space-between" alignItems="center" width='100%'>
