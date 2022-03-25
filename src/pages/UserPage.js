@@ -46,7 +46,7 @@ const UserPage = (props) => {
 
     const logout= () => {
         dispatch(userActions.logout());
-        setTimeout(()=>{navigate('/');},500)
+        setTimeout(()=>{navigate('/');},300)
     }
 
     return (

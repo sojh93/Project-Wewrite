@@ -33,7 +33,7 @@ export default function Bottom(props) {
     return (
         <>
         <LoginBanner hide={alrt}/>
-        <Grid zIndex='9' position="absolute" bottom="-0px" borderRadius="10px 10px 0 0" >
+        <Grid zIndex='9' position="absolute" bottom="0px" borderRadius="10px 10px 0 0" >
             <Grid is_flex backgroundColor='#F9FAFB' borderRadius="10px 10px 0 0" alignItems="center" color='#7E7E7E' justifyContent="space-around" width="100vw" minWidth ="360px" maxWidth ="420px" height='60px'>
                 <Grid is_flex justifyContent='center' backgroundColor='#F9FAFB' width='50px'>{props.thisPage==="main"?       <Image width='25px' height='40px' src='/Icon/Main.png'/>             : <Image onClick={()=>navigate('/')} width='25px' height='40px' src='/Icon/Main.png'/>}</Grid>
                 <Grid is_flex justifyContent='center'  backgroundColor='#F9FAFB' width='50px'>{props.thisPage==="book"?       <Image width='37px' height='40px' src='/Icon/complete.png'/>      : <Image onClick={()=>navigate('/postlist/recent')} width='37px' height='40px' src='/Icon/complete.png'/>}</Grid>
