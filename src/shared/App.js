@@ -53,7 +53,7 @@ function App() {
           <Image position='relative' backgroundSize='contain' backgroundRepeat='no-repeat' width='100%' height='100%' src='/background.png'/>
         </div>
         <div className="screen" >
-          <Grid is_flex  borderRadius='0px' boxSizing='border-box' borderRight='0px solid #beb8ff' borderLeft='0px solid #beb8ff'>
+          <Grid position='relative' overflow='hidden' is_flex  borderRadius='0px' height='90vh' boxSizing='border-box'>
             <Routes>
               <Route path="/" element={<Main />} />
               <Route path="/login" element={<Login />} />

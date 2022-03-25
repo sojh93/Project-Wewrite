@@ -202,7 +202,7 @@ const Header = (props) => {
                     </Grid>
                     <Grid margin='10px' position='relative' backgroundColor="#F9FAFB00" is_flex border="0">
                         <Image onClick={()=>{_user.is_login?checkNotice():loginAlrt()}} width='24px' height='24px' src="/Icon/bell_p.png"></Image>
-                        <Grid position='absolute' width='10px' height='10px' backgroundColor='red' borderRadius='5px' top='10px' display={_user.user.alaramRead?'none':''}/>
+                        <Grid position='absolute' width='10px' height='10px' backgroundColor='red' borderRadius='5px' top='10px' display={_user.user.alaramRead?'none':_user.is_login?'':'none'}/>
                     </Grid>
                 </Grid>
             </Grid>
