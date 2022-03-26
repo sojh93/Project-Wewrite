@@ -146,6 +146,8 @@ const addPost=(postData) =>{
             }).then(res=>{
                 dispatch(setPost(res.data,'all'));
             });
+        }).catch(err=>{
+            window.alert("게시글 작성이 실패하였습니다.");
         });
     }
 }
