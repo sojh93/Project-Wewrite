@@ -139,6 +139,9 @@ function PostDetail(props) {
         console.log('done');
     }
     const addComment = () =>{
+        if(comment===''){
+            return;
+        }
         dispatch(postActions.addComment(comment,postKey));
         commentRef.current.value='';
         setComment('');
