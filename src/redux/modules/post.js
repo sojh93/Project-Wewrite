@@ -306,7 +306,17 @@ const addComment=(comment,post_id) =>{
                 'authorization' : token,
             }
         }).then(res=>{
-            console.log(res.data);
+            instance({
+                method : "get",
+                url : `/posts/${post_id}`,
+                data : {},
+                headers : {
+                    "Content-Type": "application/json;charset-UTF-8",
+                    'authorization' : token,
+                }
+            }).then(res=>{
+                dispatch(setOnePost(res.data));
+            });
         })
     }
 }
