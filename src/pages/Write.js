@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import _, { set } from "lodash";
+import imageCompression from "browser-image-compression";
 
 //import Actions
 import { actionCreators as userActions } from '../redux/modules/user';
@@ -41,6 +42,7 @@ function Write() {
     var foo = new File(["foo"], "foo.txt", {
         type: "text/plain",
     });
+    const [upload,setUpload] =React.useState(foo);
     
     //lodash
     const debounce = _.debounce((k) => setSentenceCnt(k), 500);
@@ -71,16 +73,34 @@ function Write() {
     const refFileInput = React.useRef();
     const [preview,setPreview] = React.useState(null);
 
+
+    const actionImgCompress = async (fileSrc) => {
+        console.log("압축 시작");
+    
+        const options = {
+            maxSizeMB: 0.2,
+            maxWidthOrHeight: 1920,
+            useWebWorker: true,
+        };
+        try {
+          // 압축 결과
+            const compressedFile = await imageCompression(fileSrc, options);
+            console.log(compressedFile);
+            setUpload(compressedFile);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    
     const selectFile = (e) =>{
         const reader = new FileReader();
         const file = refFileInput.current.files[0];
+        actionImgCompress(file);
         reader.readAsDataURL(file);
         reader.addEventListener("load",function () {
             setPreview(reader.result);
         })
-
-        console.log('헷')
-
+        
     }
 
     const openModal = ()=>{
@@ -89,7 +109,7 @@ function Write() {
 
     const submitPost =()=>{
         
-        
+        console.log(upload);
 
         const postData = new FormData();
         postData.append("title", title);
@@ -97,12 +117,12 @@ function Write() {
         postData.append("limitCnt", sentenceCnt);
         postData.append("category", category);
         postData.append("paragraph", sentence);
-        postData.append("postImageUrl",refFileInput.current.files[0]?refFileInput.current.files[0]:foo);
+        postData.append("postImageUrl",upload);
 
         console.log(sentence);
         dispatch(postActions.addPost(postData));
         dispatch(postActions.getAll())
-        navigate('/');
+        setTimeout(()=>{navigate('/')},500);
     }
 
 
