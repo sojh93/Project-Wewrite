@@ -86,7 +86,7 @@ function Write() {
         const blob = new Blob([ia], {
             type: "image/jpeg"
         });
-        const file = new File([blob], "image.jpg");
+        const file = new File([blob], `${_user.user.userKey}${Math.random()* 100 % 100}.jpg`);
         
         console.log(file);
         setUpload(file);
