@@ -20,6 +20,9 @@ import { Button, Grid, Input, Image, Text } from "../elements";
 //import Actions
 import { actionCreators as userActions } from "../redux/modules/user";
 
+//API
+import instance from "../shared/Request";
+import { setCookie } from "../shared/Cookie";
 
 
 function Login() {
@@ -28,16 +31,36 @@ function Login() {
 
     const _user = useSelector((state) => state.user);
 
+    const [loginFail, setLoginFail]=React.useState(false);
+
     const handleSubmit = (event) => {
         event.preventDefault();
+
         const data = new FormData(event.currentTarget);
 
         const userInfo = {
             username: data.get("loginID"),
             password: data.get("password"),
         };
-        dispatch(userActions.login(userInfo));
-    };
+
+
+        instance({
+            method : "post",
+            url : "/user/login",
+            data : userInfo,
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8"
+            }
+        }).then(res=>{
+            const token = res.headers.authorization;
+            setCookie('WW_user',token);
+            window.location.assign('/');
+        }).catch(err =>{
+            setLoginFail(true)
+        });
+        
+    }
+
 
     return (
         <Grid wrap>
@@ -74,6 +97,8 @@ function Login() {
                             margin: "30px 0",
                         }}
                         margin="normal"
+                        error={loginFail}
+                        
                         size="small"
                         fullWidth
                         id="loginID"
@@ -89,6 +114,8 @@ function Login() {
                             height: "40px",
                             bgcolor: "white",
                         }}
+                        error={loginFail}
+                        helperText={loginFail?'유효하지 않은 아이디 혹은 비밀번호입니다.':''}
                         margin="normal"
                         size="small"
                         //required
