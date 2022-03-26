@@ -38,6 +38,9 @@ function Write() {
     const navigate = useNavigate();
 
     const testRef = React.useRef();
+    var foo = new File(["foo"], "foo.txt", {
+        type: "text/plain",
+    });
     
     //lodash
     const debounce = _.debounce((k) => setSentenceCnt(k), 500);
@@ -85,7 +88,8 @@ function Write() {
     }
 
     const submitPost =()=>{
-
+        
+        
 
         const postData = new FormData();
         postData.append("title", title);
@@ -93,7 +97,7 @@ function Write() {
         postData.append("limitCnt", sentenceCnt);
         postData.append("category", category);
         postData.append("paragraph", sentence);
-        postData.append("postImageUrl",refFileInput.current.files[0]);
+        postData.append("postImageUrl",refFileInput.current.files[0]?refFileInput.current.files[0]:foo);
 
         console.log(sentence);
         dispatch(postActions.addPost(postData));
@@ -111,7 +115,7 @@ function Write() {
                 <Grid>
                     <img src={preview?preview:'/default_img/inputImage.png'} width="130px" height="150px"/>
                     <Button onClick={()=>{refFileInput.current.click()}} border="1px solid #dbdbdb" width = "130px" height="30px" fontSize="12px" fontWeight="600">표지 변경하기</Button>
-                    <input ref={refFileInput} onChange={selectFile} type="file" accept="image/*,.jpg,.png,.fif,.jfif,.jpeg,.tif,.webp" style={{display:'none'}}/>
+                    <input ref={refFileInput} onChange={selectFile} type="file" accept="image/*,.heif,.jpg,.png,.fif,.jfif,.jpeg,.tif,.webp" style={{display:'none'}}/>
                 </Grid>
 
                 <Grid width='90%'>
