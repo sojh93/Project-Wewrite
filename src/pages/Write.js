@@ -37,6 +37,7 @@ const style = {
 function Write() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const _user = useSelector(state=>state.user);
 
     const testRef = React.useRef();
     var foo = new File(["foo"], "foo.txt", {
@@ -73,6 +74,23 @@ function Write() {
     const refFileInput = React.useRef();
     const [preview,setPreview] = React.useState(null);
 
+    const handlingDataForm = async dataURI => {
+        // dataURL 값이 data:image/jpeg:base64,~~~~~~~ 이므로 ','를 기점으로 잘라서 ~~~~~인 부분만 다시 인코딩
+        const byteString = atob(dataURI.split(",")[1]);
+        // Blob를 구성하기 위한 준비, 이 내용은 저도 잘 이해가 안가서 기술하지 않았습니다.
+        const ab = new ArrayBuffer(byteString.length);
+        const ia = new Uint8Array(ab);
+        for (let i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+        const blob = new Blob([ia], {
+            type: "image/jpeg"
+        });
+        const file = new File([blob], "image.jpg");
+        
+        console.log(file);
+        setUpload(file);
+    };
 
     const actionImgCompress = async (fileSrc) => {
         console.log("압축 시작");
@@ -85,8 +103,18 @@ function Write() {
         try {
           // 압축 결과
             const compressedFile = await imageCompression(fileSrc, options);
-            console.log(compressedFile);
-            setUpload(compressedFile);
+
+            const reader = new FileReader();
+            reader.readAsDataURL(compressedFile);
+            reader.onloadend = () => {
+                // 변환 완료!
+                const base64data = reader.result;
+                // formData 만드는 함수
+                handlingDataForm(base64data);
+            };
+
+
+            
         } catch (error) {
             console.log(error);
         }
