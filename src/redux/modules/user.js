@@ -9,12 +9,19 @@ import { set } from "lodash";
 //action
 const SET_USER = "SET_USER";
 const DEL_USER = "DEL_USER";
+const SET_NOTICE = "SET_NOTICE";
 const SUB = "SUB";
+const NOTICE = "NOTICE";
+const NOTICE_CHECK = "NOTICE_CHECK";
 
 //action creatos
 const set_user = createAction(SET_USER, (user_data) => ({ user_data }));
 const del_user = createAction(DEL_USER, () => ({  }));
+const setNotice = createAction(SET_NOTICE, (noticeList) => ({ noticeList }));
 const sub = createAction(SUB, (noti) => ({noti}));
+const AlrtNotice = createAction(NOTICE, () => ({}));
+const AlrtNoticeCheck = createAction(NOTICE_CHECK, () => ({}));
+
 
 //initialState
 const initialState = {
@@ -98,6 +105,7 @@ const check=() =>{
 const logout=() =>{
     return async function (dispatch,getState){
         deleteCookie('WW_user');
+        dispatch(del_user());
     }
 }
 const editData=(userData) =>{
@@ -117,12 +125,40 @@ const editData=(userData) =>{
         });
     }
 }
+const notice=(noti) =>{
+    return async function (dispatch,getState){
+        const token = getCookie('WW_user');
+
+        instance({
+            method : "get",
+            url : "/api/alarm?page=0&size=20",
+            data : {},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8",
+                'authorization' : token,
+            }
+        }).then(res=>{
+            dispatch(setNotice(res.data));
+        });
+    }
+}
+
 const subNoti=(noti) =>{
     return async function (dispatch,getState){
         dispatch(sub(noti));
     }
 }
 
+const Alrt=() =>{
+    return async function (dispatch,getState){
+        dispatch(AlrtNotice());
+    }
+}
+const AlrtCheck=() =>{
+    return async function (dispatch,getState){
+        dispatch(AlrtNoticeCheck());
+    }
+}
 
 //reducer
 export default handleActions(
@@ -137,9 +173,21 @@ export default handleActions(
             draft.is_login = false;
             draft.user = {};
         }),
+        [SET_NOTICE]: (state, action) =>
+        produce(state, (draft) => {
+            draft.noticeList = [...action.payload.noticeList];
+        }),
         [SUB]: (state, action) =>
         produce(state, (draft) => {
             draft.sub = action.payload.noti;
+        }),
+        [NOTICE]: (state, action) =>
+        produce(state, (draft) => {
+            draft.user.alarmRead = false;
+        }),
+        [NOTICE_CHECK]: (state, action) =>
+        produce(state, (draft) => {
+            draft.user.alarmRead = true;
         }),
     },
     initialState
@@ -155,6 +203,9 @@ const actionCreators = {
     editData,
     nickCheck,
     subNoti,
+    notice,
+    Alrt,
+    AlrtCheck,
 };
 
 export { actionCreators };

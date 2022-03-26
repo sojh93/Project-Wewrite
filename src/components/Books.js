@@ -12,7 +12,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { actionCreators as postActions } from '../redux/modules/post';
 
-const Books = (props) => {
+const Books = React.memo((props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -51,6 +51,6 @@ const Books = (props) => {
         </Grid>
         
     )
-}
+})
 
 export default Books;

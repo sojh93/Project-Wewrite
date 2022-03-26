@@ -2,8 +2,8 @@ import axios from "axios";
 
 const instance = axios.create({
     // baseURL: "https://binscot.shop/",
-    // baseURL: "http://13.209.70.1/",
-    baseURL: "http://3.34.179.104/",
+    baseURL: "http://13.209.70.1/",
+    // baseURL: "http://3.34.179.104/",
     headers: {
         "content-type": "application/json;charset-UTF-8",
         accept: "application/json,",
@@ -11,3 +11,4 @@ const instance = axios.create({
 });
 
 export default instance;
+

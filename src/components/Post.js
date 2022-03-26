@@ -18,7 +18,7 @@ import { Button, Grid, Input, Image, Text,Chip } from "../elements"
 //import Actions
 import { actionCreators as postActions } from '../redux/modules/post';
 
-export default function Post(props) {
+const Post = React.memo((props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -72,5 +72,6 @@ export default function Post(props) {
             
         </Grid>
     );
-} 
+})
 
+export default Post;

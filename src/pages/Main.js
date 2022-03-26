@@ -41,19 +41,22 @@ function Main(props) {
     const _user = useSelector(state => state.user);
     const _post = useSelector(state => state.post);
 
+    console.log(_user);
+    console.log(_post);
 
     React.useEffect(() => {
 
-        dispatch(postActions.getAll())
-        dispatch(postActions.getRecent())
-        dispatch(postActions.getRecommend())
+        dispatch(postActions.getAll(0,6));
+        dispatch(postActions.getRecent(0,6));
+        dispatch(postActions.getRecommend(0,6));
+        dispatch(postActions.getBest());
 
     }, []);
 
     return (
         <>
             <Header isMain />
-            <Grid wrap>
+            <Grid wrap marginTop='60px'>
 
                 <Grid is_flex flexDirection='column' alignItems='center' margin='0'>
 
@@ -82,6 +85,9 @@ function Main(props) {
                             className="mySwiper"
                         >
                             {_post.recommendPostList.map((v, i) => {
+                                if(i>5){
+                                    return null;
+                                }
                                 return (
                                     <SwiperSlide key={v.postKey}>
                                         <BookCover onClick={() => { navigate(`/PostDetail/${v.postKey}`) }} category={v.categoryList} title={v.title} para={v.paragraphResList[0].paragraph} src={v.postImageUrl} key={i} postKey={v.postKey} />
@@ -93,9 +99,12 @@ function Main(props) {
                     </Grid>
                     <Image width='100%' height='83px' src='/banner/mainBanner.png'/>
                     <Grid width='100%' height='310px' marginTop='20px' is_flex flexDirection='column'>
-                        <Text margin='0px 10px' fontSize='24px' fontWeight='700'>새로운 이야기</Text>
+                        <Grid is_flex>
+                            <Text margin='0px 10px' fontSize='24px' fontWeight='700'>새로운 이야기</Text>
+                            <Text onClick={()=>{navigate('/postlist/recent')}} margin='13px 0 0 0' color="#888888" fontSize="14px">더보기 +</Text>
+                        </Grid>
                         <Swiper
-                            style={{ height: '230px', width: 'calc(100vw - 20px)', minWidth: '340px', maxWidth: '370px', margin: '10px' }}
+                            style={{ height: '230px', width: 'calc(100vw - 20px)', minWidth: '340px', maxWidth: '400px', margin: '10px' }}
                             slidesPerView={2.75}
                             spaceBetween={20}
                             freeMode={true}
@@ -127,9 +136,12 @@ function Main(props) {
                     <Grid width='100%' backgroundColor='#E0E0E0' height='500px' is_flex flexDirection='column'>
                         <Text margin='10px' marginTop='30px' fontSize='24px' fontWeight='700'>당신에게 추천해요</Text>
                         <Grid backgroundColor='#E0E0E0' width='100%' is_flex flexDirection='column' alignItems='center' gap='20px'>
-                            <Popular title="test"></Popular>
-                            <Popular title="test"></Popular>
-                            <Popular title="test"></Popular>
+                            {_post.bestPostList?_post.bestPostList.map((v,i)=>{
+                                return (
+                                    <Popular key={i} title={v.title} postKey={v.postKey} comment={v.commentList[0].comment}></Popular>
+                                )
+                            }):''}
+
                         </Grid>
                         {/* <Swiper
                             style={{ height: '230px', width: 'calc(100vw - 20px)', minWidth: '340px', maxWidth: '370px', margin: '10px' }}
@@ -161,9 +173,12 @@ function Main(props) {
                     <Grid width='100%' height='10px' backgroundColor='#F9FAFB'/>
                     
                     <Grid width='100%' is_flex flexDirection='column'>
-                        <Text margin='0px 10px' fontSize='24px' fontWeight='700'>당신이 완성해주세요</Text>
+                    <Grid is_flex>
+                            <Text margin='0px 10px' fontSize='24px' fontWeight='700'>당신이 완성해주세요</Text>
+                            <Text onClick={()=>{navigate('/postlist/all')}} margin='13px 0 0 0' color="#888888" fontSize="14px">더보기 +</Text>
+                        </Grid>
                         <Swiper
-                            style={{ height: '230px', width: 'calc(100vw - 20px)', minWidth: '340px', maxWidth: '370px', margin: '10px' }}
+                            style={{ height: '230px', width: 'calc(100vw - 20px)', minWidth: '340px', maxWidth: '400px', margin: '10px' }}
                             slidesPerView={2.75}
                             spaceBetween={20}
                             freeMode={true}

@@ -12,31 +12,41 @@ const LIKE = "LIKE";
 const MARK ="MARK";
 const USER_POST = "USER_POST";
 const LIKE_PARA = "LIKE_PARA";
+const LIKE_POST = "LIKE_POST";
+const BOOKMARK_POST = "BOOKMARK_POST";
 
-//action creators
-const setPost = createAction(SET_POST, (postList,postType) => ({ postList,postType }));
+//action creatos
+const setPost = createAction(SET_POST, (postList,postType,size,start) => ({ postList,postType,size,start }));
 const setOnePost = createAction(SET_ONE, (postData) => ({ postData }));
 const setUserPost = createAction(USER_POST, (postList) => ({ postList }));
 const like = createAction(LIKE, (postData) => ({ postData }));
 const mark = createAction(MARK, (postData,postKey) => ({ postData,postKey }));
 const like_Para = createAction(LIKE_PARA, (postData) => ({ postData }));
+const like_Post = createAction(LIKE_POST, (postList) => ({ postList }));
+const setUserBookmark = createAction(BOOKMARK_POST, (postList) => ({ postList }));
+
 
 //initialState
 const initialState = {
+    paging : { start : null, next : null, size : 6, page : null},
     allPostList : [],
     recentPostList : [],
     recommendPostList : [],
+    bestPostList : [],
+    themePostList : [],
     userPostList : {},
+    bookmarkList : [],
+    likeList : [],
     thisPost : {postKey:null},
 };
 
 
 //middleware actions
-const getAll=() =>{
+const getAll=(start=0,size=30) =>{
     return async function (dispatch,getState){
         instance({
             method : "get",
-            url : "/posts/incomplete?page=0&size=30",
+            url : `/posts/incomplete?page=${start}&size=${size}`,
             data : {},
             headers : {
                 "Content-Type": "application/json;charset-UTF-8"
@@ -49,11 +59,11 @@ const getAll=() =>{
     }
 }
 
-const getRecent=() =>{
+const getRecent=(start=0,size=30) =>{
     return async function (dispatch,getState){
         instance({
             method : "get",
-            url : "/posts/recent?page=0&size=30",
+            url : `/posts/recent?page=${start}&size=${size}`,
             data : {},
             headers : {
                 "Content-Type": "application/json;charset-UTF-8"
@@ -65,17 +75,51 @@ const getRecent=() =>{
         });
     }
 }
-const getRecommend=() =>{
+const getRecommend=(start=0,size=30) =>{
     return async function (dispatch,getState){
         instance({
             method : "get",
-            url : "/posts/recommend?page=0&size=30",
+            url : `/posts/recommend?page=${start}&size=${size}`,
             data : {},
             headers : {
                 "Content-Type": "application/json;charset-UTF-8"
             }
         }).then(res=>{
             dispatch(setPost(res.data,'recommend'));
+        });
+    }
+}
+
+const getBest=() =>{
+    return async function (dispatch,getState){
+        instance({
+            method : "get",
+            url : "/posts/viewMain",
+            data : {},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8"
+            }
+        }).then(res=>{
+            dispatch(setPost(res.data,'best'));
+        });
+    }
+}
+
+
+const getTheme=(theme,start=0,size=30) =>{
+    return async function (dispatch,getState){
+        console.log(theme);
+        instance({
+            method : "post",
+            url : "/category/posts?page=0&size=30",
+            data : {
+                category : theme
+                },
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8"
+            }
+        }).then(res=>{
+            dispatch(setPost(res.data,'theme'));
         });
     }
 }
@@ -154,6 +198,23 @@ const markPost=(postKey) =>{
         });
     }
 }
+const likePostList=(postKey) =>{
+    return async function (dispatch,getState){
+        const token = getCookie('WW_user');
+        instance({
+            method : "get",
+            url : `/posts/viewMyLikesPost?page=0&size=30`,
+            data : {},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8",
+                'authorization' : token,
+            }
+        }).then(res=>{
+            dispatch(like_Post(res.data));
+            console.log(res.data);
+        })
+    }
+}
 
 const userPost=(pageUserKey) =>{
     return async function (dispatch,getState){
@@ -167,6 +228,23 @@ const userPost=(pageUserKey) =>{
         }).then(res=>{
             dispatch(setUserPost(res.data));
             console.log(res.data);
+        })
+    }
+}
+
+const userBookmark=() =>{
+    return async function (dispatch,getState){
+        const token = getCookie('WW_user');
+        instance({
+            method : "get",
+            url : `/bookmark?page=0&size=30`,
+            data : {},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8",
+                'authorization' : token,
+            }
+        }).then(res=>{
+            dispatch(setUserBookmark(res.data));
         })
     }
 }
@@ -193,6 +271,7 @@ const likePara=(paragraphKey) =>{
 const completePara=(postKey,category) =>{
     return async function (dispatch,getState){
         const token = getCookie('WW_user');
+        console.log("카테고리",category);
         instance({
             method : "patch",
             url : `/posts/complete/${postKey}`,
@@ -207,12 +286,30 @@ const completePara=(postKey,category) =>{
     }
 }
 
+const addComment=(comment,post_id) =>{
+    return async function (dispatch,getState){
+        const token = getCookie('WW_user');
+        instance({
+            method : "post",
+            url : `/comment/${post_id}`,
+            data : {comment},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8",
+                'authorization' : token,
+            }
+        }).then(res=>{
+            console.log(res.data);
+        })
+    }
+}
 //reducer
 export default handleActions(
     {
         [SET_POST]: (state, action) =>
         produce(state, (draft) => {
             draft[`${action.payload.postType}PostList`] = [...action.payload.postList];
+            // draft.paging.page = action.payload.postType;
+            // draft.paging.start += action.payload.start;
         }),
         [SET_ONE]: (state, action) =>
         produce(state, (draft) => {
@@ -297,6 +394,14 @@ export default handleActions(
                 }
             })
         }),
+        [BOOKMARK_POST]: (state, action) =>
+        produce(state, (draft) => {
+            draft.bookmarkList = [...action.payload.postList];
+        }),
+        [LIKE_POST]: (state, action) =>
+        produce(state, (draft) => {
+            draft.likeList = [...action.payload.postList];
+        }),
         
     },
     initialState
@@ -315,6 +420,11 @@ const actionCreators = {
     markPost,
     likePara,
     completePara,
+    getTheme,
+    addComment,
+    userBookmark,
+    getBest,
+    likePostList
 
 
 };

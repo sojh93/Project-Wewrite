@@ -4,34 +4,22 @@ import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Pagination,EffectCoverflow } from "swiper";
-//import Actions
+import { FreeMode,EffectCoverflow } from "swiper";
 
+import LoginBanner from "./LoginBanner";
 
 //import elements
-import {  Grid, Input, Image, Text } from "../elements" 
+import {  Grid, Image, Text } from "../elements" 
 
 //import Mui
-import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Modal from '@mui/material/Modal';
 
-//import Icon
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
-import DensityMediumIcon from '@mui/icons-material/DensityMedium';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import SettingsIcon from '@mui/icons-material/Settings';
 
 // 소켓 통신
 import Stomp from "stompjs";
 import SockJS from "sockjs-client";
 import { getCookie } from "../shared/Cookie";
-import instance from "../shared/Request";
-
 
 //import Actions
 import { actionCreators as userActions } from '../redux/modules/user';
@@ -45,59 +33,61 @@ const Header = (props) => {
     const _user = useSelector(state => state.user);
     const _post = useSelector(state => state.post);
     // console.log(_user)
-    console.log(_post)
+    // console.log(_post)
+
+    const [alrt,setAlrt] = React.useState(true);
 
 
-        //socket
+    //socket
 
-        // const sock = new SockJS("http://13.209.70.1/ws-alarm");
-        // const sock = new SockJS("http://3.34.179.104/ws-stomp");
-        const sock = new SockJS("https://binscot.shop/ws-stomp");
-        const ws = Stomp.over(sock);
-        const token = getCookie('WW_user');
-    
-        var headers = {
-            Authorization: token
-        };
-    
-        function wsConnectSubscribe() {
-            try {
-                ws.connect(headers, () => {
-                    ws.subscribe(
-                        // websocket 구독 url 콜백함수 header 
-                        `/sub/alarm/${_user.user.userKey}`,
-                        (data) => {
-                            // console.log(data.body)
-                        },
-                        headers
-                    );
-                    dispatch(userActions.subNoti(true));
-                });
-                
-            } catch (error) {
-                console.log(error);
-            }
+    const sock = new SockJS("http://13.209.70.1/ws-alarm");
+    // const sock = new SockJS("http://3.34.179.104/ws-stomp");
+    // const sock = new SockJS("https://binscot.shop/ws-stomp");
+    const ws = Stomp.over(sock);
+    const token = getCookie('WW_user');
+
+    var headers = {
+        Authorization: token
+    };
+
+    function wsConnectSubscribe() {
+        try {
+            ws.connect(headers, () => {
+                ws.subscribe(
+                    // websocket 구독 url 콜백함수 header 
+                    `/sub/alarm/${_user.user.userKey}`,
+                    (data) => {
+                        dispatch(userActions.Alrt())
+                    },
+                    headers
+                );
+                dispatch(userActions.subNoti(true));
+            });
+            
+        } catch (error) {
+            console.log(error);
         }
-    
-        function wsDisConnectUnsubscribe() {
-            try {
-                ws.disconnect(() => {
-                    ws.unsubscribe("sub-0");
-                }, headers);
-                dispatch(userActions.subNoti(false));
-            } catch (error) {
-                console.log(error);
-            }
-        }
+    }
 
-        React.useEffect(async() => {
-            if(!_user.is_login){
-                dispatch(userActions.check());
-            }
-            if(_user.is_login & !_user.sub){
-                wsConnectSubscribe()
-            }
-        },[_user.is_login]);
+    function wsDisConnectUnsubscribe() {
+        try {
+            ws.disconnect(() => {
+                ws.unsubscribe("sub-0");
+            }, headers);
+            dispatch(userActions.subNoti(false));
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    React.useEffect(async() => {
+        if(!_user.is_login){
+            dispatch(userActions.check());
+        }
+        if(_user.is_login & !_user.sub){
+            wsConnectSubscribe()
+        }
+    },[_user.is_login]);
 
     const [categoryopen, setCategoryOpen] = React.useState(false);
     const handleOpen = () => {
@@ -107,6 +97,12 @@ const Header = (props) => {
     const handleClose = () => {
         setCategoryOpen(false);
 }
+    const loginAlrt = () => {
+        setAlrt(false);
+        setTimeout(()=>{
+            setAlrt(true);
+        },5000)
+    }
 
     const style = {
         position: 'absolute',
@@ -120,13 +116,18 @@ const Header = (props) => {
         p: 4,
     };
 
+    const checkNotice = () =>{
+        dispatch(userActions.AlrtCheck());
+        setTimeout(()=>{navigate('/notice')},500);
+    }
 
     if(props.isMain)
     return(
             <Grid >
-                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFBBB" is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+                <LoginBanner hide={alrt}/>
+                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFBBB" is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="420px" height='60px' margin='0'  >
                     <Grid margin='10px' backgroundColor="#F9FAFB00" is_flex border="0">
-                        <Image onClick={handleOpen} width='30px' height='30px' src="/Icon/menu.png"></Image>
+                        <Image onClick={handleOpen} width='30px' height='30px' src="/Icon/menu_p.png"></Image>
                         <Modal
                             open={categoryopen}
                             onClose={handleClose}
@@ -199,8 +200,9 @@ const Header = (props) => {
                     <Grid backgroundColor="#F9FAFB00" is_flex border="0">
                         <Image backgroundSize='contain' backgroundRepeat='no-repeat' width='150px' height='45px' src="/Logo/Logo_p.png"></Image>
                     </Grid>
-                    <Grid margin='10px' backgroundColor="#F9FAFB00" is_flex border="0">
-                        <Image onClick={handleOpen} width='24px' height='24px' src="/Icon/bell.png"></Image>
+                    <Grid margin='10px' position='relative' backgroundColor="#F9FAFB00" is_flex border="0">
+                        <Image onClick={()=>{_user.is_login?checkNotice():loginAlrt()}} width='24px' height='24px' src="/Icon/bell_p.png"></Image>
+                        <Grid position='absolute' width='10px' height='10px' backgroundColor='red' borderRadius='5px' top='10px' display={_user.user.alaramRead?'none':''}/>
                     </Grid>
                 </Grid>
             </Grid>
@@ -210,7 +212,7 @@ const Header = (props) => {
     if(props.isDetail){
         return(
             <Grid>
-                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="420px" height='60px' margin='0'  >
                     <Grid margin='10px' onClick={()=>{navigate(-1)}} is_flex backgroundColor="#F9FAFB" border="0">
                         <Image  width='30px' height='30px' src="/Icon/left.png"></Image>
                     </Grid>
@@ -228,7 +230,7 @@ const Header = (props) => {
     if(props.isChangePassword){
         return(
             <Grid>
-                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="420px" height='60px' margin='0'  >
                     <Grid margin='10px' onClick={()=>{navigate(-1)}} is_flex backgroundColor="#F9FAFB" border="0">
                         <Image  width='30px' height='30px' src="/Icon/left.png"></Image>   
                     </Grid> 
@@ -244,26 +246,11 @@ const Header = (props) => {
             </Grid>
         );
     }
-    if(props.isWithdrawMember){
-        return(
-            <Grid>
-                <Grid zIndex='9' boxShadow='rgb(217 217 217) 0px 2px 5px' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
-                    <Grid is_flex border="0" backgroundColor="#F9FAFB">
-                        <Tooltip title="뒤로가기"><IconButton  onClick={()=>{navigate(-1)}} sx={{width:"50px", height : "50px", margin:"0"}}><KeyboardArrowLeftIcon sx={{ width:"15px", height : "15px", margin :"0 10px 0px 10px"}}/></IconButton></Tooltip>    
-                    </Grid>   
-                    <Grid backgroundColor="#F9FAFB">
-                        <Text margin="auto" backgroundColor="#F9FAFB">{props.WithdrawMember}</Text>
-                    </Grid>
-                    <Grid width="50px" height="50px" backgroundColor="#F9FAFB"></Grid>
-                </Grid>
-            </Grid>
-        );
-    }
     
     if(props.isUserPage){
         return(
             <Grid>
-                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="420px" height='60px' margin='0'  >
                     <Grid width='50px' height='50px' is_flex backgroundColor="#F9FAFB" border="0">
                             
                     </Grid>
@@ -282,7 +269,7 @@ const Header = (props) => {
     if(props.isEditUser){
         return(
             <Grid>
-                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="420px" height='60px' margin='0'  >
                     <Grid margin='10px' onClick={()=>{navigate(-1)}} is_flex backgroundColor="#F9FAFB" border="0">
                         <Image  width='30px' height='30px' src="/Icon/left.png"></Image>   
                     </Grid>
@@ -301,7 +288,7 @@ const Header = (props) => {
     if(props.isWrite){
         return(
             <Grid>
-                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+                <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="420px" height='60px' margin='0'  >
                     <Grid margin='10px' onClick={()=>{navigate(-1)}} is_flex backgroundColor="#F9FAFB" border="0">
                         <Image  width='30px' height='30px' src="/Icon/left.png"></Image>   
                     </Grid>
@@ -317,25 +304,9 @@ const Header = (props) => {
         );
     }
 
-    if(props.isNotice){
-        return(
-            <Grid>
-                <Grid zIndex='9' boxShadow='rgb(217 217 217) 0px 2px 5px' position="relative" top="0px"  backgroundColor="#F9FAFB"  is_flex justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
-                    <Grid is_flex border="0" backgroundColor="#F9FAFB">
-                        <Tooltip title="뒤로가기"><IconButton  onClick={()=>{navigate(-1)}} sx={{width:"50px", height : "50px", margin:"0"}}><KeyboardArrowLeftIcon sx={{ width:"15px", height : "15px", margin :"0 10px 0px 10px"}}/></IconButton></Tooltip>    
-                    </Grid>   
-                    <Grid backgroundColor="#F9FAFB">
-                        
-                    </Grid>
-                    <Grid width="50px" height="50px" backgroundColor="#F9FAFB"></Grid>
-                </Grid>
-            </Grid>
-        );
-    }
-    
     return(
         <Grid>
-            <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="390px" height='60px' margin='0'  >
+            <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="420px" height='60px' margin='0'  >
                 <Grid margin='10px' onClick={()=>{navigate(-1)}} is_flex backgroundColor="#F9FAFB" border="0">
                     <Tooltip title="뒤로가기"><Image  width='30px' height='30px' src="/Icon/left.png"></Image></Tooltip>    
                 </Grid>

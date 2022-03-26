@@ -89,7 +89,7 @@ const Input = ({
                             type={type}
                             onChange={onChange}
                             defaultValue={defaultValue}
-                            ref={ref}
+                            ref={_ref}
                             placeholder={placeholder}
                             style={{...props}}
                         />
