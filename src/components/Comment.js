@@ -43,7 +43,7 @@ export default function Comment(props) {
                     <Text>{data.comment}</Text>
                 </Grid>
                 <Grid is_flex flexDirection='column' alignItems='center' >
-                    <IconButton
+                    {/* <IconButton
                         aria-label="more"
                         id="basic-button"
                         aria-controls={open ? 'basic-menu' : undefined}
@@ -53,10 +53,10 @@ export default function Comment(props) {
                         sx={{margin : '0 5px',padding:'0'}}
                     >
                         <MoreHorizIcon />
-                    </IconButton>
+                    </IconButton> */}
                     <Grid is_flex alignItems='center' justifyContent='space-evenly'>
-                        <FavoriteBorderOutlinedIcon  sx={{width:'10px'}}/>
-                        <Text margin='0 2px 1px 2px' fontSize='10px'>{data.commentLikesCnt}</Text>
+                        {/* <FavoriteBorderOutlinedIcon  sx={{width:'10px'}}/> */}
+                        {/* <Text margin='0 2px 1px 2px' fontSize='10px'>{data.commentLikesCnt}</Text> */}
                     </Grid>
                     <Menu
                         id="basic-menu"
