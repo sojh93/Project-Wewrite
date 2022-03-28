@@ -205,6 +205,7 @@ function PostDetail(props) {
                             setTimeout(()=>{dispatch(postActions.getOne(postKey));},500)
                             setTimer(true);
                             console.log(timer);
+                            setTimeout(()=>{wsDisConnectUnsubscribe();window.location.reload();},1000*60*15)
                         }
                         if(data.body.split(',')[0].split('\"')[3] === 'TALK'){
                             console.log('TALK');
@@ -254,6 +255,10 @@ function PostDetail(props) {
     function sendParagraph() {
         if(!_user.is_login){
             console.log('로그인이 필요합니다.')
+            return;
+        }
+        if(contents===''){
+            window.alert("문장을 입력해주세요.");
             return;
         }
         if(thisPost.limitCnt - 1 === thisPost.paragraphResDtoList.length){
