@@ -17,10 +17,16 @@ import { Button, Grid, Input, Image, Text,Chip } from "../elements"
 
 //import Actions
 import { actionCreators as postActions } from '../redux/modules/post';
+import { actionCreators as staticActions } from '../redux/modules/static';
+
 
 const Post = React.memo((props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const alrt = useSelector(state=> state.static.LoginModal)
+    const is_login = useSelector(state=> state.user.is_login)
+
 
     const charLimit = (text, limit) =>{
         if(text.length > limit){
@@ -30,6 +36,12 @@ const Post = React.memo((props) => {
     }
 
     const likePost = () =>{
+        if(!is_login){
+            if(alrt){
+                dispatch(staticActions.idCheck());
+            }
+            return;
+        }
         dispatch(postActions.likePost(props.postKey));
         console.log('done');
     }
@@ -37,6 +49,12 @@ const Post = React.memo((props) => {
         navigate(`/postdetail/${props.postKey}`);
     }
     const markPost =() =>{
+        if(!is_login){
+            if(alrt){
+                dispatch(staticActions.idCheck());
+            }
+            return;
+        }
         dispatch(postActions.markPost(props.postKey));
         console.log('done');
     }

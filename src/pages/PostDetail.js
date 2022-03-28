@@ -13,6 +13,7 @@ import 'moment/locale/ko'
 //import Actions
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as userActions } from "../redux/modules/user";
+import { actionCreators as staticActions } from '../redux/modules/static';
 
 //import elements
 import { Button, Grid, Input, Image, Text, Chip } from "../elements"
@@ -63,6 +64,8 @@ function PostDetail(props) {
     const _post = useSelector(state => state.post);
     const postKey = useParams().postKey;
     const thisPost = _post.thisPost;
+    const is_login = useSelector(state=> state.user.is_login)
+    const alrt = useSelector(state=> state.static.LoginModal)
     console.log(thisPost);
     const refInput = React.useRef(null);
 
@@ -131,10 +134,22 @@ function PostDetail(props) {
     ,false):false;
 
     const likePost =() =>{
+        if(!is_login){
+            if(alrt){
+                dispatch(staticActions.idCheck());
+            }
+            return;
+        }
         dispatch(postActions.likePost(postKey));
         console.log('done');
     }
     const markPost = () =>{
+        if(!is_login){
+            if(alrt){
+                dispatch(staticActions.idCheck());
+            }
+            return;
+        }
         dispatch(postActions.markPost(postKey));
         console.log('done');
     }
@@ -427,7 +442,7 @@ function PostDetail(props) {
                         <Image width='14px' onClick={markPost} height='18px' margin='6px' src={isMark?'/Icon/bookmark_filled.png':'/Icon/bookmark.png'}/>
                         <Text fontSize='12px' color='#7E7E7E'>{thisPost.bookmarkLikesCnt ? thisPost.bookmarkLikesCnt : "0"}</Text>
                         <Grid is_flex onClick={handleOpenC}>
-                            <Image width='16px' onClick={markPost} height='16px' margin='6px' src={props.isMark?'/Icon/talk.png':'/Icon/talk.png'}/>
+                            <Image width='16px' height='16px' margin='6px' src={props.isMark?'/Icon/talk.png':'/Icon/talk.png'}/>
                             <Text fontSize='12px'  color='#7E7E7E'>댓글보기</Text>
                         </Grid>
                     </Grid>

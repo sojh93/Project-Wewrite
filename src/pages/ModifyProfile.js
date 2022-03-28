@@ -32,7 +32,7 @@ function ModifyProfile() {
 
     //profile image
     const refFileInput = React.useRef();
-    const [preview, setPreview] = React.useState('/default_img/inputImage.png');
+    const [preview, setPreview] = React.useState(user.userProfileImage?user.userProfileImage:'/default_img/inputImage.png');
     const userProfile = new FormData();
 
     const refNick = React.useRef();

@@ -23,6 +23,7 @@ import { getCookie } from "../shared/Cookie";
 
 //import Actions
 import { actionCreators as userActions } from '../redux/modules/user';
+import { actionCreators as staticActions } from '../redux/modules/static';
 
 
 
@@ -35,7 +36,8 @@ const Header = (props) => {
     // console.log(_user)
     // console.log(_post)
 
-    const [alrt,setAlrt] = React.useState(true);
+    const alrt = useSelector(state => state.static.LoginModal);
+    console.log(alrt);
 
 
     //socket
@@ -98,10 +100,8 @@ const Header = (props) => {
         setCategoryOpen(false);
 }
     const loginAlrt = () => {
-        setAlrt(false);
-        setTimeout(()=>{
-            setAlrt(true);
-        },5000)
+
+        dispatch(staticActions.idCheck());
     }
 
     const style = {
@@ -188,9 +188,6 @@ const Header = (props) => {
                                         <SwiperSlide>
                                             <Text onClick={(e)=>navigate('/themepage/하이틴')}>하이틴</Text>
                                         </SwiperSlide>
-                                        <SwiperSlide>
-                                            <Text onClick={(e)=>navigate('/themepage/어드벤쳐')}>어드벤쳐</Text>
-                                        </SwiperSlide>
                                 </Swiper>
                             </Grid>
                             </>
@@ -212,6 +209,8 @@ const Header = (props) => {
     if(props.isDetail){
         return(
             <Grid>
+                <LoginBanner hide={alrt}/>
+
                 <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="420px" height='60px' margin='0'  >
                     <Grid margin='10px' onClick={()=>{navigate(-1)}} is_flex backgroundColor="#F9FAFB" border="0">
                         <Image  width='30px' height='30px' src="/Icon/left.png"></Image>
@@ -230,6 +229,7 @@ const Header = (props) => {
     if(props.isChangePassword){
         return(
             <Grid>
+
                 <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="420px" height='60px' margin='0'  >
                     <Grid margin='10px' onClick={()=>{navigate(-1)}} is_flex backgroundColor="#F9FAFB" border="0">
                         <Image  width='30px' height='30px' src="/Icon/left.png"></Image>   
@@ -250,6 +250,8 @@ const Header = (props) => {
     if(props.isUserPage){
         return(
             <Grid>
+                <LoginBanner hide={alrt}/>
+
                 <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="420px" height='60px' margin='0'  >
                     <Grid width='50px' height='50px' is_flex backgroundColor="#F9FAFB" border="0">
                             
@@ -259,8 +261,8 @@ const Header = (props) => {
                         <Text>{props.UserName}</Text>
                     </Grid>
     
-                    <Grid width='50px' height='50px' onClick={()=>{navigate(`/modifyprofile`)}} backgroundColor="#F9FAFB" is_flex alignItems='center' justifyContent='center' border="0" >
-                        <Image width='24px' height='24px' src='/Icon/Frame.png'></Image>  
+                    <Grid width='50px' height='50px' backgroundColor="#F9FAFB" is_flex alignItems='center' justifyContent='center' border="0" >
+                        <Image display={props.mine?'':'none'}  onClick={()=>{_user.is_login?navigate(`/modifyprofile`):loginAlrt()}} width='24px' height='24px' src='/Icon/Frame.png'></Image>  
                     </Grid>
                 </Grid>
             </Grid>
@@ -306,6 +308,7 @@ const Header = (props) => {
 
     return(
         <Grid>
+            <LoginBanner hide={alrt}/>
             <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="420px" height='60px' margin='0'  >
                 <Grid margin='10px' onClick={()=>{navigate(-1)}} is_flex backgroundColor="#F9FAFB" border="0">
                     <Tooltip title="뒤로가기"><Image  width='30px' height='30px' src="/Icon/left.png"></Image></Tooltip>    

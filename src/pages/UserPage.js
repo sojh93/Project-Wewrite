@@ -29,8 +29,7 @@ const UserPage = (props) => {
     const myKey = _user.user.userKey;
     const pageUserKey = parseInt(useParams().userKey);
     const pageUser=_post.userPostList
-    // const [pageUser,setPageUser] = React.useState(false)
-    // console.log(_post);
+
     console.log(myKey, pageUserKey);
     if(pageUserKey !== pageUser.userKey){
         dispatch(postActions.userPost(pageUserKey));
@@ -50,7 +49,7 @@ const UserPage = (props) => {
 
     return (
     <Grid wrap>
-            <Header isUserPage userKey={pageUserKey} UserName={pageUser.nickname?pageUser.nickname:''}/>
+            <Header isUserPage mine={myKey === pageUserKey} userKey={pageUserKey} UserName={pageUser.nickname?pageUser.nickname:''}/>
             <Grid position='relative' is_flex flexDirection='column' alignItems='center' width="100%" padding="0" marginTop="80px">
                 {myKey === pageUserKey?<Button onClick={logout} fontSize='12px' theme='unfilled' width='60px' height='30px' right='20px' position='absolute'>로그아웃</Button>:''}
                 <Image is_circle size='100' src={pageUser.userProfileImage?pageUser.userProfileImage:''}/>

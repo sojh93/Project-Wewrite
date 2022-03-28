@@ -51,18 +51,32 @@ function Write() {
     
     //modal
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
+    const handleOpen = () => {
+        if(title===''){
+            window.alert('제목을 입력해주세요');
+            return;
+        }
+        if(sentence===''){
+            window.alert('내용을 입력해주세요');
+            return;
+        }
+        if(category===null){
+            window.alert('카테고리를 선택해주세요');
+            return;
+        }
+        setOpen(true);
+    }
     const handleClose = () => setOpen(false);
 
     //title
-    const [title,setTitle] = React.useState(null);
+    const [title,setTitle] = React.useState('');
 
     //book cover color
     const colorList = ['black','white','pink','sky']
     const [color,setColor] = React.useState(0);
 
     //first sentence
-    const [sentence,setSentence] = React.useState(null);
+    const [sentence,setSentence] = React.useState('');
 
     //set sentence count
     const [sentenceCnt,setSentenceCnt] = React.useState(2);
@@ -131,8 +145,19 @@ function Write() {
         
     }
 
-    const openModal = ()=>{
-        
+    const check = ()=>{
+        if(title===''){
+            window.alert('제목을 입력해주세요');
+            return;
+        }
+        if(sentence===''){
+            window.alert('내용을 입력해주세요');
+            return;
+        }
+        if(category===null){
+            window.alert('카테고리를 선택해주세요');
+            return;
+        }
     }
 
     const submitPost =()=>{

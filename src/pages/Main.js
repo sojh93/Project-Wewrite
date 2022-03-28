@@ -34,6 +34,7 @@ import Popular from '../components/popular';
 
 
 
+
 function Main(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -43,6 +44,8 @@ function Main(props) {
 
     console.log(_user);
     console.log(_post);
+
+
 
     React.useEffect(() => {
 
@@ -57,7 +60,6 @@ function Main(props) {
         <>
             <Grid wrap>
             <Header isMain />
-
                 <Grid is_flex flexDirection='column' alignItems='center' margin='60px 0 0'>
 
                     <Grid width='100%' height='400px' backgroundColor='#E0E0E0AA' backgroundSize='contain'>
