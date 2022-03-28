@@ -72,9 +72,9 @@ function Login() {
                 width="100%"
             >
                 <Grid is_flex flexDirection='column' width='300px'>
-                    <Text color='#6454FF' fontSize="24px" fontWeight="900">
-                        Welcome
-                    </Text>
+                    <Grid onClick={()=>{navigate('/')}} cursor='pointer' backgroundColor="#F9FAFB00" is_flex border="0" marginBottom='20px'>
+                        <Image backgroundSize='contain' backgroundRepeat='no-repeat' width='200px' height='68px' src="/Logo/Logo_p.png"></Image>
+                    </Grid>
                     <Text color='#7E7E7E' fontSize="12px" fontWeight="400">
                         서비스 이용을 위해 로그인 해주세요.
                     </Text>
