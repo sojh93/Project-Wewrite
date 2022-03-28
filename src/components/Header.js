@@ -253,8 +253,8 @@ const Header = (props) => {
                 <LoginBanner hide={alrt}/>
 
                 <Grid zIndex='9' position="absolute" top="0px"  backgroundColor="#F9FAFB"  is_flex alignItems="center" justifyContent='space-between' boxSizing="border-box" padding="0" width ="100vw" minWidth ="360px" maxWidth ="420px" height='60px' margin='0'  >
-                    <Grid width='50px' height='50px' is_flex backgroundColor="#F9FAFB" border="0">
-                            
+                    <Grid margin='10px' onClick={()=>{navigate(-1)}} is_flex backgroundColor="#F9FAFB" border="0">
+                        <Image  width='30px' height='30px' src="/Icon/left.png"></Image>   
                     </Grid>
     
                     <Grid backgroundColor="#F9FAFB">
