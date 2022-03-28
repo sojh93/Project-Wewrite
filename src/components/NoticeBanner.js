@@ -13,8 +13,8 @@ const NoticeBanner = () => {
 
     return(
     <Grid>
-        <Grid is_flex width="100%" flexDirection="column" margin="20px 0" height="220px" justifyContent="left" border="1px solid black">
-            <Image width="100%" height="220px" src='/banner/event.png'/>
+        <Grid is_flex width="100%" flexDirection="column" margin="20px 0" height="90px" justifyContent="left" border="1px solid black">
+            <Image  onClick={()=>{window.open("https://forms.gle/mDoHthCZaxLt4js87", '_blank')}} width="100%" height="90px" src='/banner/mainBanner.png'/>
 
         </Grid>
         
