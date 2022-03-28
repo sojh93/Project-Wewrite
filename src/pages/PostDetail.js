@@ -32,6 +32,9 @@ import SockJS from "sockjs-client";
 import { getCookie } from "../shared/Cookie";
 import instance from "../shared/Request";
 
+import _ from "lodash";
+
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -90,6 +93,13 @@ function PostDetail(props) {
 
     }, []) : '';
 
+
+    //lodash
+    const debounce = _.debounce((k) =>  {
+        console.log(k)
+    }
+    , 700);
+    const keyPress = React.useCallback(debounce, []);
 
     const [category, setCategory] = React.useState(null);
     const [timer,setTimer] = React.useState(false);
@@ -404,7 +414,7 @@ function PostDetail(props) {
                 {thisPost.complete ?
                     '' :
                     <Grid marginTop='30px' width='100%' is_flex flexDirection='column' alignItems='center'>
-                        <Input _ref={refInput} display={isWriting?writer===_user.user.nickname?'':'none':'none'} placeholder= {isWriting?writer===_user.user.nickname?'내용을 작성해주세요.':'다른 유저가 작성중입니다.':'아래 버튼을 눌러 작성을 시작해주세요.'} onChange={(e) => { setContents(e.target.value) }} width='350px' height='100px' isTheme type='textarea' />
+                        <Input _ref={refInput} display={isWriting?writer===_user.user.nickname?'':'none':'none'} placeholder= {isWriting?writer===_user.user.nickname?'내용을 작성해주세요.':'다른 유저가 작성중입니다.':'아래 버튼을 눌러 작성을 시작해주세요.'} onChange={(e) => { keyPress(e.target.value) }} width='350px' height='100px' isTheme type='textarea' />
                         
                         {isWriting?
                         writer===_user.user.nickname?

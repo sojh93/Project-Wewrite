@@ -9,14 +9,8 @@ import _ from "lodash";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 
-//import Page
-import Login from "../pages/Login";
-
 //import elements
-import { Button, Grid, Input, Image, Text } from "../elements";
-
-//import Icon
-import blank from "../image/blank.jpg";
+import { Button, Grid, Input, Text } from "../elements";
 
 //impot Component
 import Header from "../components/Header";
