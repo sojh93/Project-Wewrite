@@ -30,7 +30,6 @@ const UserPage = (props) => {
     const pageUserKey = parseInt(useParams().userKey);
     const pageUser=_post.userPostList
 
-    console.log(myKey, pageUserKey);
     if(pageUserKey !== pageUser.userKey){
         dispatch(postActions.userPost(pageUserKey));
     }

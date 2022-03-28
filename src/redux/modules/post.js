@@ -221,7 +221,6 @@ const likePostList=(postKey) =>{
             }
         }).then(res=>{
             dispatch(like_Post(res.data));
-            console.log(res.data);
         })
     }
 }
@@ -237,7 +236,6 @@ const userPost=(pageUserKey) =>{
             }
         }).then(res=>{
             dispatch(setUserPost(res.data));
-            console.log(res.data);
         })
     }
 }
@@ -247,7 +245,7 @@ const userBookmark=() =>{
         const token = getCookie('WW_user');
         instance({
             method : "get",
-            url : `/bookmark?page=0&size=30`,
+            url : `/bookmark?page=0&size=200`,
             data : {},
             headers : {
                 "Content-Type": "application/json;charset-UTF-8",
@@ -255,6 +253,7 @@ const userBookmark=() =>{
             }
         }).then(res=>{
             dispatch(setUserBookmark(res.data));
+            console.log(res.data);
         })
     }
 }
