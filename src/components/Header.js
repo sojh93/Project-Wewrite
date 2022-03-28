@@ -171,7 +171,7 @@ const Header = (props) => {
                                             <Text onClick={(e)=>navigate('/themepage/액션')}>액션</Text>
                                         </SwiperSlide>
                                         <SwiperSlide>
-                                            <Text onClick={(e)=>navigate('/themepage/코미디')}>💦코미디</Text>
+                                            <Text onClick={(e)=>navigate('/themepage/코미디')}>코미디</Text>
                                         </SwiperSlide>
                                         <SwiperSlide>
                                             <Text onClick={(e)=>navigate('/themepage/무협')}>무협</Text>
@@ -180,7 +180,7 @@ const Header = (props) => {
                                             <Text onClick={(e)=>navigate('/themepage/SF')}>SF</Text>
                                         </SwiperSlide>
                                         <SwiperSlide>
-                                            <Text onClick={(e)=>navigate('/themepage/미스테리')}>미스테리</Text>
+                                            <Text onClick={(e)=>navigate('/themepage/미스테리')}>추리</Text>
                                         </SwiperSlide>
                                         <SwiperSlide>
                                             <Text onClick={(e)=>navigate('/themepage/스포츠')}>스포츠</Text>
