@@ -37,7 +37,7 @@ const Header = (props) => {
     // console.log(_post)
 
     const alrt = useSelector(state => state.static.LoginModal);
-    console.log(alrt);
+    // console.log(alrt);
 
 
     //socket
