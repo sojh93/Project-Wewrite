@@ -86,7 +86,7 @@ function Write() {
 
     //book cover image
     const refFileInput = React.useRef();
-    const [preview,setPreview] = React.useState(null);
+    const [preview,setPreview] = React.useState('/default_img/inputImage.png');
 
     const handlingDataForm = async dataURI => {
         // dataURL 값이 data:image/jpeg:base64,~~~~~~~ 이므로 ','를 기점으로 잘라서 ~~~~~인 부분만 다시 인코딩
@@ -186,7 +186,7 @@ function Write() {
             <Grid is_flex marginTop="100px" marginBottom='100px' alignItems='center' flexDirection="column">
                 
                 <Grid>
-                    <img src={preview?preview:'/default_img/inputImage.png'} width="130px" height="150px"/>
+                    <Image src={preview} width="130px" height="150px"/>
                     <Button onClick={()=>{refFileInput.current.click()}} border="1px solid #dbdbdb" width = "130px" height="30px" fontSize="12px" fontWeight="600">표지 변경하기</Button>
                     <input ref={refFileInput} onChange={selectFile} type="file" accept="image/*" style={{display:'none'}}/>
                 </Grid>
