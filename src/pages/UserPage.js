@@ -84,7 +84,7 @@ const UserPage = (props) => {
 
 
                 
-                <Grid is_flex width='300%' overflow='hidden' height='250px' justifyContent='space-around' transform={'translate(' + (2 - index) * (1 / 3) * 100 + '%)'} transition='transform 0.5s ease 0.1s'>
+                <Grid is_flex width='300%' overflowX='hidden' height='70vh' justifyContent='space-around' transform={'translate(' + (2 - index) * (1 / 3) * 100 + '%)'} transition='transform 0.5s ease 0.1s'>
                     <Grid is_flex flexDirection='column' alignItems='center' width="30%" marginTop='32px' gap='24px'>
                         {pageUser.postResponseDtoList?pageUser.postResponseDtoList.map((v,i)=>{
                             const likeThis= v.postLikeClickersResponseDtoList

@@ -35,16 +35,16 @@ const Sentence = React.memo((props)=>{
             <Grid  width='100%' is_flex alignItems='flex-start'>
                 <Grid height='auto'>
                     <Text white-space='pre-line' margin='0'>{props.contents.split("\n").map((line) => {
-                        if(line.length > 40){
-                            return (
-                                <span>
-                                    {line.slice(0,40)}
-                                    <br />
-                                    {line.slice(40,line.lnngth)}
-                                    <br />
-                                </span>
-                                );
-                        }
+                        // if(line.length > 40){
+                        //     return (
+                        //         <span>
+                        //             {line.slice(0,40)}
+                        //             <br />
+                        //             {line.slice(40,line.lnngth)}
+                        //             <br />
+                        //         </span>
+                        //         );
+                        // }
                         return (
                         <span>
                             {line}
