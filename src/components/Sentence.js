@@ -34,7 +34,26 @@ const Sentence = React.memo((props)=>{
 
             <Grid  width='100%' is_flex alignItems='flex-start'>
                 <Grid height='auto'>
-                    <Text margin='0'>{props.contents}</Text>
+                    <Text white-space='pre-line' margin='0'>{props.contents.split("\n").map((line) => {
+                        console.log(line.length)
+                        if(line.length > 40){
+                            console.log(line.length)
+                            return (
+                                <span>
+                                    {line.slice(0,40)}
+                                    <br />
+                                    {line.slice(40,line.lnngth)}
+                                    <br />
+                                </span>
+                                );
+                        }
+                        return (
+                        <span>
+                            {line}
+                            <br />
+                        </span>
+                        );
+                    })}</Text>
                 </Grid>
             </Grid>
         </Grid>
