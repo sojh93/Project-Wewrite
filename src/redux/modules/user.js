@@ -104,7 +104,6 @@ const check=() =>{
 }
 const logout=() =>{
     return async function (dispatch,getState){
-        deleteCookie('WW_user');
         dispatch(del_user());
     }
 }
@@ -172,6 +171,7 @@ export default handleActions(
         produce(state, (draft) => {
             draft.is_login = false;
             draft.user = {};
+            deleteCookie('WW_user');
             window.location.assign('/')
         }),
         [SET_NOTICE]: (state, action) =>
