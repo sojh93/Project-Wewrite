@@ -245,7 +245,7 @@ const userBookmark=() =>{
         const token = getCookie('WW_user');
         instance({
             method : "get",
-            url : `/bookmark?page=0&size=200`,
+            url : `/bookmark?page=0&size=1000`,
             data : {},
             headers : {
                 "Content-Type": "application/json;charset-UTF-8",
