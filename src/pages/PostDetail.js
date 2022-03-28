@@ -277,6 +277,7 @@ function PostDetail(props) {
             };
             console.log(data);
             refInput.current.value='';
+            setContents('');
             // 로딩 중
             waitForConnection(ws, function () {
                 ws.send("/pub/paragraph/complete", headers, JSON.stringify(data));
