@@ -336,8 +336,11 @@ function PostDetail(props) {
         } catch (error) {
 
         }
-        dispatch(postActions.completePara(postKey,category));
-        setTimeout(()=>{dispatch(postActions.getOne(postKey));
+        setTimeout(()=>{
+            dispatch(postActions.completePara(postKey,category));
+                        handleClose()},300)
+        setTimeout(()=>{
+            dispatch(postActions.getOne(postKey));
                         handleClose()},500)
     }
 
