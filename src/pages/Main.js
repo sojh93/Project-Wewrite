@@ -99,7 +99,7 @@ function Main(props) {
                         </Swiper>
 
                     </Grid>
-                    <Image onClick={()=>{window.location.assign("https://forms.gle/mDoHthCZaxLt4js87")}}  cursor="pointer" width='100%' height='83px' src='/banner/mainBanner.png'/>
+                    <Image onClick={()=>{window.open("https://forms.gle/mDoHthCZaxLt4js87", '_blank')}}  cursor="pointer" width='100%' height='83px' src='/banner/mainBanner.png'/>
                     <Grid width='100%' height='310px' marginTop='20px' is_flex flexDirection='column'>
                         <Grid is_flex>
                             <Text margin='0px 10px' fontSize='24px' fontWeight='700'>새로운 이야기</Text>

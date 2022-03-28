@@ -52,7 +52,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <div className="Frame">
           <Image position='relative' backgroundSize='contain' backgroundRepeat='no-repeat' width='100%' height='100%' src='/background.png'/>
-          <Image onClick={()=>{window.location.assign("https://forms.gle/mDoHthCZaxLt4js87")}} cursor="pointer" position='absolute' top='55%' right='0px' backgroundSize='contain' backgroundRepeat='no-repeat' width='15%' height='20%' src='/banner/survey.png'/>
+          <Image onClick={()=>{window.open("https://forms.gle/mDoHthCZaxLt4js87", '_blank')}} cursor="pointer" position='absolute' top='55%' right='0px' backgroundSize='contain' backgroundRepeat='no-repeat' width='15%' height='20%' src='/banner/survey.png'/>
         </div>
         <div className="screen" >
           <Grid position='relative' overflow='hidden' is_flex  borderRadius='0px' height='100vh' boxSizing='border-box'>
