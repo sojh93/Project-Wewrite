@@ -48,7 +48,7 @@ export default function BookmarkPost(props) {
 
             <Grid onClick={props.onClick} width='100%' height='26px' is_flex alignItems='flex-start'>
                 <Text margin='3px' width='auto' fontSize='16px' color='black'>
-                    {props.title}
+                    {charLimit(props.title,8)}
                     </Text>
             </Grid>
             <Grid margin='2px' marginTop='5px' width='100%' is_flex alignItems='flex-start'>
