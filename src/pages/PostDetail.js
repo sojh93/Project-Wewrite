@@ -474,7 +474,7 @@ function PostDetail(props) {
                             <Button onClick={() => { setCategory('판타지') }} fontSize='12px' width='70px' height='40px' theme={category === '판타지' ? 'filled' : 'unfilled'}>판타지</Button>
                             <Button onClick={() => { setCategory('스릴러') }} fontSize='12px' width='70px' height='40px' theme={category === '스릴러' ? 'filled' : 'unfilled'}>스릴러</Button>
                             <Button onClick={() => { setCategory('공포') }} fontSize='12px' width='70px' height='40px' theme={category === '공포' ? 'filled' : 'unfilled'}>공포</Button>
-                            <Button onClick={() => { setCategory('로맨스/멜로') }} fontSize='12px' width='70px' height='40px' theme={category === '로맨스' ? 'filled' : 'unfilled'}>로맨스</Button>
+                            <Button onClick={() => { setCategory('로맨스') }} fontSize='12px' width='70px' height='40px' theme={category === '로맨스' ? 'filled' : 'unfilled'}>로맨스</Button>
                         </Grid>
                         <Grid is_flex justifyContent='space-between' margin='5px 0' gap='5px'>
                             <Button onClick={() => { setCategory('액션') }} fontSize='12px' width='70px' height='40px' theme={category === '액션' ? 'filled' : 'unfilled'}>액션</Button>
@@ -483,7 +483,7 @@ function PostDetail(props) {
                             <Button onClick={() => { setCategory('SF') }} fontSize='12px' width='70px' height='40px' theme={category === 'SF' ? 'filled' : 'unfilled'}>SF</Button>
                         </Grid>
                         <Grid is_flex justifyContent='space-between' gap='5px'>
-                            <Button onClick={() => { setCategory('추리/미스터리') }} fontSize='12px' width='70px' height='40px' theme={category === '추리' ? 'filled' : 'unfilled'}>추리</Button>
+                            <Button onClick={() => { setCategory('추리') }} fontSize='12px' width='70px' height='40px' theme={category === '추리' ? 'filled' : 'unfilled'}>추리</Button>
                             <Button onClick={() => { setCategory('드라마') }} fontSize='12px' width='70px' height='40px' theme={category === '드라마' ? 'filled' : 'unfilled'}>드라마</Button>
                             <Button onClick={() => { setCategory('스포츠') }} fontSize='12px' width='70px' height='40px' theme={category === '스포츠' ? 'filled' : 'unfilled'}>스포츠</Button>
                             <Button onClick={() => { setCategory('하이틴') }} fontSize='12px' width='70px' height='40px' theme={category === '하이틴' ? 'filled' : 'unfilled'}>하이틴</Button>
