@@ -96,7 +96,7 @@ function PostDetail(props) {
 
     //lodash
     const debounce = _.debounce((k) =>  {
-        console.log(k)
+        setContents(k)
     }
     , 700);
     const keyPress = React.useCallback(debounce, []);
