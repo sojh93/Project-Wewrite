@@ -287,7 +287,7 @@ function Signup() {
                             >
                             </Input>
                             
-                            <Chip onClick={email?emailVerification:null} position='absolute' right='10px' top='17px' width="70px" height="24px" backgroundColor={email?'#6454FF':'#EAEAEA'}>인증코드</Chip>
+                            <Chip cursor="pointer" onClick={email?emailVerification:null} position='absolute' right='10px' top='17px' width="70px" height="24px" backgroundColor={email?'#6454FF':'#EAEAEA'}>인증코드</Chip>
                             
                             <Text text-align='left' width='350px' display={emailVeri?'':'none'} margin="0" color='#6454FF' fontWeight='400' fontSize='14px'>인증 코드를 발급했습니다.</Text>
                             <Grid is_flex width='100%'><Text display={emailCheck?'':'none'} margin="0" color='red' fontWeight='400' fontSize='14px'>이메일 형식이 맞지 않습니다.</Text></Grid>
@@ -309,8 +309,8 @@ function Signup() {
                         />
 
                         {code?
-                        <Chip onClick={codeVerification} position='absolute' right='10px' top='22px' width="70px" height="24px" backgroundColor='#6454FF'>인증하기</Chip> :
-                        <Chip position='absolute' right='10px' top='22px' width="70px" height="24px" backgroundColor='#EAEAEA'>인증하기</Chip>
+                        <Chip cursor="pointer" onClick={codeVerification} position='absolute' right='10px' top='22px' width="70px" height="24px" backgroundColor='#6454FF'>인증하기</Chip> :
+                        <Chip cursor="pointer" position='absolute' right='10px' top='22px' width="70px" height="24px" backgroundColor='#EAEAEA'>인증하기</Chip>
                         }                        
                         
                         <Text display={codeVeri?'':'none'} margin="0" color='#6454FF' fontWeight='400' fontSize='14px'>인증되었습니다.</Text>

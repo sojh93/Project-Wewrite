@@ -21,7 +21,14 @@ const Books = React.memo((props) => {
     const alrt = useSelector(state=> state.static.LoginModal)
 
 
-
+    const control = (s,limit) =>{
+        if(s.length > limit){
+            return (s.slice(0,limit)+'...')
+        }
+        else{
+            return s
+        }
+    }
 
     const likePost =() =>{
         if(!is_login){
@@ -48,8 +55,8 @@ const Books = React.memo((props) => {
             <Image onClick={props.onClick} border='1px solid #C4C4C4' boxSizing ='border-box' borderRadius='5px' width='100%' minHeight='140px' maxHeight='150px' height='150px' src={props.src}/>
 
             <Grid onClick={props.onClick} width='100%' height='26px' is_flex alignItems='flex-start'>
-                <Text margin='3px' width='auto' fontSize='16px' color='black'>
-                    {props.title}
+                <Text  margin='3px' width='auto' fontSize='16px' color='black'>
+                    {control(props.title,8)}
                     </Text>
             </Grid>
             <Grid margin='2px' marginTop='5px' width='100%' is_flex alignItems='flex-start'>
