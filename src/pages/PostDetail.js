@@ -413,7 +413,7 @@ function PostDetail(props) {
                         
                         {isWriting?
                         writer===_user.user.nickname?
-                        <Grid is_flex alignItems='center'><Text>제한 시간</Text> <Timer min='5'/> <Text>남았습니다.</Text></Grid>:
+                        <Grid is_flex alignItems='center'><Text>제한 시간</Text> <Timer min='15'/> <Text>남았습니다.</Text></Grid>:
                         <Grid><Text>{thisPost.writer?thisPost.writer:'unknown'}님이 작성중입니다.</Text></Grid>:''}
                         {isWriting?
                         writer===_user.user.nickname?
