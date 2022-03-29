@@ -224,7 +224,7 @@ function PostDetail(props) {
                             console.log('TALK');
                             // setWriter(null)
                             // setIsWriting(false);
-                            setTimeout(()=>{dispatch(postActions.getOne(postKey));},500)
+                            setTimeout(()=>{window.location.reload()},500)
                         }
                     },
                     headers
