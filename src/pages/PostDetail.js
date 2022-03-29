@@ -454,11 +454,11 @@ function PostDetail(props) {
                 <Grid width='350px' height='1px' borderTop='1px solid #CECECE' />
                 <Grid>
                     <Grid is_flex alignItems='center'>
-                        <Image onClick={likePost} width='20px' height='20px' margin='4px' src={isLike?'/Icon/thumbs-up-filled.png':'/Icon/thumbs-up.png'}/>   
+                        <Image cursor="pointer" onClick={likePost} width='20px' height='20px' margin='4px' src={isLike?'/Icon/thumbs-up-filled.png':'/Icon/thumbs-up.png'}/>   
                         <Text fontSize='12px' color='#7E7E7E'>{thisPost.postLikesCnt ? thisPost.postLikesCnt : "0"}</Text>
-                        <Image width='14px' onClick={markPost} height='18px' margin='6px' src={isMark?'/Icon/bookmark_filled.png':'/Icon/bookmark.png'}/>
+                        <Image cursor="pointer" width='14px' onClick={markPost} height='18px' margin='6px' src={isMark?'/Icon/bookmark_filled.png':'/Icon/bookmark.png'}/>
                         <Text fontSize='12px' color='#7E7E7E'>{thisPost.bookmarkLikesCnt ? thisPost.bookmarkLikesCnt : "0"}</Text>
-                        <Grid is_flex onClick={handleOpenC}>
+                        <Grid cursor="pointer" is_flex onClick={handleOpenC}>
                             <Image width='16px' height='16px' margin='6px' src={props.isMark?'/Icon/talk.png':'/Icon/talk.png'}/>
                             <Text fontSize='12px'  color='#7E7E7E'>댓글보기</Text>
                         </Grid>

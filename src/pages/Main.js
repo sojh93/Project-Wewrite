@@ -103,7 +103,7 @@ function Main(props) {
                     <Grid width='100%' height='310px' marginTop='20px' is_flex flexDirection='column'>
                         <Grid is_flex>
                             <Text margin='0px 10px' fontSize='24px' fontWeight='700'>새로운 이야기</Text>
-                            <Text onClick={()=>{navigate('/postlist/recent')}} margin='13px 0 0 0' color="#888888" fontSize="14px">더보기 +</Text>
+                            <Text cursor='pointer' onClick={()=>{navigate('/postlist/recent')}} margin='13px 0 0 0' color="#888888" fontSize="14px">더보기 +</Text>
                         </Grid>
                         <Swiper
                             style={{ height: '230px', width: 'calc(100vw - 20px)', minWidth: '340px', maxWidth: '400px', margin: '10px' }}
@@ -177,7 +177,7 @@ function Main(props) {
                     <Grid width='100%' is_flex flexDirection='column'>
                     <Grid is_flex>
                             <Text margin='0px 10px' fontSize='24px' fontWeight='700'>당신이 완성해주세요</Text>
-                            <Text onClick={()=>{navigate('/postlist/all')}} margin='13px 0 0 0' color="#888888" fontSize="14px">더보기 +</Text>
+                            <Text cursor='pointer' onClick={()=>{navigate('/postlist/all')}} margin='13px 0 0 0' color="#888888" fontSize="14px">더보기 +</Text>
                         </Grid>
                         <Swiper
                             style={{ height: '230px', width: 'calc(100vw - 20px)', minWidth: '340px', maxWidth: '400px', margin: '10px' }}
