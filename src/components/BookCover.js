@@ -26,6 +26,11 @@ const BookCover = (props) => {
                     <Text color='#FFFFFF' fontSize='14px' fontWeight='400' >{control(props.para,50)}</Text>
                     <Grid backgroundColor='#FFFFFF00' margin='2px' marginTop='5px' is_flex alignItems='flex-start'>
                     {props.category?props.category.map((v,i)=>{
+                        if(i===1){
+                            if(props.category[0].category === v.category){
+                                return;
+                            }
+                        }
                         return (
                             <Chip margin='5px 5px 5px 0' key={i}>{v.category}</Chip>
                         )

@@ -70,6 +70,11 @@ const Post = React.memo((props) => {
                     <Grid margin='5px 10px' is_flex flexDirection='column' height='50px' justifyContent='space-between'>
                         <Grid>
                             {props.category?props.category.map((v,i)=>{
+                                if(i===1){
+                                    if(props.category[0].category === v.category){
+                                        return;
+                                    }
+                                }
                                 return (<Chip margin='0 5px 0 0' key={i}>{v.category}</Chip>)
                             }):''}
                         </Grid>
