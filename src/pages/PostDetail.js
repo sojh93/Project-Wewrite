@@ -177,7 +177,9 @@ function PostDetail(props) {
     };
 
     React.useEffect(() => {
-        
+        setTimeout(()=>{
+            console.log('1분 경과');
+        },60000)
         dispatch(postActions.getOne(postKey));
 
         if(!_user.is_login){
