@@ -120,7 +120,17 @@ const editData=(userData) =>{
                 'authorization' : token,
             }
         }).then(res=>{
-            console.log(res);
+            instance({
+                method : "post",
+                url : "/user/myInfo",
+                data : {},
+                headers : {
+                    "Content-Type": "application/json;charset-UTF-8",
+                    "authorization" : token
+                }
+            }).then(res=>{
+                dispatch(set_user(res.data));
+            });
         });
     }
 }
