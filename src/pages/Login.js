@@ -7,18 +7,11 @@ import { useNavigate } from "react-router-dom";
 //import MUI
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
 
-//import Pages
-import Main from "./Main";
-import Signup from "./Signup";
 
 //import elements
 import { Button, Grid, Input, Image, Text } from "../elements";
 
-//import Actions
-import { actionCreators as userActions } from "../redux/modules/user";
 
 //API
 import instance from "../shared/Request";
@@ -151,13 +144,10 @@ function Login() {
                         width='300px'
                         height = '40px'
                         borderRadius='5px'
-                        onClick={() =>
+                            onClick={() =>
                             window.location.assign(
-//                                 "https://kauth.kakao.com/oauth/authorize?client_id=43268aa6f88af6282a341e3b61b9a761&redirect_uri=http://localhost:3000/login/kakaoLogin&response_type=code"
-                                "https://kauth.kakao.com/oauth/authorize?client_id=43268aa6f88af6282a341e3b61b9a761&redirect_uri=https://www.wewrite.co.kr/login/kakaoLogin&response_type=code"
+                                `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=https://www.wewrite.co.kr/login/kakaoLogin&response_type=code`
                             )
-                            
-                            
                         }
                     > 
                     </Grid>

@@ -36,11 +36,10 @@ const KakaoLogin = () => {
     React.useEffect(() => {
         const data = {
             grant_type : "authorization_code",
-            client_id : "43268aa6f88af6282a341e3b61b9a761",
-//             redirect_uri : "http://localhost:3000/login/kakaoLogin",
+            client_id : process.env.REACT_APP_KAKAO_CLIENT_ID,
             redirect_uri : "https://www.wewrite.co.kr/login/kakaoLogin",
             code : router.search.split('=')[1],
-            client_secret : "rPfOmfcisQud180j3Kyp9jxytSXQuTrH",
+            client_secret : process.env.REACT_APP_KAKAO_CLIENT_SECRET,
         }
 
         

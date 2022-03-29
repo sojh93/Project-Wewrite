@@ -17,6 +17,7 @@
         "browser-image-compression": "^1.0.17",
         "classnames": "2.3.1",
         "connected-react-router": "6.9.2",
+        "dotenv": "^16.0.0",
         "eslint": "8.10.0",
         "eslint-config-react-app": "7.0.0",
         "express-ws": "5.0.2",
