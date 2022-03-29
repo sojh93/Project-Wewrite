@@ -67,13 +67,25 @@ function ModifyProfile() {
     }
 
     const finishEdit = ()=>{
-        const userData={
-            nickName: nick,
-            introduction:intro
-        }
-        dispatch(userActions.editData(userData))
-        dispatch(postActions.userPost(_user.user.userKey));
-        navigate(-1);
+        instance({
+            method : "post",
+            url : "/user/signup/checkNick",
+            data : {nickName:nick},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8"
+            }
+        }).then(res=>{
+            const userData={
+                nickName: nick,
+                introduction:intro
+            }
+            dispatch(userActions.editData(userData))
+            dispatch(postActions.userPost(_user.user.userKey));
+            navigate(-1);
+        }).catch(err=>{
+            window.alert("중복된 닉네임입니다.");
+        });
+        
     }
 
     return (
