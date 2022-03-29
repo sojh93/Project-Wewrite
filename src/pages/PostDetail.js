@@ -188,8 +188,8 @@ function PostDetail(props) {
         wsConnectSubscribe();
         
         return () => { 
+            cancelParagraph();
             wsDisConnectUnsubscribe();
-            
             };
     }, [])
 
@@ -417,7 +417,7 @@ function PostDetail(props) {
                         {isWriting?
                         writer===_user.user.nickname?
                         <Grid is_flex alignItems='center'><Text>제한 시간</Text> <Timer min='15'/> <Text>남았습니다.</Text></Grid>:
-                        <Grid><Text>다른 유저가 작성중입니다.</Text></Grid>:''}
+                        <Grid><Text>{thisPost.writer?thisPost.writer:'unknown'}님이 작성중입니다.</Text></Grid>:''}
                         {isWriting?
                         writer===_user.user.nickname?
                         <Button margin='20px' marginTop='10px' onClick={sendParagraph} theme='unfilled'>작성하기</Button>:
