@@ -61,7 +61,7 @@ const UserPage = (props) => {
                     {pageUser.nickname?pageUser.nickname:''}
                 </Text>
 
-                <Text margin="10px" fontSize="12px">
+                <Text whiteSpace='pre-line' margin="10px" fontSize="12px">
                     {pageUser.introduction?pageUser.introduction:''}
                 </Text>
 
