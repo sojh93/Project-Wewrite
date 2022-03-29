@@ -178,10 +178,8 @@ function PostDetail(props) {
 
     React.useEffect(() => {
         
-        if (_post.thisPost.postKey !== postKey) {
-            dispatch(postActions.getOne(postKey));
-            
-        }
+        dispatch(postActions.getOne(postKey));
+        
         if(!_user.is_login){
             dispatch(userActions.check())
         }
