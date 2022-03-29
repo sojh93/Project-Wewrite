@@ -179,7 +179,7 @@ function PostDetail(props) {
     React.useEffect(() => {
         
         dispatch(postActions.getOne(postKey));
-        
+
         if(!_user.is_login){
             dispatch(userActions.check())
         }
@@ -211,7 +211,12 @@ function PostDetail(props) {
                             setTimeout(()=>{dispatch(postActions.getOne(postKey));},500)
                             setTimer(true);
                             console.log(timer);
-                            setTimeout(()=>{wsDisConnectUnsubscribe();window.location.reload();},1000*60*15)
+                            setTimeout(()=>{
+                                if(writer===_user.user.nickname){
+                                    wsDisConnectUnsubscribe();
+                                    window.location.reload();
+                                }
+                            },1000*60*15)
                         }
                         if(data.body.split(',')[0].split('\"')[3] === 'TALK'){
                             console.log('TALK');
