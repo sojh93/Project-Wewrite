@@ -47,7 +47,7 @@ const Timer = (props) => {
                 'Authorization' : token,
             }
         }).then(res=>{
-            console.log(res);
+            window.location.reload();
         });
         }
     }, [sec]);

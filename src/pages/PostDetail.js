@@ -213,12 +213,6 @@ function PostDetail(props) {
                             setTimeout(()=>{dispatch(postActions.getOne(postKey));},500)
                             setTimer(true);
                             console.log(timer);
-                            setTimeout(()=>{
-                                if(writer===_user.user.nickname){
-                                    wsDisConnectUnsubscribe();
-                                    window.location.reload();
-                                }
-                            },1000*60*15)
                         }
                         if(data.body.split(',')[0].split('\"')[3] === 'TALK'){
                             console.log('TALK');
@@ -369,7 +363,7 @@ function PostDetail(props) {
                     'Authorization' : token,
                 }
             }).then(res=>{
-                console.log(res);
+                window.location.reload();
             });
         }
     }
@@ -421,7 +415,7 @@ function PostDetail(props) {
                         
                         {isWriting?
                         writer===_user.user.nickname?
-                        <Grid is_flex alignItems='center'><Text>제한 시간</Text> <Timer min='15'/> <Text>남았습니다.</Text></Grid>:
+                        <Grid is_flex alignItems='center'><Text>제한 시간</Text> <Timer min='5'/> <Text>남았습니다.</Text></Grid>:
                         <Grid><Text>{thisPost.writer?thisPost.writer:'unknown'}님이 작성중입니다.</Text></Grid>:''}
                         {isWriting?
                         writer===_user.user.nickname?
@@ -439,10 +433,8 @@ function PostDetail(props) {
                         slidesPerView={5}
                         spaceBetween={20}
                         freeMode={true}
-                        pagination={{
-                            clickable: true,
-                        }}
-                        modules={[FreeMode, Pagination]}
+                        
+                        modules={[FreeMode]}
                         className="mySwiper"
                     >
                         {thisPost.paragraphResDtoList ? users.map(v => {
