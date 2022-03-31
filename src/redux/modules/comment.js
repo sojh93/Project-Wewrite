@@ -14,10 +14,10 @@ import { getCookie } from "../../shared/Cookie";
 
 
 //action
-const SET_COMMENT = "SET_COMMENT";
+const ADD_COMMENT = "ADD_COMMENT";
 
 //action creators
-const setComment = createAction(SET_COMMENT, (comment) => ({ comment }));
+const addComment = createAction(ADD_COMMENT, (comment) => ({ comment }));
 
 //initialState
 const initialState = {
@@ -25,7 +25,7 @@ const initialState = {
 };
 
 
-const addComment = (comment) => {
+const addCommentDB = (comment) => {
     return async function (dispatch){
         const token = getCookie('WW_user');
 
@@ -38,7 +38,7 @@ const addComment = (comment) => {
                 'authorization' : token,
             }
         }).then(res=>{
-            dispatch(setComment(res.data));
+            dispatch(addComment(res.data));
         });
         
     };
@@ -48,8 +48,9 @@ const addComment = (comment) => {
 // handleActions 설정.(Get, Add, Delete)
 export default handleActions ({
    
-    [SET_COMMENT]: (state,action) => produce(state, (draft) => {
-            draft.thisPost = {...action.payload.postId};
+    [ADD_COMMENT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list.unshift(action.payload.comment);
         }),
         
     },
@@ -57,6 +58,7 @@ export default handleActions ({
 )
 const actionCreators = { //액션 생성자 내보내기
     addComment,
+    addCommentDB,
 };
 
 export {actionCreators};
