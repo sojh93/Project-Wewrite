@@ -3,11 +3,14 @@ import styled from "styled-components";
 
 const Grid = ({
     onClick,
+    onSubmit,
     children,
     is_flex,
+    _ref,
     kakao=false,
     wrap,
     notice,
+    className,
     ...props
 
 }) => {
@@ -31,7 +34,7 @@ const Grid = ({
     }
     if(is_flex){
         return(
-            <Flex onClick={onClick} style={{...props}}>
+            <Flex ref={_ref} onClick={onClick} onSubmit={onSubmit} style={{...props}}>
                 {children}
             </Flex>
         )
@@ -44,7 +47,7 @@ const Grid = ({
         )
     }
     return(
-            <Div onClick={onClick} style={{...props}}>
+            <Div className={className} onClick={onClick} style={{...props}}>
                 {children}
             </Div>
 
@@ -53,7 +56,7 @@ const Grid = ({
 
 const Wrap = styled.div`
     width : 100vw;
-    max-width : 390px;
+    max-width : 420px;
     min-width : 360px;
     height : ${props => props.theme.size.height};
     background-color : ${props => props.theme.mainTheme.tertiary};
@@ -67,13 +70,12 @@ const Wrap = styled.div`
 
 const WrapNotice = styled.div`
     width : 100vw;
-    max-width : 390px;
-    min-width : 360px;
+    max-width : 800px;
+    min-width : 780px;
     height : ${props => props.theme.size.height};
     background-color : ${props => props.theme.mainTheme.tertiary};
     overflow : hidden;
     flex-direction : column;
-    overflow: hidden;
     ::-webkit-scrollbar { 
     display: none;
     }

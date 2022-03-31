@@ -13,7 +13,7 @@ import 'moment/locale/ko'
 //import Actions
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as userActions } from "../redux/modules/user";
-import { actionCreators as commentActions } from "../redux/modules/comment";
+import { actionCreators as staticActions } from '../redux/modules/static';
 
 //import elements
 import { Button, Grid, Input, Image, Text, Chip } from "../elements"
@@ -32,7 +32,21 @@ import SockJS from "sockjs-client";
 import { getCookie } from "../shared/Cookie";
 import instance from "../shared/Request";
 
+import _ from "lodash";
+
+
 const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '330px',
+    height: '600px',
+    borderRadius: '5px',
+    boxShadow: 24,
+    p: 4,
+};
+const styleComment = {
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -51,11 +65,11 @@ function PostDetail(props) {
 
     const _user = useSelector(state => state.user);
     const _post = useSelector(state => state.post);
-    const _comment = useSelector(state => state.comment);
     const postKey = useParams().postKey;
-    const postId = useParams().postId;
     const thisPost = _post.thisPost;
-    console.log(thisPost);
+    const is_login = useSelector(state=> state.user.is_login)
+    const alrt = useSelector(state=> state.static.LoginModal)
+    // console.log(thisPost);
     const refInput = React.useRef(null);
 
     // console.log(thisPost);
@@ -63,7 +77,7 @@ function PostDetail(props) {
     const users = thisPost.paragraphResDtoList ? thisPost.paragraphResDtoList.reduce((x, v, i) => {
         let tempList = []
         if (x.length === 0) {
-            return [{ nickname: v.userInfoResDto.nickname, userProfileImage: v.userInfoResDto.userProfileImage }]
+            return [{ nickname: v.userInfoResDto.nickname, userProfileImage: v.userInfoResDto.userProfileImage, userKey : v.userInfoResDto.userKey }]
         } else {
             for (let i of x) {
                 tempList.push(i.nickname)
@@ -72,18 +86,26 @@ function PostDetail(props) {
             if (tempList.includes(v.userInfoResDto.nickname)) {
                 return x;
             } else {
-                x.push({ nickname: v.userInfoResDto.nickname, userProfileImage: v.userInfoResDto.userProfileImage })
+                x.push({ nickname: v.userInfoResDto.nickname, userProfileImage: v.userInfoResDto.userProfileImage, userKey : v.userInfoResDto.userKey })
                 return x;
             }
         }
 
     }, []) : '';
 
-    
+
+    //lodash
+    const debounce = _.debounce((k) =>  {
+        setContents(k)
+    }
+    , 700);
+    const keyPress = React.useCallback(debounce, []);
 
     const [category, setCategory] = React.useState(null);
     const [timer,setTimer] = React.useState(false);
 
+    const [comment,setComment] = React.useState('');
+    const commentRef = React.useRef();
 
     //modal
     const [open, setOpen] = React.useState(false);
@@ -95,11 +117,7 @@ function PostDetail(props) {
     const handleCloseC = () => setCOpen(false);
 
     //socket
-    // const sock = new SockJS("http://13.209.70.1/ws-stomp");
-    // const sock = new SockJS("http://3.34.179.104/ws-stomp");
-    // const sock = new SockJS("http://binscot.shop/ws-stomp");
-    const sock = new SockJS("http://3.34.179.104/ws-stomp");
-    
+    const sock = new SockJS(`${process.env.REACT_APP_DATABASE_BASEURL}ws-stomp`);
     const ws = Stomp.over(sock);
     const token = getCookie('WW_user');
 
@@ -109,14 +127,13 @@ function PostDetail(props) {
     let isWriting = _post.thisPost.writing;
 
 
-    // 좋아요 버튼 관련 로직
+
     const isLike= thisPost.postLikeClickersResponseDtoList?
             thisPost.postLikeClickersResponseDtoList
             .reduce((X,V)=>
                 {   
                     return Object.values(V)[0]===_user.user.userKey?true:X}
             ,false):false;
-    // 북마크 버튼 관련 로직
     const isMark= thisPost.bookmarkClickUserKeyResDtoList?
     thisPost.bookmarkClickUserKeyResDtoList
     .reduce((X,V)=>
@@ -125,18 +142,35 @@ function PostDetail(props) {
     ,false):false;
 
     const likePost =() =>{
+        if(!is_login){
+            if(alrt){
+                dispatch(staticActions.idCheck());
+            }
+            return;
+        }
         dispatch(postActions.likePost(postKey));
         console.log('done');
     }
-    const markPost =() =>{
+    const markPost = () =>{
+        if(!is_login){
+            if(alrt){
+                dispatch(staticActions.idCheck());
+            }
+            return;
+        }
         dispatch(postActions.markPost(postKey));
         console.log('done');
     }
-
-    const addComment =(comment) =>{
-        dispatch(commentActions.addComment(comment));
-        console.log('done');
+    const addComment = () =>{
+        if(comment===''){
+            return;
+        }
+        dispatch(postActions.addComment(comment,postKey));
+        commentRef.current.value='';
+        setComment('');
+        dispatch(postActions.getOne(postKey));
     }
+    
 
     var headers = {
         Authorization: token
@@ -144,23 +178,20 @@ function PostDetail(props) {
 
     React.useEffect(() => {
         
-        if (_post.thisPost.postKey !== postKey) {
-            dispatch(postActions.getOne(postKey));
-            
-        }
+        dispatch(postActions.getOne(postKey));
+        
         if(!_user.is_login){
             dispatch(userActions.check())
         }
         wsConnectSubscribe();
         
         return () => { 
+            cancelParagraph();
             wsDisConnectUnsubscribe();
-            
             };
     }, [])
 
-    
-    // 웹소캣 구독
+
     function wsConnectSubscribe() {
         try {
             ws.connect(headers, () => {
@@ -180,6 +211,7 @@ function PostDetail(props) {
                             setTimeout(()=>{dispatch(postActions.getOne(postKey));},500)
                             setTimer(true);
                             console.log(timer);
+                            setTimeout(()=>{wsDisConnectUnsubscribe();window.location.reload();},1000*60*15)
                         }
                         if(data.body.split(',')[0].split('\"')[3] === 'TALK'){
                             console.log('TALK');
@@ -196,14 +228,12 @@ function PostDetail(props) {
             console.log(error);
         }
     }
-    // 웹소캣 연결 및 구독 중지
+
     function wsDisConnectUnsubscribe() {
         try {
             ws.disconnect(() => {
-                // 웹소캣 구독 없애버림.
                 ws.unsubscribe("sub-0");
             }, headers);
-            // paragraph 취소
             cancelParagraph();
             
         } catch (error) {
@@ -229,10 +259,12 @@ function PostDetail(props) {
 
     // 메시지 보내기
     function sendParagraph() {
-        // 로그인이 안되어있다면
         if(!_user.is_login){
-        // console로 '로그인이 필요합니다' 출력.
             console.log('로그인이 필요합니다.')
+            return;
+        }
+        if(contents===''){
+            window.alert("문장을 입력해주세요.");
             return;
         }
         if(thisPost.limitCnt - 1 === thisPost.paragraphResDtoList.length){
@@ -251,6 +283,7 @@ function PostDetail(props) {
             };
             console.log(data);
             refInput.current.value='';
+            setContents('');
             // 로딩 중
             waitForConnection(ws, function () {
                 ws.send("/pub/paragraph/complete", headers, JSON.stringify(data));
@@ -260,7 +293,7 @@ function PostDetail(props) {
             console.log(ws.ws.readyState);
         }
     }
-    // 글작성 시작
+
     function startParagraph() {
         if(!_user.is_login){
             console.log('로그인이 필요합니다.')
@@ -286,7 +319,7 @@ function PostDetail(props) {
             console.log(error);
         }
     }
-    // 글작성 완료
+
     function finishParagraph() {
         try {
             const data = {
@@ -309,13 +342,14 @@ function PostDetail(props) {
         } catch (error) {
 
         }
-        // 글작성 종료. postaction함수 실행
-        dispatch(postActions.completePara(postKey,category));
-        setTimeout(()=>{dispatch(postActions.getOne(postKey));
+        setTimeout(()=>{
+            dispatch(postActions.completePara(postKey,category));
+                        handleClose()},300)
+        setTimeout(()=>{
+            dispatch(postActions.getOne(postKey));
                         handleClose()},500)
     }
 
-    // 문단작성 취소 
     function cancelParagraph() {
         console.log(isWriting, writer===_user.user.nickname)
         if(writer===_user.user.nickname){
@@ -333,8 +367,7 @@ function PostDetail(props) {
         }
     }
 
-   
-
+    
 
     return (
 
@@ -345,15 +378,20 @@ function PostDetail(props) {
             </Grid>
             <Grid is_flex flexDirection='column' alignItems='center' margin="-4px 0 0 0" width='100%'>
                 <Grid margin='10px' width='90%'>
-                    {thisPost.categoryList ? thisPost.categoryList.map((v,i) => {
-                        return (
-                            <Chip margin='0 5px 0 0' key={i}>{v.category}</Chip>
-                        )
-                    }) : ''}
+                    <Grid is_flex justifyContent='space-between'>
+                        <Grid>
+                        {thisPost.categoryList ? thisPost.categoryList.map((v,i) => {
+                            return (
+                                <Chip margin='0 5px 0 0' key={i}>{v.category}</Chip>
+                            )
+                        }) : ''}
+                        </Grid>
+                    
+                    {thisPost.complete?"":<Text margin="0">작성 가능 문단 수 {thisPost.paragraphResDtoList?thisPost.paragraphResDtoList.length:""} / {thisPost.limitCnt?thisPost.limitCnt:""}</Text>}
+                    </Grid>
 
                     <Grid is_flex justifyContent="space-between" alignItems="center" width='100%'>
                         <Text fontSize='24px'>{thisPost.title ? thisPost.title : ""}</Text>
-
                     </Grid>
                 </Grid>
 
@@ -371,13 +409,13 @@ function PostDetail(props) {
                 </Grid>
                 {thisPost.complete ?
                     '' :
-                    <Grid marginTop='30px' width='100vw' is_flex flexDirection='column' alignItems='center'>
-                        <Input _ref={refInput} display={isWriting?writer===_user.user.nickname?'':'none':'none'} placeholder= {isWriting?writer===_user.user.nickname?'내용을 작성해주세요.':'다른 유저가 작성중입니다.':'아래 버튼을 눌러 작성을 시작해주세요.'} onChange={(e) => { setContents(e.target.value) }} width='350px' height='100px' isTheme type='textarea' />
+                    <Grid marginTop='30px' width='100%' is_flex flexDirection='column' alignItems='center'>
+                        <Input _ref={refInput} display={isWriting?writer===_user.user.nickname?'':'none':'none'} placeholder= {isWriting?writer===_user.user.nickname?'내용을 작성해주세요.':'다른 유저가 작성중입니다.':'아래 버튼을 눌러 작성을 시작해주세요.'} onChange={(e) => { keyPress(e.target.value) }} width='350px' height='100px' isTheme type='textarea' />
                         
                         {isWriting?
                         writer===_user.user.nickname?
                         <Grid is_flex alignItems='center'><Text>제한 시간</Text> <Timer min='15'/> <Text>남았습니다.</Text></Grid>:
-                        <Grid><Text>다른 유저가 작성중입니다.</Text></Grid>:''}
+                        <Grid><Text>{thisPost.writer?thisPost.writer:'unknown'}님이 작성중입니다.</Text></Grid>:''}
                         {isWriting?
                         writer===_user.user.nickname?
                         <Button margin='20px' marginTop='10px' onClick={sendParagraph} theme='unfilled'>작성하기</Button>:
@@ -389,7 +427,6 @@ function PostDetail(props) {
 
                 <Grid is_flex flexDirection='column' alignItems='center' width='100%'>
                     <Text marginTop='10px' width='90%'>참여자</Text>
-                    {/* Swiper => 화면넘기는 효과를 부여한다. React Components */}
                     <Swiper
                         style={{ height: '74px', width: 'calc(90% - 20px)', margin: '10px' }}
                         slidesPerView={5}
@@ -405,7 +442,7 @@ function PostDetail(props) {
 
                             return (
                                 <SwiperSlide>
-                                    <Paragraph nick={v.nickname} src={v.userProfileImage} />
+                                    <Paragraph nick={v.nickname} userKey={v.userKey} src={v.userProfileImage} />
                                 </SwiperSlide>
                             )
                         }) : ''}
@@ -415,12 +452,14 @@ function PostDetail(props) {
                 <Grid width='350px' height='1px' borderTop='1px solid #CECECE' />
                 <Grid>
                     <Grid is_flex alignItems='center'>
-                        <Image onClick={likePost} width='20px' height='20px' margin='4px' src={isLike?'/Icon/thumbs-up-filled.png':'/Icon/thumbs-up.png'}/>   
+                        <Image cursor="pointer" onClick={likePost} width='20px' height='20px' margin='4px' src={isLike?'/Icon/thumbs-up-filled.png':'/Icon/thumbs-up.png'}/>   
                         <Text fontSize='12px' color='#7E7E7E'>{thisPost.postLikesCnt ? thisPost.postLikesCnt : "0"}</Text>
-                        <Image width='14px' onClick={markPost} height='18px' margin='6px' src={isMark?'/Icon/bookmark_filled.png':'/Icon/bookmark.png'}/>
+                        <Image cursor="pointer" width='14px' onClick={markPost} height='18px' margin='6px' src={isMark?'/Icon/bookmark_filled.png':'/Icon/bookmark.png'}/>
                         <Text fontSize='12px' color='#7E7E7E'>{thisPost.bookmarkLikesCnt ? thisPost.bookmarkLikesCnt : "0"}</Text>
-                        <Image width='16px' onClick={markPost} height='16px' margin='6px' src={props.isMark?'/Icon/talk.png':'/Icon/talk.png'}/>
-                        <Text fontSize='12px' color='#7E7E7E' onClick={() => handleOpenC(true)}>댓글보기</Text>
+                        <Grid cursor="pointer" is_flex onClick={handleOpenC}>
+                            <Image width='16px' height='16px' margin='6px' src={props.isMark?'/Icon/talk.png':'/Icon/talk.png'}/>
+                            <Text fontSize='12px'  color='#7E7E7E'>댓글보기</Text>
+                        </Grid>
                     </Grid>
                 </Grid>
 
@@ -441,7 +480,7 @@ function PostDetail(props) {
                             <Button onClick={() => { setCategory('판타지') }} fontSize='12px' width='70px' height='40px' theme={category === '판타지' ? 'filled' : 'unfilled'}>판타지</Button>
                             <Button onClick={() => { setCategory('스릴러') }} fontSize='12px' width='70px' height='40px' theme={category === '스릴러' ? 'filled' : 'unfilled'}>스릴러</Button>
                             <Button onClick={() => { setCategory('공포') }} fontSize='12px' width='70px' height='40px' theme={category === '공포' ? 'filled' : 'unfilled'}>공포</Button>
-                            <Button onClick={() => { setCategory('로맨스/멜로') }} fontSize='12px' width='70px' height='40px' theme={category === '로맨스/멜로' ? 'filled' : 'unfilled'}>로맨스 /<br />멜로</Button>
+                            <Button onClick={() => { setCategory('로맨스') }} fontSize='12px' width='70px' height='40px' theme={category === '로맨스' ? 'filled' : 'unfilled'}>로맨스</Button>
                         </Grid>
                         <Grid is_flex justifyContent='space-between' margin='5px 0' gap='5px'>
                             <Button onClick={() => { setCategory('액션') }} fontSize='12px' width='70px' height='40px' theme={category === '액션' ? 'filled' : 'unfilled'}>액션</Button>
@@ -450,7 +489,7 @@ function PostDetail(props) {
                             <Button onClick={() => { setCategory('SF') }} fontSize='12px' width='70px' height='40px' theme={category === 'SF' ? 'filled' : 'unfilled'}>SF</Button>
                         </Grid>
                         <Grid is_flex justifyContent='space-between' gap='5px'>
-                            <Button onClick={() => { setCategory('추리/미스터리') }} fontSize='12px' width='70px' height='40px' theme={category === '추리/미스터리' ? 'filled' : 'unfilled'}>추리 /<br />미스터리</Button>
+                            <Button onClick={() => { setCategory('추리') }} fontSize='12px' width='70px' height='40px' theme={category === '추리' ? 'filled' : 'unfilled'}>추리</Button>
                             <Button onClick={() => { setCategory('드라마') }} fontSize='12px' width='70px' height='40px' theme={category === '드라마' ? 'filled' : 'unfilled'}>드라마</Button>
                             <Button onClick={() => { setCategory('스포츠') }} fontSize='12px' width='70px' height='40px' theme={category === '스포츠' ? 'filled' : 'unfilled'}>스포츠</Button>
                             <Button onClick={() => { setCategory('하이틴') }} fontSize='12px' width='70px' height='40px' theme={category === '하이틴' ? 'filled' : 'unfilled'}>하이틴</Button>
@@ -466,26 +505,30 @@ function PostDetail(props) {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Grid is_flex flexDirection='column' justifyContent='center' alignItems='center' {...style}>
+                <Grid is_flex flexDirection='column' justifyContent='flex-start' alignItems='center' {...styleComment}>
 
-                    <Grid>
+                    <Grid marginTop='35px'>
                         <Text fontSize='24px' color='black' fontWeight='700'>댓글을 확인하세요</Text>
                     </Grid>
 
-
-                    <Image margin='10px' width='50px' height='50px' src='/default_img/talkIocn.png'></Image>
-
+                    <Grid width='70px' height='77px'>
+                        <Image width='70px' height='77px' src='/default_img/talkIocn.png'></Image>
+                    </Grid>
                     <Grid margin='0px 20px' is_flex alignItems='flex-end' width='100%'>
-                        <Text margin='5px 0 5px 10px' fontSize='16px' alignItems='center' fontWeight='500'>댓글</Text><Text fontSize='10px' color='#C4C4C4' fontWeight='400'>3</Text>
+                        <Text margin='5px 0 5px 10px' fontSize='16px' alignItems='center' fontWeight='500'>댓글</Text><Text fontSize='10px' color='#C4C4C4' fontWeight='400'>{thisPost.commentList?thisPost.commentList.length:'0'}</Text>
                     </Grid>
 
-                    <Grid width='100%'>
-                        <Comment />
+                    <Grid width='100%' overflow='scroll' height="300px">
+                        {thisPost.commentList?thisPost.commentList.map((v)=>{
+                            return(<Comment commentInfo={v} date={moment(v.commentModifiedAt).format('lll')}/>)
+                        }):''}
                     </Grid>
+                    <Grid width='100%' is_flex flexDirection='column' alignItems='center'>
+                        <Input _ref={commentRef} placeholder={'댓글 달기'} onChange={(e)=>{setComment(e.target.value)}} margin='20px' width='90%' isTheme></Input>
 
-                    <Input placeholder={'댓글 달기'} margin='20px' width='80%' isTheme ></Input>
-
-                    <Button theme='unfilled' onClick={addComment}>작성하기</Button>
+                        <Button onClick={addComment} theme='unfilled'>작성하기</Button>
+                    </Grid>
+                    <Grid height='30px'/>
                 </Grid>
             </Modal>
 

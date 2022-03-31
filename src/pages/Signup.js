@@ -3,20 +3,14 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import _, { set } from "lodash";
+import _ from "lodash";
 
 //import MUI
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 
-//import Page
-import Login from "../pages/Login";
-
 //import elements
-import { Button, Grid, Input, Image, Text } from "../elements";
-
-//import Icon
-import blank from "../image/blank.jpg";
+import { Button, Grid, Input, Text } from "../elements";
 
 //impot Component
 import Header from "../components/Header";
@@ -42,7 +36,6 @@ function Signup() {
                 "Content-Type": "application/json;charset-UTF-8"
             }
         }).then(res=>{
-            console.log(res);
             setNickCheck(true);
         }).catch(err=>{
             setNickCant(true);
@@ -50,6 +43,22 @@ function Signup() {
     }
     , 1000);
     
+    const debounceEmail = _.debounce((k) =>  {
+        instance({
+            method : "post",
+            url : "/user/signup/checkID",
+            data : {username:k},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8"
+            }
+        }).then(res=>{
+            setEmailDup(true);
+        }).catch(err=>{
+            setEmailCant(true);
+        });
+    }
+    , 1000);
+
     const debouncePwd = _.debounce((k) =>  {
         setPwdForm(k);
         setPwdFormCheck(true);
@@ -64,12 +73,15 @@ function Signup() {
     , 1000);
 
     const keyPress = React.useCallback(debounce, []);
+    const keyPressEmail = React.useCallback(debounceEmail, []);
     const keyPressPwd = React.useCallback(debouncePwd, []);
     const keyPressPwdCheck = React.useCallback(debouncePwdCheck, []);
 
     //email
     const [email, setEmail] = React.useState(null);
     const [emailCheck, setEmailCheck] = React.useState(false);
+    const [emailDup, setEmailDup] = React.useState(false);
+    const [emailCant, setEmailCant] = React.useState(false);
     const [emailVeri, setEmailVeri] = React.useState(false);
 
     //Code
@@ -132,9 +144,11 @@ function Signup() {
         if(e.target.value === ''){
             setEmail(false);
             setEmailCheck(false);
+            setEmailCant(false);
         }else{
             setEmail(e.target.value);
             setEmailCheck(false);
+            setEmailCant(false);
         }
     };
 
@@ -145,19 +159,42 @@ function Signup() {
             console.log("형식이 맞지 않습니다.");
             setEmailCheck(true);
             return;
+        }else{
+            
+            instance({
+                method : "post",
+                url : "/user/signup/checkID",
+                data : {username:email},
+                headers : {
+                    "Content-Type": "application/json;charset-UTF-8"
+                }
+            })
+            .then(res=>{
+                console.log(res.data);
+                if(res.data){
+                    setEmailDup(true);
+                    instance({
+                        method : "post",
+                        url : "/mailCheck",
+                        data : {email},
+                        headers : {
+                            "Content-Type": "application/json;charset-UTF-8"
+                        }
+                    }).then(res=>{
+                        setEmailVeri(true);
+                        console.log(res.data.key)
+                        setMailCode(res.data.key);
+                    });
+                }   
+            })
+            .catch(err =>{
+                setEmailCant(true);
+                console.log('중복입니다.');
+            })
+
+        
         }
-        setEmailVeri(true);
-        instance({
-            method : "post",
-            url : "/mailCheck",
-            data : {email},
-            headers : {
-                "Content-Type": "application/json;charset-UTF-8"
-            }
-        }).then(res=>{
-            console.log(res.data.key)
-            setMailCode(res.data.key);
-        });
+        
     };
 
     const codeVerification = (e)=>{
@@ -181,7 +218,7 @@ function Signup() {
 
 
     const nickChange = (e) => {
-        let _reg = /^[-_.!0-9a-zA-Z]{6,15}$/;
+        let _reg = /^[-_.@!0-9a-zA-Z]{2,15}$/;
         setNick(e.target.value);
         setNickCant(false);
         setNickCheck(false);
@@ -191,7 +228,7 @@ function Signup() {
 
 
     const pwdChange = (e) => {
-        let _reg = /^[-_.!0-9a-zA-Z]{6,15}$/;
+        let _reg = /^[-_.@!0-9a-zA-Z]{6,15}$/;
         setPwd(e.target.value);
         setPwdFormCheck(false);
         keyPressPwd(_reg.test(e.target.value));
@@ -250,14 +287,11 @@ function Signup() {
                             >
                             </Input>
                             
-                            {email?
-                            <Chip onClick={emailVerification} position='absolute' right='10px' top='17px' width="70px" height="24px" backgroundColor='#6454FF'>인증코드</Chip> :
-                            <Chip position='absolute' right='10px' top='17px' width="70px" height="24px" backgroundColor='#EAEAEA'>인증코드</Chip>
-                            }                        
+                            <Chip cursor="pointer" onClick={email?emailVerification:null} position='absolute' right='10px' top='17px' width="70px" height="24px" backgroundColor={email?'#6454FF':'#EAEAEA'}>인증코드</Chip>
                             
                             <Text text-align='left' width='350px' display={emailVeri?'':'none'} margin="0" color='#6454FF' fontWeight='400' fontSize='14px'>인증 코드를 발급했습니다.</Text>
                             <Grid is_flex width='100%'><Text display={emailCheck?'':'none'} margin="0" color='red' fontWeight='400' fontSize='14px'>이메일 형식이 맞지 않습니다.</Text></Grid>
-
+                            <Grid is_flex width='100%'><Text display={emailCant?'':'none'} margin="0" color='red' fontWeight='400' fontSize='14px'>중복인 이메일입니다.</Text></Grid>
                         </Grid>
                     </Grid>
                     
@@ -275,8 +309,8 @@ function Signup() {
                         />
 
                         {code?
-                        <Chip onClick={codeVerification} position='absolute' right='10px' top='22px' width="70px" height="24px" backgroundColor='#6454FF'>인증하기</Chip> :
-                        <Chip position='absolute' right='10px' top='22px' width="70px" height="24px" backgroundColor='#EAEAEA'>인증하기</Chip>
+                        <Chip cursor="pointer" onClick={codeVerification} position='absolute' right='10px' top='22px' width="70px" height="24px" backgroundColor='#6454FF'>인증하기</Chip> :
+                        <Chip cursor="pointer" position='absolute' right='10px' top='22px' width="70px" height="24px" backgroundColor='#EAEAEA'>인증하기</Chip>
                         }                        
                         
                         <Text display={codeVeri?'':'none'} margin="0" color='#6454FF' fontWeight='400' fontSize='14px'>인증되었습니다.</Text>
@@ -323,11 +357,10 @@ function Signup() {
                         />
                         <Grid is_flex flexDirection='column' fontSize="8px" alignItems='flex-start' width="100%" padding="0">
                             <Text margin="0">
-                                ※ 10~20자 사이로 비밀번호를 생성해주세요.
+                                ※ 6~15자 사이로 비밀번호를 생성해주세요.
                             </Text>
                             <Text margin="0">
-                                ※ 대/소문자, 숫자, 특수문자 등 2개 이상을
-                                사용해주세요.
+                                ※ 대/소문자, 숫자, 특수문자(!,@,_) 사용하여 지정주세요.
                             </Text>
                         </Grid>
                         <Text display={pwdFormCheck&&pwdForm?'':'none'} margin="0" color='#6454FF' fontWeight='400' fontSize='14px'>사용가능한 비밀번호입니다.</Text>
@@ -366,7 +399,7 @@ function Signup() {
                         </Text>
                     </Grid>
 
-                    <Grid
+                    {/* <Grid
                         is_flex
                         padding="10px"
                         margin="5px 0 0 0"
@@ -387,7 +420,7 @@ function Signup() {
                                 setAgree3(true);
                             }}
                         />
-                    </Grid>
+                    </Grid> */}
                     <Grid
                         is_flex
                         flexDirection="column"
@@ -423,6 +456,7 @@ function Signup() {
                     <Button
                         theme="unfilled"
                         type="submit"
+                        disabled={!codeVeri}
                     >
                         가입
                     </Button>

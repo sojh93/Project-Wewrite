@@ -34,22 +34,49 @@ function PostList() {
     const _post = useSelector(state => state.post);
     console.log(_post);
 
+    const [kind, setKind] = React.useState('recent');
 
+    window.scrollTo(0,0)
     React.useEffect(() => {
-        dispatch(postActions.getRecent())
-        dispatch(postActions.getAll())
+        dispatch(postActions.getRecent());
+        dispatch(postActions.getRecommend());
+        dispatch(postActions.getAll());
     }, []);
     
+    React.useEffect(() => {window.scrollTo(0,0)}, [kind,listType]);
 
 
     return (
         <Grid wrap>
             <Header/>
             <Grid is_flex marginTop='70px' width="100%" flexDirection="column" alignItems="center">
-            <Grid width='100%'><Text marginBottom='-15px' fontSize='24px' fontWeight='700'>#{listType === 'all' ? '참여 가능 작품' : ''}{listType === 'recent' ? '완결 작품':''}</Text></Grid>
+            <Grid width='100%' is_flex justifyContent='space-between'>
+                <Grid width='100%'><Text margin='0 0 -15px 20px'  fontSize='24px' fontWeight='700'>#{listType === 'all' ? '참여 가능 작품' : ''}{listType === 'recent' ? '완결 작품':''}</Text></Grid>
+                {listType === 'recent'?
+                <Grid is_flex margin='10px 10px 0 10px'>
+                    <Text onClick={()=>setKind('recent')} fontSize='12px' color={kind==='recent'?"#000000":"#E0E0E0"}>최신순</Text>
+                    <Text onClick={()=>setKind('recommend')} fontSize='12px' color={kind==='recommend'?"#000000":"#E0E0E0"}>좋아요순</Text>
+                </Grid>:''}
+                
+            </Grid>
             <Grid is_flex flexDirection='column' alignItems='center' width="90%" marginTop='32px' gap='24px'>
                     {/* //Recent// */}
-                    {_post.recentPostList && listType === 'recent'?_post.recentPostList.map((v,i)=>{
+                    {_post.recentPostList && listType === 'recent'?kind==='recent'?_post.recentPostList.map((v,i)=>{
+                        const likeThis= v.postLikeClickersResponseDtoList
+                        .reduce((X,V)=>
+                            {   
+                                return Object.values(V)[0]===_user.user.userKey?true:X}
+                        ,false)
+                        const markThis= v.bookmarkClickUserKeyResDtoList
+                        .reduce((X,V)=>
+                            {   
+                                return Object.values(V)[0]===_user.user.userKey?true:X}
+                        ,false)
+                        return (
+                            <Post bookmarkLikesCnt={v.bookmarkLikesCnt} key={i} category={v.categoryList} postKey={v.postKey} isMark={markThis} isLike={likeThis} first={v.paragraphResList[0].paragraph} like={v.postLikesCnt} title={v.title} url={v.postImageUrl}/>
+                        )
+                    }):
+                    _post.recommendPostList.map((v,i)=>{
                         const likeThis= v.postLikeClickersResponseDtoList
                         .reduce((X,V)=>
                             {   

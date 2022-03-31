@@ -7,44 +7,16 @@ import { useNavigate } from "react-router-dom";
 //import MUI
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
 
-//import Pages
-import Main from "./Main";
-import Signup from "./Signup";
 
 //import elements
 import { Button, Grid, Input, Image, Text } from "../elements";
-//import Icon
 
-//impot Component
 
-//import Actions
-import { actionCreators as userActions } from "../redux/modules/user";
-
-//import axios
-
-//43268aa6f88af6282a341e3b61b9a761
+//API
 import instance from "../shared/Request";
+import { setCookie } from "../shared/Cookie";
 
-function Copyright(props) {
-    return (
-        <Typography
-            variant="body2"
-            color="text.secondary"
-            align="center"
-            {...props}
-        >
-            {"Copyright © "}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{" "}
-            {new Date().getFullYear()}
-            {"."}
-        </Typography>
-    );
-}
 
 function Login() {
     const navigate = useNavigate();
@@ -52,16 +24,36 @@ function Login() {
 
     const _user = useSelector((state) => state.user);
 
+    const [loginFail, setLoginFail]=React.useState(false);
+
     const handleSubmit = (event) => {
         event.preventDefault();
+
         const data = new FormData(event.currentTarget);
 
         const userInfo = {
             username: data.get("loginID"),
             password: data.get("password"),
         };
-        dispatch(userActions.login(userInfo));
-    };
+
+
+        instance({
+            method : "post",
+            url : "/user/login",
+            data : userInfo,
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8"
+            }
+        }).then(res=>{
+            const token = res.headers.authorization;
+            setCookie('WW_user',token);
+            window.location.assign('/');
+        }).catch(err =>{
+            setLoginFail(true)
+        });
+        
+    }
+
 
     return (
         <Grid wrap>
@@ -73,9 +65,9 @@ function Login() {
                 width="100%"
             >
                 <Grid is_flex flexDirection='column' width='300px'>
-                    <Text color='#6454FF' fontSize="24px" fontWeight="900">
-                        Welcome
-                    </Text>
+                    <Grid onClick={()=>{navigate('/')}} cursor='pointer' backgroundColor="#F9FAFB00" is_flex border="0" marginBottom='20px'>
+                        <Image backgroundSize='contain' backgroundRepeat='no-repeat' width='200px' height='68px' src="/Logo/Logo_p.png"></Image>
+                    </Grid>
                     <Text color='#7E7E7E' fontSize="12px" fontWeight="400">
                         서비스 이용을 위해 로그인 해주세요.
                     </Text>
@@ -98,6 +90,8 @@ function Login() {
                             margin: "30px 0",
                         }}
                         margin="normal"
+                        error={loginFail}
+                        
                         size="small"
                         fullWidth
                         id="loginID"
@@ -113,6 +107,8 @@ function Login() {
                             height: "40px",
                             bgcolor: "white",
                         }}
+                        error={loginFail}
+                        helperText={loginFail?'유효하지 않은 아이디 혹은 비밀번호입니다.':''}
                         margin="normal"
                         size="small"
                         //required
@@ -148,9 +144,9 @@ function Login() {
                         width='300px'
                         height = '40px'
                         borderRadius='5px'
-                        onClick={() =>
+                            onClick={() =>
                             window.location.assign(
-                                "https://kauth.kakao.com/oauth/authorize?client_id=43268aa6f88af6282a341e3b61b9a761&redirect_uri=http://localhost:3000/login/kakaoLogin&response_type=code"
+                                `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=https://www.wewrite.co.kr/login/kakaoLogin&response_type=code`
                             )
                         }
                     > 

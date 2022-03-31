@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import _, { set } from "lodash";
+import imageCompression from "browser-image-compression";
 
 //import Actions
 import { actionCreators as userActions } from '../redux/modules/user';
@@ -36,6 +37,13 @@ const style = {
 function Write() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const _user = useSelector(state=>state.user);
+
+    const testRef = React.useRef();
+    var foo = new File(["foo"], "foo.txt", {
+        type: "text/plain",
+    });
+    const [upload,setUpload] =React.useState(foo);
     
     //lodash
     const debounce = _.debounce((k) => setSentenceCnt(k), 500);
@@ -43,48 +51,118 @@ function Write() {
     
     //modal
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
+    const handleOpen = () => {
+        if(title===''){
+            window.alert('제목을 입력해주세요');
+            return;
+        }
+        if(sentence===''){
+            window.alert('내용을 입력해주세요');
+            return;
+        }
+        if(category===null){
+            window.alert('카테고리를 선택해주세요');
+            return;
+        }
+        setOpen(true);
+    }
     const handleClose = () => setOpen(false);
 
     //title
-    const [title,setTitle] = React.useState(null);
+    const [title,setTitle] = React.useState('');
 
     //book cover color
     const colorList = ['black','white','pink','sky']
     const [color,setColor] = React.useState(0);
 
     //first sentence
-    const [sentence,setSentence] = React.useState(null);
+    const [sentence,setSentence] = React.useState('');
 
     //set sentence count
     const [sentenceCnt,setSentenceCnt] = React.useState(2);
     
     //category
-    const refCategory = React.useRef();
     const [category,setCategory] = React.useState(null)
 
     //book cover image
     const refFileInput = React.useRef();
-    const [preview,setPreview] = React.useState(null);
+    const [preview,setPreview] = React.useState('/default_img/inputImage.png');
 
+    const handlingDataForm = async dataURI => {
+        // dataURL 값이 data:image/jpeg:base64,~~~~~~~ 이므로 ','를 기점으로 잘라서 ~~~~~인 부분만 다시 인코딩
+        const byteString = atob(dataURI.split(",")[1]);
+        // Blob를 구성하기 위한 준비, 이 내용은 저도 잘 이해가 안가서 기술하지 않았습니다.
+        const ab = new ArrayBuffer(byteString.length);
+        const ia = new Uint8Array(ab);
+        for (let i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+        const blob = new Blob([ia], {
+            type: "image/jpeg"
+        });
+        const file = new File([blob], `${_user.user.userKey}${Math.random()* 100 % 100}.jpg`);
+        
+        console.log(file);
+        setUpload(file);
+    };
+
+    const actionImgCompress = async (fileSrc) => {
+        console.log("압축 시작");
+    
+        const options = {
+            maxSizeMB: 0.2,
+            maxWidthOrHeight: 1920,
+            useWebWorker: true,
+        };
+        try {
+          // 압축 결과
+            const compressedFile = await imageCompression(fileSrc, options);
+
+            const reader = new FileReader();
+            reader.readAsDataURL(compressedFile);
+            reader.onloadend = () => {
+                // 변환 완료!
+                const base64data = reader.result;
+                // formData 만드는 함수
+                handlingDataForm(base64data);
+            };
+
+
+            
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    
     const selectFile = (e) =>{
         const reader = new FileReader();
         const file = refFileInput.current.files[0];
+        actionImgCompress(file);
         reader.readAsDataURL(file);
         reader.addEventListener("load",function () {
             setPreview(reader.result);
         })
-
-        console.log('헷')
-
-    }
-
-    const openModal = ()=>{
         
     }
 
-    const submitPost =()=>{
+    const check = ()=>{
+        if(title===''){
+            window.alert('제목을 입력해주세요');
+            return;
+        }
+        if(sentence===''){
+            window.alert('내용을 입력해주세요');
+            return;
+        }
+        if(category===null){
+            window.alert('카테고리를 선택해주세요');
+            return;
+        }
+    }
 
+    const submitPost =()=>{
+        
+        console.log(upload);
 
         const postData = new FormData();
         postData.append("title", title);
@@ -92,12 +170,12 @@ function Write() {
         postData.append("limitCnt", sentenceCnt);
         postData.append("category", category);
         postData.append("paragraph", sentence);
-        postData.append("postImageUrl",refFileInput.current.files[0]);
+        postData.append("postImageUrl",upload);
 
         console.log(sentence);
         dispatch(postActions.addPost(postData));
         dispatch(postActions.getAll())
-        navigate('/');
+        setTimeout(()=>{navigate('/')},500);
     }
 
 
@@ -108,9 +186,9 @@ function Write() {
             <Grid is_flex marginTop="100px" marginBottom='100px' alignItems='center' flexDirection="column">
                 
                 <Grid>
-                    <img src={preview?preview:'/default_img/inputImage.png'} width="130px" height="150px"/>
+                    <Image src={preview} width="130px" height="150px"/>
                     <Button onClick={()=>{refFileInput.current.click()}} border="1px solid #dbdbdb" width = "130px" height="30px" fontSize="12px" fontWeight="600">표지 변경하기</Button>
-                    <input ref={refFileInput} onChange={selectFile} type="file" accept="image/*,.jpg,.png,.fif,.jfif,.jpeg,.tif,.webp" style={{display:'none'}}/>
+                    <input ref={refFileInput} onChange={selectFile} type="file" accept="image/*" style={{display:'none'}}/>
                 </Grid>
 
                 <Grid width='90%'>
@@ -149,7 +227,7 @@ function Write() {
                         <Button onClick={()=>{setCategory('판타지')}} fontSize='12px' width='75px' height='40px' theme={category==='판타지'?'filled':'unfilled'}>판타지</Button>
                         <Button onClick={()=>{setCategory('스릴러')}} fontSize='12px' width='75px' height='40px' theme={category==='스릴러'?'filled':'unfilled'}>스릴러</Button>
                         <Button onClick={()=>{setCategory('공포')}} fontSize='12px' width='75px' height='40px' theme={category==='공포'?'filled':'unfilled'}>공포</Button>
-                        <Button onClick={()=>{setCategory('로맨스/멜로')}} fontSize='12px' width='75px' height='40px' theme={category==='로맨스/멜로'?'filled':'unfilled'}>로맨스 /<br/>멜로</Button>
+                        <Button onClick={()=>{setCategory('로맨스')}} fontSize='12px' width='75px' height='40px' theme={category==='로맨스'?'filled':'unfilled'}>로맨스</Button>
                     </Grid>
                     <Grid is_flex justifyContent='space-between'>
                         <Button onClick={()=>{setCategory('액션')}} fontSize='12px' width='75px' height='40px' theme={category==='액션'?'filled':'unfilled'}>액션</Button>
@@ -158,7 +236,7 @@ function Write() {
                         <Button onClick={()=>{setCategory('SF')}} fontSize='12px' width='75px' height='40px' theme={category==='SF'?'filled':'unfilled'}>SF</Button>
                     </Grid>
                     <Grid is_flex justifyContent='space-between'>
-                        <Button onClick={()=>{setCategory('추리/미스터리')}} fontSize='12px' width='75px' height='40px' theme={category==='추리/미스터리'?'filled':'unfilled'}>추리 /<br/>미스터리</Button>
+                        <Button onClick={()=>{setCategory('추리')}} fontSize='12px' width='75px' height='40px' theme={category==='추리'?'filled':'unfilled'}>추리</Button>
                         <Button onClick={()=>{setCategory('드라마')}} fontSize='12px' width='75px' height='40px' theme={category==='드라마'?'filled':'unfilled'}>드라마</Button>
                         <Button onClick={()=>{setCategory('스포츠')}} fontSize='12px' width='75px' height='40px' theme={category==='스포츠'?'filled':'unfilled'}>스포츠</Button>
                         <Button onClick={()=>{setCategory('하이틴')}} fontSize='12px' width='75px' height='40px' theme={category==='하이틴'?'filled':'unfilled'}>하이틴</Button>
@@ -166,7 +244,6 @@ function Write() {
                 </Grid>
                 
                 <Button onClick={handleOpen} theme='unfilled'>게시하기</Button>
-                
             </Grid>
             <Bottom />
 

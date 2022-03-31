@@ -14,8 +14,8 @@ import { getCookie } from "../shared/Cookie";
 
 import { actionCreators as userActions } from '../redux/modules/user';
 import { actionCreators as postActions } from '../redux/modules/post';
-import { SettingsBackupRestore } from '@mui/icons-material';
 
+import _ from "lodash";
 
 function ModifyProfile() {
     const dispatch = useDispatch();
@@ -28,11 +28,9 @@ function ModifyProfile() {
 
     console.log(_user);
 
-
-
     //profile image
     const refFileInput = React.useRef();
-    const [preview, setPreview] = React.useState('/default_img/inputImage.png');
+    const [preview, setPreview] = React.useState(user.userProfileImage?user.userProfileImage:'/default_img/inputImage.png');
     const userProfile = new FormData();
 
     const refNick = React.useRef();
@@ -45,8 +43,6 @@ function ModifyProfile() {
         const reader = new FileReader();
         const file = refFileInput.current.files[0];
         userProfile.append("userProfile",file);
-
-        
         instance({
             method : "put",
             url : "/user/updateProfile",
@@ -62,22 +58,62 @@ function ModifyProfile() {
         
         reader.readAsDataURL(file);
         reader.addEventListener("load", function () {
-            setPreview(reader.result);
+        setPreview(reader.result);
         })
     }
 
     const finishEdit = ()=>{
-        console.log(nick);
-        const userData={
-            nickName: nick,
-            introduction:intro
+        if(nick===user.nickname){
+            const userData={
+                nickName: nick,
+                introduction:intro
+            }
+            dispatch(userActions.editData(userData))
+            dispatch(postActions.userPost(_user.user.userKey));
+            navigate(-1);
+        }else{
+            instance({
+                method : "post",
+                url : "/user/signup/checkNick",
+                data : {nickName:nick},
+                headers : {
+                    "Content-Type": "application/json;charset-UTF-8"
+                }
+            }).then(res=>{
+                const userData={
+                    nickName: nick,
+                    introduction:intro
+                }
+                dispatch(userActions.editData(userData))
+                dispatch(postActions.userPost(_user.user.userKey));
+                navigate(-1);
+            }).catch(err=>{
+                window.alert("중복된 닉네임입니다.");
+            });
         }
-        console.log(userData);
-        dispatch(userActions.editData(userData))
-        dispatch(postActions.userPost(user.user.userKey));
-        navigate(-1);
+        
+    }
+    const debounce = _.debounce((k) =>  {
+        setNick(k);
+    }
+    , 1000);
+    
+    const keyPress = React.useCallback(debounce, []);
+
+    const nickChange = (k) =>{
+        keyPress(k)
     }
 
+    const debounce2 = _.debounce((k) =>  {
+        setIntro(k);
+    }
+    , 1000);
+    
+    const keyPress2 = React.useCallback(debounce2, []);
+
+    const nickBio = (k) =>{
+        keyPress2(k)
+    }
     return (
         <Grid wrap>
             <Header isEditUser onClick={finishEdit}/>
@@ -90,12 +126,12 @@ function ModifyProfile() {
         
                     <Grid is_flex borderBottom='1px solid #E0E0E0' width="350px">
                         <Text ref={refNick} width='40px' height="10px" margin='9px' fontSize="14px" fontWeight="bold" color="#424242" justifyContent="left">닉네임</Text>
-                        <Input isTheme onChange={(e)=>{setNick(e.target.value)}} defaultValue={_user.is_login?user.nickname:''} width='350px' border='0' color="#424242" height="40px" margin="0 0 10px 0"/>
+                        <Input isTheme onChange={(e)=>{nickChange(e.target.value)}} defaultValue={_user.is_login?user.nickname:''} width='350px' border='0' color="#424242" height="40px" margin="0 0 10px 0"/>
                     </Grid>
 
                     <Grid is_flex borderBottom='1px solid #E0E0E0' width="350px" margin="15px 0 0 0">
                         <Text ref={refIntro} width='34px' height="15px" margin='14px 9px 9px 9px' fontSize="14px" fontWeight="bold" color="#424242">소개</Text>
-                        <Input isTheme defaultValue={_user.is_login?user.introduction:''} onChange={(e)=>{setIntro(e.target.value)}} type='textarea' width='350px' height='60px' fontSize="12px" border='0' margin="0 0 0 10px" />
+                        <Input isTheme defaultValue={_user.is_login?user.introduction:''} onChange={(e)=>{nickBio(e.target.value)}} type='textarea' width='350px' height='60px' fontSize="12px" border='0' margin="0 0 0 10px" />
                     </Grid>
 
                     <Grid is_flex borderBottom='1px solid #E0E0E0' width="350px">
