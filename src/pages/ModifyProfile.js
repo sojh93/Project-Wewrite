@@ -139,6 +139,7 @@ function ModifyProfile() {
                         <Text color="#424242" margin="20px" > {_user.is_login?user.username:''}</Text>
                     </Grid>
 
+
                 <Grid is_flex width="350px" height="40px" margin="15px 0px 15px 0px" borderBottom="1px solid #E0E0E0" justifyContent="space-between" alignItems="center">
                     <Text width="34px" height="15px" margin="0 9px 20px 9px" fontSize="14px" fontWeight="bold" color="#424242" >비밀번호</Text>
                     <Text width="71px" height="32px" fontSize="12px" color="#424242" margin="0" padding="0">변경하기 {'>'}</Text>
