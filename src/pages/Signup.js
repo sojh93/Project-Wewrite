@@ -335,6 +335,11 @@ function Signup() {
                                 onChange={nickChange}
                                 borderColor={nickCant?'red':nickCheck?'#6454FF':''}
                             />
+                            <Grid is_flex flexDirection='column' fontSize="8px" alignItems='flex-start' width="100%" padding="0">
+                            <Text margin="0">
+                                ※ 2~15자 사이로 닉네임을 설정해주세요.
+                            </Text>
+                        </Grid>
                         <Text display={nickCheck?'':'none'} margin="0" color='#6454FF' fontWeight='400' fontSize='14px'>사용가능한 닉네임입니다.</Text>
                         <Text display={nickCant?'':'none'} margin="0" color='red' fontWeight='400' fontSize='14px'>중복된 닉네임입니다.</Text>
 
