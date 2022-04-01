@@ -143,10 +143,7 @@ function ModifyProfile() {
                     <Text width="34px" height="15px" margin="0 9px 20px 9px" fontSize="14px" fontWeight="bold" color="#424242" >비밀번호</Text>
                     <Text width="71px" height="32px" fontSize="12px" color="#424242" margin="0" padding="0">변경하기 {'>'}</Text>
                 </Grid>
-                <Grid is_flex width="350px" height="40px" margin="0 10px 10px 10px" borderBottom="1px solid #E0E0E0" justifyContent="space-between">
-                    <Text width="34px" height="15px" margin='1px 0 0 9px' fontSize="14px" fontWeight="bold" color="#424242">호칭</Text>
-                    <Text display="block" width="71px" height="24px" fontSize="12px" color="#424242" margin="3px 0 0 0">변경하기 {'>'}</Text>
-                </Grid>
+                
             </Grid>
             
             <Grid height="100px"/>
