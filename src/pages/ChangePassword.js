@@ -61,7 +61,7 @@ function ChangePassword() {
             <Grid is_flex borderBottom='1px solid #e0e0e0' margin="20px 0 0 20px" width="350px">
                 <Input _ref={changePCheckRef} isTheme className="Password" type="password" width='100%' border='0' placeholder="비밀번호 확인" placeholderTextColor="#e0e0e0"/>
             </Grid>
-            <Grid margin='80px' width='100%' is_flex alignItems='center' justifyContent='center'>
+            <Grid margin='80px 0' width='100%' is_flex alignItems='center' justifyContent='center'>
                 <Button onClick={change} theme='unfilled' width='120px'>변경하기</Button>
             </Grid>
         </Grid>
