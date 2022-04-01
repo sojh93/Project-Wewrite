@@ -148,20 +148,7 @@ function ModifyProfile() {
                     <Text display="block" width="71px" height="24px" fontSize="12px" color="#424242" margin="3px 0 0 0">변경하기 {'>'}</Text>
                 </Grid>
             </Grid>
-            <Grid is_flex flexDirection="column" margin="20px 0 0 0" justifyContent="center">
-                <Grid is_flex width="350px" height="40px" margin="10px" justifyContent="space-between">
-                    <Text color="#888888" margin="10px 10px 10px 15px">사용자 환경 설정</Text>
-                </Grid>
-                <Grid is_flex width="350px" height="40px" margin="10px 10px 10px 20px" borderBottom="1px solid #E0E0E0">
-                    <Text fontWeight="bold" width='34px' height="15px" margin='0 9px 0 5px' fontSize="14px" color="#424242">문의하기</Text>
-                </Grid>
-                <Grid is_flex width="350px" height="40px" margin="10px 10px 10px 20px" borderBottom="1px solid #E0E0E0" justifyContent="space-between" color="#424242">
-                    <Text fontWeight="bold" width='34px' height="15px" margin='0 9px 0 5px' fontSize="14px" color="#424242">이용약관</Text>
-                </Grid>
-                <Grid is_flex width="350px" height="40px" margin="10px 10px 10px 20px" borderBottom="1px solid #E0E0E0" justifyContent="space-between" color="#424242">
-                    <Text fontWeight="bold" width='34px' height="15px" margin='0 9px 0 5px' fontSize="14px" color="#424242">회원탈퇴</Text>
-                </Grid>
-            </Grid>
+            
             <Grid height="100px"/>
             
         </Grid >
