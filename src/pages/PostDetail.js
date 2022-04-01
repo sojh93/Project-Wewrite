@@ -431,7 +431,6 @@ function PostDetail(props) {
                         slidesPerView={5}
                         spaceBetween={20}
                         freeMode={true}
-                        
                         modules={[FreeMode]}
                         className="mySwiper"
                     >
