@@ -140,7 +140,7 @@ const notice=(noti) =>{
 
         instance({
             method : "get",
-            url : "/api/alarm?page=0&size=20",
+            url : "/api/alarm",
             data : {},
             headers : {
                 "Content-Type": "application/json;charset-UTF-8",
