@@ -1,6 +1,5 @@
 ## 프로젝트 설명
 
----
 
 ### 텍스트로 릴레이 소설을 만들 수 있는 플랫폼!
 
@@ -13,13 +12,11 @@
 
 ## 프로젝트 아키텍쳐
 
----
 
 ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/88e5dd6e-baf5-4fd3-89ab-33ca9b3dbd09/Untitled.png)
 
 ## 프로젝트 타임 라인
 
----
 
 [프로젝트 구상 및 설계](https://www.notion.so/67dfbc939fb949c2be8be8971075aee3)
 
@@ -35,7 +32,6 @@
 
 ## 완성 페이지
 
----
 
 [We-Write](https://www.wewrite.co.kr/)
 
@@ -45,14 +41,11 @@
 
 1. 데모 영상
 
-## Front
 
 # 1. 기능 설명
 
----
 
 > 1. 로그인 페이지
-> 
 
 ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c46b4594-e2ce-4ec0-a31a-54a2066837dd/Untitled.png)
 
@@ -62,11 +55,9 @@
     - Input을 이용하여 email과 password를 입력 받아 로그인 API에 전송
     - 로그인을 시도하여 성공하면 메인페이지로 이동
     - 로그인이 실패할 경우 오른쪽과 같이 input box에 경고를 준다.
-
 ---
 
 > 2.회원가입
-> 
 1. 페이지 화면
 
 ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/09751352-f728-4ff1-a4f8-d6d68c48ac1e/Untitled.png)
