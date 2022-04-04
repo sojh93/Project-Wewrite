@@ -123,8 +123,9 @@ function PostDetail(props) {
 
     //contents
     const [contents, setContents] = React.useState('');
-    let writer = _post.thisPost.writer;
-    let isWriting = _post.thisPost.writing;
+    const [writer, setWriter] = React.useState(thisPost.writer);
+    // let writer = thisPost.writer;
+    let isWriting = thisPost.writing;
 
 
 
@@ -206,7 +207,8 @@ function PostDetail(props) {
                         }
                         if(data.body.split(',')[0].split('\"')[3] === 'START'){
                             console.log('START');
-                            // setWriter(data.body.split(',')[6].split('\"')[3])
+                            setWriter(data.body.split(',')[6].split('\"')[3])
+                            console.log(data.body.split(',')[6].split('\"')[3]);
                             // setIsWriting(true);
                             setTimeout(()=>{dispatch(postActions.getOne(postKey));},500)
                             setTimer(true);
