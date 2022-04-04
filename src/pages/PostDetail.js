@@ -372,33 +372,24 @@ function PostDetail(props) {
                     // setIsWriting(true);
     
                 });
+
+                setTimeout(()=>{
+                    instance({
+                    method : "post",
+                    url : `/cancelIsWriting/${postKey}`,
+                    data : {},
+                    headers : {
+                        "Content-Type": "application/json;charset-UTF-8",
+                        'Authorization' : token,
+                    }
+                }).then(res=>{
+                    window.location.reload()
+                });},500);
+
             } catch (error) {
                 console.log(error);
             }
-            instance({
-                method : "post",
-                url : `/cancelIsWriting/${postKey}`,
-                data : {},
-                headers : {
-                    "Content-Type": "application/json;charset-UTF-8",
-                    'Authorization' : token,
-                }
-            }).then(res=>{
-                const data = {
-                    type: "STOP",
-                    postId: postKey,
-                    userName: _user.user.username,
-                    userId: _user.user.userKey,
-                    nickName: _user.user.nickname,
-                };
-    
-                waitForConnection(ws, function () {
-                    ws.send("/pub/paragraph/complete", headers, JSON.stringify(data));
-                    // setIsWriting(true);
-    
-                });
-                setTimeout(()=>window.location.reload(),500);
-            });
+            
         }
     }
 
