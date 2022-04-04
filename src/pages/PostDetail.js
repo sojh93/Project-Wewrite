@@ -220,9 +220,9 @@ function PostDetail(props) {
                         }
                         if(data.body.split(',')[0].split('\"')[3] === 'QUIT'){
                             console.log('QUIT');
-                            console.log(data.body.split(',')[0].split('\"'));
+                            console.log(data.body.split(',')[1].split('\"'));
                             // if(writer === data.body.split(',')[0].split('\"')[3])
-                            setTimeout(()=>{window.location.reload()},500)
+                            // setTimeout(()=>{window.location.reload()},500)
                         }
                     },
                     headers
