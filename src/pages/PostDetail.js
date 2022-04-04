@@ -219,7 +219,7 @@ function PostDetail(props) {
                         }
                         if(data.body.split(',')[0].split('\"')[3] === 'QUIT'){
                             console.log('QUIT');
-                            console.log(thisPost.writer,data.body.split(',')[1].split('\"')[3])
+                            console.log(_post,data.body.split(',')[1].split('\"')[3])
                             if(thisPost.writer === data.body.split(',')[1].split('\"')[3]){
                                 setTimeout(()=>{window.location.reload()},500)
                             }
