@@ -358,6 +358,25 @@ function PostDetail(props) {
     function cancelParagraph() {
         console.log(isWriting, writer===_user.user.nickname)
         if(writer===_user.user.nickname){
+
+            try {
+    
+                const data = {
+                    type: "STOP",
+                    postId: postKey,
+                    userName: _user.user.username,
+                    userId: _user.user.userKey,
+                    nickName: _user.user.nickname,
+                };
+    
+                waitForConnection(ws, function () {
+                    ws.send("/pub/paragraph/complete", headers, JSON.stringify(data));
+                    // setIsWriting(true);
+    
+                });
+            } catch (error) {
+                console.log(error);
+            }
             instance({
                 method : "post",
                 url : `/cancelIsWriting/${postKey}`,
