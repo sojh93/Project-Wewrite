@@ -215,11 +215,13 @@ function PostDetail(props) {
                         }
                         if(data.body.split(',')[0].split('\"')[3] === 'TALK'){
                             console.log('TALK');
-                            setTimeout(()=>{window.location.reload()},500)
+                            setTimeout(()=>{dispatch(postActions.getOne(postKey));
+                            },500)
                         }
                         if(data.body.split(',')[0].split('\"')[3] === 'QUIT'){
                             console.log('QUIT');
-                            setTimeout(()=>{window.location.reload()},500)
+                            setTimeout(()=>{dispatch(postActions.getOne(postKey));
+                            },500)
                             
                         }
                     },
