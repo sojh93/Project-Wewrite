@@ -69,7 +69,7 @@ function PostDetail(props) {
     const thisPost = _post.thisPost;
     const is_login = useSelector(state=> state.user.is_login)
     const alrt = useSelector(state=> state.static.LoginModal)
-    // console.log(thisPost);
+    console.log(thisPost);
     const refInput = React.useRef(null);
 
     // console.log(thisPost);
