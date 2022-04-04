@@ -123,8 +123,8 @@ function PostDetail(props) {
 
     //contents
     const [contents, setContents] = React.useState('');
-    const [writer, setWriter] = React.useState(thisPost.writer);
-    // let writer = thisPost.writer;
+    // const [writer, setWriter] = React.useState(thisPost.writer);
+    let writer = thisPost.writer;
     let isWriting = thisPost.writing;
 
 
@@ -207,23 +207,20 @@ function PostDetail(props) {
                         }
                         if(data.body.split(',')[0].split('\"')[3] === 'START'){
                             console.log('START');
-                            setWriter(data.body.split(',')[6].split('\"')[3])
                             console.log(data.body.split(',')[6].split('\"')[3]);
-                            // setIsWriting(true);
-                            setTimeout(()=>{dispatch(postActions.getOne(postKey));},500)
+                            setTimeout(()=>{dispatch(postActions.getOne(postKey));
+                            },500)
                             setTimer(true);
                             console.log(timer);
                         }
                         if(data.body.split(',')[0].split('\"')[3] === 'TALK'){
                             console.log('TALK');
-                            // setWriter(null)
-                            // setIsWriting(false);
                             setTimeout(()=>{window.location.reload()},500)
                         }
                         if(data.body.split(',')[0].split('\"')[3] === 'QUIT'){
                             console.log('QUIT');
-                            console.log(writer,data.body.split(',')[1].split('\"')[3])
-                            if(writer === data.body.split(',')[1].split('\"')[3]){
+                            console.log(thisPost.writer,data.body.split(',')[1].split('\"')[3])
+                            if(thisPost.writer === data.body.split(',')[1].split('\"')[3]){
                                 setTimeout(()=>{window.location.reload()},500)
                             }
                         }
