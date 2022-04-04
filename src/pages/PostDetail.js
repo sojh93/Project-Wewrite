@@ -72,6 +72,10 @@ function PostDetail(props) {
     console.log(thisPost);
     const refInput = React.useRef(null);
 
+    let t1 = new Date(thisPost.paragraphStartTime);
+    const calcTime=moment.duration(moment()-t1).asSeconds()
+    console.log(calcTime);
+
     // console.log(thisPost);
 
     const users = thisPost.paragraphResDtoList ? thisPost.paragraphResDtoList.reduce((x, v, i) => {
