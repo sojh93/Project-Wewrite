@@ -220,6 +220,7 @@ function PostDetail(props) {
                         }
                         if(data.body.split(',')[0].split('\"')[3] === 'QUIT'){
                             console.log('QUIT');
+                            console.log(writer,data.body.split(',')[1].split('\"')[3])
                             if(writer === data.body.split(',')[1].split('\"')[3]){
                                 setTimeout(()=>{window.location.reload()},500)
                             }
