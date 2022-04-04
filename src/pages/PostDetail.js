@@ -73,10 +73,9 @@ function PostDetail(props) {
     const refInput = React.useRef(null);
 
     let t1 = new Date(thisPost.paragraphStartTime);
-    const calcTime=moment.duration(moment()-t1).asSeconds()
-    console.log(calcTime);
-
-    // console.log(thisPost);
+    const calcTime=parseInt(moment.duration(moment()-t1).asSeconds());
+    const calcMin= parseInt(calcTime / 60);
+    const calcSec= parseInt(calcTime % 60);
 
     const users = thisPost.paragraphResDtoList ? thisPost.paragraphResDtoList.reduce((x, v, i) => {
         let tempList = []
@@ -446,7 +445,7 @@ function PostDetail(props) {
                         
                         {isWriting?
                         writer===_user.user.nickname?
-                        <Grid is_flex alignItems='center'><Text>제한 시간</Text> <Timer min='15'/> <Text>남았습니다.</Text></Grid>:
+                        <Grid is_flex alignItems='center'><Text>제한 시간</Text> <Timer min={calcMin} sec={calcSec}/> <Text>남았습니다.</Text></Grid>:
                         <Grid><Text>{thisPost.writer?thisPost.writer:'unknown'}님이 작성중입니다.</Text></Grid>:''}
                         {isWriting?
                         writer===_user.user.nickname?
