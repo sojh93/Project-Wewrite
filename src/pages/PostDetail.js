@@ -218,6 +218,12 @@ function PostDetail(props) {
                             // setIsWriting(false);
                             setTimeout(()=>{window.location.reload()},500)
                         }
+                        if(data.body.split(',')[0].split('\"')[3] === 'QUIT'){
+                            console.log('QUIT');
+                            console.log(data.body.split(',')[0].split('\"'));
+                            // if(writer === data.body.split(',')[0].split('\"')[3])
+                            setTimeout(()=>{window.location.reload()},500)
+                        }
                     },
                     headers
                 );
