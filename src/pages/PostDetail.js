@@ -384,7 +384,20 @@ function PostDetail(props) {
                     'Authorization' : token,
                 }
             }).then(res=>{
-                window.location.reload();
+                const data = {
+                    type: "STOP",
+                    postId: postKey,
+                    userName: _user.user.username,
+                    userId: _user.user.userKey,
+                    nickName: _user.user.nickname,
+                };
+    
+                waitForConnection(ws, function () {
+                    ws.send("/pub/paragraph/complete", headers, JSON.stringify(data));
+                    // setIsWriting(true);
+    
+                });
+                setTimeout(()=>window.location.reload(),500);
             });
         }
     }
