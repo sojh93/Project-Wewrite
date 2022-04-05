@@ -180,9 +180,19 @@ function PostDetail(props) {
         Authorization: token
     };
 
+    
+
     React.useEffect(() => {
         
         dispatch(postActions.getOne(postKey));
+
+        const listener = (event) => {
+            event.preventDefault();
+            event.returnValue = "";
+            cancelParagraph();
+            wsDisConnectUnsubscribe();
+        };
+        window.addEventListener('beforeunload', listener);
 
         if(!_user.is_login){
             dispatch(userActions.check())
@@ -192,6 +202,7 @@ function PostDetail(props) {
         return () => { 
             cancelParagraph();
             wsDisConnectUnsubscribe();
+            window.removeEventListener("beforeunload", listener);
             };
     }, [])
 
