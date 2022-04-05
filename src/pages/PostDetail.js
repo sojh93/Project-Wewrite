@@ -6,6 +6,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination } from "swiper";
 import Modal from '@mui/material/Modal';
+import Slider from '@mui/material/Slider';
+
 
 import moment from "moment";
 import 'moment/locale/ko'
@@ -103,6 +105,10 @@ function PostDetail(props) {
     }
     , 700);
     const keyPress = React.useCallback(debounce, []);
+
+    const [sentenceCnt,setSentenceCnt] = React.useState(1);
+    const debounce2 = _.debounce((k) => setSentenceCnt(k), 500);
+    const keyPress2 = React.useCallback(debounce2, []);
 
     const [category, setCategory] = React.useState(null);
     const [timer,setTimer] = React.useState(false);
@@ -412,13 +418,32 @@ function PostDetail(props) {
         instance({
             method : "patch",
             url : `/posts/continue/${postKey}`,
-            data : {addParagraphSize : 5},
+            data : {addParagraphSize : sentenceCnt},
             headers : {
                 "Content-Type": "application/json;charset-UTF-8",
                 'Authorization' : token,
             }
-        }).then(()=>{
-            sendParagraph()
+        }).then((res)=>{
+            console.log(res);
+            console.log(sentenceCnt);
+
+
+            const data = {
+                type: "TALK",
+                postId: postKey,
+                userName: _user.user.username,
+                userId: _user.user.userKey,
+                paragraph: contents,
+                nickName: _user.user.nickname,
+            };
+            console.log(data);
+            refInput.current.value='';
+            setContents('');
+            // 로딩 중
+            waitForConnection(ws, function () {
+                ws.send("/pub/paragraph/complete", headers, JSON.stringify(data));
+            });
+            handleClose();
         })
     }
     
@@ -563,6 +588,21 @@ function PostDetail(props) {
                 <Grid is_flex flexDirection='column' justifyContent='center' alignItems='center' {...style}>
                 <Text fontSize='24px' color='black' fontWeight='700'>몇 문장을 더 진행할까요?</Text>
                 <Image margin='30px' width='50px' height='60px' src='/default_img/book2.png'></Image>
+                <Slider
+                        style={{width:'200px'}}
+                        size="small"
+                        defaultValue={1}
+                        aria-label="Small"
+                        step={1}
+                        min={1}
+                        max={10}
+                        valueLabelDisplay="auto"
+                        marks={
+                            [{value : 1, label:'1개'},{value : 10, label:'10개'}]
+                        }
+                        onChange={(e)=>{
+                            keyPress2(e.target.value)}}
+                    />
                 <Grid is_flex gap='20px'>
                     <Button onClick={continueParagraph} theme='unfilled'>Go!</Button>
                 </Grid>
