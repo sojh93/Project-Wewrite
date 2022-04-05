@@ -180,7 +180,7 @@ function PostDetail(props) {
         Authorization: token
     };
 
-    const [stopNgo,setStopNgo] = React.useState(false);
+    const [stopNgo,setStopNgo] = React.useState("Yet");
 
     React.useEffect(() => {
         
@@ -356,7 +356,7 @@ function PostDetail(props) {
                 ws.send("/pub/paragraph/complete", headers, JSON.stringify(data));
             });
 
-            setStopNgo(false)
+            setStopNgo("Yet")
             
         } catch (error) {
 
@@ -408,7 +408,19 @@ function PostDetail(props) {
             
         }
     }
-
+    function continueParagraph() {
+        instance({
+            method : "patch",
+            url : `/posts/continue/${postKey}`,
+            data : {addParagraphSize : 5},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8",
+                'Authorization' : token,
+            }
+        }).then(()=>{
+            sendParagraph()
+        })
+    }
     
 
     return (
@@ -456,7 +468,7 @@ function PostDetail(props) {
                         
                         {isWriting?
                         writer===_user.user.nickname?
-                        <Grid is_flex alignItems='center'><Text>제한 시간</Text> <Timer min={calcMin?14 - calcMin:15} sec={calcSec?60 - calcSec:0}/> <Text>남았습니다.</Text></Grid>:
+                        <Grid is_flex alignItems='center'><Text>제한 시간</Text> <Timer min={calcMin?14 - calcMin:15} sec={calcSec>0?60 - calcSec:0}/> <Text>남았습니다.</Text></Grid>:
                         <Grid><Text>{thisPost.writer?thisPost.writer:'unknown'}님이 작성중입니다.</Text></Grid>:''}
                         {isWriting?
                         writer===_user.user.nickname?
@@ -510,7 +522,16 @@ function PostDetail(props) {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                {stopNgo?
+                {stopNgo==='Yet'?
+                <Grid is_flex flexDirection='column' justifyContent='center' alignItems='center' {...style}>
+                <Text fontSize='24px' color='black' fontWeight='700'>소설을 좀 더 진행할까요?</Text>
+                <Image margin='30px' width='50px' height='60px' src='/default_img/book2.png'></Image>
+                <Grid is_flex gap='20px'>
+                    <Button onClick={()=>{setStopNgo('Stop')}} theme='unfilled'>Stop!</Button>
+                    <Button onClick={()=>{setStopNgo('Go')}} theme='unfilled'>Go!</Button>
+                </Grid>
+                </Grid>
+                :stopNgo==='Stop'?
                 <Grid is_flex flexDirection='column' justifyContent='center' alignItems='center' {...style}>
                     <Text fontSize='24px' color='black' fontWeight='700'>소설을 완성했어요!</Text>
                     <Image margin='10px' width='50px' height='60px' src='/default_img/book2.png'></Image>
@@ -536,16 +557,16 @@ function PostDetail(props) {
                         </Grid>
                     </Grid>
                     <Button onClick={finishParagraph} theme='unfilled'>확인했어요!</Button>
-                </Grid>:
-                <Grid is_flex flexDirection='column' justifyContent='center' alignItems='center' {...style}>
-                <Text fontSize='24px' color='black' fontWeight='700'>소설을 좀 더 진행할까요?</Text>
-                <Image margin='10px' width='50px' height='60px' src='/default_img/book2.png'></Image>
-                <Text margin="0px 0px" fontSize='16px' color='#7E7E7E' fontWeight='500'>추가 장르를 선택할 수 있습니다.</Text>
-                <Grid is_flex gap='20px'>
-                    <Button onClick={()=>{setStopNgo(true)}} theme='unfilled'>Stop!</Button>
-                    <Button onClick={()=>{console.log("고고")}} theme='unfilled'>Go!</Button>
                 </Grid>
-            </Grid>
+                
+                :
+                <Grid is_flex flexDirection='column' justifyContent='center' alignItems='center' {...style}>
+                <Text fontSize='24px' color='black' fontWeight='700'>몇 문장을 더 진행할까요?</Text>
+                <Image margin='30px' width='50px' height='60px' src='/default_img/book2.png'></Image>
+                <Grid is_flex gap='20px'>
+                    <Button onClick={continueParagraph} theme='unfilled'>Go!</Button>
+                </Grid>
+                </Grid>
                 }
                 
             </Modal>
