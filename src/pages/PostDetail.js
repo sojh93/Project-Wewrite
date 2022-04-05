@@ -180,7 +180,7 @@ function PostDetail(props) {
         Authorization: token
     };
 
-    
+    const [stopNgo,setStopNgo] = React.useState(false);
 
     React.useEffect(() => {
         
@@ -356,7 +356,7 @@ function PostDetail(props) {
                 ws.send("/pub/paragraph/complete", headers, JSON.stringify(data));
             });
 
-            
+            setStopNgo(false)
             
         } catch (error) {
 
@@ -510,6 +510,7 @@ function PostDetail(props) {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
+                {stopNgo?
                 <Grid is_flex flexDirection='column' justifyContent='center' alignItems='center' {...style}>
                     <Text fontSize='24px' color='black' fontWeight='700'>소설을 완성했어요!</Text>
                     <Image margin='10px' width='50px' height='60px' src='/default_img/book2.png'></Image>
@@ -535,7 +536,18 @@ function PostDetail(props) {
                         </Grid>
                     </Grid>
                     <Button onClick={finishParagraph} theme='unfilled'>확인했어요!</Button>
+                </Grid>:
+                <Grid is_flex flexDirection='column' justifyContent='center' alignItems='center' {...style}>
+                <Text fontSize='24px' color='black' fontWeight='700'>소설을 좀 더 진행할까요?</Text>
+                <Image margin='10px' width='50px' height='60px' src='/default_img/book2.png'></Image>
+                <Text margin="0px 0px" fontSize='16px' color='#7E7E7E' fontWeight='500'>추가 장르를 선택할 수 있습니다.</Text>
+                <Grid is_flex gap='20px'>
+                    <Button onClick={()=>{setStopNgo(true)}} theme='unfilled'>Stop!</Button>
+                    <Button onClick={()=>{console.log("고고")}} theme='unfilled'>Go!</Button>
                 </Grid>
+            </Grid>
+                }
+                
             </Modal>
 
             <Modal
