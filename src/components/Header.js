@@ -237,7 +237,7 @@ const Header = (props) => {
                     </Grid>
     
                     <Grid backgroundColor="#F9FAFB" is_flex border="0">
-                        <Text color="#6454FF" margin="0 20px 0 0" padding="0">저장</Text>  
+                        
                     </Grid>
                 </Grid>
             </Grid>

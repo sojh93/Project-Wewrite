@@ -6,6 +6,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination } from "swiper";
 import Modal from '@mui/material/Modal';
+import Slider from '@mui/material/Slider';
+
 
 import moment from "moment";
 import 'moment/locale/ko'
@@ -69,10 +71,13 @@ function PostDetail(props) {
     const thisPost = _post.thisPost;
     const is_login = useSelector(state=> state.user.is_login)
     const alrt = useSelector(state=> state.static.LoginModal)
-    // console.log(thisPost);
+    console.log(thisPost);
     const refInput = React.useRef(null);
 
-    // console.log(thisPost);
+    let t1 = new Date(thisPost.paragraphStartTime);
+    const calcTime=parseInt(moment.duration(moment()-t1).asSeconds());
+    const calcMin= parseInt(calcTime / 60);
+    const calcSec= parseInt(calcTime % 60);
 
     const users = thisPost.paragraphResDtoList ? thisPost.paragraphResDtoList.reduce((x, v, i) => {
         let tempList = []
@@ -101,6 +106,10 @@ function PostDetail(props) {
     , 700);
     const keyPress = React.useCallback(debounce, []);
 
+    const [sentenceCnt,setSentenceCnt] = React.useState(1);
+    const debounce2 = _.debounce((k) => setSentenceCnt(k), 500);
+    const keyPress2 = React.useCallback(debounce2, []);
+
     const [category, setCategory] = React.useState(null);
     const [timer,setTimer] = React.useState(false);
 
@@ -123,8 +132,9 @@ function PostDetail(props) {
 
     //contents
     const [contents, setContents] = React.useState('');
-    let writer = _post.thisPost.writer;
-    let isWriting = _post.thisPost.writing;
+    // const [writer, setWriter] = React.useState(thisPost.writer);
+    let writer = thisPost.writer;
+    let isWriting = thisPost.writing;
 
 
 
@@ -176,10 +186,20 @@ function PostDetail(props) {
         Authorization: token
     };
 
+    const [stopNgo,setStopNgo] = React.useState("Yet");
+
     React.useEffect(() => {
         
         dispatch(postActions.getOne(postKey));
-        
+
+        const listener = (event) => {
+            event.preventDefault();
+            event.returnValue = "";
+            cancelParagraph();
+            wsDisConnectUnsubscribe();
+        };
+        window.addEventListener('beforeunload', listener);
+
         if(!_user.is_login){
             dispatch(userActions.check())
         }
@@ -188,6 +208,7 @@ function PostDetail(props) {
         return () => { 
             cancelParagraph();
             wsDisConnectUnsubscribe();
+            window.removeEventListener("beforeunload", listener);
             };
     }, [])
 
@@ -206,18 +227,22 @@ function PostDetail(props) {
                         }
                         if(data.body.split(',')[0].split('\"')[3] === 'START'){
                             console.log('START');
-                            // setWriter(data.body.split(',')[6].split('\"')[3])
-                            // setIsWriting(true);
-                            setTimeout(()=>{dispatch(postActions.getOne(postKey));},500)
+                            console.log(data.body.split(',')[6].split('\"')[3]);
+                            setTimeout(()=>{dispatch(postActions.getOne(postKey));
+                            },500)
                             setTimer(true);
                             console.log(timer);
-                            setTimeout(()=>{wsDisConnectUnsubscribe();window.location.reload();},1000*60*15)
                         }
                         if(data.body.split(',')[0].split('\"')[3] === 'TALK'){
                             console.log('TALK');
-                            // setWriter(null)
-                            // setIsWriting(false);
-                            setTimeout(()=>{dispatch(postActions.getOne(postKey));},500)
+                            setTimeout(()=>{dispatch(postActions.getOne(postKey));
+                            },500)
+                        }
+                        if(data.body.split(',')[0].split('\"')[3] === 'QUIT'){
+                            console.log('QUIT');
+                            setTimeout(()=>{dispatch(postActions.getOne(postKey));
+                            },500)
+                            
                         }
                     },
                     headers
@@ -337,7 +362,7 @@ function PostDetail(props) {
                 ws.send("/pub/paragraph/complete", headers, JSON.stringify(data));
             });
 
-            
+            setStopNgo("Yet")
             
         } catch (error) {
 
@@ -353,20 +378,74 @@ function PostDetail(props) {
     function cancelParagraph() {
         console.log(isWriting, writer===_user.user.nickname)
         if(writer===_user.user.nickname){
-            instance({
-                method : "post",
-                url : `/cancelIsWriting/${postKey}`,
-                data : {},
-                headers : {
-                    "Content-Type": "application/json;charset-UTF-8",
-                    'Authorization' : token,
-                }
-            }).then(res=>{
-                console.log(res);
-            });
+
+            try {
+    
+                const data = {
+                    type: "STOP",
+                    postId: postKey,
+                    userName: _user.user.username,
+                    userId: _user.user.userKey,
+                    nickName: _user.user.nickname,
+                };
+    
+                waitForConnection(ws, function () {
+                    ws.send("/pub/paragraph/complete", headers, JSON.stringify(data));
+                    // setIsWriting(true);
+    
+                });
+
+                setTimeout(()=>{
+                    instance({
+                    method : "post",
+                    url : `/cancelIsWriting/${postKey}`,
+                    data : {},
+                    headers : {
+                        "Content-Type": "application/json;charset-UTF-8",
+                        'Authorization' : token,
+                    }
+                }).then(res=>{
+                    window.location.reload()
+                });},500);
+
+            } catch (error) {
+                console.log(error);
+            }
+            
         }
     }
+    function continueParagraph() {
+        instance({
+            method : "patch",
+            url : `/posts/continue/${postKey}`,
+            data : {addParagraphSize : sentenceCnt},
+            headers : {
+                "Content-Type": "application/json;charset-UTF-8",
+                'Authorization' : token,
+            }
+        }).then((res)=>{
+            console.log(res);
+            console.log(sentenceCnt);
 
+
+            const data = {
+                type: "TALK",
+                postId: postKey,
+                userName: _user.user.username,
+                userId: _user.user.userKey,
+                paragraph: contents,
+                nickName: _user.user.nickname,
+            };
+            console.log(data);
+            refInput.current.value='';
+            setContents('');
+            // 로딩 중
+            waitForConnection(ws, function () {
+                ws.send("/pub/paragraph/complete", headers, JSON.stringify(data));
+            });
+            handleClose();
+        })
+    }
     
 
     return (
@@ -414,7 +493,7 @@ function PostDetail(props) {
                         
                         {isWriting?
                         writer===_user.user.nickname?
-                        <Grid is_flex alignItems='center'><Text>제한 시간</Text> <Timer min='15'/> <Text>남았습니다.</Text></Grid>:
+                        <Grid is_flex alignItems='center'><Text>제한 시간</Text> <Timer min={calcMin?14 - calcMin:15} sec={calcSec>0?60 - calcSec:0}/> <Text>남았습니다.</Text></Grid>:
                         <Grid><Text>{thisPost.writer?thisPost.writer:'unknown'}님이 작성중입니다.</Text></Grid>:''}
                         {isWriting?
                         writer===_user.user.nickname?
@@ -432,10 +511,7 @@ function PostDetail(props) {
                         slidesPerView={5}
                         spaceBetween={20}
                         freeMode={true}
-                        pagination={{
-                            clickable: true,
-                        }}
-                        modules={[FreeMode, Pagination]}
+                        modules={[FreeMode]}
                         className="mySwiper"
                     >
                         {thisPost.paragraphResDtoList ? users.map(v => {
@@ -471,6 +547,16 @@ function PostDetail(props) {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
+                {stopNgo==='Yet'?
+                <Grid is_flex flexDirection='column' justifyContent='center' alignItems='center' {...style}>
+                <Text fontSize='24px' color='black' fontWeight='700'>소설을 좀 더 진행할까요?</Text>
+                <Image margin='30px' width='50px' height='60px' src='/default_img/book2.png'></Image>
+                <Grid is_flex gap='20px'>
+                    <Button onClick={()=>{setStopNgo('Stop')}} theme='unfilled'>Stop!</Button>
+                    <Button onClick={()=>{setStopNgo('Go')}} theme='unfilled'>Go!</Button>
+                </Grid>
+                </Grid>
+                :stopNgo==='Stop'?
                 <Grid is_flex flexDirection='column' justifyContent='center' alignItems='center' {...style}>
                     <Text fontSize='24px' color='black' fontWeight='700'>소설을 완성했어요!</Text>
                     <Image margin='10px' width='50px' height='60px' src='/default_img/book2.png'></Image>
@@ -497,6 +583,32 @@ function PostDetail(props) {
                     </Grid>
                     <Button onClick={finishParagraph} theme='unfilled'>확인했어요!</Button>
                 </Grid>
+                
+                :
+                <Grid is_flex flexDirection='column' justifyContent='center' alignItems='center' {...style}>
+                <Text fontSize='24px' color='black' fontWeight='700'>몇 문장을 더 진행할까요?</Text>
+                <Image margin='30px' width='50px' height='60px' src='/default_img/book2.png'></Image>
+                <Slider
+                        style={{width:'200px'}}
+                        size="small"
+                        defaultValue={1}
+                        aria-label="Small"
+                        step={1}
+                        min={1}
+                        max={10}
+                        valueLabelDisplay="auto"
+                        marks={
+                            [{value : 1, label:'1개'},{value : 10, label:'10개'}]
+                        }
+                        onChange={(e)=>{
+                            keyPress2(e.target.value)}}
+                    />
+                <Grid is_flex gap='20px'>
+                    <Button onClick={continueParagraph} theme='unfilled'>Go!</Button>
+                </Grid>
+                </Grid>
+                }
+                
             </Modal>
 
             <Modal
