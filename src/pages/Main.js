@@ -6,23 +6,18 @@ import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Autoplay, Pagination, EffectFade, Navigation } from "swiper";
 
+//import CSS
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/effect-fade";
-
 import "./styles.css";
 
 //import Actions
-import { actionCreators as userActions } from '../redux/modules/user';
 import { actionCreators as postActions } from '../redux/modules/post';
 
 //import elements
-import { Button, Grid, Input, Image, Text } from "../elements"
-
-
-
-
+import { Grid, Image, Text } from "../elements"
 
 // impot Component
 import Header from '../components/Header'
@@ -30,9 +25,6 @@ import Bottom from '../components/Bottom';
 import Books from '../components/Books';
 import BookCover from '../components/BookCover';
 import Popular from '../components/popular';
-import { Spinner } from '../elements';
-
-
 
 
 function Main(props) {
@@ -42,18 +34,11 @@ function Main(props) {
     const _user = useSelector(state => state.user);
     const _post = useSelector(state => state.post);
 
-    console.log(_user);
-    console.log(_post);
-
-
-
     React.useEffect(() => {
-
         dispatch(postActions.getAll(0,6));
         dispatch(postActions.getRecent(0,6));
         dispatch(postActions.getRecommend(0,6));
         dispatch(postActions.getBest());
-
     }, []);
 
     return (
@@ -144,32 +129,6 @@ function Main(props) {
                             }):''}
 
                         </Grid>
-                        {/* <Swiper
-                            style={{ height: '230px', width: 'calc(100vw - 20px)', minWidth: '340px', maxWidth: '370px', margin: '10px' }}
-                            slidesPerView={2.75}
-                            spaceBetween={20}
-                            freeMode={true}
-                            modules={[FreeMode]}
-                            className="mySwiper"
-                        >
-                            {_post.recommendPostList ? _post.recommendPostList.map((v, i) => {
-                                const likeThis = v.postLikeClickersResponseDtoList
-                                    .reduce((X, V) => {
-                                        return Object.values(V)[0] === _user.user.userKey ? true : X
-                                    }
-                                        , false)
-                                const markThis = v.bookmarkClickUserKeyResDtoList
-                                    .reduce((X, V) => {
-                                        return Object.values(V)[0] === _user.user.userKey ? true : X
-                                    }
-                                        , false)
-                                return (
-                                    <SwiperSlide key={v.postKey}>
-                                        <Books onClick={() => { navigate(`/PostDetail/${v.postKey}`) }} bookmarkLikesCnt={v.bookmarkLikesCnt} isMark={markThis} category={v.categoryList} title={v.title} isLike={likeThis} like={v.postLikesCnt} src={v.postImageUrl} key={i} postKey={v.postKey} />
-                                    </SwiperSlide>
-                                )
-                            }) : ''}
-                        </Swiper> */}
                     </Grid>
                     <Grid width='100%' height='10px' backgroundColor='#F9FAFB'/>
                     
@@ -217,19 +176,5 @@ function Main(props) {
         </>
     );
 }
-
-
-const Hover = styled.div`
-
-`;
-
-const Mark = styled.div`
-    position : absolute;
-    top : 10px;
-    right : 10px;
-    font-size : 15px;
-    color : gray;
-    display : none
-`;
 
 export default Main;
