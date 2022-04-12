@@ -1,26 +1,22 @@
 //import Library
 import React from "react"
-import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import _, { set } from "lodash";
 import imageCompression from "browser-image-compression";
 
 //import Actions
-import { actionCreators as userActions } from '../redux/modules/user';
 import { actionCreators as postActions } from '../redux/modules/post';
 
 //import elements
 import { Button, Grid, Input, Image, Text } from "../elements"
 
-//import MUI
-import Slider from '@mui/material/Slider';
-import Modal from '@mui/material/Modal';
-
-
 // impot Component
 import Header from "../components/Header"
 import Bottom from "../components/Bottom"
+import Slider from '@mui/material/Slider';
+import Modal from '@mui/material/Modal';
+
 
 const style = {
     position: 'absolute',
@@ -39,7 +35,6 @@ function Write() {
     const navigate = useNavigate();
     const _user = useSelector(state=>state.user);
 
-    const testRef = React.useRef();
     var foo = new File(["foo"], "foo.txt", {
         type: "text/plain",
     });
@@ -68,30 +63,19 @@ function Write() {
     }
     const handleClose = () => setOpen(false);
 
-    //title
-    const [title,setTitle] = React.useState('');
-
-    //book cover color
     const colorList = ['black','white','pink','sky']
-    const [color,setColor] = React.useState(0);
-
-    //first sentence
-    const [sentence,setSentence] = React.useState('');
-
-    //set sentence count
-    const [sentenceCnt,setSentenceCnt] = React.useState(2);
-    
-    //category
-    const [category,setCategory] = React.useState(null)
-
-    //book cover image
     const refFileInput = React.useRef();
+    
+    const [title,setTitle] = React.useState('');
+    const [color,setColor] = React.useState(0);
+    const [sentence,setSentence] = React.useState('');
+    const [sentenceCnt,setSentenceCnt] = React.useState(2);
+    const [category,setCategory] = React.useState(null)
     const [preview,setPreview] = React.useState('/default_img/inputImage.png');
 
     const handlingDataForm = async dataURI => {
         // dataURL 값이 data:image/jpeg:base64,~~~~~~~ 이므로 ','를 기점으로 잘라서 ~~~~~인 부분만 다시 인코딩
         const byteString = atob(dataURI.split(",")[1]);
-        // Blob를 구성하기 위한 준비, 이 내용은 저도 잘 이해가 안가서 기술하지 않았습니다.
         const ab = new ArrayBuffer(byteString.length);
         const ia = new Uint8Array(ab);
         for (let i = 0; i < byteString.length; i++) {
@@ -108,16 +92,14 @@ function Write() {
 
     const actionImgCompress = async (fileSrc) => {
         console.log("압축 시작");
-    
         const options = {
-            maxSizeMB: 0.2,
+            maxSizeMB: 2,
             maxWidthOrHeight: 1920,
             useWebWorker: true,
         };
         try {
-          // 압축 결과
+            // 압축 결과
             const compressedFile = await imageCompression(fileSrc, options);
-
             const reader = new FileReader();
             reader.readAsDataURL(compressedFile);
             reader.onloadend = () => {
@@ -126,9 +108,6 @@ function Write() {
                 // formData 만드는 함수
                 handlingDataForm(base64data);
             };
-
-
-            
         } catch (error) {
             console.log(error);
         }
@@ -158,12 +137,10 @@ function Write() {
             window.alert('카테고리를 선택해주세요');
             return;
         }
+        submitPost()
     }
 
     const submitPost =()=>{
-        
-        console.log(upload);
-
         const postData = new FormData();
         postData.append("title", title);
         postData.append("color", colorList[color]);
@@ -172,7 +149,6 @@ function Write() {
         postData.append("paragraph", sentence);
         postData.append("postImageUrl",upload);
 
-        console.log(sentence);
         dispatch(postActions.addPost(postData));
         dispatch(postActions.getAll())
         setTimeout(()=>{navigate('/')},500);
@@ -263,7 +239,7 @@ function Write() {
                         <Text fontSize='14px'> - 최소 2명 이상 참여해야요.</Text>
                         <Text fontSize='14px'> - 문장 삭제는 뒤에 문장이 달리지 않았을 경우에만 가능해요.</Text>
                     </Grid>
-                    <Button onClick={submitPost} theme='unfilled'>확인했어요!</Button>
+                    <Button onClick={check} theme='unfilled'>확인했어요!</Button>
                 </Grid>
             </Modal>
         </Grid>
