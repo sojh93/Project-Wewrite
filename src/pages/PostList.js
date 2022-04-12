@@ -68,8 +68,10 @@ function PostList() {
             </Grid>
             <Grid is_flex flexDirection='column' alignItems='center' width="90%" marginTop='32px' gap='24px'>
                     {/* //Recent// */}
+                    {/* map 메서드 = 반복문을 돌며 배열 안의 요소들을 1대1로 짝지어 주는 것. */}
                     {_post.recentPostList && listType === 'recent'?kind==='recent'?_post.recentPostList.map((v,i)=>{
                         const likeThis= v.postLikeClickersResponseDtoList
+                        // reduce 메서드 = reduce(콜백함수, 초기값)와 같은 형태를 가지고 있으며, 배열의 각 요소가 주어진 콜백함수를 거치게 된다. 이 콜백함수를 리듀서(reducer) 라고 한다.
                         .reduce((X,V)=>
                             {   
                                 return Object.values(V)[0]===_user.user.userKey?true:X}
