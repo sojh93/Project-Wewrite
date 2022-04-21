@@ -200,8 +200,8 @@ Demo link :  https://youtu.be/IeBK9FS2aa8
 https://spiritual-notebook-05f.notion.site/WeWrite-8f2948c6dc1b472f81e28085f2e189e0
 
 ## 📒 팀깃헙
-BE https://github.com/binscot/HanghaeFinal  
 FE https://github.com/peppermintt0504/Project
+BE https://github.com/binscot/HanghaeFinal  
 
 
 
